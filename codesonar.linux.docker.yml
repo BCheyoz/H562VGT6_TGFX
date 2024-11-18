@@ -1,0 +1,70 @@
+.codesonar_sast:
+  tags:
+    - Codesonar
+    - Docker
+  image: codesonar_linux_x86_x64:7.1p0.20220902
+  variables:
+    CODESONAR: "/opt/codesonar/codesonar/bin/codesonar"
+    CSPYTHON: "/opt/codesonar/codesonar/bin/cspython"
+    SARIF2SAST: "/opt/cso-sarif2sast"
+    CODESONAR_HUB_URL: 172.20.2.14:7340
+    CODESONAR_HUBUSER: bchhay
+    CODESONAR_HUBPWFILE: "codesonar.pwfile"
+    CODESONAR_MAX_WARNINGS: 5
+    CODESONAR_VISIBILITY_FILTER: 2
+    CODESONAR_WARNING_THRESHOLD: 60
+    #GITLAB_TOKEN:
+    CODESONAR_PROJECT_NAME: "${CI_PROJECT_NAME}"
+    CI_SERVER_CAFILE: 'gitlab.root.cacert'
+  script:    
+    - echo Aldes2022 > codesonar.pwfile
+    - echo ${CODESONAR_HUB_URL}
+    - echo ${CI_PROJECT_NAME}
+    - echo ${PATH}
+    - arm-none-eabi-gcc --version
+    - make --version
+    # Configure code for build (if necessary)
+    #- ./configure
+    # Run source code build command with CodeSonar Analyze:
+    - >
+        $CODESONAR analyze
+        -foreground
+        -auth password
+        -hubuser ${CODESONAR_HUBUSER}
+        -hubpwfile ${CODESONAR_HUBPWFILE}
+        ${CODESONAR_PROJECT_NAME}
+        ${CODESONAR_HUB_URL}
+        make
+        |& tee analysis.log
+    - cat analysis.log
+    # Find the CodeSonar Hub Analysis ID for code analysis we just did:
+    - CODESONAR_ANALYSIS_ID=$(cat ${CODESONAR_PROJECT_NAME}.prj_files/aid.txt)
+    # Download the Sarif output from CodeSonar Hub:
+    # - >
+        # $CODESONAR get
+        # -auth password
+        # -hubuser ${CODESONAR_HUBUSER}
+        # -hubpwfile ${CODESONAR_HUBPWFILE}
+        # -o allwarnings.sarif
+        # ${CODESONAR_HUB_URL}/analysis/${CODESONAR_ANALYSIS_ID}-allwarnings.sarif?filter=${CODESONAR_VISIBILITY_FILTER}
+    # # Translate CodeSonar Sarif format to GitLab SAST.
+    # # sarifsast.py will fail if number of warnings found exceeds max warnings and threshold:
+    # - >
+        # $CSPYTHON $SARIF2SAST/sarif2sast.py
+        # --sarif allwarnings.sarif
+        # --output gl-sast-report.json
+        # --summary-report sast-summary-report.md
+        # --codesonar-url ${CODESONAR_HUB_URL}
+        # --analysis-id ${CODESONAR_ANALYSIS_ID}
+        # --max ${CODESONAR_MAX_WARNINGS}
+        # --threshold ${CODESONAR_WARNING_THRESHOLD}
+  # after_script:
+    # # Post a summary of analysis results as a comment in the Merge Request:
+    # - >
+        # $CSPYTHON $SARIF2SAST/upload_gitlab_mr_notes.py
+        # --api-token-variable GITLAB_TOKEN
+        # --report sast-summary-report.md
+        # --cafile "${CI_SERVER_CAFILE}"
+  # artifacts:
+    # reports:
+      # sast: gl-sast-report.json

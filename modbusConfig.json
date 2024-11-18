@@ -1,0 +1,2 @@
+{"tabName":"TableModbusSlave", "getPrefix":"get", "setPrefix":"set", "enumSeparator":"/", "enumValueSeparator":":", "infoMarkLimiter":"\"", "enumFirstElemTypeIdx":0, "removeDoubleName":true, "hideLine":true, "noEnum":true,
+"orderData":{"name":-1, "adress":0, "readLevel":1, "writeLevel":2, "unit":-1, "coef":-1, "type":3, "readAllow":4, "writeAllow":5, "enumInfo":-1}}
