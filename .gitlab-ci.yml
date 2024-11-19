@@ -63,7 +63,7 @@ Deploy-job:
     OUTPUT_FILE: "tfl4_cm_modbus_${CI_COMMIT_REF_NAME}"
   tags: 
     - Docker
-    - Qt
+    - Qt5.15
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -86,7 +86,7 @@ ConvertModbus-job:
     OUTPUT_FILE: "tfl4_cm_modbus_${CI_COMMIT_REF_NAME}"
   tags: 
     - Docker
-    - Qt
+    - Qt5.15
   when: manual
   script:
     - mkdir out
