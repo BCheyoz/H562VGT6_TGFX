@@ -87,7 +87,7 @@ typedef unsigned long long  ULONG64;
 #include <stdint.h>
 #include <stdlib.h>
 
-#define VOID                                    void
+typedef void                                    VOID;
 typedef char                                    CHAR;
 typedef char                                    BOOL;
 typedef unsigned char                           UCHAR;
