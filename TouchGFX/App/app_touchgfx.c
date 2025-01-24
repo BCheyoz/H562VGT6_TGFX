@@ -44,9 +44,9 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void touchgfx_init(void);
-void touchgfx_components_init(void);
-void touchgfx_taskEntry(void);
+__attribute__((weak)) void touchgfx_init(void);
+__attribute__((weak)) void touchgfx_components_init(void);
+__attribute__((weak)) void touchgfx_taskEntry(void);
 
 /* USER CODE BEGIN PFP */
 
