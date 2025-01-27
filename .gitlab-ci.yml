@@ -11,8 +11,9 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: Build  
   tags: 
     - Docker
-    - Linux
-    - arm-none-eabi-gcc
+    - Codesonar    
+    # - Linux
+    # - arm-none-eabi-gcc
   only:
     - merge_requests
   script:
