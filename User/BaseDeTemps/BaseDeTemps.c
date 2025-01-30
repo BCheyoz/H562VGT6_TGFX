@@ -12,12 +12,16 @@
  *
  */
 
-#include <LedBlinker.hpp>
+
 #include "BaseDeTemps.h"		// Pour accès à nos propres déclarations publiques
 
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 /******************************************************************************/
 // Zone des Variables utilisées dans l'Interruption Système :
 // => Initialisation à la déclaration nécessaire !
@@ -118,8 +122,6 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			AliveRunTime100ms++;
 #endif // BDT_SUPPORT_ALIVE_RT
 
-			Handle_GestionLed_RT_100ms();
-
 		//	UserFn_RT_100ms();	// Exemple de fonction à exécuter au RunTime dans le Programme Principal @ 100ms
 
 		/* USER CODE END RT_100ms */
@@ -175,3 +177,8 @@ uint32_t getAliveRunTime1s(void)
 #endif // BDT_SUPPORT_ALIVE_RT
 
 }
+
+
+#ifdef __cplusplus
+}
+#endif
