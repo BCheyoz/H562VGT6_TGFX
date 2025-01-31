@@ -36,7 +36,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "BaseDeTemps.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -126,16 +126,16 @@ int main(void)
   MX_USBX_Host_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
-
+  InitBaseDeTemps();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  GestionBaseDeTemps();
     /* USER CODE END WHILE */
-
-  MX_TouchGFX_Process();
+	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
