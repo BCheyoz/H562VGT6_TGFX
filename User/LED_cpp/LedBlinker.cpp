@@ -25,6 +25,7 @@ LedBlinker::LedBlinker(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES
 {
 	_sabLed = 0;
 	_curLed = 0;
+	_nbSwitch = 0;
 	_GPIOPort = GPIOx;
 	_GPIOPin = GPIO_Pin;
 	_mode = newBlinkMode;
@@ -43,22 +44,32 @@ void LedBlinker::Handle_RT_100ms(void) // Gestion Clignotement Led de vie
 			led->_curLed++;
 
 			switch (led->_mode) {
-				case E_LED_ETEINTE:
+				case E_LED_OFF:
 					led->_curLed += (led->_curLed & 1); // Retomber sur un chiffre pair pour être sûr de la maintenir éteinte
 					led->_sabLed = 5; // Recalculer dans 5*100ms = 500ms
 					break;
-				case E_LED_FIXE:
+				case E_LED_FIX:
 					led->_curLed |= 1; // Forcer ON
 					led->_sabLed = 5; // Recalculer dans 5*100ms = 500ms
 					break;
-				case E_LED_CLIGN_LENT:
+				case E_LED_SLOW_BLINK:
 					led->_sabLed = (led->_curLed & 1) ? 5 : 5; // 5=500ms => 500ms ON + 500ms OFF
 					break;
-				case E_LED_CLIGN_RAPIDE_1:
+				case E_LED_FAST_BLINK:
+					led->_sabLed = (led->_curLed & 1) ? 2 : 2; // 2=200ms => 200ms ON + 200ms OFF
+					break;
+				case E_LED_VERY_FAST_BLINK:
 					led->_sabLed = (led->_curLed & 1) ? 1 : 1; // 1=100ms => 100ms ON + 100ms OFF
 					break;
-				case E_LED_CLIGN_RAPIDE_2:
-					led->_sabLed = (led->_curLed & 1) ? 2 : 2; // 2=200ms => 200ms ON + 200ms OFF
+				case E_LED_HEARTBEAT_BLINK: // cycle de 600ms => 100ms ON + 100ms OFF + 100ms ON + 300ms OFF
+					led->_nbSwitch++;
+					if(led->_nbSwitch < 4){
+						led->_sabLed = 1;
+					}
+					else {
+						led->_nbSwitch = 0;
+						led->_sabLed = 3;
+					}
 					break;
 				default:
 					// Normalement, on ne devrait jamais passer par ici

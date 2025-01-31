@@ -19,11 +19,12 @@
 
 typedef enum
 {
-	E_LED_ETEINTE = 0,		// La Led sera maintenue éteinte
-	E_LED_FIXE,				// La Led sera maintenue allumée en permanence
-	E_LED_CLIGN_LENT,		// La Led va effectuer un Clignotement lent
-	E_LED_CLIGN_RAPIDE_1,	// La Led va effectuer le Clignotement Rapide #1
-	E_LED_CLIGN_RAPIDE_2,	// La Led va effectuer le Clignotement Rapide #2
+	E_LED_OFF = 0,		// La Led sera maintenue éteinte
+	E_LED_FIX,				// La Led sera maintenue allumée en permanence
+	E_LED_SLOW_BLINK,		// La Led va effectuer un Clignotement lent
+	E_LED_FAST_BLINK,		// La Led va effectuer le Clignotement Rapide #1
+	E_LED_VERY_FAST_BLINK,	// La Led va effectuer le Clignotement Rapide #2
+	E_LED_HEARTBEAT_BLINK,	// La Led va effectuer le Clignotement facon battement de coeur
 	//---------------
 	E_LED_NB_ETATS // A conserver en dernier élément : indique le nb Max d'états possibles
 } E_LED_BLINK_MODES;
@@ -42,7 +43,7 @@ extern "C" {
 class LedBlinker {
 public :
 
-	LedBlinker(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES newBlinkMode = E_LED_ETEINTE);
+	LedBlinker(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES newBlinkMode = E_LED_OFF);
 
 	static void Handle_RT_100ms();	// A appeler dans une BaseDeTemps @ 100ms
 
@@ -53,6 +54,7 @@ private :
 	E_LED_BLINK_MODES _mode;
 	uint16_t _sabLed;
 	uint8_t _curLed;
+	uint8_t _nbSwitch;
 	GPIO_TypeDef *_GPIOPort;
 	uint16_t _GPIOPin;
 
