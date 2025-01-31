@@ -17,7 +17,7 @@
 
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
-inline __attribute__((always_inline)) void Handle_GestionLed_RT_100ms() { LedBlinker::Handle_RT_100ms(); }
+inline __attribute__((always_inline)) void Handle_Led_RT_100ms() { LedBlinker::Handle_RT_100ms(); }
 
 /******************************************************************************/
 

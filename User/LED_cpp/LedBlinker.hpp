@@ -34,7 +34,7 @@ typedef enum
 #ifdef __cplusplus
 extern "C" {
 #endif
-  void Handle_GestionLed_RT_100ms();
+  void Handle_Led_RT_100ms();
 #ifdef __cplusplus
 }
 #endif
