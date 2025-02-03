@@ -16,8 +16,12 @@
 
 
 /******************************************************************************/
+// Initialisation des variables static partagé entre toutes les instances de l'objet
+std::list<LedBlinker*> LedBlinker::s_allLeds;
+
+/******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
-inline __attribute__((always_inline)) void Handle_Led_RT_100ms() { LedBlinker::Handle_RT_100ms(); }
+void Handle_Led_RT_100ms() { LedBlinker::Handle_RT_100ms(); }
 
 /******************************************************************************/
 
