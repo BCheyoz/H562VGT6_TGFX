@@ -1,9 +1,10 @@
-# LedBlinker cpp Lib v1.0
+# LedBlinker cpp Lib v1.1
 
-Basé sur la libraiire LedBlinker.c anciennement LedAlive.c
+Basé sur la libraire LedBlinker.c anciennement LedAlive.c
 
 ## History Usage 
 * 06/12/2024 : Added by BC to Test_Aff_Nucleo_H563ZI (STM32H563ZI)
+* 03/02/2025 : Added by BC to [TFL4_Cartemere_App](https://git-ext.aldes.com/be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app/-/tree/develop) (STM32H562VGTX)
 
 
 # Procédure pour intégrer cette Librairie
@@ -41,19 +42,23 @@ il est souvent préférable d'utiliser la formulation "../User/LED_cpp" (sans le
  ainsi qu'une Base de Temps appropriée (par exemple dans la zone "USER CODE * Includes" du .c
  de la Librairie "BaseDeTemps") :
 ```
-	#include <LedBlinker.hpp>
+	#include "LedBlinkerInterface.h"
 ```
 
-4) Ajouter l'appel d'Init dans le "main" du "main.c" (par exemple parmi les "USER CODE * 2") :
-```
-	InitGestionLed();
-```
-
-5) Ajouter le Handler @ 100ms dans une sous-partie de la Boucle Principale (RT) à 100ms :
+4) Ajouter le Handler @ 100ms dans une sous-partie de la Boucle Principale (RT) à 100ms :
 (par exemple dans la zone @ 100ms "USER CODE * RT_100ms" de "GestionBaseDeTemps" ("BaseDeTemps.c")
 ```
-	Handle_GestionLed_RT_100ms();
+	Handle_Led_RT_100ms();
 ```
+
+5) Crée les instances par LED   
+Appeler le construction dans la partie "init" du MainStateMachine ou du main.c    
+Acceder aux commande via l'instance de l'objet crée
+```
+	LedBlinker(Status_Led_GPIO_Port, Status_Led_Pin, E_LED_SLOW_BLINK);
+```
+
+
    
 Félicitations, c'est prêt :-) !
 
