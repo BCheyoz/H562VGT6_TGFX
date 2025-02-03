@@ -36,6 +36,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.32357255" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -77,6 +78,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -111,6 +113,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.276423556" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>
@@ -200,6 +203,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -240,6 +244,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -274,6 +279,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.459381886" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
