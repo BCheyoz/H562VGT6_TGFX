@@ -16,6 +16,7 @@
 #include "BaseDeTemps.h"		// Pour accès à nos propres déclarations publiques
 
 /* USER CODE BEGIN Includes */
+#include "LedBlinkerInterface.h"
 /* USER CODE END Includes */
 
 
@@ -123,7 +124,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 #endif // BDT_SUPPORT_ALIVE_RT
 
 		//	UserFn_RT_100ms();	// Exemple de fonction à exécuter au RunTime dans le Programme Principal @ 100ms
-
+			Handle_Led_RT_100ms();
 		/* USER CODE END RT_100ms */
 
 // Fin de Zone des Appels exécutés au RumTime dans le Programme Principal @ 100ms.
