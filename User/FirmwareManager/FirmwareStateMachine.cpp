@@ -65,6 +65,7 @@ FwMng::FwMng()
 	resetCommissionning = FALSE;
 	commissionningParamDone = FALSE;
 	commissionningParamSaved = FALSE;
+	resetConfig = FALSE;
 #endif
 
 #ifdef USE_SAV_STATE
@@ -73,7 +74,6 @@ FwMng::FwMng()
 
 	state = E_BOARD_READY_STATE;
 	timer_100ms = 0;
-	resetConfig = FALSE;
 	ctrlCmdReset = TRUE;
 	powerOnTimer = 0;
 	eraseMemory = 0;
@@ -102,24 +102,29 @@ void FwMng::run(void)
 	switch(state)
 	{
 	case E_BOARD_READY_STATE:
-		// on reste en Boot tant qu'il n'y a pas de code carte
+		// on reste en Board Ready tant qu'il n'y a pas de code carte
 		if(isCodeBoardCompliant()){
-			state = E_BOARD_READY_STATE;
+
 			if( isCodeIdCompliant() == TRUE)
 			{
-				if(isCommissionningDone() == TRUE)
-					state = E_PRODUCT_COMPLETE_STATE;
-				else
+#ifdef USE_COMMISIONNING_STATE
+				if(isCommissionningDone() == FALSE)
 					state = E_PRODUCT_READY_STATE;
+				else
+#endif
+					state = E_PRODUCT_COMPLETE_STATE;
 			}
+#ifdef USE_SAV_STATE
 			else {
 				if(isSAVProduct() == TRUE){
 					state = E_BOARD_SAV_READY_STATE;
 				}
 			}
+#endif
 		}
 		break;
 
+#ifdef USE_COMMISIONNING_STATE
 	case E_PRODUCT_READY_STATE:
 		if(commissionningParamDone == TRUE){
 			// on enregistre une fois quand la mise en service est terminé
@@ -132,20 +137,25 @@ void FwMng::run(void)
 			state = E_PRODUCT_COMPLETE_STATE;
 		}
 		break;
+#endif
 
 	case E_PRODUCT_COMPLETE_STATE:
+#ifdef USE_COMMISIONNING_STATE
         if(resetConfig == TRUE){
 			resetConfig = FALSE;
 			resetParamProduct();
 			state = E_PRODUCT_READY_STATE;
+			break;
 		}
 
         if(resetCommissionning == TRUE){
 			resetCommissionning = FALSE;
 			setCommissionningState(0);
 			state = E_PRODUCT_READY_STATE;
+			break;
 		}
-
+#endif
+#ifdef USE_SAV_STATE
 		if(savReset == TRUE){
 		    savReset = FALSE;
             // Cette fonction efface le Product ID et les réglages du système
@@ -153,30 +163,30 @@ void FwMng::run(void)
             state = E_BOARD_SAV_READY_STATE; // necessite le changement d'état avant reset ID
             WriteProductId(0);
             //setFanExhaustVoltage_mV(0);
+            break;
 		}
-
-		else{
-			if(regReset == TRUE){
-				regReset = FALSE;
-				//mainRegulationInit();
-			}
-			else {
-				if(powerOnTimer >= POWER_ON_WAIT){
-					//mainRegulation();
-				}
+#endif
+		if(regReset == TRUE){
+			regReset = FALSE;
+			//mainRegulationInit();
+		}
+		else {
+			if(powerOnTimer >= POWER_ON_WAIT){
+				//mainRegulation();
 			}
 		}
 		break;
-
+#ifdef USE_SAV_STATE
 	case E_BOARD_SAV_READY_STATE:
 		if( isCodeIdCompliant() == TRUE)
 		{
-			state = E_PRODUCT_READY_STATE;
+			state = E_BOARD_READY_STATE;
 		}
 		break;
-
+#endif
 	case E_FACTORY_STATE:
 	case E_FACTORY_BENCH_STATE:
+#ifdef USE_SAV_STATE
 	    if(savReset == TRUE){
             savReset = FALSE;
             // Cette fonction efface le Product ID et les réglages du système
@@ -184,6 +194,7 @@ void FwMng::run(void)
             WriteProductId(0);
             setFanExhaustVoltage_mV(0);
         }
+#endif
 	    if(eraseMemory == 1){
 	        eraseMemory++;
             setFanExhaustVoltage_mV(0);
@@ -258,8 +269,7 @@ void FwMng::requestEndOfCommissionning(uint8_t code){
 #ifdef USE_SAV_STATE
 void FwMng::requestSAVreset(uint8_t code){
 	//HII-2140 - La fonction SAV Reset est disponible que pour des carte avec un code SAP en 111xxxxx
-	if((E_PRODUCT_READY_STATE != state && E_FACTORY_STATE != state && E_FACTORY_BENCH_STATE != state)
-	        || code != SAV_RESET_PWD){ return;}
+	if(E_PRODUCT_COMPLETE_STATE == state || code != SAV_RESET_PWD){ return;}
 		savReset = TRUE;
 }
 #endif
