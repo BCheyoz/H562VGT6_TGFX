@@ -3,9 +3,6 @@
 
 #include <stdint.h>
 
-/*** Nombre de parametre dans la table ST_PARAM Parametres[] sans oublier le +1 ****/
-#define NB_PARAM_USE 39
-
 typedef enum {
 E_FRANCE = 0,
 E_BELGIQUE,
@@ -21,6 +18,9 @@ E_CHINA,
 E_NB_TARGET_ID
 }E_TARGET_ID;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void HandleWorkingTimeRT_1s(void);
 void ParamProductInit();
 
@@ -46,5 +46,9 @@ GET_SET_DECLARATION(SapBoard, 	uint32_t)
 GET_SET_DECLARATION(SnBoard,	uint64_t)
 GET_SET_DECLARATION(ProductId,	uint16_t)
 GET_SET_DECLARATION(SoftTargetId,uint8_t)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // PARAMPRODUCTINFO_H

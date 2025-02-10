@@ -55,7 +55,7 @@ FwMng * FwMng::getInstance(){
 
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
-void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
+extern "C" void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
 
 /*******************************************************************************************************/
 

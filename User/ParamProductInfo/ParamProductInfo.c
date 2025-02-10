@@ -12,6 +12,10 @@
 #include "utils.h"
 #include "FirmwareGateway.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define NB_TRY_READ_PARAMETERS		5	//5 tentative de lecture du parametre avant de declencher un probleme
 #define NB_HOUR_EACH_DATETIME_SAVE	3
 #define NB_1s_IN_1h					3600	// 3600 = 60 * 60
@@ -140,3 +144,6 @@ GET_SET_DEFINITION(SnBoard, 		uint64_t)
 GET_SET_DEFINITION(ProductId, 		uint16_t)
 GET_SET_DEFINITION(SoftTargetId, 	uint8_t)
 
+#ifdef __cplusplus
+}
+#endif

@@ -38,6 +38,7 @@
 /* USER CODE BEGIN Includes */
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
+#include "FirmwareStateMachine.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -129,6 +130,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
+  FwMng *FwManager = FwMng::getInstance();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -140,6 +142,7 @@ int main(void)
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
+	  FwManager->run();
   }
   /* USER CODE END 3 */
 }
