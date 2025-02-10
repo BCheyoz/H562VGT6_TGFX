@@ -12,7 +12,11 @@
  */
 
 #include <stdint.h> // Pour les types "int*_t" & "uint*_t"
-#include "crc.h"	// Pour nos propres déclarations publiques
+#include "aldes_crc.h"	// Pour nos propres déclarations publiques
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /******************************************************************************/
 
@@ -213,5 +217,10 @@ void FreeCRC32_Table(void)
 #endif
 
 }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CRC_SUPPORT_CRC32

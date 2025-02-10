@@ -12,6 +12,10 @@
 #ifndef CRC_H_
 #define CRC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /********************************************************************************/
 
 // Paramètres User à Activer, si nécessaire :
@@ -51,5 +55,10 @@ void CreateCRC32_Table(void);
 void FreeCRC32_Table(void);
 
 #endif // CRC_SUPPORT_CRC32
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CRC_H_ */
