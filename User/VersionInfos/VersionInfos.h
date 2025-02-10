@@ -13,6 +13,10 @@
 #ifndef VERSION_INFOS_VERSION_INFOS_H_
 #define VERSION_INFOS_VERSION_INFOS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h> // Pour les types "int*_t" & "uint*_t"
 
 /********************************************************************************************/
@@ -159,5 +163,9 @@ uint32_t getMcuDeviceId(void);
   #define SAB_STAY_BL_EXPIRED	0
   extern uint16_t sabKeepInBL;	// WARNING : ne PAS utiliser en mode Applicatif !
 #endif // FIRMWARE_IS_BOOTLOADER
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* VERSION_INFOS_VERSION_INFOS_H_ */

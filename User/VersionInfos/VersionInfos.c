@@ -9,7 +9,6 @@
  *
  */
 
-#include <stdint.h>			// Pour les types "int*_t" & "uint*_t"
 #include "VersionInfos.h"	// Pour nos propres déclarations publiques
 #include "FlashInfos.h"		// Pour accès aux Infos sur la Flash
 //#include "main.h"			// Pour accès direct aux bons includes des HAL
@@ -22,6 +21,11 @@
 	#include "UpgradeFirmware.h"
 	#include "UpdateManager.h"
 #endif // FIRMWARE_IS_BOOTLOADER
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /******************************************************************************/
 
@@ -564,3 +568,7 @@ VI_FUNCTION_GET_U32_LINKER_VALUE(SiData, _sidata);
 #endif // VI_SUPPORT_LINKER_INFOS
 
 /******************************************************************************/
+
+#ifdef __cplusplus
+}
+#endif

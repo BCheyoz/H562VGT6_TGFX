@@ -37,6 +37,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "BaseDeTemps.h"
+#include "VersionInfos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -127,6 +128,7 @@ int main(void)
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
+  InitComputeInfos();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,6 +136,7 @@ int main(void)
   while (1)
   {
 	  GestionBaseDeTemps();
+	  ComputeMyInfos();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
