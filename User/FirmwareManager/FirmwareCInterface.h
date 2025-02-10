@@ -1,11 +1,9 @@
-#ifndef MSM_MAINSTATEMACHINE_H
-#define MSM_MAINSTATEMACHINE_H
+#ifndef FIRMWARE_MANAGER_C_INTERFACE_H
+#define FIRMWARE_MANAGER_C_INTERFACE_H
 
-#include <stdint.h>
-
-//#define USE_SAV_STATE
-//#define USE_COMMISIONNING_STATE
-//#define USE_ALIVE_LED
+#define USE_SAV_STATE
+#define USE_COMMISIONNING_STATE
+#define USE_ALIVE_LED
 
 typedef enum
 {
@@ -20,12 +18,15 @@ typedef enum
 	E_PRODUCT_COMPLETE_STATE = 4,
 	E_FACTORY_BENCH_STATE,
 	E_FACTORY_STATE,
-}e_softState;
+} e_softState;
 
-void handleMainStateMachineRT_100ms();
-void MSM_Init();
-void MSM_Mgt();
-
+/********************************************************************************************/
+// pour compatibilité avec la lib BaseDeTemps en C
+#ifdef __cplusplus
+extern "C" {
+#endif
+void handleFirmwareManager_RT_100ms();
+/*
 e_softState firmwareState();
 void requestToSwitchToFactoryState(uint16_t value);
 
@@ -49,5 +50,11 @@ void requestSAVreset(uint8_t code);
 void requestBlinkMode(uint16_t newBlinkMode);
 uint16_t blinkMode();
 #endif
+*/
+#ifdef __cplusplus
+}
+#endif
+/********************************************************************************************/
 
-#endif // MSM_MAINSTATEMACHINE_H
+
+#endif // FIRMWARE_MANAGER_C_INTERFACE_H

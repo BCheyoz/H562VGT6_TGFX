@@ -8,9 +8,10 @@
  *
  */
 
+#include "FirmwareStateMachine.hpp"
 #include "FirmwareGateway.h"
-#include "FirmwareStateMachine.h"
 #include "utils.h"
+#include <list>
 
 typedef enum
 {
@@ -25,19 +26,21 @@ typedef enum
 
 typedef struct {
 	e_device device;
-	e_softState stateAllow[];
+	std::list<e_softState> stateAllow;
 }s_limitAcces;
 
 
-s_limitAcces writeLimitStateAcces = {
+std::list<s_limitAcces> writeLimitStateAcces = {
 		{E_FAN, {E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
-		{E_SENSOR, {E_FACTORY_STATE}},
+		{E_SENSOR, {E_FACTORY_STATE}}
 };
 
 
 void requestFanVoltage_mV(uint16_t newVoltage){
-	if(E_FACTORY_STATE == MSM_readSoftState()	//  fonction autorisee uniquement en factory state et banc
-		|| E_FACTORY_BENCH_STATE == MSM_readSoftState()){
+	FwMng *obj = FwMng::getInstance();
+
+	if(E_FACTORY_STATE == obj->getState()	//  fonction autorisee uniquement en factory state et banc
+		|| E_FACTORY_BENCH_STATE == obj->getState()){
 		//setFanExhaustVoltage_mV(newVoltage);
 	}
 }

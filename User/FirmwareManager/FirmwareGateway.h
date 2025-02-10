@@ -1,5 +1,5 @@
-#ifndef INF_PRODUCTINFO_H
-#define INF_PRODUCTINFO_H
+#ifndef FIRMWARE_MANAGER_GATEWAY_H
+#define FIRMWARE_MANAGER_GATEWAY_H
 
 #include <stdint.h>
 
@@ -11,4 +11,4 @@ uint16_t fanLastFeedbackSpeed();
 uint16_t fanLastDeltaTime();
 uint8_t fanVoltage_V_x10();
 
-#endif // INF_PRODUCTINFO_H
+#endif // FIRMWARE_MANAGER_GATEWAY_H
