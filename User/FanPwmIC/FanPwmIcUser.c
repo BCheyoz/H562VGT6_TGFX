@@ -10,6 +10,18 @@
  *  Pour intégrer facilement cette Librairie "FanPwmIC" dans un nouveau Projet :
  *   -> Suivre les indications dans "FanPwmIcConf.h"
  *
+ *	remarques :
+ *	Ventilateur 1 :
+ *		commande ventilateur :
+ *		FAPB = 240 Mhz, Counter period = 10000, Freq cible PWM = 12khz
+ *		PSC = (((FAPB / Période) / Cible) -1)
+ *		PSC = (((240*10^(6))/(10000))/(12*10^3))-1 = 1
+ *
+ *		retour tachy :
+ *		FAPB = 240 Mhz, Counter period = 65535, deltaMax = 1100ms entre 2 impulsions de signal, soit 0.9Hz / 54 RPM Min
+ *		PSC = "Prescaler -1" avec Prescaler minimum = (int)((FAPB * deltaMax)/(Period +1))
+ *		PSC = (((240*10^(6))*(1100*10^(-3)))/(65535+1)) = 4028.3 = 4029 -1 = 4028
+ *
  */
 #include "tim.h"			// Pour accès aux Variables & Fonctions des Timers
 #include "FanPwmIcUser.h"	// Pour accès à la Configuration & Déclarations User
@@ -52,8 +64,8 @@
 #define FAN1_IC_GET_DATAS		&mFanData[FAN1_DATA_POS].IcDatas
 
 #define FAN1_IC_TIME_OUT		FPIC_MAKE_TIME_OUT_ms(1100)	// TimeOut = 1.1s (pour RPM > 55)
-#define FAN1_IC_FAPB			FPIC_MAKE_FAPB_MHz(60)	// Tim12 sur APB1 @ 60MHz
-#define FAN1_IC_PSC 			1007	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
+#define FAN1_IC_FAPB			FPIC_MAKE_FAPB_MHz(240)	// Tim12 sur APB1 @ 240MHz
+#define FAN1_IC_PSC 			2048	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
 #define FAN1_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 #define FAN1_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 #define FAN1_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN1_IC_FAPB, FAN1_IC_PSC, FAN1_IC_PPT, FAN1_IC_K_UNIT)

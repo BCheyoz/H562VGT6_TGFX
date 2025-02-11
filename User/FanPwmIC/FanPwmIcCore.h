@@ -17,6 +17,8 @@
 
 #include "FanPwmIcUtils.h"			// Pour accès aux Outils d'aide à la Configuration
 
+#define REFRAME_TO_MAX_OF_RANGE(val,min,max)	if( ((val) < (min)) || ((val) > (max)) ) (val) = (max)
+
 /******************************************************************************/
 // Prototypes Publics :
 
