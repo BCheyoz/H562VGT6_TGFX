@@ -25,6 +25,8 @@
 	#define FLASH_BASE_ADR		FLASH_BASE		// 0x08000000UL = FLASH base address
 	#ifdef FLASH_BANK1_END
 		#define FLASH_MAX_SIZE	(FLASH_BANK1_END +1 - FLASH_BASE_ADR) // Calcul automatique si possible
+	#elif defined(FLASH_BANK_SIZE)	// define pour les model STM32H562
+		#define FLASH_MAX_SIZE FLASH_BANK_SIZE
 	#else // !FLASH_BANK1_END
 	#endif // FLASH_BANK1_END
 #endif // FLASHAXI_BASE
@@ -38,8 +40,9 @@
 #ifndef FLASH_DEVICE_SIZE	// Configuration manuelle FLASH_DEVICE_SIZE requise :
 //	#define FLASH_DEVICE_SIZE	  (64 *1024UL)	// Flash =   64K sur STM32F7xxx8 (STM32F730x8, STM32F750x8)
 //	#define FLASH_DEVICE_SIZE	 (256 *1024UL)	// Flash =  256K sur STM32F7xxxC (STM32F722xx, STM32F723xx, STM32F732xx, STM32F733xx)
-	#define FLASH_DEVICE_SIZE 	 (512 *1024UL)	// Flash =  512K sur STM32F7xxxE (STM32F722xx, STM32F723xx, STM32F732xx, STM32F733xx, STM32F745xx, STM32F746xx)
-//	#define FLASH_DEVICE_SIZE	(1024 *1024UL)	// Flash = 1024K sur STM32F7xxxG (STM32F745xx, STM32F746xx, STM32F765xx, STM32F767xx, STM32F768Ax, STM32F769xx)
+//	#define FLASH_DEVICE_SIZE 	 (512 *1024UL)	// Flash =  512K sur STM32F7xxxE (STM32F722xx, STM32F723xx, STM32F732xx, STM32F733xx, STM32F745xx, STM32F746xx)
+	#define FLASH_DEVICE_SIZE	(1024 *1024UL)	/* Flash = 1024K sur STM32F7xxxG (STM32F745xx, STM32F746xx, STM32F765xx, STM32F767xx, STM32F768Ax, STM32F769xx)
+	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 STM32H5xxxG (STM32H562xx)*/
 //	#define FLASH_DEVICE_SIZE	(2048 *1024UL)	// Flash = 2048K sur STM32F7xxxI (STM32F765xx, STM32F767xx, STM32F768Ax, STM32F769xx)
 #endif // FLASH_MAX_SIZE
 
@@ -55,7 +58,8 @@
 
 #ifndef VECTORS_BLOC_SIZE	// Configuration manuelle VECTORS_BLOC_SIZE requise :
 //	#define VECTORS_BLOC_SIZE	( 67 *sizeof(uint32_t))	//  67 Vecteurs de type .word (= UINT32) sur STM32F103RBTx (Cortex M3,  cf. "g_pfnVectors" in "startup_stm32f103rbtx.s")
-	#define VECTORS_BLOC_SIZE	(120 *sizeof(uint32_t))	// 120 Vecteurs de type .word (= UINT32) sur STM32F732xx   (Cortex M7,  cf. "g_pfnVectors" in "startup_stm32f732xx.s")
+//	#define VECTORS_BLOC_SIZE	(120 *sizeof(uint32_t))	// 120 Vecteurs de type .word (= UINT32) sur STM32F732xx   (Cortex M7,  cf. "g_pfnVectors" in "startup_stm32f732xx.s")
+	#define VECTORS_BLOC_SIZE	(147 *sizeof(uint32_t))	// 147 Vecteurs de type .word (= UINT32) sur STM32H562xx   (Cortex M7,  cf. "g_pfnVectors" in "startup_stm32h562xx.s")
 //	#define VECTORS_BLOC_SIZE	( 46 *sizeof(uint32_t))	//  46 Vecteurs de type .word (= UINT32) sur STM32G070CBTx (Cortex M0+, cf. "g_pfnVectors" in "startup_stm32g070cbtx.s")
 //	#define VECTORS_BLOC_SIZE	( 47 *sizeof(uint32_t))	//  47 Vecteurs de type .word (= UINT32) sur STM32G0B1CETx (Cortex M0+, cf. "g_pfnVectors" in "startup_stm32g0b1cetx.s")
 #endif // VECTORS_BLOC_SIZE
