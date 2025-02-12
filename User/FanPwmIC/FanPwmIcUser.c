@@ -7,25 +7,14 @@
  *  Updated on: 07 Mars 2022
  *  Updated by: j.proux
  *
- *  Pour intégrer facilement cette Librairie "FanPwmIC" dans un nouveau Projet :
- *   -> Suivre les indications dans "FanPwmIcConf.h"
- *
- *	remarques :
- *	Ventilateur 1 :
- *		commande ventilateur :
- *		FAPB = 240 Mhz, Counter period = 10000, Freq cible PWM = 12khz
- *		PSC = (((FAPB / Période) / Cible) -1)
- *		PSC = (((240*10^(6))/(10000))/(12*10^3))-1 = 1
- *
- *		retour tachy :
- *		FAPB = 240 Mhz, Counter period = 65535, deltaMax = 1100ms entre 2 impulsions de signal, soit 0.9Hz / 54 RPM Min
- *		PSC = "Prescaler -1" avec Prescaler minimum = (int)((FAPB * deltaMax)/(Period +1))
- *		PSC = (((240*10^(6))*(1100*10^(-3)))/(65535+1)) = 4028.3 = 4029 -1 = 4028
- *
+ *  Version 1.0
  */
 #include "tim.h"			// Pour accès aux Variables & Fonctions des Timers
 #include "FanPwmIcUser.h"	// Pour accès à la Configuration & Déclarations User
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /******************************************************************************/
 
 #if defined(FPIC_NB_FANS_WITH_FEEDBACK) && (FPIC_NB_FANS_WITH_FEEDBACK > 0)

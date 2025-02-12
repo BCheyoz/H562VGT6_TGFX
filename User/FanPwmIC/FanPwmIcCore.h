@@ -7,8 +7,7 @@
  *  Updated on: 04 Mars 2022
  *  Updated by: j.proux
  *
- *  Pour intégrer facilement cette Librairie "FanPwmIC" dans un nouveau Projet :
- *   -> Suivre les indications dans "FanPwmIcConf.h"
+ *  Version 1.0
  *
  */
 
