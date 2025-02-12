@@ -22,11 +22,11 @@ extern "C" {
 /********************************************************************************************/
 // Paramètres User à Activer / Configurer :
 
-/*** Beta 00.38.00 (v0.55.13) by BC le 18/07/2024 ****************************************************/
-#define VERSION_FW_SOFT_TYPE    (0xB0)  // Bin type
-#define VERSION_FW_SOFT_MAJOR   (0x01)  // major version
+/*** Alpha 00.01.00 (v0.1.0) by BC le 11/02/2025 ****************************************************/
+#define VERSION_FW_SOFT_TYPE    (0xA0)  // Bin type
+#define VERSION_FW_SOFT_MAJOR   (0x00)  // major version
 #define VERSION_FW_SOFT_MINOR   (0x01)  // Minor version
-#define VERSION_FW_SOFT_DEV     (0x08)  // Dev version
+#define VERSION_FW_SOFT_DEV     (0x00)  // Dev version
 
 
 #define VERSION_FW_SOFT			VI_MAKE_VER_SOFT_32(VERSION_FW_SOFT_TYPE, VERSION_FW_SOFT_MAJOR, VERSION_FW_SOFT_MINOR, VERSION_FW_SOFT_DEV)
@@ -38,8 +38,8 @@ extern "C" {
 #define VI_SUPPORT_JUMP_BL  		// Pour gérer les Reboot temporisés vers BL
 //#define VI_SUPPORT_LINKER_INFOS 	// Pour activer la Récupération de qq Infos depuis le Linker
 
-#define VI_FW_VERSION_KEYWORD		'H','2','C','M','e','r','_','F','W'	// Applicatif Signature Keyword to Tag in Applicatif
-#define VI_BL_VERSION_KEYWORD		'H','2','C','M','e','r','_','B','L'	// BootLoader Signature Keyword to Find in Applicatif
+#define VI_FW_VERSION_KEYWORD		'T','F','L','4','C','M','_','F','W'	// Applicatif Signature Keyword to Tag in Applicatif
+#define VI_BL_VERSION_KEYWORD		'T','F','L','4','C','M','_','B','L'	// BootLoader Signature Keyword to Find in Applicatif
 
 #define FIRMWARE_IS_APPLICATIF  	// Considérer ce Firmware comme un Applicatif (Activer par défaut)
 //#define FIRMWARE_IS_BOOTLOADER  	// Activer uniquement si ce Firmware doit être considéré comme un BootLoader
