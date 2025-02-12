@@ -12,6 +12,9 @@
 
 #include "FanPwmIcCore.h"	// Pour accès à nos propres déclarations publiques
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /******************************************************************************/
 
 #if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_FAN_PWM_IC)
@@ -662,3 +665,7 @@ void FanPwmIC_SwapPwmIc(tFanPwmData* pPwmData1, tFanIcData* pIcData1, tFanPwmDat
 #endif // FPIC_ENABLE_SWAP_IC_FEED_BACK
 
 }
+
+#ifdef __cplusplus
+}
+#endif

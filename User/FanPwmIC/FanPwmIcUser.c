@@ -320,3 +320,6 @@ uint8_t AreFansSwapped_Exhaust_Supply(void)
 }
 
 /******************************************************************************/
+#ifdef __cplusplus
+}
+#endif

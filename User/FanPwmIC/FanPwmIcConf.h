@@ -14,10 +14,10 @@
 #ifndef FAN_PWM_IC_FAN_PWM_IC_CONF_H_
 #define FAN_PWM_IC_FAN_PWM_IC_CONF_H_
 
-/*****************************************************************************************
-* Procédure pour intégrer facilement cette Librairie "FanPwmIC" dans un nouveau projet : *
-******************************************************************************************
-
+#ifdef __cplusplus
+extern "C" {
+#endif
+/**************************************************************************************************/
 
 // Configuration des Variables pour les Datas :
 #define FPIC_NB_FANS_WITH_FEEDBACK		1	// Indiquer le nombre de Ventilateurs AVEC retour Feedback à gérer
@@ -68,4 +68,7 @@
 	#endif // FPIC_NB_FANS_ONLY_FEEDBACK
 #endif // FPIC_NB_FANS_WITH_FEEDBACK
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* FAN_PWM_IC_FAN_PWM_IC_CONF_H_ */
