@@ -25,6 +25,6 @@
 #define I2CCM_RESET_PIN 	Rst_Sensor_Pin
 #define I2CCM_RESET_PORT	Rst_Sensor_GPIO_Port
 
-#define I2CCM_MAX_DEV_SIM	2	// Max Devices Simultanément : Co2 + RTC uniquement
+#define I2CCM_MAX_DEV_SIM	1	// Max Devices Simultanément : Co2 + RTC uniquement
 
 #endif /* I2CCOMMASTERSYSTEM_I2CCOMMASTERSYSCONF_H_ */

@@ -76,9 +76,9 @@ typedef enum	// Identification des Familles de Périphériques RTC :
 //I2CCM_Pres_LMI_ExtData  	mPresLMI = {0};
 
 // Variables de Co2 :
-I2CCM_Co2_SCD3x_ExtData 	mCo2SCD3 = {0};
+//I2CCM_Co2_SCD3x_ExtData 	mCo2SCD3 = {0};
 //I2CCM_Co2_SCD4_ExtData	mCo2SCD4 = {0};
-I2CCM_Co2_EE895_ExtData 	mCo2EE895 = {0};
+//I2CCM_Co2_EE895_ExtData 	mCo2EE895 = {0};
 
 // Variables de COV :
 //I2CCM_COV_SGP40_ExtData 	mCovSGP40 = {0};
@@ -89,7 +89,9 @@ I2CCM_Co2_EE895_ExtData 	mCo2EE895 = {0};
 //I2CCM_Hr_SHT4x_ExtData  	mHrSHT4 = {0};
 
 // Variables de RTC :
+#ifdef I2C_USE_RTC_RV3028
 I2CCM_Rtc_RV3028_ExtData	mRtcRv3028 = {0};
+#endif
 
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
 	I2CCM_RTC_RV3028_ManualRW	rtcRV3028_ManualRW = {0};
@@ -113,8 +115,8 @@ const I2CCM_DevInitParams i2cSystemInitTable[] = {
 //	{ I2cIntDevGrpCOV,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Cov_ENS160_Init,		I2cDevCovFamilyENS160,	0, &mCovENS160 },	// ENS160 sera chargé si SGP40 ne répond pas
 
 	// Capteurs de Co2 (SCD3x ou EE895) :
-	{ I2cSysDevGrpCo2,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Co2_SCD3x_Init,		I2cDevCo2FamilySCD3,	0, &mCo2SCD3 },		// SCD3x est recherché en premier
-	{ I2cSysDevGrpCo2,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Co2_EE895_Init,		I2cDevCo2FamilyEE895,	0, &mCo2EE895 },	// EE895 sera chargé si SCD3 ne répond pas
+//	{ I2cSysDevGrpCo2,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Co2_SCD3x_Init,		I2cDevCo2FamilySCD3,	0, &mCo2SCD3 },		// SCD3x est recherché en premier
+//	{ I2cSysDevGrpCo2,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Co2_EE895_Init,		I2cDevCo2FamilyEE895,	0, &mCo2EE895 },	// EE895 sera chargé si SCD3 ne répond pas
 
 	// Capteurs de Pression (LMI ou SDP8) :
 //	{ I2cIntDevGrpPressure,	I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_PressureLMI_Init,		I2cDevPresFamilyLMI,	0, &mPresLMI },		// LMI est recherché en premier
@@ -122,7 +124,7 @@ const I2CCM_DevInitParams i2cSystemInitTable[] = {
 //	{ I2cIntDevGrpPressure,	I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_PressureSDP6_Init,	I2cDevPresFamilySDP6,	0, &mPresSDP6 },
 
 	// Périphérique RTC (RV3028) :
-	{ I2cSysDevGrpRTC,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Rtc_RV3028_Init,		I2cDevRtcFamilyRV3028,	0, &mRtcRv3028 },	// RV3028 est recherché en premier
+//	{ I2cSysDevGrpRTC,		I2CCM_CHANNEL_NONE, I2CCM_LOAD_DEFAULT_DEVICE,	i2cCM_Rtc_RV3028_Init,		I2cDevRtcFamilyRV3028,	0, &mRtcRv3028 },	// RV3028 est recherché en premier
 
 /* USER CODE END InitTable */
 
@@ -168,7 +170,7 @@ void GestionI2cSystem(void)
 }
 
 /******************************************************************************/
-
+#ifdef I2C_USE_RTC_RV3028
 uint16_t I2cSystem_StartWriteNewDateTime2RTC(void* pExtVar, RTC_CommonBase_DateTime* pNewDateTime)
 {
 	if(0 == pExtVar) return 0;
@@ -246,6 +248,7 @@ void I2cSystem_HandleRtcManualMultiExecute_10ms(void)
   #endif // I2C_ENABLE_DEBUG_MULTI_EXECUTION
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 }
+#endif
 
 /******************************************************************************/
 

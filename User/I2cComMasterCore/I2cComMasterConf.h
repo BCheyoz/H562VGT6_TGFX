@@ -20,15 +20,16 @@
 //#define I2CCM_USE_I2C_CUSTOM_DRIVER 		// Pour utiliser le Driver custom ALDES "I2cSoftComPort" à la place des HAL
 
 // Capteurs de Pression supportés :
-#define I2CCM_NB_MAX_DEV_PRESS_HSC  	0	// Aucun Capteur de Pression HSC à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_PRESS_HSC  	1	// Aucun Capteur de Pression HSC à gérer simultanément sur l'ensemble des I2C
 #define I2CCM_NB_MAX_DEV_PRESS_SDP6 	0	// Aucun Capteur de Pression SDP6 à gérer simultanément sur l'ensemble des I2C
-#define I2CCM_NB_MAX_DEV_PRESS_SDP8 	0	// Aucun Capteur de Pression SDP8 à gérer simultanément sur l'ensemble des I2C
-#define I2CCM_NB_MAX_DEV_PRESS_LMI  	0	// Aucun Capteur de Pression LMI à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_PRESS_SDP8 	1	// Aucun Capteur de Pression SDP8 à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_PRESS_LMI  	1	// Aucun Capteur de Pression LMI à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_PRESS_ABP2  	1	// Aucun Capteur de Pression ABP2 à gérer simultanément sur l'ensemble des I2C
 
 // Capteurs de Co2 supportés :
 #define I2CCM_NB_MAX_DEV_CO2_EE894  	0	// Aucun Capteur de Co2 EE894 à gérer simultanément sur l'ensemble des I2C
-#define I2CCM_NB_MAX_DEV_CO2_EE895  	1	// 1 seul Capteur de Co2 EE895 à gérer simultanément sur l'ensemble des I2C
-#define I2CCM_NB_MAX_DEV_CO2_SCD3x  	1	// 1 seul Capteur de Co2 SCD3x à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_CO2_EE895  	0	// 1 seul Capteur de Co2 EE895 à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_CO2_SCD3x  	0	// 1 seul Capteur de Co2 SCD3x à gérer simultanément sur l'ensemble des I2C
 #define I2CCM_NB_MAX_DEV_CO2_SCD4x  	0	// Aucun Capteur de Co2 SCD4x à gérer simultanément sur l'ensemble des I2C
 
 // Capteurs de COV supportés :
@@ -42,7 +43,7 @@
 #define I2CCM_NB_MAX_DEV_HR_HTU31		0	// Aucun Capteur de T° & HR HTU31D à gérer simultanément sur l'ensemble des I2C
 
 // Périphériques RTC supportés :
-#define I2CCM_NB_MAX_DEV_RTC_RV3028 	1	// 1 seul Périphérique RTC "RV3028" à gérer simultanément sur l'ensemble des I2C
+#define I2CCM_NB_MAX_DEV_RTC_RV3028 	0	// 1 seul Périphérique RTC "RV3028" à gérer simultanément sur l'ensemble des I2C
 
 //#define I2CCM_ENABLE_I2C_DEBUG				// Pour activer la mise à disposition générale d'Infos I2c Interne
 //#define I2CCM_ENABLE_I2C_IBUS_DEBUG		// Pour activer la capture d'Infos I2c Interne vers l'iBus

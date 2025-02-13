@@ -28,6 +28,10 @@
 	#include "I2cSoftComPort.h" 	// Pour accès aux Fonctions bas-niveau du Driver custom ALDES "I2cSoftComPort" à la place des HAL_I2C
 #endif // I2CCM_USE_I2C_CUSTOM_DRIVER
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /******************************************************************************/
 // Définitions, Paramètres & Structures pour la Configuration de la Table d'Init :
 
@@ -362,5 +366,9 @@ void I2CCM_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
 #define I2C_Delay(millisec) HAL_Delay(millisec)
 
 /******************************************************************************/
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* USER_I2CCOMMASTER_I2CCOMMASTERUTILS_H_ */

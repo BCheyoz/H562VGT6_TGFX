@@ -39,6 +39,7 @@
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
+#include "I2cComMasterSystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -130,6 +131,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
+  I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   /* USER CODE END 2 */
 
@@ -139,6 +141,7 @@ int main(void)
   {
 	  GestionBaseDeTemps();
 	  ComputeMyInfos();
+	  GestionI2cSystem();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
