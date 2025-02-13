@@ -25,8 +25,8 @@
 	#define FLASH_BASE_ADR		FLASH_BASE		// 0x08000000UL = FLASH base address
 	#ifdef FLASH_BANK1_END
 		#define FLASH_MAX_SIZE	(FLASH_BANK1_END +1 - FLASH_BASE_ADR) // Calcul automatique si possible
-	#elif defined(FLASH_BANK_SIZE)	// define pour les model STM32H562
-		#define FLASH_MAX_SIZE FLASH_BANK_SIZE
+	#elif defined(FLASH_SIZE_DEFAULT)	// define pour les model STM32H562 taille max de la série et non du µ selectionner
+		#define FLASH_MAX_SIZE FLASH_SIZE_DEFAULT
 	#else // !FLASH_BANK1_END
 	#endif // FLASH_BANK1_END
 #endif // FLASHAXI_BASE
@@ -44,7 +44,7 @@
 	#define FLASH_DEVICE_SIZE	(1024 *1024UL)	/* Flash = 1024K sur STM32F7xxxG (STM32F745xx, STM32F746xx, STM32F765xx, STM32F767xx, STM32F768Ax, STM32F769xx)
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 STM32H5xxxG (STM32H562xx)*/
 //	#define FLASH_DEVICE_SIZE	(2048 *1024UL)	// Flash = 2048K sur STM32F7xxxI (STM32F765xx, STM32F767xx, STM32F768Ax, STM32F769xx)
-#endif // FLASH_MAX_SIZE
+#endif // FLASH_DEVICE_SIZE
 
 #ifndef FLASH_MAX_SIZE
 	#warning "FLASH_MAX_SIZE could not be detected !"
