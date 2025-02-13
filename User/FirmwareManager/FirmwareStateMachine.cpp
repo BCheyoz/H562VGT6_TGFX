@@ -80,8 +80,7 @@ FwMng::FwMng()
 	regReset = TRUE;
 
 #ifdef USE_ALIVE_LED
-	//TODO get GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES newBlinkMode = E_LED_OFF
-	//ledAlive = LedBlinker(GPIOx, Pin, E_LED_SLOW_BLINK);
+	ledAlive = new LedBlinker(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin, E_LED_SLOW_BLINK);
 #endif
 
 }

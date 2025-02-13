@@ -258,6 +258,12 @@
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/CRC"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>

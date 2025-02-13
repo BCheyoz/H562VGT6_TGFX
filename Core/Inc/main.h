@@ -61,6 +61,8 @@ void Error_Handler(void);
 #define AFF_D_C_GPIO_Port GPIOE
 #define AFF_RESET_Pin GPIO_PIN_4
 #define AFF_RESET_GPIO_Port GPIOC
+#define LED_ALIVE_Pin GPIO_PIN_15
+#define LED_ALIVE_GPIO_Port GPIOE
 #define BLE_IRQ_Pin GPIO_PIN_10
 #define BLE_IRQ_GPIO_Port GPIOD
 
