@@ -41,7 +41,6 @@
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
@@ -94,7 +93,6 @@
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
@@ -140,7 +138,6 @@
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
@@ -240,7 +237,6 @@
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
@@ -292,7 +288,6 @@
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
@@ -338,7 +333,6 @@
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/I2cComCore_cpp"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
