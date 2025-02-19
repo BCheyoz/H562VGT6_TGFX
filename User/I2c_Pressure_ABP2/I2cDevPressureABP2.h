@@ -4,6 +4,8 @@
  *  Created on: 13 Fev. 2025
  *  Original Author: b.chhay
  *
+ *  Ref sensor X116221ABP2
+ *
  *  Version 1.0
  *
  */
@@ -18,20 +20,34 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
-#ifdef TODO
+
 /******************************************************************************/
 
 #define ABP2_UNKNOWN_PRESSURE_PA 		0.0f	// Par défaut, la Pression est initialisée à 0Pa
 #define ABP2_UNKNOWN_TEMPERATURE_DEG_C	-999.0f	// Par défaut, la Température est initialisée à -999°c (= physiquement impossible)
 #define ABP2_PRESS_MAX_ALLOWED_ERRORS	5
 
-// Valeurs RAW & Intermédiaires :
-#define ABP2_GET_BRIDGE_BRUT
-#define ABP2_GET_BRIDGE_MOY
-#define ABP2_GET_PRESS_BRUT
-#define ABP2_GET_TEMP_BRUT
+#define ABP2_MOY_PRES 	10	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de pression
+#define ABP2_MOY_TEMP 	10	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de température
+
+// Sensor Options :
+#define ABP2_READ_TEMPERATURE		// Demander à récupérer la Température du Capteur
 
 /******************************************************************************/
+
+typedef union {
+	struct {
+		unsigned mathSat: 1;	// 1 = internal math saturation has occurred
+		unsigned b1: 1;			// always 0
+		unsigned memError: 1;	// 0 = passed; 1 = failed. Indicates whether the checksum-based integrity check passed or failed; the memory error status bit is calculated only during the power-up sequence.
+		unsigned b3: 1;			// always 0
+		unsigned b4: 1;			// always 0
+		unsigned isBusy: 1;     // 1 = device is busy. Indicates that the data for the last command is not yet available. No new commands are processed if the device is busy.
+		unsigned power: 1;		// 1 = device is powered; 0 = device is not powered
+		unsigned b7: 1;			// always 0
+	};
+	uint8_t raw;
+}ABP2_StatusFlags;
 
 typedef struct _I2CCM_Pres_ABP2_ExtData
 {
@@ -41,67 +57,20 @@ typedef struct _I2CCM_Pres_ABP2_ExtData
 // Variables en Sortie Publique :
 	float	Pressure;
 	float	Temperature;
-	uint16_t BridgeOffset;
-	uint16_t BrdgOfstOpId;
+	ABP2_StatusFlags status;
 	uint16_t newFlags;
 
-//****************************
-// Derniers échantillons RAW :
-
-	// Valeurs Brutes :
-#ifdef ABP2_GET_BRIDGE_BRUT
-	int16_t  WheatstoneBridgeBrut;	// Valeur brute "pont de Wheatstone" retournée par le capteur lui-même.
-#endif // ABP2_GET_BRIDGE_BRUT
-#ifdef ABP2_GET_TEMP_BRUT
-	uint16_t TemperatureBrut;
-#endif // ABP2_GET_TEMP_BRUT
-
-//********************************************
-// Conversion de la Moyenne des échantillons :
-
-	// Valeurs Intermédiaires :
-#ifdef ABP2_GET_BRIDGE_MOY
-	float	BridgeMoy;
-#endif // ABP2_GET_BRIDGE_MOY
-#ifdef ABP2_GET_PRESS_BRUT
-	float	PresBrut;
-#endif // ABP2_GET_PRESS_BRUT
-
 } I2CCM_Pres_ABP2_ExtData;	// External ABP2 Datas Struct
+/******************************************************************************/
 
 typedef enum
 {
 	I2cCmPressureAbp2NoNewFlags	= 0,
-	I2cCmPressureAbp2NewPressure	= (1 <<0),
-	I2cCmPressureAbp2NewOffset	= (1 <<1),
+	I2cCmPressureAbp2NewValue	= (1 <<0),
+	I2cCmPressureAbp2NewStatus	= (1 <<1),
 } I2CCM_Pressure_ABP2_NewFlags;
 
-/******************************************************************************/
-
-typedef enum _I2CCM_Pressure_ABP2_AZ_OP_ID
-{
-	I2cCmPressureAbp2AutoZeroReady	= 0,
-	I2cCmPressureAbp2AutoZeroActive	= (1 <<0), // Flag 0x01xx
-	I2cCmPressureAbp2AutoZeroDoSave	= (1 <<1), // Flag 0x02xx
-} I2CCM_Pressure_ABP2_AZ_OP_ID; // Auto Zero Operation ID
-
-typedef enum _I2CCM_Pressure_ABP2_AZ_Status
-{
-	I2cCmPressureAbp2AutoZeroIdle	= 0,
-	I2cCmPressureAbp2AutoZeroEnded	= (1 <<0),
-	I2cCmPressureAbp2AutoZeroSaved	= (1 <<1),
-} I2CCM_Pressure_ABP2_AZ_Status; // Auto Zéro Staus
-
-#define I2CCM_AUTOZERO_GET_ACTION_ID(a)		I2CCM_GET_8LH(a) // Byte 1
-#define I2CCM_AUTOZERO_GET_STEP_ID(a)		I2CCM_GET_8LL(a) // Byte 0
-#define I2CCM_AUTOZERO_MAKE_ACTION_ID(a)	(((a) & 0xFF) << 8)
-#define I2CCM_AUTOZERO_MSK_STEP_ID			0xFF // StepId sur Byte0 uniquement
-
-/******************************************************************************/
-
 int16_t i2cCM_PressureABP2_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams);
-uint16_t i2cCM_ReframeOffsetInAllowedRange(uint16_t newOffset);
-#endif // todo
 
 #ifdef __cplusplus
 }

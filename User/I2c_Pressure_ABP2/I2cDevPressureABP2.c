@@ -14,10 +14,11 @@
 #include "I2cComMasterConf.h"	// Pour accès à la Configuration User souhaitée
 #include "I2cComMasterUtils.h"	// Pour accès aux Outils de support I2cComMaster
 
+#include "utils.h"				// Pour joindre les octets en un entier
+
 #ifdef __cplusplus
  extern "C" {
 #endif
-#ifdef TODO
 
 /******************************************************************************/
 
@@ -26,120 +27,101 @@ typedef enum
 	I2cDevPresType_ABP2_Unknown = 0,	// Unknown ABP2 Type
 	I2cDevPresType_ABP2_28,			// Linked to CPT_HONEYWELL_1
 	I2cDevPresType_ABP2_38,			// Linked to CPT_HONEYWELL_2
+	I2cDevPresType_ABP2_48,			// Linked to CPT_HONEYWELL_3
 	// Insérer ici tout nouveau type supporté par ce module de Pression ABP2
 	I2cDevPresType_ABP2_OutOfRange,	// OutOfRange = nbEléments +1
 } I2cDevPressureTypeABP2;
 
 /******************************************************************************/
+// Moyennage :
+#define ABP2_AVERAGE_ARRAY_MAX_SIZE	255    // valeur limite a 0xFF -1 car l'index est en uint8
 
-#define ABP2_MOY_P_FROM_ECH_BRUT 	30	// Pour activer un Moyennage sur les échantillons bruts issus du Capteur
-#define ABP2_MOY_P_FROM_P_CALC		10	// Pour activer un Moyennage des valeurs déjà converties en Pression
-#define ABP2_NB_MOY_PRESSURE_AUTOZ	10	// Nb d'échantillons à prendre pour Déterminer le nouvel Offset
+#if ABP2_MOY_PRES > ABP2_AVERAGE_ARRAY_MAX_SIZE
+#define ABP2_AVG_PRES_ARRAY_MAX_SIZE 	ABP2_AVERAGE_ARRAY_MAX_SIZE
+#else
+#define ABP2_AVG_PRES_ARRAY_MAX_SIZE 	ABP2_MOY_PRES
+#endif
+
+#if ABP2_MOY_TEMP > ABP2_AVERAGE_ARRAY_MAX_SIZE
+#define ABP2_AVG_TEMP_ARRAY_MAX_SIZE 	ABP2_AVERAGE_ARRAY_MAX_SIZE
+#else
+#define ABP2_AVG_TEMP_ARRAY_MAX_SIZE 	ABP2_MOY_TEMP
+#endif
 
 // Temporisations :
 #define ABP2_TEMPO_BEFORE_FIRST_ACTION	100		// 100ms avant 1° Lecture
-#define ABP2_TEMPO_REPLY_TIMEOUT			100		// 100ms d'attente max pour répondre
+#define ABP2_TEMPO_REPLY_TIMEOUT		100		// 100ms d'attente max pour répondre
 #define ABP2_TEMPO_RETRY_ACTION			1000	// 1s avant Retry
 #define ABP2_TEMPO_BEFORE_NEXT_ACTION	1 *1000	// 1s avant de redemander une nouvelle Lecture
 
-/******************************************************************************/
+// Capteur de Pression HoneyWell AdrI2c $28 [0; 300Pa [ :
+#define ADR_SENSOR_ABP2_28		0x28	// Adresse I2C = $28 sur 7bits
+#define ADR_SENSOR_ABP2_38		0x38	// Adresse I2C = $38 sur 7bits
+#define ADR_SENSOR_ABP2_48		0x48	// Adresse I2C = $48 sur 7bits
+#define ABP2_MAX_TX_SIZE		3		// Envoi de 3 Bytes max
+#define ABP2_MAX_RX_SIZE		7		// Réception de 7 Bytes max
 
-// Capteur de Pression HoneyWell AdrI2c $28 [0; -300Pa [ :
-#define ADR_CPT_HONEYWELL_28	0x28	// Adresse I2C = $28 sur 7bits
-#define MAX_TX_SIZE_CPT_28		0		// Envoi de 0 Bytes max
-#define MAX_RX_SIZE_CPT_28		4		// Réception de 4 Bytes max
-#define NEW_RX_SIZE_CPT_28		4		// NewValue = 4 Bytes à lire
-#define OUTPUT_MAX_CPT_28		14745.0f
-#define OUTPUT_MIN_CPT_28		1638.0f
-#define PRESSURE_MAX_CPT_28		0.0f
-#define PRESSURE_MIN_CPT_28		-3000.0f // <=> -300 Pa *10
+#define ABP2_READ_CMD		0xAA		// commande de lecture 0xAA suive par 2 Octets à 0x0
 
-/******************************************************************************/
+#ifdef ABP2_READ_TEMPERATURE
+#define ABP2_NEW_RX_SIZE		7		// NewValue = 7 Bytes à lire => status(1 Octet) + pression (3 Octets) + Température (3 Octets)
+#else
+#define ABP2_NEW_RX_SIZE		4		// NewValue = 4 Bytes à lire => status(1 Octet) + pression (3 Octets)
+#endif
 
-// Capteur de Pression HoneyWell AdrI2c $38 [0; -1000Pa[ :
-#define ADR_CPT_HONEYWELL_38	0x38 // Adresse I2C = $38 sur 7bits
-#define MAX_TX_SIZE_CPT_38		0    // Envoi de 0 Bytes max
-#define MAX_RX_SIZE_CPT_38		4    // Réception de 4 Bytes max
-#define I2C_ABP2_38_READ_PRESSURE_TX_SIZE	0	// QueryNewValue = 0 Bytes à envoyer
-#define I2C_ABP2_38_READ_PRESSURE_RX_SIZE	4	// NewValue = 4 Bytes à lire
-#define OUTPUT_MIN_CPT_38		1638.0f
-#define OUTPUT_MAX_CPT_38		14745.0f
-#define PRESSURE_MIN_CPT_38		0.0f
-#define PRESSURE_MAX_CPT_38		10000.0f // <=> 1000Pa *10
+#define ABP2_INHO2_2_PA				   249.089f // 1 pouce d'eau = 249.089 Pa
+#define ABP2_OUTPUT_MAX				15099494.0f
+#define ABP2_OUTPUT_MIN				 1677722.0f
+#define ABP2_PRESSURE_MAX	1 * ABP2_INHO2_2_PA // plage de mesure de la Doc -1 à +1 inHo2
+#define ABP2_PRESSURE_MIN  -1 * ABP2_INHO2_2_PA
+#define ABP2_PRES_COEF  	(ABP2_PRESSURE_MAX - ABP2_PRESSURE_MIN) / (ABP2_OUTPUT_MAX - ABP2_OUTPUT_MIN)
 
-#define DEF_OFFSET_HONEYWELL_38	1638
-#define MIN_OFFSET_HONEYWELL_38 1441	// = DEF_OFFSET_HONEYWELL_38 -15Pa
-#define MAX_OFFSET_HONEYWELL_38 1834	// = DEF_OFFSET_HONEYWELL_38 +15Pa
-
-/******************************************************************************/
-
-// From "I2C Communications with Honeywell Digital Output Pressure Sensors.pdf" :
-#define I2CCM_ABP2_PRESSURE_FROM_OUTPUT_VALUE(a,b)	(((((a) - I2CCM_MAKE_NAME(OUTPUT_MIN_CPT_,b)) * (I2CCM_MAKE_NAME(PRESSURE_MAX_CPT_,b) - I2CCM_MAKE_NAME(PRESSURE_MIN_CPT_,b)))/(I2CCM_MAKE_NAME(OUTPUT_MAX_CPT_,b) - I2CCM_MAKE_NAME(OUTPUT_MIN_CPT_,b))) + I2CCM_MAKE_NAME(PRESSURE_MIN_CPT_,b) ) /10.0
-#define I2CCM_ABP2_PRESSURE_FROM_OUTPUT_DELTA(a,b)	((((a) * (I2CCM_MAKE_NAME(PRESSURE_MAX_CPT_,b) - I2CCM_MAKE_NAME(PRESSURE_MIN_CPT_,b)))/(I2CCM_MAKE_NAME(OUTPUT_MAX_CPT_,b) - I2CCM_MAKE_NAME(OUTPUT_MIN_CPT_,b))) + I2CCM_MAKE_NAME(PRESSURE_MIN_CPT_,b) ) /10.0
-#define I2CCM_ABP2_TEMPERATURE_FROM_OUTPUT_VALUE(a)	((((a) * 200.0f)/(2047.0f)) - 50.0f)
+#define ABP2_TEMP_MAX  110.f // 110°C
+#define ABP2_TEMP_MIN  -40.f // -40°C
+#define ABP2_TEMP_COEF (ABP2_TEMP_MAX - ABP2_TEMP_MIN) / 16777215 // 16777215 = (2 puissance 24) - 1
 
 /******************************************************************************/
 
 typedef struct _I2CCM_Pres_ABP2_IntData
 {
 	I2CCM_InternalBaseData base;	// Base requise pour I2C_ComMaster
-	uint16_t BridgeBrut;
-	uint16_t TemperatureBrut;
+	uint32_t PreRaw;
+	uint32_t TempRaw;
 	uint16_t ErrorsCt;
-	uint16_t BridgeOffset;  // = Shared_Pressure_Offset (utilisé par DEVICE_TYPE_38)
-	uint16_t BrdgOfstOpId;	// = Shared_PresOfst_Action (utilisé par DEVICE_TYPE_38)
+
+	//****************************
+	// Derniers échantillons converti sans moyennage pour du débug : (acces via stmMonitor)
+	float PreConverted;
+	float TempConverted;
 
 	// Variables pour la Moyenne Glissante rapide :
-#ifdef ABP2_MOY_P_FROM_ECH_BRUT
-	uint16_t TabMoyCurIdxE;
-	uint16_t maxEchBrut4Pmoy;		// Pour limiter à N échantillons bruts parmi ABP2_MOY_P_FROM_ECH_BRUT
-	uint16_t TabMoyEch[ABP2_MOY_P_FROM_ECH_BRUT];
-	uint32_t TabMoyCumul;
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-#ifdef ABP2_MOY_P_FROM_P_CALC
-	uint16_t TabMoyCurIdxP;
-	uint16_t maxPresBrut4Moy;		// Pour limiter à N valeurs brutes de Pressions parmi ABP2_MOY_P_FROM_ECH_BRUT
-	float	 Tab_Moy_P[ABP2_MOY_P_FROM_P_CALC];
-	float	 CumulPressure;
-#endif // ABP2_MOY_P_FROM_P_CALC
+	uint8_t AvgTabPresCurIdx;
+	uint8_t MaxPresSample;
+	float AvgTabPresEch[ABP2_AVG_PRES_ARRAY_MAX_SIZE];
+	float AvgTabCumulPress;
+
+	uint8_t AvgTabTempCurIdx;
+	uint8_t MaxTempSample;
+	float AvgTabTempEch[ABP2_AVG_TEMP_ARRAY_MAX_SIZE];
+	float AvgTabCumulTemp;
 
 } I2CCM_Pres_ABP2_IntData;	// Internal ABP2 Datas Struct
 
 /******************************************************************************/
 // Prototypes locaux :
 
-static int16_t i2cCM_PressureABP2_Init_28(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams);
-static uint16_t getI2cCM_PressureABP2_NextActionFrame_28(I2CCM_Device *pDevice);
-
-static int16_t i2cCM_PressureABP2_Init_38(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams);
-static uint16_t getI2cCM_PressureABP2_NextActionFrame_38(I2CCM_Device *pDevice);
-
-static uint16_t handleI2cCM_PressureABP2_ActionComplete(I2CCM_Device *pDevice);
-//int getI2C_PressureABP2_RW_VarPtrSize(int varId, int varContext, void *pDevice, void* *pPtr, int *pSize);
-
-// Pour version avec "Contrôle de l'Offset" déporté dans une fonction complémentaire :
-//int handleI2C_PressureABP2_PostWriteOffset(int varId, int varContext, void *pDevice, void* *pPtr, int *pSize);
-
-uint16_t getI2C_ABP2_Pressure_UserOffset(I2CCM_DevInitParams* pInitParams);
-
-#ifdef ABP2_MOY_P_FROM_ECH_BRUT
-	uint16_t i2cCM_ReframeABP2_MaxEchBrut4Pmoy(uint16_t newValue);
-	uint16_t getI2CCM_ABP2_MaxPresBrut4Moy(I2CCM_DevInitParams* pInitParams);
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-
-#ifdef ABP2_MOY_P_FROM_P_CALC
-	uint16_t i2cCM_ReframeABP2_MaxPresBrut4Moy(uint16_t newValue);
-	uint16_t getI2CCM_ABP2_MaxEchBrut4Pmoy(I2CCM_DevInitParams* pInitParams);
-#endif // ABP2_MOY_P_FROM_P_CALC
+static int16_t i2cSensorABP2_Init(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams, uint8_t adr);
+static uint16_t i2cSensorABP2_NextActionFrame(I2CCM_Device *pDevice);
+static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice);
 
 /******************************************************************************/
 // Variables Internes :
 
-I2CCM_Pres_ABP2_IntData mI2CCM_Pres_ABP2_IntData[I2CCM_NB_MAX_DEV_PRESS_ABP2];	// MAX_NB_I2C_DEV_PRESS_ABP2 est configuré dans "I2cComMasterConf.h"
-#if defined(MAX_TX_SIZE_CPT_38) && (MAX_TX_SIZE_CPT_38 > 0)
-	uint8_t mI2CCM_Pressure_ABP2_TxBuf[MAX_TX_SIZE_CPT_38];
+I2CCM_Pres_ABP2_IntData mI2CCM_Pres_ABP2_IntData[I2CCM_NB_MAX_DEV_PRESS_ABP2];	// I2CCM_NB_MAX_DEV_PRESS_ABP2 est configuré dans "I2cComMasterConf.h"
+#if defined(ABP2_MAX_TX_SIZE) && (ABP2_MAX_TX_SIZE > 0)
+	uint8_t mI2CCM_Pressure_ABP2_TxBuf[ABP2_MAX_TX_SIZE];
 #endif // MAX_TX_SIZE_CPT_38
-uint8_t mI2CCM_Pressure_ABP2_RxBuf[MAX_RX_SIZE_CPT_38];
+uint8_t mI2CCM_Pressure_ABP2_RxBuf[ABP2_MAX_RX_SIZE];
 
 /******************************************************************************/
 // Point d'entrée Public pour l'Initialisation de tous les Capteurs de Pression ABP2 :
@@ -161,7 +143,10 @@ int16_t i2cCM_PressureABP2_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pIni
 		case I2CCM_LOAD_DEFAULT_DEVICE2:	// Seconde Recommandation par défaut :
 			DeviceType = I2cDevPresType_ABP2_28; // ABP2 Type 28
 			break;
-		// Insérer ici pour ajouter une recommandation d'ordre 3 ou 4 ...
+		case I2CCM_LOAD_DEFAULT_DEVICE3:	// Seconde Recommandation par défaut :
+			DeviceType = I2cDevPresType_ABP2_48; // ABP2 Type 48
+			break;
+		// Insérer ici pour ajouter une recommandation d'ordre 4 ...
 		default: // Recommandation non gérée :
 			return 0;	// DeviceType not implemented !
 			break;
@@ -175,10 +160,13 @@ int16_t i2cCM_PressureABP2_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pIni
 		return I2cDevPresType_ABP2_OutOfRange -1; // = Last -1
 		break;
 	case I2cDevPresType_ABP2_28:
-		return i2cCM_PressureABP2_Init_28(DeviceType, pDevice, pInitParams);
+		return i2cSensorABP2_Init(DeviceType, pDevice, pInitParams, ADR_SENSOR_ABP2_28);
 		break;
 	case I2cDevPresType_ABP2_38:
-		return i2cCM_PressureABP2_Init_38(DeviceType, pDevice, pInitParams);
+		return i2cSensorABP2_Init(DeviceType, pDevice, pInitParams, ADR_SENSOR_ABP2_38);
+		break;
+	case I2cDevPresType_ABP2_48:
+		return i2cSensorABP2_Init(DeviceType, pDevice, pInitParams, ADR_SENSOR_ABP2_48);
 		break;
 	default:
 		break;
@@ -188,26 +176,26 @@ int16_t i2cCM_PressureABP2_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pIni
 
 /******************************************************************************/
 
-static int16_t i2cCM_PressureABP2_Init_28(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams)
+static int16_t i2cSensorABP2_Init(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams, uint8_t adr)
 {
 	if(0 == pDevice) return 0;		// Can't load Device !
 	if(0 == pInitParams) return 0;	// Can't check Params !
 	if(I2cDevPresType_ABP2_28 == DeviceType) // Type n°1 :
 	{
 		// Renseigne les Références :
-		pDevice->DevAddr8		= I2CCM_MAKE_ADR8_WITH_RW_MASK(ADR_CPT_HONEYWELL_28);
+		pDevice->DevAddr8		= I2CCM_MAKE_ADR8_WITH_RW_MASK(adr);
 		pDevice->ActionId		= I2CCM_ACTION_INIT;
 		pDevice->FrameId		= 0;   // Only 1 Frame => not used !
 
 		// Renseigne les Fonctions de CallBack :
-		pDevice->getNextActionFrame		= getI2cCM_PressureABP2_NextActionFrame_28;
-		pDevice->handleActionComplete	= handleI2cCM_PressureABP2_ActionComplete;
+		pDevice->getNextActionFrame		= i2cSensorABP2_NextActionFrame;
+		pDevice->handleActionComplete	= i2cSensorABP2_ActionComplete;
 
 		// Initialise les Pointeurs :
 		pDevice->pIntData = &mI2CCM_Pres_ABP2_IntData[pInitParams->intVarId]; // Internal Data Struct
 		pDevice->pExtData = pInitParams->pExtStruct; // External Data Struct
 		pDevice->pTxBuf =
-#if defined(MAX_TX_SIZE_CPT_28) && (MAX_TX_SIZE_CPT_28 > 0)
+#if defined(ABP2_MAX_TX_SIZE) && (ABP2_MAX_TX_SIZE > 0)
 							mI2CCM_Pressure_ABP2_TxBuf;	// notre Buffer d'Envoi
 #else // ! MAX_TX_SIZE_CPT_38
 							0; // No Transmit
@@ -217,15 +205,18 @@ static int16_t i2cCM_PressureABP2_Init_28(int16_t DeviceType, I2CCM_Device* pDev
 		// Initialise les Structures & Buffers :
 		I2CCM_FillMemory(pDevice->pIntData, 0, sizeof(I2CCM_Pres_ABP2_IntData));
 		I2CCM_FillMemory(pDevice->pExtData, 0, sizeof(I2CCM_Pres_ABP2_ExtData));
-#if defined(MAX_TX_SIZE_CPT_28) && (MAX_TX_SIZE_CPT_28 > 0)
-		I2CCM_FillMemory(pDevice->pTxBuf, 0, MAX_TX_SIZE_CPT_28);
+#if defined(ABP2_MAX_TX_SIZE) && (ABP2_MAX_TX_SIZE > 0)
+		I2CCM_FillMemory(pDevice->pTxBuf, 0, ABP2_MAX_TX_SIZE);
 #endif // MAX_TX_SIZE_CPT_38
-		I2CCM_FillMemory(pDevice->pRxBuf, 0, MAX_RX_SIZE_CPT_28);
+		I2CCM_FillMemory(pDevice->pRxBuf, 0, ABP2_MAX_RX_SIZE);
 
 		// Initialise les Internal Valeurs Spécifiques :
 		I2CCM_Pres_ABP2_IntData* pIntData = (I2CCM_Pres_ABP2_IntData*)pDevice->pIntData;
 		pIntData->base.fullStructSize = sizeof(I2CCM_Pres_ABP2_IntData);
 		pIntData->base.idOfDevice = DeviceType;	// For internal purpose only
+
+		pIntData->MaxPresSample = 1;
+		pIntData->MaxTempSample = 1;
 
 		// Initialise les External Valeurs Spécifiques :
 		I2CCM_Pres_ABP2_ExtData* pExtData = (I2CCM_Pres_ABP2_ExtData*)pDevice->pExtData;
@@ -233,6 +224,9 @@ static int16_t i2cCM_PressureABP2_Init_28(int16_t DeviceType, I2CCM_Device* pDev
 		pExtData->base.idOfDevice = DeviceType | pInitParams->devHandler | I2CCM_DEVICE_RECENTLY_LOADED_MSK;
 		pExtData->Pressure		= ABP2_UNKNOWN_PRESSURE_PA;
 		pExtData->Temperature	= ABP2_UNKNOWN_TEMPERATURE_DEG_C;
+
+		// initialise la commande par defaut de lecture
+		mI2CCM_Pressure_ABP2_TxBuf[0] = ABP2_READ_CMD;
 	}
 	//---------------------------------------------------
 	else DeviceType = 0;	// DeviceType not implemented !
@@ -241,7 +235,7 @@ static int16_t i2cCM_PressureABP2_Init_28(int16_t DeviceType, I2CCM_Device* pDev
 
 /******************************************************************************/
 
-static uint16_t getI2cCM_PressureABP2_NextActionFrame_28(I2CCM_Device *pDevice)
+static uint16_t i2cSensorABP2_NextActionFrame(I2CCM_Device *pDevice)
 {
 	if(0 == pDevice)	return I2C_ABORT_DEV;	// Impossible de continuer sur ce Device !
 	switch(pDevice->ActionId)
@@ -254,10 +248,10 @@ static uint16_t getI2cCM_PressureABP2_NextActionFrame_28(I2CCM_Device *pDevice)
 		break;
 	//---------------------
 	case I2CCM_QUERY_VALUES:  // Comment Récupérer les Valeurs ?
-		pDevice->nbBytes2Send = 0; // No Data to Transmit
-		pDevice->nbBytes2Read = NEW_RX_SIZE_CPT_28; // 4 Bytes to Receive
+		pDevice->nbBytes2Send = ABP2_MAX_TX_SIZE;
+		pDevice->nbBytes2Read = ABP2_NEW_RX_SIZE;
 		pDevice->DelayInMs   = ABP2_TEMPO_REPLY_TIMEOUT; // 100ms de TimeOut pour répondre
-		return I2C_RECEIVE | I2C_HANDLE_RX; // Demande Lecture + CallBack de Réception
+		return I2C_TRANSMIT | I2C_RECEIVE | I2C_HANDLE_RX; // Demande Envoi + Lecture + CallBack de Réception
 		break;
 	//---------------------
 	default:    // Not Handled correctly :
@@ -269,145 +263,8 @@ static uint16_t getI2cCM_PressureABP2_NextActionFrame_28(I2CCM_Device *pDevice)
 
 /******************************************************************************/
 
-static int16_t i2cCM_PressureABP2_Init_38(int16_t DeviceType, I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams)
-{
-	if(0 == pDevice) return 0;		// Can't load Device !
-	if(0 == pInitParams) return 0;	// Can't check Params !
-	if(I2cDevPresType_ABP2_38 == DeviceType) // Type n°2 :
-	{
-		// Renseigne les Références :
-		pDevice->DevAddr8		= I2CCM_MAKE_ADR8_WITH_RW_MASK(ADR_CPT_HONEYWELL_38);
-		pDevice->ActionId		= I2CCM_ACTION_INIT;
-		pDevice->FrameId		= 0;   // Only 1 Frame => not used !
-
-		// Renseigne les Fonctions de CallBack :
-		pDevice->getNextActionFrame		= getI2cCM_PressureABP2_NextActionFrame_38;
-		pDevice->handleActionComplete	= handleI2cCM_PressureABP2_ActionComplete;
-
-		// Initialise les Pointeurs :
-		pDevice->pIntData = &mI2CCM_Pres_ABP2_IntData[pInitParams->intVarId]; // Internal Data Struct
-		pDevice->pExtData = pInitParams->pExtStruct; // External Data Struct
-		pDevice->pTxBuf =
-#if defined(MAX_TX_SIZE_CPT_38) && (MAX_TX_SIZE_CPT_38 > 0)
-							mI2CCM_Pressure_ABP2_TxBuf;	// notre Buffer d'Envoi
-#else // ! MAX_TX_SIZE_CPT_38
-							0; // No Transmit
-#endif // MAX_TX_SIZE_CPT_38
-		pDevice->pRxBuf = mI2CCM_Pressure_ABP2_RxBuf;	// notre Buffer de Réception
-
-		// Initialise les Structures & Buffers :
-		I2CCM_FillMemory(pDevice->pIntData, 0, sizeof(I2CCM_Pres_ABP2_IntData));
-		I2CCM_FillMemory(pDevice->pExtData, 0, sizeof(I2CCM_Pres_ABP2_ExtData));
-#if defined(MAX_TX_SIZE_CPT_38) && (MAX_TX_SIZE_CPT_38 > 0)
-		I2CCM_FillMemory(pDevice->pTxBuf, 0, MAX_TX_SIZE_CPT_38);
-#endif // MAX_TX_SIZE_CPT_38
-		I2CCM_FillMemory(pDevice->pRxBuf, 0, MAX_RX_SIZE_CPT_38);
-
-		// Initialise les Internal Valeurs Spécifiques :
-		I2CCM_Pres_ABP2_IntData* pIntData = (I2CCM_Pres_ABP2_IntData*)pDevice->pIntData;
-		pIntData->base.fullStructSize = sizeof(I2CCM_Pres_ABP2_IntData);
-		pIntData->base.idOfDevice = DeviceType;	// For internal purpose only
-		pIntData->BridgeOffset	= i2cCM_ReframeOffsetInAllowedRange(getI2C_ABP2_Pressure_UserOffset(pInitParams)); // uniquement pour DEVICE_TYPE_38
-
-#ifdef ABP2_MOY_P_FROM_ECH_BRUT
-		uint16_t maxEchBrut4Pmoy = getI2CCM_ABP2_MaxEchBrut4Pmoy(pInitParams);
-		pIntData->maxEchBrut4Pmoy = i2cCM_ReframeABP2_MaxEchBrut4Pmoy(maxEchBrut4Pmoy);
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-
-#ifdef ABP2_MOY_P_FROM_P_CALC
-		uint16_t maxPresBrut4Moy = getI2CCM_ABP2_MaxPresBrut4Moy(pInitParams);
-		pIntData->maxPresBrut4Moy = i2cCM_ReframeABP2_MaxPresBrut4Moy(maxPresBrut4Moy);
-#endif // ABP2_MOY_P_FROM_P_CALC
-
-		// Initialise les External Valeurs Spécifiques :
-		I2CCM_Pres_ABP2_ExtData* pExtData = (I2CCM_Pres_ABP2_ExtData*)pDevice->pExtData;
-		pExtData->base.fullStructSize = sizeof(I2CCM_Pres_ABP2_ExtData);
-		pExtData->base.idOfDevice = DeviceType | pInitParams->devHandler | I2CCM_DEVICE_RECENTLY_LOADED_MSK;
-		pExtData->BridgeOffset	= pIntData->BridgeOffset; // uniquement pour DEVICE_TYPE_38
-		pExtData->Pressure		= ABP2_UNKNOWN_PRESSURE_PA;
-		pExtData->Temperature	= ABP2_UNKNOWN_TEMPERATURE_DEG_C;
-	}
-	//---------------------------------------------------
-	else DeviceType = 0;	// DeviceType not implemented !
-	return DeviceType;		// return loaded DeviceType
-}
-
-/******************************************************************************/
-
-uint16_t i2cCM_ReframeOffsetInAllowedRange(uint16_t newOffset)
-{
-	if( (newOffset < MIN_OFFSET_HONEYWELL_38) || (newOffset > MAX_OFFSET_HONEYWELL_38) )
-	{
-		newOffset = DEF_OFFSET_HONEYWELL_38; // Ré-affecte l'Offset par défaut si hors plage autorisée
-	}
-	return newOffset;
-}
-
-/******************************************************************************/
-
-#ifdef ABP2_MOY_P_FROM_ECH_BRUT
-uint16_t i2cCM_ReframeABP2_MaxEchBrut4Pmoy(uint16_t newValue)
-{
-	return ((newValue < 1)||(newValue > ABP2_MOY_P_FROM_ECH_BRUT)) ? ABP2_MOY_P_FROM_ECH_BRUT : newValue;
-}
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-
-/******************************************************************************/
-
-#ifdef ABP2_MOY_P_FROM_P_CALC
-uint16_t i2cCM_ReframeABP2_MaxPresBrut4Moy(uint16_t newValue)
-{
-	return ((newValue < 1)||(newValue > ABP2_MOY_P_FROM_P_CALC)) ? ABP2_MOY_P_FROM_P_CALC : newValue;
-}
-#endif // ABP2_MOY_P_FROM_P_CALC
-
-/******************************************************************************/
-
-static uint16_t getI2cCM_PressureABP2_NextActionFrame_38(I2CCM_Device *pDevice)
-{
-	if(0 == pDevice)	return I2C_ABORT_DEV;	// Impossible de continuer sur ce Device !
-	switch(pDevice->ActionId)
-	{
-	case I2CCM_ACTION_INIT:   // Initialisations à effectuer :
-//		// On a besoin de l'Offset du Capteur de Pression !
-//		pDevice->result = I2cPressureAbp2VarId_BridgeOffset;
-		pDevice->ActionId = I2CCM_QUERY_VALUES; // Prochaine Action = Lire le Capteur
-		pDevice->DelayInMs = ABP2_TEMPO_BEFORE_FIRST_ACTION; // 100ms de Tempo
-		return I2C_END_BLOC; // rendre la main pour la suite ...
-//		return I2C_NEED_PARAM | I2C_END_BLOC;
-		break;
-	//---------------------
-	case I2CCM_QUERY_VALUES:  // Comment Récupérer les Valeurs ?
-		pDevice->nbBytes2Send = 0; // No Data to Transmit
-		pDevice->nbBytes2Read = I2C_ABP2_38_READ_PRESSURE_RX_SIZE; // 4 Bytes to Receive
-		pDevice->DelayInMs   = ABP2_TEMPO_REPLY_TIMEOUT; // 100ms de TimeOut pour répondre
-		return I2C_RECEIVE | I2C_HANDLE_RX; // Demande Lecture + CallBack de Réception
-		break;
-	//---------------------
-	case I2CCM_RETURN_VALUES:
-		pDevice->result = pDevice->FrameId;	// Transfert vers le Code Variable à récupérer
-		pDevice->ActionId = I2CCM_QUERY_VALUES; // Prochaine Action = Lire le Capteur
-		return I2C_NEW_VALUE | I2C_END_BLOC; // Récupérer puis rendre la main;
-		break;
-	//---------------------
-	case I2CCM_REDIRECT_ACTION:
-		pDevice->ActionId = I2CCM_GET_16L(pDevice->result); // Nouveau CodeAction
-		uint16_t ret      = I2CCM_GET_16H(pDevice->result); // Valeur à retourner
-		pDevice->result   = pDevice->FrameId;
-		return ret;
-		break;
-	//---------------------
-	default:    // Not Handled correctly :
-		break;
-	}
-	pDevice->ActionId = I2CCM_ACTION_INIT;
-	return I2C_END_BLOC;
-}
-
-/******************************************************************************/
-
-// Handler "ActionComplete" partagé ABP2_28 & ABP2_38 :
-static uint16_t handleI2cCM_PressureABP2_ActionComplete(I2CCM_Device *pDevice)
+// Handler "ActionComplete"
+static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 {
 	if(0 == pDevice)    return I2C_END_BLOC;
 
@@ -419,112 +276,68 @@ static uint16_t handleI2cCM_PressureABP2_ActionComplete(I2CCM_Device *pDevice)
 		if(0 == pDevice->result) // No I2C error :
 		{
 			uint8_t *pBuf = (uint8_t *)pDevice->pRxBuf; // Pour pointer le Buffer de Réception
-
-			if(0x00 == ((pBuf[0] >>6) & 0x03)) // Bits "Normal Operation" :
-			{
-				float NewPressure;
+			pExtData->status.raw = pBuf[0];
+			pExtData->newFlags |= I2cCmPressureAbp2NewStatus; // Signale un nouvel etat capteur
+			if(pExtData->status.mathSat == 1 || pExtData->status.memError == 1 || pExtData->status.power == 0){
+				// Error :
+				I2CCM_MAKE_INC_CT_WITH_MAX_VALUE(pIntData->ErrorsCt, UINT16_MAX)
+				I2CCM_MAKE_INC_CT_WITH_MAX_VALUE(pDevice->ErrorsCt,  UINT16_MAX)
+			}
+			else if(pExtData->status.isBusy == 0) { // sensor ready
 				// OK, pas d'ereur de réception :
 				I2CCM_MAKE_DEC_CT_WITH_MAX_VALUE(pIntData->ErrorsCt,	I2CCM_MAX_ERROR_CT_ON_PERIF_OK)
 				I2CCM_MAKE_DEC_CT_WITH_MAX_VALUE(pDevice->ErrorsCt,		I2CCM_MAX_ERROR_CT_ON_PERIF_OK)
 				pExtData->base.idOfDevice &= (~I2CCM_DEVICE_RECENTLY_LOADED_MSK);
 
-				// Préparation AutoZéro :
-				if( (0 != (I2CCM_AUTOZERO_MAKE_ACTION_ID(I2cCmPressureAbp2AutoZeroActive) & pIntData->BrdgOfstOpId)) // Flag AutoZéro Actif ?
-				 && (0 == I2CCM_AUTOZERO_GET_STEP_ID(pIntData->BrdgOfstOpId)) ) // + Pas initialisé ?
-				{
-					pIntData->BrdgOfstOpId += ABP2_NB_MOY_PRESSURE_AUTOZ; // Pré-charge le nb de Captures à prendre ...
-				}
-
 				// Recomposition des Datas Brutes :
-				uint16_t valeurBridgeBrut = I2CCM_MAKE_UINT16_FROM_BIG_ENDIAN(pBuf[0] & 0x3F, pBuf[1]);
-#ifdef ABP2_GET_BRIDGE_BRUT
-				pExtData->WheatstoneBridgeBrut = valeurBridgeBrut;
-#endif // ABP2_GET_BRIDGE_BRUT
+				uint16_t pword = pBuf[1];
+				pIntData->PreRaw = JOIN_16_16_BE(pword, JOIN_8_8_BE(pBuf[2], pBuf[3]));
+				pIntData->PreConverted = ((pIntData->PreRaw - ABP2_OUTPUT_MIN) * ABP2_PRES_COEF) + ABP2_PRESSURE_MIN;
 
-				uint16_t tmpTemperatureBrut = I2CCM_MAKE_UINT16_FROM_BIG_ENDIAN(pBuf[2], pBuf[3] & 0xE0)>>5;
-				pExtData->Temperature = I2CCM_ABP2_TEMPERATURE_FROM_OUTPUT_VALUE((float)tmpTemperatureBrut);
-#ifdef ABP2_GET_TEMP_BRUT
-				pExtData->TemperatureBrut = tmpTemperatureBrut;
-#endif // ABP2_GET_TEMP_BRUT
+#ifdef ABP2_READ_TEMPERATURE
+				uint16_t tword = pBuf[4];
+				pIntData->TempRaw = JOIN_16_16_BE(tword, JOIN_8_8_BE(pBuf[5], pBuf[6]));
+				pIntData->TempConverted = (pIntData->TempRaw * ABP2_TEMP_COEF) + ABP2_TEMP_MIN;
+#endif
 
-				// Calcul d'une Moyenne glissante sur la base des "Echantillons Bruts" venant du Capteur :
-				float tmpBridgeValue;
-#if defined(ABP2_MOY_P_FROM_ECH_BRUT) && (ABP2_MOY_P_FROM_ECH_BRUT > 0)	// QuickMoy by Jp for AldesAeraulique © 2021 :
-				uint16_t maxEchBrut4Pmoy = i2cCM_ReframeABP2_MaxEchBrut4Pmoy(pIntData->maxEchBrut4Pmoy);
+				// Calcul de la Moyenne glissante
+#if defined(ABP2_MOY_PRES) && (ABP2_MOY_PRES > 1)
+				if(pIntData->AvgTabPresCurIdx >= ABP2_AVG_PRES_ARRAY_MAX_SIZE) { pIntData->AvgTabPresCurIdx = 0; }
+				// divise la valeur cumuler par le nombre d'echantillons limité à la taille max du tableau
+				if(pIntData->MaxPresSample >= ABP2_AVG_PRES_ARRAY_MAX_SIZE){ pIntData->MaxPresSample = ABP2_AVG_PRES_ARRAY_MAX_SIZE; }
+				else if(pIntData->MaxPresSample == 0){ pIntData->MaxPresSample = 1; }
+				else { pIntData->MaxPresSample++; }
 
-				uint16_t curIndexEch = pIntData->TabMoyCurIdxE;
-				if(curIndexEch >= maxEchBrut4Pmoy) { curIndexEch = 0; }
-				pIntData->TabMoyCumul -= pIntData->TabMoyEch[curIndexEch];
-				pIntData->TabMoyCumul += pIntData->TabMoyEch[curIndexEch] = valeurBridgeBrut;
-				pIntData->TabMoyCurIdxE = curIndexEch +1; // Incrémenter pour préparer pour la valeur suivante
+				pIntData->AvgTabCumulPress -= pIntData->AvgTabPresEch[pIntData->AvgTabPresCurIdx];
+				pIntData->AvgTabCumulPress += pIntData->AvgTabPresEch[pIntData->AvgTabPresCurIdx] = pIntData->PreConverted;
+				pIntData->AvgTabPresCurIdx++; // Incrémenter pour préparer pour la valeur suivante
 
-				tmpBridgeValue = ((float)(pIntData->TabMoyCumul) / (float)maxEchBrut4Pmoy);
-#else // ! ABP2_MOY_P_FROM_ECH_BRUT
-//                tmpBridgeValue = pIntData->BridgeBrut;
-				tmpBridgeValue = (float)valeurBridgeBrut;
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-#ifdef ABP2_GET_BRIDGE_MOY
-				pExtData->BridgeMoy = tmpBridgeValue;
-#endif // ABP2_GET_BRIDGE_MOY
+				pExtData->Pressure = pIntData->AvgTabCumulPress / pIntData->MaxPresSample;
+#else // ! ABP2_MOY_PRES
+				pExtData->Pressure = pIntData->PreConverted;
+#endif // ABP2_MOY_PRES
 
-				if( (0 != (I2CCM_AUTOZERO_MAKE_ACTION_ID(I2cCmPressureAbp2AutoZeroActive) & pIntData->BrdgOfstOpId)) // Flag AutoZéro Actif ?
-					&& (I2CCM_AUTOZERO_GET_STEP_ID(pIntData->BrdgOfstOpId) > 0) ) // + Captures en attente :
-				{
-					pIntData->BridgeOffset = tmpBridgeValue;	// Capture notre nouvel Offset !
-					pIntData->BrdgOfstOpId--; // Signale qu'on a bien capturé le nouvel Offset
-				}
+#if defined(ABP2_MOY_TEMP) && (ABP2_MOY_TEMP > 1)
+				if(pIntData->AvgTabTempCurIdx >= ABP2_AVG_TEMP_ARRAY_MAX_SIZE) { pIntData->AvgTabTempCurIdx = 0; }
+				// divise la valeur cumuler par le nombre d'echantillons limité à la taille max du tableau
+				if(pIntData->MaxTempSample >= ABP2_AVG_TEMP_ARRAY_MAX_SIZE){ pIntData->MaxTempSample = ABP2_AVG_TEMP_ARRAY_MAX_SIZE; }
+				else if(pIntData->MaxTempSample == 0){ pIntData->MaxTempSample = 1; }
+				else { pIntData->MaxTempSample++; }
 
-				// Calcul des Résultats :
-				//                switch(pDevice->DeviceType)
-				switch(pIntData->base.idOfDevice)
-				{
-				case I2cDevPresType_ABP2_38: // DEVICE_TYPE_38:
-					NewPressure = I2CCM_ABP2_PRESSURE_FROM_OUTPUT_DELTA(tmpBridgeValue - (float)pIntData->BridgeOffset, 38); // avec Params pour ABP2_38
-					break;
-				case I2cDevPresType_ABP2_28: // DEVICE_TYPE_28:
-				default:
-					NewPressure = I2CCM_ABP2_PRESSURE_FROM_OUTPUT_VALUE(tmpBridgeValue, 28); // avec Params pour ABP2_28
-					break;
-				}
-#ifdef ABP2_GET_PRESS_BRUT
-				pExtData->PresBrut = NewPressure;
-#endif // ABP2_GET_PRESS_BRUT
+				pIntData->AvgTabCumulTemp -= pIntData->AvgTabTempEch[pIntData->AvgTabTempCurIdx];
+				pIntData->AvgTabCumulTemp += pIntData->AvgTabTempEch[pIntData->AvgTabTempCurIdx] = pIntData->TempConverted;
+				pIntData->AvgTabTempCurIdx++; // Incrémenter pour préparer pour la valeur suivante
 
-				// Ajout_Jp le 08/01/2020 : Calcul de la Moyenne glissante :
-#if defined(ABP2_MOY_P_FROM_P_CALC) && (ABP2_MOY_P_FROM_P_CALC > 0)	// QuickMoy by Jp for AldesAeraulique © 2021 :
-				uint16_t maxPresBrut4Moy = i2cCM_ReframeABP2_MaxPresBrut4Moy(pIntData->maxPresBrut4Moy);
-
-				uint16_t curIndexPress = pIntData->TabMoyCurIdxP;
-				if(curIndexPress >= maxPresBrut4Moy) { curIndexPress = 0; }
-				pIntData->CumulPressure -= pIntData->Tab_Moy_P[curIndexPress];
-				pIntData->CumulPressure += pIntData->Tab_Moy_P[curIndexPress] = NewPressure;
-				pIntData->TabMoyCurIdxP = curIndexPress +1; // Incrémenter pour préparer pour la valeur suivante
-
-				pExtData->Pressure = (pIntData->CumulPressure / (float)maxPresBrut4Moy);
-#else // ! ABP2_MOY_P_FROM_P_CALC
-				pExtData->Pressure = NewPressure;
-#endif // ABP2_MOY_P_FROM_P_CALC
+				pExtData->Temperature = pIntData->AvgTabCumulTemp / pIntData->MaxTempSample;
+#else // ! ABP2_MOY_TEMP
+				pExtData->Temperature = pIntData->TempConverted;
+#endif // ABP2_MOY_TEMP
 
 				// Délai de prochaine action :
-				pDevice->DelayInMs  = ABP2_TEMPO_BEFORE_NEXT_ACTION; // 10s avant prochaine action
-
-				if( (0 != (I2CCM_AUTOZERO_MAKE_ACTION_ID(I2cCmPressureAbp2AutoZeroActive) & pIntData->BrdgOfstOpId)) // Flag AutoZéro Actif ?
-				 && (0 == I2CCM_AUTOZERO_GET_STEP_ID(pIntData->BrdgOfstOpId)) ) // + Terminé :
-				{
-					pIntData->BridgeOffset = i2cCM_ReframeOffsetInAllowedRange(pIntData->BridgeOffset);
-					if(pExtData->BridgeOffset != pIntData->BridgeOffset)
-					{
-						pExtData->BridgeOffset = pIntData->BridgeOffset;
-						pExtData->newFlags |= I2cCmPressureAbp2NewOffset; // Signale le Nouveau Offset
-					}
-
-					// Signaler au Gestionaire qu'on a un nouvel Offset :
-					pIntData->BrdgOfstOpId ^= (I2cCmPressureAbp2AutoZeroEnded | I2CCM_AUTOZERO_MAKE_ACTION_ID(I2cCmPressureAbp2AutoZeroActive)); // Signaler Terminé + Désactiver le mode AutoZéro
-					return I2C_END_BLOC;	// Rendre tout de suite la main
-				}
+				pDevice->DelayInMs  = ABP2_TEMPO_BEFORE_NEXT_ACTION; // 1s avant prochaine action
 
 				// Signaler à la tâche qu'il y a 1 nouvelle Data à récupérer :
-				pExtData->newFlags |= I2cCmPressureAbp2NewPressure; // Signale la nouvelle Data
+				pExtData->newFlags |= I2cCmPressureAbp2NewValue; // Signale la nouvelle Data
 				return I2C_NEW_VALUE | I2C_END_BLOC; // Signaler puis rendre la main
 			}
 		} else { // Error :
@@ -544,32 +357,6 @@ static uint16_t handleI2cCM_PressureABP2_ActionComplete(I2CCM_Device *pDevice)
 	return I2C_END_BLOC;
 }
 
-/******************************************************************************/
-
-__attribute__((weak)) uint16_t getI2C_ABP2_Pressure_UserOffset(I2CCM_DevInitParams* pInitParams)
-{
-	return DEF_OFFSET_HONEYWELL_38; // Internal Librairie option : UserOffset = DefaultOffset
-}
-
-/******************************************************************************/
-
-#ifdef ABP2_MOY_P_FROM_ECH_BRUT
-__attribute__((weak)) uint16_t getI2CCM_ABP2_MaxEchBrut4Pmoy(I2CCM_DevInitParams* pInitParams)
-{
-	return ABP2_MOY_P_FROM_ECH_BRUT; // Internal Librairie option : maxEchBrut4Pmoy = ABP2_MOY_P_FROM_ECH_BRUT
-}
-#endif // ABP2_MOY_P_FROM_ECH_BRUT
-
-/******************************************************************************/
-
-#ifdef ABP2_MOY_P_FROM_P_CALC
-__attribute__((weak)) uint16_t getI2CCM_ABP2_MaxPresBrut4Moy(I2CCM_DevInitParams* pInitParams)
-{
-	return ABP2_MOY_P_FROM_P_CALC; // Internal Librairie option : maxPresBrut4Moy = ABP2_MOY_P_FROM_P_CALC
-}
-#endif // ABP2_MOY_P_FROM_P_CALC
-
-#endif // todo
 
 #ifdef __cplusplus
 }

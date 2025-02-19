@@ -1,5 +1,7 @@
-# I2cDevPressureABP2 Lib v1.0
+# I2cDevPressureABP2 Lib v1.0  
 
+Ref sensor X116221ABP2  
+ATTENTION : cette librairie utilise la Librairie "Utils", pensez a intégrer la librairie dépendante.
 
 ## History Usage 
 * 10/02/2025 : Added by BC to [TFL4_Cartemere_App](https://git-ext.aldes.com/be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app/-/tree/develop) (STM32H562VGTX)
