@@ -160,9 +160,11 @@ int16_t i2cCM_PressureHSC_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pInit
 		case I2CCM_LOAD_DEFAULT_DEVICE:	// Première Recommandation par défaut :
 			DeviceType = I2cDevPresType_HSC_38; // HSC Type 38
 			break;
+#ifndef HSC_IGNORE_28
 		case I2CCM_LOAD_DEFAULT_DEVICE2:	// Seconde Recommandation par défaut :
 			DeviceType = I2cDevPresType_HSC_28; // HSC Type 28
 			break;
+#endif
 		// Insérer ici pour ajouter une recommandation d'ordre 3 ou 4 ...
 		default: // Recommandation non gérée :
 			return 0;	// DeviceType not implemented !

@@ -28,6 +28,8 @@
 #define HSC_UNKNOWN_TEMPERATURE_DEG_C	-999.0f	// Par défaut, la Température est initialisée à -999°c (= physiquement impossible)
 #define HSC_PRESS_MAX_ALLOWED_ERRORS	5
 
+#define HSC_IGNORE_28		// Ignore le capteur a l'adresse 28 car un autre composant est affecter à l'dresse 28
+
 // Valeurs RAW & Intermédiaires :
 #define HSC_GET_BRIDGE_BRUT
 #define HSC_GET_BRIDGE_MOY
