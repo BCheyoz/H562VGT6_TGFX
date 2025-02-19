@@ -17,6 +17,10 @@
 
 #include "FanPwmIcUtils.h"			// Pour accès aux Outils d'aide à la Configuration
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /********************************************************************************************/
 // Fonctions publiques se rapportant au Ventilateur 1 (Exhaust) :
 
@@ -43,5 +47,9 @@ uint16_t getFanSupplyLastDeltaTime(void);
 
 uint8_t AreFansSwapped_Exhaust_Supply(void);
 void ApplyFanSwap_Exhaust_Supply(uint8_t swapAction);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FANPWMIC_FANPWMICUSER_H_ */
