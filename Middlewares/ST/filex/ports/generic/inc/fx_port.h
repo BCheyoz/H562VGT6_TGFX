@@ -87,7 +87,8 @@ typedef unsigned long long  ULONG64;
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef void                                    VOID;
+//#define VOID                                    void
+typedef void                                    VOID;	// Patch_EEC : Always reset to this line, instead of the (default) line above from CubeMX !
 typedef char                                    CHAR;
 typedef char                                    BOOL;
 typedef unsigned char                           UCHAR;

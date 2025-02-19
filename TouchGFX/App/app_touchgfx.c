@@ -44,9 +44,9 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-__attribute__((weak)) void touchgfx_init(void);
-__attribute__((weak)) void touchgfx_components_init(void);
-__attribute__((weak)) void touchgfx_taskEntry(void);
+__attribute__((weak)) void touchgfx_init(void); 			// Patch_EEC : Always reset to this WEAK line, instead of the (default) line from CubeMX !
+__attribute__((weak)) void touchgfx_components_init(void);	// Patch_EEC : Always reset to this WEAK line, instead of the (default) line from CubeMX !
+__attribute__((weak)) void touchgfx_taskEntry(void);		// Patch_EEC : Always reset to this WEAK line, instead of the (default) line from CubeMX !
 
 /* USER CODE BEGIN PFP */
 
