@@ -12,6 +12,8 @@
  *
  */
 
+#if 0
+
 #include "I2cComMasterSystem.h" 	// Pour accès à nos propres déclarations publiques
 #include "I2cComMasterSysConf.h"	// Pour accès à la Configuration de l'I2C_System
 #include "I2cComMasterUtils.h"  	// Pour accès aux Outils de support I2cComMaster
@@ -302,3 +304,4 @@ uint16_t getI2cSystemCo2SCD3xErrorsCt(void)
 }
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
+#endif // 0
