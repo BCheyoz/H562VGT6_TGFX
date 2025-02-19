@@ -22,7 +22,7 @@ extern "C" {
 void FillMemoryWithBuffer(uint8_t* pDest, const uint8_t *pSrc, uint16_t valueSize, uint16_t BytesCt){
     while(BytesCt > 0)
     {
-        for(uint8_t idx = 0; idx < valueSize; idx++){
+        for(uint16_t idx = 0; idx < valueSize; idx++){
             *pDest = pSrc[idx];
             pDest++;
         }
