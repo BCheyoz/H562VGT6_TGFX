@@ -22,8 +22,10 @@
 /* USER CODE BEGIN Includes */
 
 // Includes des Capteurs de Pression :
-//#include "I2cDevPressureSDP8.h" 		// Pour accès au Capteur de Pression SDP8
-//#include "I2cDevPressureLMI.h"  		// Pour accès au Capteur de Pression LMI
+#include "I2cDevPressureSDP8.h" 		// Pour accès au Capteur de Pression SDP8
+#include "I2cDevPressureLMI.h"  		// Pour accès au Capteur de Pression LMI
+#include "I2cDevPressureHSC.h"			// Pour accès au Capteur de Pression HSC
+#include "I2cDevPressureABP2.h"			// Pour accès au Capteur de Pression ABP2
 //#include "I2cDevPressureSDP6.h" 		// Pour accès au Capteur de Pression SDP6
 
 // Includes des Capteurs de Co2 :
@@ -51,10 +53,11 @@
 /* USER CODE BEGIN Public_Vars */
 
 // Variables de Pression :
-//extern I2CCM_Pres_HSC_ExtData 	mPresHSC;
+extern I2CCM_Pres_HSC_ExtData 	mPresHSC;
+extern I2CCM_Pres_ABP2_ExtData 	mPresABP2;
 //extern I2CCM_Pres_SDP6_ExtData	mPresSDP6;
-//extern I2CCM_Pres_SDP8_ExtData	mPresSDP8;
-//extern I2CCM_Pres_LMI_ExtData 	mPresLMI;
+extern I2CCM_Pres_SDP8_ExtData	mPresSDP8;
+extern I2CCM_Pres_LMI_ExtData 	mPresLMI;
 
 // Variables de Co2 :
 //extern I2CCM_Co2_SCD3x_ExtData	mCo2SCD3;
