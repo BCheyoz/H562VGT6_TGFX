@@ -29,11 +29,12 @@ typedef struct {
 } tAI_FloatValue;
 
 /******************************************************************************/
-
 extern tAI_FloatValue tAiRefAlim;
-extern tAI_FloatValue tAi0_0_10V;
-extern tAI_FloatValue tAi1_0_10V;
-extern tAI_FloatValue tAi2_0_10V;
+extern tAI_FloatValue tAi1_T1;
+extern tAI_FloatValue tAi0_T2;
+extern tAI_FloatValue tAi18_T3;
+extern tAI_FloatValue tAi15_T4;
+extern tAI_FloatValue tAi14_T5;
 
 #if defined(AI_ENABLE_SUPPORT_STATS) && (AI_NB_MAX_OF_INIT_PARAMS > 0)
 	extern tAiStats mAiStats[AI_NB_MAX_OF_INIT_PARAMS];
@@ -41,9 +42,11 @@ extern tAI_FloatValue tAi2_0_10V;
 
 /******************************************************************************/
 
-uint8_t getValueForMemHistoA0_0_10V(void);
-uint8_t getValueForMemHistoA1_0_10V(void);
-uint8_t getValueForMemHistoA2_0_10V(void);
+uint16_t getAi1_T1_x10(void);
+uint16_t getAi0_T2_x10(void);
+uint16_t getAi18_T3_x10(void);
+uint16_t getAi15_T4_x10(void);
+uint16_t getAi14_T5_x10(void);
 
 /******************************************************************************/
 #ifdef __cplusplus

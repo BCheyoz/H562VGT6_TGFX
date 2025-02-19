@@ -40,6 +40,7 @@
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
+#include "AnalogInputsCore.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -133,6 +134,7 @@ int main(void)
   InitBaseDeTemps();
   InitComputeInfos();
   FwMng *FwManager = FwMng::getInstance();
+  InitAnalogInputs();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -141,6 +143,7 @@ int main(void)
   {
 	  GestionBaseDeTemps();
 	  ComputeMyInfos();
+	  Gestion_AnalogInputs();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */

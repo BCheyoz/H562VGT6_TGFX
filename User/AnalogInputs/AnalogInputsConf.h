@@ -273,7 +273,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 #include "AnalogInputsUtils.h"	// Pour accès aux Outils d'aide à la Configuration
 
 // Synthèse pour "AnalogInputsCore.c" des différentes Sources & Applications :
-#define AI_NB_MAX_OF_INIT_PARAMS		1 // 1 seul Périphérique ADC utilisé sur HII_CarteMere_App
+#define AI_NB_MAX_OF_INIT_PARAMS		1 // 2 ADC utilisés mais 1 réservé pour touch GFX, donc 1 adc disponible (ADC1)
 //#define AI_NB_MAX_OF_INIT_PARAMS		1+1 // 2 pour essais avec 1 vide
 
 #define AI_DISCARD_MIN_MAX_VALUE	// Pour demander à ignorer les valeurs Min & Max des échantillons ADC_DMA

@@ -7,9 +7,6 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
- *  Pour intégrer facilement cette Librairie "AnalogInputs" dans un nouveau Projet :
- *   -> Suivre les indications dans "AnalogInputsConf.h"
- *
  */
 
 #include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
@@ -38,12 +35,12 @@ extern "C" {
 #define ADC1_RAW_BUF_NAME		AdcRawBuf1
 #define ADC1_ACCU_RAW_BUF_NAME	AdcAccuRawBuf1
 #define ADC1_MOY_FN_HANDLERS	Adc1FnNewFloatValueHandlers
-#define ADC1_NB_OF_CHANNELS 	4			// HII_CarteMere_App = VrefInt, ADC1_IN5 (Ai0_0-10V), ADC1_IN6 (Ai1_0-10V), ADC1_IN7 (Ai2_0-10V)
+#define ADC1_NB_OF_CHANNELS 	6			// tfl4_cartemere_app = VrefInt, ADC1_IN1 (Ai_T1), ADC1_IN0 (Ai_T2), ADC1_IN18 (Ai_T3), ADC1_IN15 (Ai_T4), ADC1_IN14 (Ai_T5)
 #define ADC1_SAMPLES_PER_CH 	5			// 5 échantillons de chaque pour faire une première moyenne instantanée
 #define ADC1_MOY_NB_VALUES		20			// La valeur de sortie sera moyennée sur les 20 dernières valeurs instantanées disponibles
 #define ADC1_CONV_DELAY 		10			// Temps accordé pour la Conv : Base @ 10ms => 10 = 100ms
 #define ADC1_ERROR_DELAY		10			// Tempo après une Erreur ADC : Base @ 10ms => 10 = 100ms
-#define ADC1_REF_INT_CHANNEL	0			// Index du Rank qui est associé au "Channel Vrefint"
+#define ADC1_REF_INT_CHANNEL	0			// Index du Rank qui est associé au "Channel Vrefint" ?
 #define ADC1_REF_INT_PT_CONV	(AI_INTERNAL_VREF / AI_VALIM_TYPIC * (float)AI_MAX_PT_CONV)
 
 /******************************************************************************/
@@ -78,9 +75,11 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 // Variables finales pour le Stockage des Résultats ADC :
 
 tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
-tAI_FloatValue tAi0_0_10V = {0};
-tAI_FloatValue tAi1_0_10V = {0};
-tAI_FloatValue tAi2_0_10V = {0};
+tAI_FloatValue tAi1_T1 = {0};// ADC1_IN1
+tAI_FloatValue tAi0_T2 = {0};// ADC1_IN0
+tAI_FloatValue tAi18_T3 = {0};// ADC1_IN18
+tAI_FloatValue tAi15_T4 = {0};// ADC1_IN15
+tAI_FloatValue tAi14_T5 = {0};// ADC1_IN14
 
 uint32_t nbConvDone = 0;
 
@@ -88,7 +87,7 @@ uint32_t nbConvDone = 0;
 // Prototypes des Fonctions de Conversion pour obtenir le Résulat Final :
 
 void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue);
-void AnalogInput_HandleNewFloat_0_10V(void* pVar, float newValue);
+void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue);
 
 void AnalogInput_HandleEndOfConv(void* pVar);
 
@@ -97,9 +96,11 @@ void AnalogInput_HandleEndOfConv(void* pVar);
 
 tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
 	{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
-	{ AnalogInput_HandleNewFloat_0_10V, 	&tAi0_0_10V },	// Valeur n°2 = ADC1_IN5 = Ai0_0_10V
-	{ AnalogInput_HandleNewFloat_0_10V, 	&tAi1_0_10V }, 	// Valeur n°3 = ADC1_IN6 = Ai1_0_10V
-	{ AnalogInput_HandleNewFloat_0_10V, 	&tAi2_0_10V }, 	// Valeur n°4 = ADC1_IN7 = Ai2_0_10V
+	{ AnalogInput_HandleNewFloat_Tx, 	&tAi1_T1 },	// Valeur n°2 = ADC1_IN1 = tAi_T1
+	{ AnalogInput_HandleNewFloat_Tx, 	&tAi0_T2 },	// Valeur n°3 = ADC1_IN0 = tAi_T2
+	{ AnalogInput_HandleNewFloat_Tx, 	&tAi18_T3 },	// Valeur n°4 = ADC1_IN18 = tAi_T3
+	{ AnalogInput_HandleNewFloat_Tx, 	&tAi15_T4 },	// Valeur n°5 = ADC1_IN15 = tAi_T4
+	{ AnalogInput_HandleNewFloat_Tx, 	&tAi14_T5 },	// Valeur n°6 = ADC1_IN14 = tAi_T5
 };
 
 /******************************************************************************/
@@ -124,7 +125,7 @@ void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue)
 	else pData->value = 0; // Invraissemblable, mais il faut quand même prendre en compte
 }
 
-void AnalogInput_HandleNewFloat_0_10V(void* pVar, float newValue)
+void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 {
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
@@ -136,20 +137,31 @@ void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers l
 	nbConvDone++; // On se contente de compter de nb de Conversions effectuées ;-) !
 }
 
-uint8_t getValueForMemHistoA0_0_10V(void)
+uint16_t getAi1_T1_x10(void)
 {
-	return (uint8_t)(tAi0_0_10V.value * 10.);
+	return (uint16_t)(tAi1_T1.value * 10.0f);
 }
 
-uint8_t getValueForMemHistoA1_0_10V(void)
+uint16_t getAi0_T2_x10(void)
 {
-	return (uint8_t)(tAi1_0_10V.value * 10.);
+	return (uint16_t)(tAi0_T2.value * 10.0f);
 }
 
-uint8_t getValueForMemHistoA2_0_10V(void)
+uint16_t getAi18_T3_x10(void)
 {
-	return (uint8_t)(tAi2_0_10V.value * 10.);
+	return (uint16_t)(tAi18_T3.value * 10.0f);
 }
+
+uint16_t getAi15_T4_x10(void)
+{
+	return (uint16_t)(tAi15_T4.value * 10.0f);
+}
+
+uint16_t getAi14_T5_x10(void)
+{
+	return (uint16_t)(tAi14_T5.value * 10.0f);
+}
+
 
 #ifdef __cplusplus
 }
