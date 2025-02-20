@@ -21,6 +21,7 @@
 #include "adc.h"
 #include "crc.h"
 #include "app_filex.h"
+#include "gpdma.h"
 #include "i2c.h"
 #include "icache.h"
 #include "memorymap.h"
@@ -39,6 +40,8 @@
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
+#include "AnalogInputsCore.h"
+#include "I2cComMasterSystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,6 +109,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_GPDMA1_Init();
   MX_ADC1_Init();
   MX_OCTOSPI1_Init();
   MX_SPI2_Init();
@@ -130,7 +134,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
+  I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
+  InitAnalogInputs();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -139,6 +145,8 @@ int main(void)
   {
 	  GestionBaseDeTemps();
 	  ComputeMyInfos();
+	  Gestion_AnalogInputs();
+	  GestionI2cSystem();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
@@ -171,13 +179,13 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 62;
+  RCC_OscInitStruct.PLL.PLLN = 60;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
-  RCC_OscInitStruct.PLL.PLLFRACN = 4096;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();

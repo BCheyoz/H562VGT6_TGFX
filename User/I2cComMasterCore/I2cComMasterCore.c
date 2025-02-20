@@ -22,6 +22,10 @@
 #include "I2cComMasterCore.h"	// Pour accès à nos propres déclarations publiques
 #include "I2cComMasterUtils.h"	// Pour accès aux Outils de support I2cComMaster
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /******************************************************************************/
 
 #define I2CCM_ADD_IGNORE_QRY_RST_ON_PERIF_RST	5
@@ -622,3 +626,8 @@ float i2cComMaster_AddFloatToMoyManager(I2CCM_MoyManager_Float* pMoyManager, flo
 	inline void I2CCM_FillMemory(uint8_t* pDest, uint8_t Value, uint16_t BytesCt) { while(BytesCt-- > 0) { *pDest++ = Value; } }
 	inline void I2CCM_CopyMemory(uint8_t* pDest, uint8_t* pSrc, uint16_t BytesCt) { while(BytesCt-- > 0) { *pDest++ = *pSrc++; } }
 #endif // UTILS_UTILS_H_
+
+
+#ifdef __cplusplus
+}
+#endif
