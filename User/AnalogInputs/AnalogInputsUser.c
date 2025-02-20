@@ -10,9 +10,7 @@
  */
 
 #include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
-
 #include "adc.h"				// Pour accès aux Variables & Fonctions d'Init ADC
-
 #include "AnalogInputsConf.h"	// Pour accès à la Configuration User souhaitée
 
 #ifdef __cplusplus

@@ -7,9 +7,6 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
- *  Pour intégrer facilement cette Librairie "AnalogInputs" dans un nouveau Projet :
- *   -> Suivre les indications dans "AnalogInputsConf.h"
- *
  */
 
 #ifndef ANALOGINPUTS_ANALOGINPUTSUTILS_H_

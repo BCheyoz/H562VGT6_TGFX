@@ -7,13 +7,9 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
- *  Pour intégrer facilement cette Librairie "AnalogInputs" dans un nouveau Projet :
- *   -> Suivre les indications dans "AnalogInputsConf.h"
- *
  */
 
 #include "AnalogInputsCore.h"	// Pour accès à nos propres déclarations publiques
-
 #include "AnalogInputsConf.h"	// Pour accès à la Configuration User souhaitée
 
 #ifdef __cplusplus
