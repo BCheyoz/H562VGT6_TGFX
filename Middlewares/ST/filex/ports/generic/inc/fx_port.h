@@ -88,7 +88,7 @@ typedef unsigned long long  ULONG64;
 #include <stdlib.h>
 
 //#define VOID                                    void
-typedef void                                    VOID;	// Patch_EEC : Always reset to this line, instead of the (default) line above from CubeMX !
+typedef void                                    VOID;	// Patch_Jp from "%UserProfile%\STM32Cube\Repository\STM32Cube_FW_H5_V1.3.0\Middlewares\ST\filex\ports\generic\inc\fx_port.h", Line 91 : Always reset to this line, instead of the (default) line above from CubeMX !
 typedef char                                    CHAR;
 typedef char                                    BOOL;
 typedef unsigned char                           UCHAR;
