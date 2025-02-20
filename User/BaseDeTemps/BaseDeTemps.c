@@ -18,6 +18,7 @@
 /* USER CODE BEGIN Includes */
 #include "LedBlinkerInterface.h"
 #include "VersionInfos.h"
+#include "AnalogInputsCore.h"
 /* USER CODE END Includes */
 
 
@@ -94,6 +95,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 // Début de Zone des Appels exécutés au RunTime dans le Programme Principal @ 10ms :
 
 	/* USER CODE BEGIN RT_10ms */
+		Handle_AnalogInputs_RT_10ms();
 
 
 // Ajout_Jp for MultiExecution and Capture I2c avec PulseView @ 500K :

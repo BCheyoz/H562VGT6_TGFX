@@ -20,6 +20,10 @@
 //#include "utils.h"				// Pour accès aux éléments utiles génériques
 #include "FanPwmIcConf.h"		// Pour accès à la Configuration User souhaitée
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /******************************************************************************/
 // Init Params :
 
@@ -183,5 +187,9 @@ void FanPwmIc_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
 #define FPIC_MAKE_CONST_END_OF_TABLE(t,n,b)					const t* n = ((void*)b) + (sizeof(b))
 #define FPIC_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(t,b,e,a)	const t* b = a; const t* e = ((void*)a) + (sizeof(a))
 #define FPIC_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(t,b,e)	extern const t* b; extern const t* e
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FANPWMIC_FANPWMICUTILS_H_ */
