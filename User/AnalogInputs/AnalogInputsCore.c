@@ -7,6 +7,8 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
+ *  Version 1.0
+ *
  */
 
 #include "AnalogInputsCore.h"	// Pour accès à nos propres déclarations publiques
