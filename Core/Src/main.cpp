@@ -41,6 +41,7 @@
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
+#include "I2cComMasterSystem.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -133,6 +134,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
+  I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
   /* USER CODE END 2 */
@@ -144,6 +146,7 @@ int main(void)
 	  GestionBaseDeTemps();
 	  ComputeMyInfos();
 	  Gestion_AnalogInputs();
+	  GestionI2cSystem();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */

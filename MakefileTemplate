@@ -475,9 +475,7 @@ Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_cdc_acm_write.c \
 Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_cdc_acm_transmission_callback.c \
 Middlewares/ST/usbx/common/usbx_host_classes/src/ux_host_class_cdc_acm_write_with_callback.c \
 Core/Src/sysmem.c \
-Core/Src/syscalls.c \
-User/AnalogInputs/AnalogInputsCore.c \
-User/AnalogInputs/AnalogInputsUser.c \
+Core/Src/syscalls.c  
 
 # ASM sources
 ASM_SOURCES =  \
@@ -556,7 +554,6 @@ C_INCLUDES =  \
 -IMiddlewares/ST/usbx/ports/generic/inc \
 -IMiddlewares/ST/usbx/common/usbx_host_classes/inc \
 -IDrivers/CMSIS/Include
--IUser/AnalogInputs \
 
 
 # compile gcc flags
