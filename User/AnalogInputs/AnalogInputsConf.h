@@ -34,8 +34,11 @@ extern "C" {
 #define AI_INTERNAL_VREF			1.21f	// Tension Interne de Référence "Vrefint"
 
 #define AI_VALIM_TYPIC				3.3f // 3.3v Typique
+#define AI_VALIM_REELLE				3.3416f //ref pour ctn
 #define AI_VALIM_MIN				1.8f // 1.8v Minimum
 #define AI_VALIM_MAX				3.6f // 3.6v Maximum
+
+#define AI_MAX_PT_CONV_REEL 		((AI_VALIM_TYPIC*AI_MAX_PT_CONV)/AI_VALIM_REELLE)
 
 #define AI_FIRST_INIT_PARAM	AI_BaseInitParam // Nom de la Base du Tableau d'Init des Paramètres
 #define AI_AFTER_INIT_PARAM	AI_EndInitParams // Nom de Fin du Tableau d'Init des Paramètres
