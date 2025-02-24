@@ -35,6 +35,7 @@ typedef enum // Liste des Protocoles actuellement suppotés :
 	UartComDisabled	= 0, // Désactivé / aucun Protocole sélectionné / inconnu / non supporté
 	UartComIbus 	= 1, // Protocole de type iBus
 	UartComModbus	= 2, // Protocole de type Modbus
+	UartComCustom	= 3, // Protocole Custom, par exemple "Inverter Embraco"
 } eUartComType;
 #define UART_COM_TYPE_MIN	UartComIbus
 #define UART_COM_TYPE_MAX	UartComModbus
@@ -386,7 +387,7 @@ uint16_t getThisHandleRxBufSize(void *hHandle);
 #define UartCom_FillMemory	FillMemory
 #define UartCom_CopyMemory	CopyMemory
 void UartCom_FillMemory(uint8_t* pDest, uint8_t Value, uint16_t BytesCt);
-//void UartCom_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
-void UartCom_CopyMemory(uint8_t* pDest, uint8_t* pSrc, uint16_t BytesCt);
+void UartCom_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
+//void UartCom_CopyMemory(uint8_t* pDest, uint8_t* pSrc, uint16_t BytesCt);
 
 #endif /* UART_COM_UARTCOMUTILS_H_ */

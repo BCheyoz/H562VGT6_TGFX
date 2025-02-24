@@ -48,6 +48,7 @@
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.32357255" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -63,44 +64,45 @@
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1340008254" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
-									<listOptionValue builtIn="false" value="../FileX/App"/>
-									<listOptionValue builtIn="false" value="../FileX/Target"/>
-									<listOptionValue builtIn="false" value="../USBX/App"/>
-									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
-									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
-									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
-									<listOptionValue builtIn="false" value="../User/CRC"/>
-									<listOptionValue builtIn="false" value="../User/Utils"/>
-									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
-									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
 									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CRC"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -109,44 +111,45 @@
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.748965851" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1233919206" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
-									<listOptionValue builtIn="false" value="../FileX/App"/>
-									<listOptionValue builtIn="false" value="../FileX/Target"/>
-									<listOptionValue builtIn="false" value="../USBX/App"/>
-									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
 									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
-									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
-									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CRC"/>
-									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
-									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.276423556" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>
@@ -247,6 +250,7 @@
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -299,6 +303,7 @@
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -345,6 +350,7 @@
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.459381886" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>

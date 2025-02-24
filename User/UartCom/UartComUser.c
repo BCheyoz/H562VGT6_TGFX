@@ -42,14 +42,14 @@
 #endif // UART_COM_ENABLE_MODBUS_MASTER
 
 #if defined(UART_COM_NB_MAX_OF_USBD) && (UART_COM_NB_MAX_OF_USBD > 0)
-	#include "UsbDeviceCDC.h"	// Pour accès aux Paramètres & Fonctions USB_Device_CDC
+//(temporaire)	#include "UsbDeviceCDC.h"	// Pour accès aux Paramètres & Fonctions USB_Device_CDC
 //	#include "UsbModbusUtils.h"		// Pour accès aux Paramètres & Fonctions USB_Device_CDC
 //	#include "UsbDeviceSlaveUser.h"
 //	#include "UsbModbusCore.h"
 #endif // UART_COM_NB_MAX_OF_USBD
 
 #if defined(UART_COM_NB_MAX_OF_USBH) && (UART_COM_NB_MAX_OF_USBH > 0)
-	#include "UsbHostCDC.h"		// Pour accès aux Paramètres & Fonctions USB_Host_CDC
+//(temporaire)	#include "UsbHostCDC.h"		// Pour accès aux Paramètres & Fonctions USB_Host_CDC
 #endif // UART_COM_NB_MAX_OF_USBH
 
 /******************************************************************************/
@@ -83,6 +83,7 @@
 //	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tUartModbusMasterBufFtFl, MODBUS_MASTER_BUF_DEF_RX_SIZE, MODBUS_MASTER_BUF_DEF_TX_SIZE, UartModbusMasterBufFtFl, UART_COM_NB_OF_UART_MODBUS_MASTER_FTFL);
 #endif // UART_COM_NB_OF_UART_CHANGEABLE_USAGE
 
+	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tEmbracoInverterBuf, 100, 50, EmbracoInverterBuf, 1);	// Temporaire : en attendant de déplacer dans le .c/h du EmbracoInverter
 
 //#if defined(NB_OF_USB_DEVICE_MODBUS) && (NB_OF_USB_DEVICE_MODBUS > 0)
 ////	UART_COM_MAKE_STRUCT_BUF(tUsbModbusSlaveBuf, USBD_RX_BUF_SIZE, USBD_TX_BUF_SIZE);
@@ -143,6 +144,7 @@ const tUartComInitParams mUartComInitParam[] = {
 //	{ UartComModbus,	USBD_MODBUS,		UsbDeviceSlaveInitUser, 	UART_COM_STRUCT_BUF_INFOS(UsbModbusBuf[0]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_USBD,	UART_COM_GPIO_TX_NONE,	USBD_EOF_RX,			USBD_CDC_MODBUS_SLAVE_EOB_RX,			USBD_REPLY_TO,			USBD_CDC_MODBUS_SLAVE_NO_TX_INIT,			USBD_CDC_MODBUS_SLAVE_NO_TX_FRAME,			USBD_CDC_MODBUS_SLAVE_NO_TX_BYTE,			USBD_CDC_MODBUS_SLAVE_NO_RX_TO,			USBD_CDC_MODBUS_SLAVE_MIN_RX_SIZE,			USBD_CDC_MODBUS_SLAVE_MIN_TX_SIZE,			USBD_MAX_RX_BLOC_SZ,			USBD_DEF_REPLY_SZ,			USBD_ERR_RX_FRAME,			USBD_ERR_TX_RETRY,			USBD_ERR_TX_FRAME,			USBD_INIT_LOAD_FLAGS,			USBD_CDC_MODBUS_CLASS },	// ModbusSlave User sur USB_Device
 //#endif // NB_OF_USB_DEVICE_MODBUS
 
+	{ UartComCustom,	UART_COM_INVERTER,	MX_USART3_UART_Init,	UART_COM_STRUCT_BUF_INFOS(EmbracoInverterBuf[0]), EmbracoInverterRxHandler,	EMBRACO_INVERTER_EXT_PARAMS,	UART_COM_GPIO_TX_NONE,	EMBRACO_INVERTER_EOF_RX,	EMBRACO_INVERTER_EOB_RX,	EMBRACO_INVERTER_REPLY_TO,	EMBRACO_INVERTER_NO_TX_INIT,	EMBRACO_INVERTER_NO_TX_FRAME,	EMBRACO_INVERTER_NO_TX_BYTE,	EMBRACO_INVERTER_NO_RX_TO,	EMBRACO_INVERTER_MIN_RX_SIZE,	EMBRACO_INVERTER_MIN_TX_SIZE,	EMBRACO_INVERTER_MAX_RX_BLOC_SZ,	EMBRACO_INVERTER_DEF_REPLY_SZ,	EMBRACO_INVERTER_ERR_RX_FRAME,	EMBRACO_INVERTER_ERR_TX_RETRY,	EMBRACO_INVERTER_ERR_TX_FRAME,	EMBRACO_INVERTER_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT }, // EmbracoInverter sur Uart3
 /* USER CODE END Static_InitParams */
 
 };

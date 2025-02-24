@@ -37,11 +37,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
 #include "I2cComMasterSystem.h"
+#include "UartComCore.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -136,11 +139,15 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+
   InitBaseDeTemps();
   InitComputeInfos();
   I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+  UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
+  UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -151,6 +158,8 @@ int main(void)
 	ComputeMyInfos();
 	Gestion_AnalogInputs();
 	GestionI2cSystem();
+	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
+
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */

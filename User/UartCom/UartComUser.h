@@ -46,10 +46,11 @@
 /* USER CODE BEGIN LinkToDevices */
 
 //#define UART_IBUS_INT		&huart1
-#define UART_MODBUS_IHM 	&huart1
+//#define UART_MODBUS_IHM 	&huart1
 //#define UART_IBUS_EXT		&huart3
-//#define UART_MODBUS_USER	&huart1
+#define UART_MODBUS_USER	&huart5
 //#define UART_MODBUS_EXT 	&huart8
+#define UART_COM_INVERTER	&huart3
 
 //#define USBD_MODBUS 		&hUsbDeviceFS
 //#define USBD_CDC_DEVICE 	&hUsbDeviceFS	// CDC sur USB_Device via UsbDevice_FullSpeed

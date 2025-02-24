@@ -19,7 +19,7 @@
  *-> 22/10/2021 : Added by Jp	to HII_Manta_App (STM32G070CBTx : productprojects/ventilation/individuel/himalaya2/manta/h2_manta_app)
  *-> 04/01/2022 : Added by Jp	to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
  *-> 25/02/2022 : Added by AB	to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
- *-> 08/04/2022 : Added by Jp	to SensorsAcquisition_G071RB
+ *-> 08/04/2022 : Added by Jp	to SensorsAcquisition_G071RB (STM32G071RBT6 : innoprojects/sensors-acquisition/firmware-kit-stm32g071rb)
  *-> 30/11/2023 : Added by Ab	to MV_By_ALDES
  *-> 21/02/2025 : Added by Jp	to TFlow4
  *
@@ -125,8 +125,13 @@ I.3.4) Pour chaque U(S)ART# pour ModBus, indiquer les "Parameter Settings -> Adv
  -> DMA on RX Error = "Enable"
  -> MSB First = "Disable"
 
-I.3.5) Pour chaque U(S)ART# vers Modbus, dans "Configuration -> DMA Settings", ajouter puis configurer
- une DMA Request de type "U(S)ART#_TX" telle que :
+I.3.5) Configurer un DMA_TX pour chaque U(S)ART# vers Modbus :
+  Si le µC est équipé d'un (ou plusieurs) "GPDMA", CubeMX proposera certainement / obligera pê à l'utiliser.
+ -> Dans ce cas, se reporter à la section I.3.5b
+ -> Sinon, procéder comme indiqué dans la section I.3.5a
+
+I.3.5a) Si le µC n'est PAS équipé de "GPDMA" (ou qu'il n'y en a plus de disponible), configurer un DMA ...
+  Dans "Configuration -> DMA Settings", ajouter puis configurer une 'DMA Request' de type "U(S)ART#_TX" telle que :
 -> Mode = "Normal"
 -> Increment Address -> Peripheral = ne PAS cocher
 -> Increment Address -> Memory = Cocher
@@ -136,23 +141,88 @@ I.3.5) Pour chaque U(S)ART# vers Modbus, dans "Configuration -> DMA Settings", a
 -> Enable synchronisation (si proposé) : à priori pas besoin de cocher
 -> Enable event (si proposé) : à priori pas besoin de cocher
 
-I.3.6) Pour chaque U(S)ART#  pour ModBus, configurer "NVIC Settings" tel que :
- -> "U(S)ART* interrupt" soit bien Coché "Enabled"
-  + "DMA* ch* interrupt" soit bien Coché "Enabled"
+I.3.5b) Si le µC est équipé d'un (ou plusieurs) "GPDMA" ...
+  Sélectioner l'un des 'GPDMA' disponibles, puis configurer l'un des "Channel" disponibles (par exemple Channel 0) :
+-> s'assurer au préalable qu'il soit bien de type "2 Words Internal FIFO",
+-> puis le configurer en "Standard Request Mode"
+
+  Dans le paneau "Configuration", cliquer sur l'onglet correspondant au channel sélectionné (par exemple "CH0") :
+-> Renseigner la "Circular configuration" telle que :
+  >> Circular Mode = "Disable",
+
+-> Renseigner la "Request Configuration" telle que :
+  >> Request -> sélectionner "U(S)ART#_TX" (en remplaçant '#' par le numéro d'UART souhaité), "ADC1" ou "ADC2"
+  >> DMA Handle in IP Structure -> sélectionner "hdmatx" si disponible,
+  >> Block HW request protocol = "Single/Burst Level", "Single/Burst Level"
+
+-> Renseigner la "Channel Configuration" telle que :
+  >> Priority = "Low",
+  >> Transaction Mode = "Normal"
+  >> Direction = "Memory To Peripheral", ("Peripheral To Memory" for ADC)
+
+-> Renseigner "Source Data Setting" tels que :
+  >> Source Address Increment After Transfer = "Enabled" ("Disabled" for ADC)
+  >> Data Width = "Byte" ("Half Word" for ADC)
+  >> Burst Length = "1" ("1" for ADC)
+  >> Allocated Port for Transfer = "Port0" ou "Port1"
+
+-> Renseigner "Destination Data Setting" tels que :
+  >> Destination Address Increment After Transfer = "Disabled", ("Enabled" for ADC)
+  >> Data Width = "Byte" ("Half Word" for ADC)
+  >> Burst Length = "1" ("1" for ADC)
+  >> Allocated Port for Transfer = "Port0" ou "Port1"
+
+-> Renseigner "Data Handling" tel que :
+  >> Data Handling Configuration = "Disable", ("Disable" for ADC)
+
+-> Renseigner "Transfer Event Configuration" tel que :
+  >> Transfer Event Generation = "The TC (and HT) event is generated at the (respectively half) end of each block"
+
+  Dans le paneau "Configuration" -> onglet "SECURITY" :
+-> Vérifier que tous les Channels concernés pour le(s) U(S)ARTs souhaités soient indiqués tels que :
+  >> "Enable Channel as Priviledged" = "NON PRIVILEDGED"
+
+  Dans le paneau "Configuration" -> onglet "All Channels" :
+-> Vérifier que tous les Channels concernés pour le(s) U(S)ARTs souhaités soient indiqués tels que :
+  >> "Request" = "GPDMA*_REQUEST_UART#_TX"
+
+I.3.6) Pour chaque U(S)ART#  pour ModBus, configurer les "NVIC Settings" tels que :
+ -> "U(S)ART* interrupt" ou "U(S)ART* global interrupt" soit bien coché "Enabled"
+ -> "GPDMAx Channel * global interrupt" (si GPDMA sélectionné) soit bien coché "Enabled"
+ -> "DMAx ch* interrupt" (si DMA classique sélectionné) soit bien coché "Enabled"
 
 I.3.7) Dans la Catégorie "System Core" -> "NVIC" -> Panel "Configuration" -> onglet "NVIC",
  s'assurer que, pour chaque U(S)ART# pour ModBus, soient bien configurés :
- -> "U(S)ART* interrupt" ou "U(S)ART* global interrupt" : Coché "Enabled"
+
+ -> "U(S)ART* interrupt" ou "U(S)ART* global interrupt" : coché "Enabled"
   + si proposé : laisser "Preemption Priority" à 0,
   + si proposé : laisser "Sub Priority" à 0.
- -> "DMAx channel * interrupt" : Coché "Enabled"
+
+ -> "GPDMAx Channel * global interrupt" (si GPDMA sélectionné) : coché "Enabled"
+  + si proposé : laisser "Preemption Priority" à 0,
+  + si proposé : laisser "Sub Priority" à 0.
+
+ -> "DMAx channel * interrupt" (si DMA classique sélectionné) : coché "Enabled"
   + si proposé : laisser "Preemption Priority" à 0,
   + si proposé : laisser "Sub Priority" à 0.
 
 I.3.8) Dans la Catégorie "System Core" -> "NVIC" -> Panel "Configuration" -> onglet "Code generation",
  s'assurer que, pour chaque U(S)ART# pour ModBus soient bien configurés :
- -> "U(S)ART* interrupt" ou "U(S)ART* global interrupt" : Cochés "Generate IRQ handler" & "Call HAL handler"
- -> "DMAx channel * interrupt" : Cochés "Generate IRQ handler" & "Call HAL handler"
+
+ -> "U(S)ART* interrupt" ou "U(S)ART* global interrupt" :
+  >> "Generate IRQ handler" : coché
+  >> "Call HAL handler" : coché
+  >> "Generate Enable in Init" (si la colonne est proposée) : coché
+
+ -> "GPDMAx Channel * global interrupt" (si GPDMA sélectionné) :
+  >> "Generate IRQ handler" : coché
+  >> "Call HAL handler" : coché
+  >> "Generate Enable in Init" (si la colonne est proposée) : coché
+
+ -> "DMAx channel * interrupt" (si DMA classique sélectionné) :
+  >> "Generate IRQ handler" : coché
+  >> "Call HAL handler" : coché
+  >> "Generate Enable in Init" (si la colonne est proposée) : coché
 
 
 I.4) Pour toutes les Méthodes de Communication :
@@ -168,7 +238,7 @@ Essai avec "Preemption Priority" à 0 sur USART3 et à 1 sur USART2 : semble OK 
 -> problème résolu avec HCLK @ 32MHz, même si UART1 & UART2 @ 16MHz avec "Preemption Priority" à 0 !
 
 Remarque_Jp le 12/04/2022 : sur STM32G071RB, UART3 n'a pas de "Clock Source" configurable !
--> il s'agit peut-être directement de PCLK, qui semble être la Clock par défaut(?) pour les autres UARTs...
+ -> il s'agit peut-être directement de PCLK, qui semble être la Clock par défaut(?) pour les autres UARTs...
 
 I.4.2) Dans l'onglet général "Project Manager" -> "Code Generator" s'assurer des Paramètres suivants :
  -> "Generate peripheral initialization as a pair of '.c/.h' files per peripheral" -> coché
@@ -176,14 +246,16 @@ I.4.2) Dans l'onglet général "Project Manager" -> "Code Generator" s'assurer d
  -> Je recommande de cocher également "Delete previously generated files when not re-generated".
 
 I.4.3) Dans l'onglet général "Project Manager" -> "Advanded Settings" -> "Driver Selector" :
--> s'assurer que tous les Périphériques U(S)ART# pour cette Librairie soient de type "HAL"
+ -> s'assurer que tous les Périphériques U(S)ART# pour cette Librairie soient de type "HAL",
+ -> s'assurer que tous les GPDMAx (le cas échéant) pour cette Librairie soient de type "HAL"
 
 I.4.4) Dans l'onglet général "Project Manager" -> "Advanded Settings" -> "Generated Function Calls" :
--> Pour chaque Périphérique U(S)ART# à utiliser, s'assurer que soient bien Cochés :
+ -> Pour chaque Périphérique U(S)ART# à utiliser, s'assurer que soient bien Cochés :
  "Generate Code" (à gauche) + "Do Not Generate Function Call" + "Visibility (Static)"
 
 Remarque : je recommande de re- "GENERATE CODE" si l'un des paramètres ci-dessus a été modifié dans CubeMX.
 
+Note_Jp : la Clock des DMA & GPDMA semble provenir directement de HCLK.
 
  +---------------------------------+
  | Etape II : Configurer "UartCom" |
@@ -229,7 +301,22 @@ Exemple 3 : en cas d'USB_Host :
 #include "usb_host.h"		// Pour accès aux Variables & Fonctions d'Init USB_HOST
 
 III.2) Décommenter & Configurer, dans la zone "USER CODE * LinkToDevices", les liens vers chaque
- Périphérique qui sera utilisé dans UartCom
+ Périphérique qui sera utilisé dans UartCom :
+
+Exemple 1 : iBus Interne sur Uart1 :
+#define UART_IBUS_INT		&huart1
+
+Exemple 2 : iBus Externe sur Uart 3 :
+#define UART_IBUS_EXT		&huart3
+
+Exemple 3 : Modbus IHM sur Uart 2 :
+#define UART_MODBUS_IHM 	&huart2
+
+Exemple 4 : Modbus User sur Uart 5 :
+#define UART_MODBUS_USER	&huart5
+
+Exemple 5 : Modbus Externe sur Uart8 :
+#define UART_MODBUS_EXT 	&huart8
 
 
  +---------------------------------+
@@ -322,7 +409,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 // Paramètres User à Activer / Configurer :
 
 //#define UART_COM_ENABLE_IBUS    			// Pour activer la liaison avec la Librairie "iBus"
-#define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
+//(temporaire)	#define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
 
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
