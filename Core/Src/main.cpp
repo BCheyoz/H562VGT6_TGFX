@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -29,7 +29,7 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
+//#include "usart.h"
 #include "usb.h"
 #include "app_usbx_host.h"
 #include "gpio.h"
@@ -68,6 +68,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -116,8 +117,8 @@ int main(void)
   MX_SPI3_Init();
   MX_SPI4_Init();
   MX_UART4_Init();
-  MX_UART5_Init();
-  MX_USART3_UART_Init();
+//  MX_UART5_Init();
+//  MX_USART3_UART_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -131,6 +132,9 @@ int main(void)
   MX_FileX_Init();
   MX_USBX_Host_Init();
   MX_TouchGFX_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
@@ -143,14 +147,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  GestionBaseDeTemps();
-	  ComputeMyInfos();
-	  Gestion_AnalogInputs();
-	  GestionI2cSystem();
+	GestionBaseDeTemps();
+	ComputeMyInfos();
+	Gestion_AnalogInputs();
+	GestionI2cSystem();
     /* USER CODE END WHILE */
-	  MX_TouchGFX_Process();
+	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
-	  FwManager->run();
+	FwManager->run();
   }
   /* USER CODE END 3 */
 }
@@ -173,8 +177,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI
+                              |RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV2;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
@@ -223,7 +231,8 @@ void PeriphCommonClock_Config(void)
   /** Initializes the peripherals clock
   */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_USART3
-                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5;
+                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5
+                              |RCC_PERIPHCLK_I2C1;
   PeriphClkInitStruct.PLL3.PLL3Source = RCC_PLL3_SOURCE_HSE;
   PeriphClkInitStruct.PLL3.PLL3M = 1;
   PeriphClkInitStruct.PLL3.PLL3N = 16;
@@ -233,15 +242,42 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3_VCIRANGE_1;
   PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3_VCORANGE_WIDE;
   PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
-  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVQ;
+  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVR|RCC_PLL3_DIVQ;
   PeriphClkInitStruct.Usart3ClockSelection = RCC_USART3CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart4ClockSelection = RCC_UART4CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart5ClockSelection = RCC_UART5CLKSOURCE_PLL3Q;
+  PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PLL3R;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL3Q;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* GPDMA1_Channel0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
+  /* GPDMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
+  /* TIM1_CC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
+  /* UART5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART5_IRQn);
+  /* GPDMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
