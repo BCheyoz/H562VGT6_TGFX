@@ -45,11 +45,11 @@ extern tAI_IntValue tAi14_T5;
 #endif // AI_ENABLE_SUPPORT_STATS && AI_NB_MAX_OF_INIT_PARAMS
 
 /******************************************************************************/
-int16_t getAi1_T1_x10(void);
-int16_t getAi0_T2_x10(void);
-int16_t getAi18_T3_x10(void);
-int16_t getAi15_T4_x10(void);
-int16_t getAi14_T5_x10(void);
+int16_t getAi1_T1(void);
+int16_t getAi0_T2(void);
+int16_t getAi18_T3(void);
+int16_t getAi15_T4(void);
+int16_t getAi14_T5(void);
 
 /******************************************************************************/
 #ifdef __cplusplus

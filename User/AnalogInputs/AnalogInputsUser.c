@@ -149,22 +149,22 @@ void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers l
 	nbConvDone++; // On se contente de compter de nb de Conversions effectuées ;-) !
 }
 
-int16_t getAi1_T1_x10(void)
+int16_t getAi1_T1(void)
 {
 	return tAi1_T1.TempValue;
 }
 
-int16_t getAi0_T2_x10(void)
+int16_t getAi0_T2(void)
 {
 	return tAi0_T2.TempValue;
 }
 
-int16_t getAi18_T3_x10(void)
+int16_t getAi18_T3(void)
 {
 	return tAi18_T3.TempValue;
 }
 
-int16_t getAi15_T4_x10(void)
+int16_t getAi15_T4(void)
 {
 	return tAi15_T4.TempValue;
 }
