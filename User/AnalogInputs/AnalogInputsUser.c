@@ -14,6 +14,7 @@
 #include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
 #include "adc.h"				// Pour accès aux Variables & Fonctions d'Init ADC
 #include "AnalogInputsConf.h"	// Pour accès à la Configuration User souhaitée
+#include <ctn.hpp>
 
 #ifdef __cplusplus
 extern "C" {
@@ -79,10 +80,10 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 
 tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
 tAI_IntValue tAi1_T1 = {0};// ADC1_IN1
-tAI_FloatValue tAi0_T2 = {0};// ADC1_IN0
-tAI_FloatValue tAi18_T3 = {0};// ADC1_IN18
-tAI_FloatValue tAi15_T4 = {0};// ADC1_IN15
-tAI_FloatValue tAi14_T5 = {0};// ADC1_IN14
+tAI_IntValue tAi0_T2 = {0};// ADC1_IN0
+tAI_IntValue tAi18_T3 = {0};// ADC1_IN18
+tAI_IntValue tAi15_T4 = {0};// ADC1_IN15
+tAI_IntValue tAi14_T5 = {0};// ADC1_IN14
 
 uint32_t nbConvDone = 0;
 
@@ -91,7 +92,7 @@ uint32_t nbConvDone = 0;
 
 void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue);
 void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue);
-void AnalogInput_convertADC_to_CTN_10K(void* pVar, float newValue);
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
 void AnalogInput_HandleEndOfConv(void* pVar);
 
 /******************************************************************************/
@@ -99,11 +100,11 @@ void AnalogInput_HandleEndOfConv(void* pVar);
 
 tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
 	{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
-	{ AnalogInput_convertADC_to_CTN_10K, 	&tAi1_T1 },	// Valeur n°2 = ADC1_IN1 = tAi_T1
-	{ AnalogInput_HandleNewFloat_Tx, 	&tAi0_T2 },	// Valeur n°3 = ADC1_IN0 = tAi_T2
-	{ AnalogInput_HandleNewFloat_Tx, 	&tAi18_T3 },	// Valeur n°4 = ADC1_IN18 = tAi_T3
-	{ AnalogInput_HandleNewFloat_Tx, 	&tAi15_T4 },	// Valeur n°5 = ADC1_IN15 = tAi_T4
-	{ AnalogInput_HandleNewFloat_Tx, 	&tAi14_T5 },	// Valeur n°6 = ADC1_IN14 = tAi_T5
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi1_T1 },	// Valeur n°2 = ADC1_IN1 = tAi_T1
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi0_T2 },	// Valeur n°3 = ADC1_IN0 = tAi_T2
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi18_T3 },	// Valeur n°4 = ADC1_IN18 = tAi_T3
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi15_T4 },	// Valeur n°5 = ADC1_IN15 = tAi_T4
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi14_T5 },	// Valeur n°6 = ADC1_IN14 = tAi_T5
 };
 
 /******************************************************************************/
@@ -132,12 +133,15 @@ void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 {
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
-	//pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
-	//float new_max_adc2 = ((float)AI_VALIM_TYPIC*(float)AI_MAX_PT_CONV)/tAiRefAlim.value;
-	//float new_max_adc = (tAiRefAlim.value*(float)AI_MAX_PT_CONV)/(float)AI_VALIM_TYPIC;
-	//(float)AI_VALIM_TYPIC*(float)AI_MAX_PT_CONV/AI_VALIM_REELLE;
+	pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
+	//pData->value = (newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
+}
 
-	pData->value = (newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
+{
+	tAI_IntValue* pData = pVar;
+	pData->nbPtADC = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
+	pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
 }
 
 void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers les Paramètres d'Initialisation, dans mAdcInitParam, dont la Librairie vient de clôturer les Conversions
@@ -145,81 +149,30 @@ void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers l
 	nbConvDone++; // On se contente de compter de nb de Conversions effectuées ;-) !
 }
 
-void AnalogInput_convertADC_to_CTN_10K(void* pVar, float newValue)
+int16_t getAi1_T1_x10(void)
 {
-	tAI_IntValue* pData = pVar;
-	//pData->nbPtADC = (uint16_t) newValue;
-	//uint16_t Val_ADC = (uint16_t) newValue;
-	pData->nbPtADC = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
-	uint16_t Val_ADC = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
-    uint8_t i;
-    float Ax, B;// 0 is convPoint  / 1 is temp
-
-    if (Val_ADC >= (uint16_t)TableConversionsAdc12bCtn3977[ADC][0]) {
-    	pData->TempValue = (int16_t)TEMPERATURE_MIN;
-    	return;
-
-    } else if (Val_ADC <= (uint16_t)TableConversionsAdc12bCtn3977[ADC][(SIZE_TAB_CTN - 1)]) {
-    	pData->TempValue = (int16_t)TEMPERATURE_MAX;
-    	return;
-    }
-
-    // On recherche ou l'on se trouve dans la table
-    // recherche par dichotomie
-    uint8_t border_a = 0;
-    uint8_t border_b = SIZE_TAB_CTN-1;// ou sizeof(table)
-    uint8_t middle = 0;
-    while(border_b > border_a + 1)
-    {
-    	middle = (border_a + border_b)/2;
-    	if(TableConversionsAdc12bCtn3977[ADC][middle] < Val_ADC)
-		{
-    		border_b = middle;
-		}
-		else
-		{
-			border_a = middle;
-		}
-    }
-    i = border_a+1;
-
-    //On calcule la pente (extrapolation lineaire)
-    Ax = ((float) TableConversionsAdc12bCtn3977[TEMP][i]*100//temp
-            - (float) TableConversionsAdc12bCtn3977[TEMP][i - 1]*100)// temp i-1
-            / ((float) TableConversionsAdc12bCtn3977[ADC][i]// val adc
-                    - (float) TableConversionsAdc12bCtn3977[ADC][i - 1]);// val adc i-1
-    B = TableConversionsAdc12bCtn3977[1][i]*100 //temp
-            - Ax * TableConversionsAdc12bCtn3977[ADC][i];// val adc
-
-    //On calcul la Textrapol
-    //gestion de l'arrondi  l'unit
-    if((((float) Val_ADC) * Ax + B) < 0) // TODO: Verifier l'ajout +/- 0.5f ...
-    {
-    	pData->TempValue = (int16_t) ((((float) Val_ADC) * Ax + B) - 0.5);
-    	return;
-    }
-    else
-    {
-    	pData->TempValue = (int16_t) (((float) Val_ADC * Ax + B) + 0.5);
-    	return;
-    }
+	return tAi1_T1.TempValue;
 }
 
-uint16_t getAi18_T3_x10(void)
+int16_t getAi0_T2_x10(void)
 {
-	return (uint16_t)(tAi18_T3.value * 10.0f);
+	return tAi0_T2.TempValue;
 }
 
-uint16_t getAi15_T4_x10(void)
+int16_t getAi18_T3_x10(void)
 {
-	return (uint16_t)(tAi15_T4.value * 10.0f);
+	return tAi18_T3.TempValue;
 }
 
-uint16_t getAi14_T5_x10(void)
+int16_t getAi15_T4_x10(void)
 {
-	return (uint16_t)(tAi14_T5.value * 10.0f);
+	return tAi15_T4.TempValue;
 }
 
+int16_t getAi14_T5_x10(void)
+{
+	return tAi14_T5.TempValue;
+}
 
 #ifdef __cplusplus
 }

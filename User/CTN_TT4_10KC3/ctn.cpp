@@ -8,8 +8,7 @@
 #ifndef CTN_TT4_10KC3_CTN_CPP_
 #define CTN_TT4_10KC3_CTN_CPP_
 
-#include "ctn.hpp"
-//#include "AnalogInputsUser.h"
+#include <ctn.hpp>
 
 const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955,3946,3936,3926,3915,3904,3892,3880,3866,3853,3838,3823,
         3807,3791,3773,3755,3736,3716,3696,3675,3652,3629,3605,3581,3555,3528,3501,3472,3443,3413,3381,3349,3316,3282,3248,3212,
@@ -25,31 +24,22 @@ const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955
 
 /****************************/
 
-/*void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
+int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
 {
-	tAI_FloatValue* pData = pVar;
-	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
-	pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
-}*/
-
-/*void AnalogInput_convertADC_to_CTN_10K(float newValue)
-{
-	//tAI_IntValue* pData = pVar;
-	uint16_t Val_ADC = (uint16_t) newValue;
     uint8_t i;
     float Ax, B;// 0 is convPoint  / 1 is temp
 
     if (Val_ADC >= (uint16_t)TableConversionsAdc12bCtn3977[ADC][0]) {
-    	pData->TempValue = (int16_t)TEMPERATURE_MIN;
+    	return (int16_t)TEMPERATURE_MIN;
 
     } else if (Val_ADC <= (uint16_t)TableConversionsAdc12bCtn3977[ADC][(SIZE_TAB_CTN - 1)]) {
-    	pData->TempValue = (int16_t)TEMPERATURE_MAX;
+    	return (int16_t)TEMPERATURE_MAX;
     }
 
     // On recherche ou l'on se trouve dans la table
     // recherche par dichotomie
     uint8_t border_a = 0;
-    uint8_t border_b = SIZE_TAB_CTN-1;// ou sizeof(table)
+    uint8_t border_b = SIZE_TAB_CTN-1;
     uint8_t middle = 0;
     while(border_b > border_a + 1)
     {
@@ -62,28 +52,27 @@ const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955
 		{
 			border_a = middle;
 		}
-
     }
     i = border_a+1;
 
     //On calcule la pente (extrapolation lineaire)
-    Ax = ((float) TableConversionsAdc12bCtn3977[TEMP][i]*100//temp
-            - (float) TableConversionsAdc12bCtn3977[TEMP][i - 1]*100)// temp i-1
-            / ((float) TableConversionsAdc12bCtn3977[ADC][i]// val adc
-                    - (float) TableConversionsAdc12bCtn3977[ADC][i - 1]);// val adc i-1
-    B = TableConversionsAdc12bCtn3977[1][i]*100 //temp
-            - Ax * TableConversionsAdc12bCtn3977[ADC][i];// val adc
+    Ax = ((float) TableConversionsAdc12bCtn3977[TEMP][i]*100
+            - (float) TableConversionsAdc12bCtn3977[TEMP][i - 1]*100)
+            / ((float) TableConversionsAdc12bCtn3977[ADC][i]
+                    - (float) TableConversionsAdc12bCtn3977[ADC][i - 1]);
+    B = TableConversionsAdc12bCtn3977[1][i]*100
+            - Ax * TableConversionsAdc12bCtn3977[ADC][i];
 
     //On calcul la Textrapol
     //gestion de l'arrondi  l'unit
-    if((((float) Val_ADC) * Ax + B) < 0) // TODO: Vrifier l'ajout +/- 0.5f ...
+    if((((float) Val_ADC) * Ax + B) < 0) // TODO: Verifier l'ajout +/- 0.5f ...
     {
-    	pData->TempValue = (int16_t) ((((float) Val_ADC) * Ax + B) - 0.5);
+    	return (int16_t) ((((float) Val_ADC) * Ax + B) - 0.5);
     }
     else
     {
-    	pData->TempValue = (int16_t) (((float) Val_ADC * Ax + B) + 0.5);
+    	return (int16_t) (((float) Val_ADC * Ax + B) + 0.5);
     }
-}*/
+}
 
 #endif /* CTN_TT4_10KC3_CTN_CPP_ */
