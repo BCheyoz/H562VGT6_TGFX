@@ -130,11 +130,12 @@ int main(void)
   MX_CRC_Init();
   MX_FileX_Init();
   MX_USBX_Host_Init();
+  MX_I2C3_Init();
   MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
   InitBaseDeTemps();
   InitComputeInfos();
-  I2cComMaster_Init_System();
+  //I2cComMaster_Init_System(); // désactiver car il appele MX_I2C1_Init qui est déja appeler plus haut
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
   /* USER CODE END 2 */
@@ -173,8 +174,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI
+                              |RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV2;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
@@ -224,7 +229,7 @@ void PeriphCommonClock_Config(void)
   */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_USART3
                               |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5
-							  |RCC_PERIPHCLK_I2C1;
+                              |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_I2C3;
   PeriphClkInitStruct.PLL3.PLL3Source = RCC_PLL3_SOURCE_HSE;
   PeriphClkInitStruct.PLL3.PLL3M = 1;
   PeriphClkInitStruct.PLL3.PLL3N = 16;
@@ -239,6 +244,7 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.Uart4ClockSelection = RCC_UART4CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart5ClockSelection = RCC_UART5CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PLL3R;
+  PeriphClkInitStruct.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PLL3R;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL3Q;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
