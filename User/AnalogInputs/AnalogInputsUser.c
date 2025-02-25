@@ -39,7 +39,7 @@ extern "C" {
 #define ADC1_RAW_BUF_NAME		AdcRawBuf1
 #define ADC1_ACCU_RAW_BUF_NAME	AdcAccuRawBuf1
 #define ADC1_MOY_FN_HANDLERS	Adc1FnNewFloatValueHandlers
-#define ADC1_NB_OF_CHANNELS 	5			// tfl4_cartemere_app = VrefInt, ADC1_IN1 (Ai_T1), ADC1_IN0 (Ai_T2), ADC1_IN18 (Ai_T3), ADC1_IN15 (Ai_T4), ADC1_IN14 (Ai_T5)
+#define ADC1_NB_OF_CHANNELS 	6			// tfl4_cartemere_app = VrefInt, ADC1_IN1 (Ai_T1), ADC1_IN0 (Ai_T2), ADC1_IN18 (Ai_T3), ADC1_IN15 (Ai_T4), ADC1_IN14 (Ai_T5)
 #define ADC1_SAMPLES_PER_CH 	1			// 5 échantillons de chaque pour faire une première moyenne instantanée
 #define ADC1_MOY_NB_VALUES		1			// La valeur de sortie sera moyennée sur les 20 dernières valeurs instantanées disponibles
 #define ADC1_CONV_DELAY 		10			// Temps accordé pour la Conv : Base @ 10ms => 10 = 100ms
@@ -78,7 +78,7 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 /******************************************************************************/
 // Variables finales pour le Stockage des Résultats ADC :
 
-//tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
+tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
 tAI_IntValue tAi1_T1 = {0};// ADC1_IN1
 tAI_IntValue tAi0_T2 = {0};// ADC1_IN0
 tAI_IntValue tAi18_T3 = {0};// ADC1_IN18
@@ -99,7 +99,7 @@ void AnalogInput_HandleEndOfConv(void* pVar);
 // Tableau des Fonctions de Conversion à appeler & Variables Finales, en fonction du Channel considéré :
 
 tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
-	//{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
+	{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
 	{ AnalogInput_HandleNewFloat_CTN, 	&tAi1_T1 },	// Valeur n°2 = ADC1_IN1 = tAi_T1
 	{ AnalogInput_HandleNewFloat_CTN, 	&tAi0_T2 },	// Valeur n°3 = ADC1_IN0 = tAi_T2
 	{ AnalogInput_HandleNewFloat_CTN, 	&tAi18_T3 },	// Valeur n°4 = ADC1_IN18 = tAi_T3
@@ -134,16 +134,12 @@ void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
 	pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
-	//pData->value = (newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
 }
 
 void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
 {
 	tAI_IntValue* pData = pVar;
-	//pData->nbPtADC = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
-	uint16_t test1 = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
-	int16_t test_res = convertADC_to_CTN_10K(test1);
-	pData->nbPtADC = (uint16_t)(newValue-66.f);
+	pData->nbPtADC = (uint16_t)(newValue-AI_OFFSET_PT_CTN);
 	pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
 }
 

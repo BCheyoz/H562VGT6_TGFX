@@ -33,7 +33,7 @@ typedef struct {
 } tAI_IntValue;
 
 /******************************************************************************/
-//extern tAI_FloatValue tAiRefAlim;
+extern tAI_FloatValue tAiRefAlim;
 extern tAI_IntValue tAi1_T1;
 extern tAI_IntValue tAi0_T2;
 extern tAI_IntValue tAi18_T3;
