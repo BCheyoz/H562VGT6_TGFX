@@ -65,6 +65,14 @@ void Error_Handler(void);
 #define LED_ALIVE_GPIO_Port GPIOE
 #define BLE_IRQ_Pin GPIO_PIN_10
 #define BLE_IRQ_GPIO_Port GPIOD
+#define Sensor_IC2_SDA_Pin GPIO_PIN_9
+#define Sensor_IC2_SDA_GPIO_Port GPIOC
+#define Sensor_IC2_SCL_Pin GPIO_PIN_8
+#define Sensor_IC2_SCL_GPIO_Port GPIOA
+#define TouchScreen_I2C_SDA_Pin GPIO_PIN_7
+#define TouchScreen_I2C_SDA_GPIO_Port GPIOB
+#define TouchScreen_I2C_SCL_Pin GPIO_PIN_8
+#define TouchScreen_I2C_SCL_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
