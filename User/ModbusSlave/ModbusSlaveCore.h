@@ -27,7 +27,7 @@
 typedef struct _tModbusSlaveParams
 {
 	// Pour l'identification :
-	uint16_t SrcId;     // Pour identifier le Périphérique Source de l'Evènement
+	uint16_t SrcId;		// Pour identifier le Périphérique Source de l'Evènement
 	uint16_t SlaveAdr;	// Adresse(s) à laquelle doit réagir le Décodage (LowByte = Adr1, HighByte = Adr2)
 	// Pour la Gestion du Niveau d'accès :
 	uint16_t AccessLevel; // Niveau d'accès actuellement autorisé
@@ -36,14 +36,14 @@ typedef struct _tModbusSlaveParams
 	uint16_t lastFrameResult; // Pour Mémoire du résultat de traitement de la dernière Réception Modbus
 
 	// Statistiques ModbusSlave :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// (cf. "ModbusSlaveConf.h"
 	uint32_t nbFramesRx;
 	uint32_t nbFramesRxLowSz;
 	uint32_t nbFramesRxCrcOk;
 	uint32_t nbFramesRxCrcErr;
 	uint32_t nbFramesRxAdrOk;
 	uint32_t nbFramesRxAdrErr;
-	uint32_t NbTramesTx;
+	uint32_t nbTramesTx;
 	// Répartition par Handler :
 	uint32_t nbFramesRead03;
 	uint32_t nbFramesWrit16;
@@ -56,87 +56,87 @@ typedef struct _tModbusSlaveParams
 /******************************************************************************/
 
 typedef enum {
-    TVarUnknown,
+	TVarUnknown,
 
-    // Type Signed Char (1 Byte = 8 bits) :
-    TVarSCharGetVarSetVar,
-    TVarSCharGetVarSetFct,
-    TVarSCharGetFctSetVar,
-    TVarSCharGetFctSetFct,
+	// Type Signed Char (1 Byte = 8 bits) :
+	TVarSCharGetVarSetVar,
+	TVarSCharGetVarSetFct,
+	TVarSCharGetFctSetVar,
+	TVarSCharGetFctSetFct,
 
-    // Type Unsigned Char (1 Byte = 8 bits) :
-    TVarUCharGetVarSetVar,
-    TVarUCharGetVarSetFct,
-    TVarUCharGetFctSetVar,
-    TVarUCharGetFctSetFct,
+	// Type Unsigned Char (1 Byte = 8 bits) :
+	TVarUCharGetVarSetVar,
+	TVarUCharGetVarSetFct,
+	TVarUCharGetFctSetVar,
+	TVarUCharGetFctSetFct,
 
-    // Type Signed Int (2 Bytes = 1x 16 bits) :
-    TVarSIntGetVarSetVar,
-    TVarSIntGetVarSetFct,
-    TVarSIntGetFctSetVar,
-    TVarSIntGetFctSetFct,
+	// Type Signed Int (2 Bytes = 1x 16 bits) :
+	TVarSIntGetVarSetVar,
+	TVarSIntGetVarSetFct,
+	TVarSIntGetFctSetVar,
+	TVarSIntGetFctSetFct,
 
-    // Type Unsigned Int (2 Bytes = 1x 16 bits) :
-    TVarUIntGetVarSetVar,
-    TVarUIntGetVarSetFct,
-    TVarUIntGetFctSetVar,
-    TVarUIntGetFctSetFct,
+	// Type Unsigned Int (2 Bytes = 1x 16 bits) :
+	TVarUIntGetVarSetVar,
+	TVarUIntGetVarSetFct,
+	TVarUIntGetFctSetVar,
+	TVarUIntGetFctSetFct,
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32 // (cf. "ModbusSlaveConf.h")
-    //----------------------------------------
-    // Type Signed Long (4 Bytes = 2x 16 bits) :
-    TVarSLongGetVarSetVar,
-    TVarSLongGetVarSetFct,
-    TVarSLongGetFctSetVar,
-    TVarSLongGetFctSetFct,
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
+	//----------------------------------------
+	// Type Signed Long (4 Bytes = 2x 16 bits) :
+	TVarSLongGetVarSetVar,
+	TVarSLongGetVarSetFct,
+	TVarSLongGetFctSetVar,
+	TVarSLongGetFctSetFct,
 
-    // Type Unsigned Long (4 Bytes = 2x 16 bits) :
-    TVarULongGetVarSetVar,
-    TVarULongGetVarSetFct,
-    TVarULongGetFctSetVar,
-    TVarULongGetFctSetFct,
+	// Type Unsigned Long (4 Bytes = 2x 16 bits) :
+	TVarULongGetVarSetVar,
+	TVarULongGetVarSetFct,
+	TVarULongGetFctSetVar,
+	TVarULongGetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG // (cf. "ModbusSlaveConf.h")
-    //----------------------------------------
-    // Type Signed LongLong (8 Bytes = 4x 16 bits) :
-    TVarSLongLongGetVarSetVar,
-    TVarSLongLongGetVarSetFct,
-    TVarSLongLongGetFctSetVar,
-    TVarSLongLongGetFctSetFct,
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
+	//----------------------------------------
+	// Type Signed LongLong (8 Bytes = 4x 16 bits) :
+	TVarSLongLongGetVarSetVar,
+	TVarSLongLongGetVarSetFct,
+	TVarSLongLongGetFctSetVar,
+	TVarSLongLongGetFctSetFct,
 
-    // Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
-    TVarULongLongGetVarSetVar,
-    TVarULongLongGetVarSetFct,
-    TVarULongLongGetFctSetVar,
-    TVarULongLongGetFctSetFct,
+	// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
+	TVarULongLongGetVarSetVar,
+	TVarULongLongGetVarSetFct,
+	TVarULongLongGetFctSetVar,
+	TVarULongLongGetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
 #ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT // (cf. "ModbusSlaveConf.h")
-    //----------------------------------------
-    // Type Float Int x1 (2 Bytes = 1x 16 bits) :
-    TVarFloatIntX1GetVarSetVar,
-    TVarFloatIntX1GetVarSetFct,
-    TVarFloatIntX1GetFctSetVar,
-    TVarFloatIntX1GetFctSetFct,
+	//----------------------------------------
+	// Type Float Int x1 (2 Bytes = 1x 16 bits) :
+	TVarFloatIntX1GetVarSetVar,
+	TVarFloatIntX1GetVarSetFct,
+	TVarFloatIntX1GetFctSetVar,
+	TVarFloatIntX1GetFctSetFct,
 
-    // Type Float Int x10 (2 Bytes = 1x 16 bits) :
-    TVarFloatIntX10GetVarSetVar,
-    TVarFloatIntX10GetVarSetFct,
-    TVarFloatIntX10GetFctSetVar,
-    TVarFloatIntX10GetFctSetFct,
+	// Type Float Int x10 (2 Bytes = 1x 16 bits) :
+	TVarFloatIntX10GetVarSetVar,
+	TVarFloatIntX10GetVarSetFct,
+	TVarFloatIntX10GetFctSetVar,
+	TVarFloatIntX10GetFctSetFct,
 
-    // Type Float Int x100 (2 Bytes = 1x 16 bits) :
-    TVarFloatIntX100GetVarSetVar,
-    TVarFloatIntX100GetVarSetFct,
-    TVarFloatIntX100GetFctSetVar,
-    TVarFloatIntX100GetFctSetFct,
+	// Type Float Int x100 (2 Bytes = 1x 16 bits) :
+	TVarFloatIntX100GetVarSetVar,
+	TVarFloatIntX100GetVarSetFct,
+	TVarFloatIntX100GetFctSetVar,
+	TVarFloatIntX100GetFctSetFct,
 
-    // Type Float Int x1000 (2 Bytes = 1x 16 bits) :
-    TVarFloatIntX1000GetVarSetVar,
-    TVarFloatIntX1000GetVarSetFct,
-    TVarFloatIntX1000GetFctSetVar,
-    TVarFloatIntX1000GetFctSetFct,
+	// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
+	TVarFloatIntX1000GetVarSetVar,
+	TVarFloatIntX1000GetVarSetFct,
+	TVarFloatIntX1000GetFctSetVar,
+	TVarFloatIntX1000GetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
 #ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG // (cf. "ModbusSlaveConf.h")
@@ -155,27 +155,27 @@ typedef enum {
 
 	// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX1KGetVarSetVar,
-    TVarFloatLongX1KGetVarSetFct,
-    TVarFloatLongX1KGetFctSetVar,
-    TVarFloatLongX1KGetFctSetFct,
+	TVarFloatLongX1KGetVarSetFct,
+	TVarFloatLongX1KGetFctSetVar,
+	TVarFloatLongX1KGetFctSetFct,
 
 	// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX10KGetVarSetVar,
-    TVarFloatLongX10KGetVarSetFct,
-    TVarFloatLongX10KGetFctSetVar,
-    TVarFloatLongX10KGetFctSetFct,
+	TVarFloatLongX10KGetVarSetFct,
+	TVarFloatLongX10KGetFctSetVar,
+	TVarFloatLongX10KGetFctSetFct,
 
 	// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX100KGetVarSetVar,
-    TVarFloatLongX100KGetVarSetFct,
-    TVarFloatLongX100KGetFctSetVar,
-    TVarFloatLongX100KGetFctSetFct,
+	TVarFloatLongX100KGetVarSetFct,
+	TVarFloatLongX100KGetFctSetVar,
+	TVarFloatLongX100KGetFctSetFct,
 
 	// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX1MGetVarSetVar,
-    TVarFloatLongX1MGetVarSetFct,
-    TVarFloatLongX1MGetFctSetVar,
-    TVarFloatLongX1MGetFctSetFct,
+	TVarFloatLongX1MGetVarSetFct,
+	TVarFloatLongX1MGetFctSetVar,
+	TVarFloatLongX1MGetFctSetFct,
 
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
@@ -183,15 +183,15 @@ typedef enum {
 	//----------------------------------------
 	// Type Float Long Raw (4 Bytes = 2x 16 bits) :
 	TVarFloatLongRawGetVarSetVar,
-    TVarFloatLongRawGetVarSetFct,
-    TVarFloatLongRawGetFctSetVar,
-    TVarFloatLongRawGetFctSetFct,
+	TVarFloatLongRawGetVarSetFct,
+	TVarFloatLongRawGetFctSetVar,
+	TVarFloatLongRawGetFctSetFct,
 
 	// Type Double LongLong Raw (8 Bytes = 4x 16 bits) :
 	TVarDoubleLongLongRawGetVarSetVar,
-    TVarDoubleLongLongRawGetVarSetFct,
-    TVarDoubleLongLongRawGetFctSetVar,
-    TVarDoubleLongLongRawGetFctSetFct,
+	TVarDoubleLongLongRawGetVarSetFct,
+	TVarDoubleLongLongRawGetFctSetVar,
+	TVarDoubleLongLongRawGetFctSetFct,
 
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 

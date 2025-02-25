@@ -129,23 +129,23 @@ tRxTxBufInfo* pCurRxTxBI = 0;			// Pour certaines Fonctions qui ont besoin d'Inf
 	static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// (cf. "ModbusSlaveConf.h
 	static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
 
-#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
+#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY	// (cf. "ModbusSlaveConf.h
 	static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
-#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
+#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// (cf. "ModbusSlaveConf.h
 	static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 	// (cf. "ModbusSlaveConf.h
 	static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
 
-#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
+#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  	// (cf. "ModbusSlaveConf.h
 	static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
 
@@ -213,6 +213,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 
 	uint16_t nbBytesRecus = pRxTxBI->RxBuf.nbBytes;
 	uint8_t* myTx = pRxTxBI->TxBuf.pBufBase;
+
 	if(nbBytesRecus >= MODBUS_SLAVE_MIN_RX_SIZE)	// S'il y a suffisamment de Bytes pour une Trame valide :
 	{
 		uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
@@ -269,7 +270,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//--------------------------------------------------
 				// Gestion Ecriture Ressource (Broadcast autorisé) :
 				//--------------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// (cf. "ModbusSlaveConf.h
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteExternalRessource(pRxTxBI, pModbusSlave, &nbBytes);
@@ -279,7 +280,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//------------------------------------------------
 				// Gestion Ordre de Dump Memory (sauf Broadcast) :
 				//------------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
+#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY	// (cf. "ModbusSlaveConf.h
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionDumpExternalMemory(pRxTxBI, pModbusSlave, &nbBytes);
@@ -289,7 +290,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Ecriture Programme Interne (Broadcast autorisé) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 	// (cf. "ModbusSlaveConf.h
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteFirmwareBloc(pRxTxBI, pModbusSlave, &nbBytes);
@@ -299,7 +300,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Vérification Programme (sauf Broadcast) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
+#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  	// (cf. "ModbusSlaveConf.h
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionValidateFirmwareProgram(pRxTxBI, pModbusSlave, &nbBytes);
@@ -309,7 +310,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Lecture Programme (sauf Broadcast) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
+#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// (cf. "ModbusSlaveConf.h
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionReadInternalProgram(pRxTxBI, pModbusSlave, &nbBytes);

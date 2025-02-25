@@ -12,30 +12,32 @@
  * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  History Usage :
- *-> 27/04/2021 : Added by Jp to TestUART_Com (STM32F732VETx)
- *-> 21/05/2021 : Added by Jp to Nükub732_Firmware (STM32F732VE : productprojects/ventilation/double-flux/nukub/Nukub_firmware)
- *-> 30/07/2021 : Added by Jp to TstMotPaP_Firmware (STM32F103RBTx : toolsprojects/moteurpap)
- *-> 12/08/2021 : Added by Jp to RMD_Firmware (STM32G0B1CETx : productprojects/ventilation/tertiaire/rmd/rmd_firmware)
- *-> 05/01/2022 : Added by Jp to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
- *-> 25/02/2022 : Added by AB to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
- * Add TFlow4
- * Add Msp430i2021_Test1 au 27 nov. 2024
+ *-> 27/04/2021 : Added by Jp	to TestUART_Com (STM32F732VETx)
+ *-> 21/05/2021 : Added by Jp	to Nükub732_Firmware (STM32F732VE : productprojects/ventilation/double-flux/nukub/Nukub_firmware)
+ *-> 30/07/2021 : Added by Jp	to TstMotPaP_Firmware (STM32F103RBTx : toolsprojects/moteurpap)
+ *-> 12/08/2021 : Added by Jp	to RMD_Firmware (STM32G0B1CETx : productprojects/ventilation/tertiaire/rmd/rmd_firmware)
+ *-> 05/01/2022 : Added by Jp	to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
+ *-> 25/02/2022 : Added by AB	to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
+ *-> 08/04/2022 : Added by Jp	to SensorsAcquisition_G071RB (STM32G071RBT6 : innoprojects/sensors-acquisition/firmware-kit-stm32g071rb)
+ *-> 06/12/2023 : Added by Ab	to MV_By_ALDES (STM32G030C8T6 : productprojects/ventilation/individuel/mvbyaldes/mv-by-aldes-app)
+ *-> 27/11/2024 : Added by Jp	to Msp430i2021_Test1 (MSP430i2021 : sandbox/teststi/msp-exp430fr2433_test1)
+ *-> 25/02/2025 : Added by Jp	to TFlow4_CarteMere_App (STM32H562VGTX : be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
+ *
  */
 
-#ifndef UART_COM_UARTCOMMODBUSCONF_H_
-#define UART_COM_UARTCOMMODBUSCONF_H_
+#ifndef MODBUS_SLAVE_MODBUS_SLAVE_CONF_H_
+#define MODBUS_SLAVE_MODBUS_SLAVE_CONF_H_
 
 /********************************************************************************************
 * Procédure pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau projet : *
 *********************************************************************************************
 
- Cette Librairie "ModbusSlave" s'appuie sur la Librairie "UartCom", de préférence du 06/01/2022.
+ +--------------------------------+
+ | Etape I : Configurer "UartCom" |
+ +--------------------------------+
+===> Cette Librairie s'appuie sur la Librairie "UartCom" :
 
- +---------------------------------------------------------------+
- | Etape I : Configurer CubeMX, ainsi que la Librairie "UartCom" |
- +---------------------------------------------------------------+
-
-I.1) Suivre d'abord la Prodécure indiquée dans "UartComConf.h", et surtout les étapes suivantes :
+I.1) Suivre tout d'abord la Procédure décrite dans "UartComConf.h", et surtout les étapes suivantes :
  -> I.3) Configurer CubeMX pour Communiquer en ModBus
  -> II.2) Activer "UART_COM_ENABLE_MODBUS_SLAVE" pour ModbusSlave
  -> III.10) Ajouter au projet l'une des Librairie "Utils" compatibles
@@ -46,9 +48,11 @@ I.2) Configurer dans "UartComDevices.h" les define correspondant à votre usage 
  "UART_COM_NB_OF_USBH_MODBUS_SLAVE_ONLY", "UART_COM_NB_OF_USBH_MODBUS_SLAVE_FTFL",
  ainsi que "UART_COM_NB_OF_USB_MODBUS_SLAVE_FTFL" (= "UART_COM_NB_OF_*_MODBUS_SLAVE_*").
 
- +----------------------------------------------------------------------------------------+
- | Etape II : Dans ce fichier "ModbusSlaveConf.h", Configurer ci-dessous (cf. plus bas) : |
- +----------------------------------------------------------------------------------------+
+
+ +-------------------------------------+
+ | Etape II : Configurer "ModbusSlave" |
+ +-------------------------------------+
+===> Dans ce fichier "ModbusSlaveConf.h" (cf. plus bas) :
 
 II.1) Renseigner "NB_MODBUS_SLAVE_BUF_DEF_SIZE" du nombre de périphériques vers ModbusSlave
  qui vont utiliser des Buffers de la taille par défaut
@@ -59,11 +63,30 @@ II.2) Le cas échéant, activer et renseigner "NB_MODBUS_SLAVE_BUF_SIZE_2" et/ou
 
 II.3) Adapter "MODBUS_SLAVE_BUF_DEF_RX_SIZE" et "MODBUS_SLAVE_BUF_DEF_TX_SIZE" aux besoins,
  respectivement, en réception et transmission, de taille par défaut de Buffer.
-(par exemple : 200 en réception et 200 en transmisison ; 1100 en réception et 500 en transmission)
+
+Exemple 1 : 270 bytes en Réception et en Réponse par défaut
+#define MODBUS_SLAVE_BUF_DEF_RX_SIZE	270	// Taille du Buffer par défaut pour la Réception ModbusSlave (min = 266 bytes)
+#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	270		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes)
+
+Exemple 2 : 1100 bytes en Réception et 500 en Réponse par défaut
+#define MODBUS_SLAVE_BUF_DEF_RX_SIZE	1100	// Taille du Buffer par défaut pour la Réception ModbusSlave (min = 266 bytes)
+#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	500		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes)
+
+Exemple 3 : 1270 bytes en Réception et 270 bytes en Réponse par défaut
+#define MODBUS_SLAVE_BUF_DEF_RX_SIZE	1270	// Taille du Buffer par défaut pour la Réception ModbusSlave (min = 266 bytes)
+#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	270		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes)
 
 II.4) Le cas échéant, adapter "MODBUS_SLAVE_BUF_SIZE_2_RX" & "MODBUS_SLAVE_BUF_SIZE_2_TX" et/ou
  "MODBUS_SLAVE_BUF_SIZE_3_RX" & "MODBUS_SLAVE_BUF_SIZE_3_TX" aux besoins, respectivement, pour
  les Tailles de Buffer personnalisée n°2 et/ou 3 (en réception & transmission)
+
+Exemple 1 : 50 bytes en Réception et en Réponse pour la Taille 2 :
+#define MODBUS_SLAVE_BUF_SIZE_2_RX		50		// Pour la Réception
+#define MODBUS_SLAVE_BUF_SIZE_2_TX		50		// Pour la Transmission
+
+Exemple 2 : 1050 bytes en Réception et en Réponse pour la Taille 3 :
+#define MODBUS_SLAVE_BUF_SIZE_3_RX		1050	// Pour la Réception
+#define MODBUS_SLAVE_BUF_SIZE_3_TX		1050	// Pour la Transmission
 
 II.5) Activer ou Désactiver les fonctions de ModbusSlave qui devront être supportées,
  par exemple : "MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS",
@@ -75,13 +98,19 @@ II.6) Activer ou Désactiver les spécificités "float" qui devront être suppor
 II.7) Activer ou Désactiver le support des Statistiques ModbusSlave, ainsi que leur éventuel
  accès dans la Table Modbus : "MODBUS_SLAVE_SUPPORT_STATS" et "MODBUS_SLAVE_ENABLE_STATS_ACCESS"
 
-II.8) Il est possible de définir l'Adresse Esclave Modbus par défaut à laquelle chaque périphérique
- devrait être attentif, via notamment "MODBUS_SLAVE_IHM_DEF_SLAVE_ID", "MODBUS_SLAVE_USER_DEF_SLAVE_ID" ...
+II.8) Configurer l'Adresse Esclave Modbus par défaut pour chaque périphérique Source
+
+Exemples :
+#define MODBUS_SLAVE_IHM_DEF_SLAVE_ID	2	// Répondre au Modbus IHM  sur Adr_Esclave = 2
+#define MODBUS_SLAVE_USER_DEF_SLAVE_ID	2	// Répondre au Modbus USER sur Adr_Esclave = 2
+#define MODBUS_SLAVE_EXT_DEF_SLAVE_ID	2	// Répondre au Modbus EXT  sur Adr_Esclave = 2
+#define MODBUS_SLAVE_USBD_DEF_SLAVE_ID	2	// Répondre au Modbus USBD sur Adr_Esclave = 2
 
 
- +----------------------------------------------------------------------------+
- | Etape III : Affecter les Paramètres de Gestion, dans "ModbusSlaveUser.h" : |
- +----------------------------------------------------------------------------+
+ +---------------------------------------------------------+
+ | Etape III : Configurer la 1° partie User de ModbusSlave |
+ +---------------------------------------------------------+
+===> Dans le fichier User.h de "ModbusSlaveUser.h" :
 
 III) Activer ou Commenter, dans la zone "USER CODE * ManageParams" de "ModbusSlaveUser.h", les différentes
  Affectations des Paramètres de Gestion des sources de ModbusSlave
@@ -103,9 +132,10 @@ Exemple 4 : Les Paramètres de Gestion ModbusSlave sur l'USB_Device seront stock
 #define MODBUS_SLAVE_USBD_CDC_PARAMS	&ModbusSlaveParam[3]
 
 
- +--------------------------------------------------------------+
- | Etape IV : Configurer la partie USER, dans "UartComUser.c" : |
- +--------------------------------------------------------------+
+ +-----------------------------------+
+ | Etape IV : Configurer UartComUser |
+ +-----------------------------------+
+===> Dans la partie USER de "UartComUser.c" :
 
 INFO : Si "UartComDevices.h" a suffisemment bien été configuré à l'étape I.2 ci-dessus,
  => Le fichier "ModbusSlaveUser.h" est automatiquement inclu dans "UartComUser.c".
@@ -169,9 +199,10 @@ IV.3) En cas de ModbusSlave intermittent, Décommenter et Adapter les fonctions 
 (ou en créer / ajouter d'autres similaires suivants les besoins)
 
 
- +-----------------------------------------------------------------+
- | Etape V : Configurer la partie USER, dans "ModbusSlaveUser.c" : |
- +-----------------------------------------------------------------+
+ +-------------------------------------------------------+
+ | Etape V : Configurer la 2° partie User de ModbusSlave |
+ +-------------------------------------------------------+
+===> Dans le fichier User.c de "ModbusSlaveUser.c" :
 
 V.1) Ajouter vos Includes utiles dans la zone des "USER CODE * Includes" de "ModbusSlaveUser.c",
 
@@ -181,7 +212,7 @@ V.3) Ajouter vos Prototypes appropriés dans la zone des "USER CODE * Prototypes
 
 V.4) Ajouter dans la Table ModbusSlave un élément de type tModbusSlaveItem par adresse Modbus à implémenter.
  Remarque : il faut toujours veiller à respecter l'ordre croissant des adresses.
- + Il faut aussi toujours veiller à ce que chaque élément ne pas de "l'ombre" au(x) suivant(s) en raison de sa taille.
+ + Il faut aussi toujours veiller à ce qu'aucun élément ne fasse "d'ombre" au(x) suivant(s) en raison de sa taille.
 
 Exemple 1 : En adresse $1, niveau d'accès 0 en lecture et niveau 4 requis en écriture, la variable "Fab_CodeSapProduct"
  (de type "ULong", c'est à dire 32bits non-signé) est retournée par lecture directe depuis son pointeur RAM ("GetVar") :
@@ -212,17 +243,40 @@ Info : La fonction "ModbusSlaveInitUserMST" est appelée par la Librairie "UartC
  tous les Périphériques matériel "statiques" associés aient été initialisés.
 
 
- +-----------------------------------+
- | Etape VI : Configurer le Projet : |
- +-----------------------------------+
+ +---------------------------------+
+ | Etape VI : Configurer le Projet |
+ +---------------------------------+
+===> Dans le nouveau Projet :
 
-VI.1) Ajouter le Dossier "ModbusSlave" à l' "IncludePath" pour toutes les Configs de Build.
+VI.1) Ajouter le Dossier "ModbusSlave" à l' "IncludePath" pour toutes les Configs de Build
 (Attention : CubeIDE a l'habitude de stocker les chemins relatifs au Workspace, et non au Dossier)
 -> il est souvent préférable d'utiliser la formulation "../User/ModbusSlave" (sans les guillemets)
+Info : Pour vérifier, sélectionner "Properties" du Projet -> "C/C++ Build" -> "Settings" -> "Tool Settings"
+ -> "MCU GCC Compiler" -> "Include paths".
 
 VI.2) Vérifier que le Dossier "ModbusSlave" ne soit "Exclude From Build" d'aucune des Configs.
-  (y compris "Debug" & "Release")
+ (y compris "Debug" & "Release")
 Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" -> "Settings".
+
+VI.3) Ajouter au projet l'une des Librairie "Utils" compatibles, comme celle de "HII_Manta_App" ou "HII_CarteMere_App".
+ -> se reporter à "utils.h" pour intégrer plus facilement votre Librairie "Utils".
+
+
+ +---------------------------------------------+
+ | Etape VII : Configurer le "build-job" du CI |
+ +---------------------------------------------+
+===> Dans le MakeFile :
+
+VII.1) Ajouter aux "C_SOURCES" le chemin relatif vers les fichiers "ModbusSlaveCore.c" & "ModbusSlaveUser.c",
+ très probablement : "User/ModbusSlave/ModbusSlaveCore.c \" (sans les guillemets mais avec '\' en fin de ligne)
+ ET : "User/ModbusSlave/ModbusSlaveUser.c \" (toujours sans les guillemets mais aussi avec '\' en fin de ligne)
+
+Remarque : pour le chemin, il faut bien utiliser la bare oblique de la division '/' à la place du '\' habituel de Windows.
+
+VII.2) Ajouter aux "C_INCLUDES" le chemin relatif vers notre dossier "ModbusSlave" avec le préfixe "-I" devant,
+ très probablement : "-IUser/ModbusSlave \" (sans les guillemets mais également avec '\' en fin de ligne)
+
+Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à la place du '\' habituel de Windows.
 
 => Félicitations, c'est prêt :-) !
 
@@ -246,12 +300,12 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 #define MODBUS_SLAVE_BUF_DEF_TX_SIZE	270		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes)
 
 // ModbusSlave de Taille 2 :
-#define MODBUS_SLAVE_BUF_SIZE_2_RX		50		// Pour la Réception
-#define MODBUS_SLAVE_BUF_SIZE_2_TX		50		// Pour la Transmission
+#define MODBUS_SLAVE_BUF_SIZE_2_RX  	50		// Taille n°2 du Buffer pour la Réception
+#define MODBUS_SLAVE_BUF_SIZE_2_TX  	50		// Taille n°2 du Buffer pour la Transmission
 
 // ModbusSlave de Taille 3 :
-#define MODBUS_SLAVE_BUF_SIZE_3_RX		1050	// Pour la Réception
-#define MODBUS_SLAVE_BUF_SIZE_3_TX		1050	// Pour la Transmission
+#define MODBUS_SLAVE_BUF_SIZE_3_RX  	1050	// Taille n°3 du Buffer pour la Réception
+#define MODBUS_SLAVE_BUF_SIZE_3_TX  	1050	// Taille n°3 du Buffer pour la Transmission
 
 #ifndef NB_MODBUS_SLAVE_BUF_DEF_SIZE	// S'il n'y a pas de contre-ordre :
 #define NB_MODBUS_SLAVE_BUF_DEF_SIZE	MAX(UART_COM_NB_MAX_OF_MODBUS_SLAVE, 0)	// Tous les ModbusSlave sont de la Taille par défaut
@@ -263,7 +317,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 //#define DISABLE_MODBUS_SLAVE_SUPPORT
 //#define DISABLE_MAX_WRITE_REGISTERS_ONCE	// Désactiver la Limitation officielle (à 124 Registres max) sur WriteMultipleRegisters
 
-//#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
+#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
 //#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_5
 
 // Activation des Fonctions Modbus Standard supportées :
@@ -414,4 +468,4 @@ MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_OF_TABLE(uint16_t, MODBUS_SLAVE_BASE_OF_PSWD)
 #define MODBUS_SLAVE_INIT_DO_LOAD_FLAGS UART_COM_MAKE_INIT_FLAGS(UART_COM_DO_LOAD_AT_MST, MODBUS_SLAVE_CHECK_ECHO, MODBUS_SLAVE_MAY_SYNC_TX, MODBUS_SLAVE_MAY_SYNC_REPLY, MODBUS_SLAVE_ON_TX_STATE) // Synthèse des Flags UartComInitFlags
 #define MODBUS_SLAVE_INIT_NO_LOAD_FLAGS UART_COM_MAKE_INIT_FLAGS(UART_COM_NO_LOAD_AT_MST, MODBUS_SLAVE_CHECK_ECHO, MODBUS_SLAVE_MAY_SYNC_TX, MODBUS_SLAVE_MAY_SYNC_REPLY, MODBUS_SLAVE_ON_TX_STATE) // Synthèse des Flags UartComInitFlags
 
-#endif /* UART_COM_UARTCOMMODBUSCONF_H_ */
+#endif /* MODBUS_SLAVE_MODBUS_SLAVE_CONF_H_ */
