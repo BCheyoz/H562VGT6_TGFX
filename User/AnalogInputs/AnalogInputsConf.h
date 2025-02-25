@@ -25,8 +25,8 @@ extern "C" {
 //#define AI_NB_MAX_OF_INIT_PARAMS		1+1 // 2 pour essais avec 1 vide
 
 #define AI_DISCARD_MIN_MAX_VALUE	// Pour demander à ignorer les valeurs Min & Max des échantillons ADC_DMA
-//#define AI_REQUEST_CALIB_AT_MST 	// Pour demander une Calibration de l'ADC à l'Init
-//#define AI_SUPPORT_ADJUST_TO_REF	// Pour demander un ajustement des échantillons à une Référence fixe connue
+#define AI_REQUEST_CALIB_AT_MST 	// Pour demander une Calibration de l'ADC à l'Init
+#define AI_SUPPORT_ADJUST_TO_REF	// Pour demander un ajustement des échantillons à une Référence fixe connue
 
 #define AI_ENABLE_SUPPORT_STATS		// Pour demander à collecter des Statistiques spécifiques par ADC
 
@@ -36,8 +36,6 @@ extern "C" {
 #define AI_VALIM_TYPIC				3.3f // 3.3v Typique
 #define AI_VALIM_MIN				1.8f // 1.8v Minimum
 #define AI_VALIM_MAX				3.6f // 3.6v Maximum
-
-#define AI_OFFSET_PT_CTN 			66.0f
 
 #define AI_FIRST_INIT_PARAM	AI_BaseInitParam // Nom de la Base du Tableau d'Init des Paramètres
 #define AI_AFTER_INIT_PARAM	AI_EndInitParams // Nom de Fin du Tableau d'Init des Paramètres

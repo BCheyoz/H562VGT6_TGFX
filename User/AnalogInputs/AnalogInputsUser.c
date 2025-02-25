@@ -27,9 +27,6 @@ extern "C" {
 #define AI_K_ADC_3_3V_10K_100K_12bits	AI_MAKE_K_ADC_R1_R2(3.3f, 10.f*1000.f, 100.f*1000.f, 4095)	// Vref = 3.3V, R1 = 10K, R2 = 100K, Nmax(12bits) = 2^12 -1 = 4095
 #define AI_K_ADC_3_3V_10K_22K_12bits	AI_MAKE_K_ADC_R1_R2(3.3f, 10.f*1000.f,  22.f*1000.f, 4095)	// Vref = 3.3V, R1 = 10K, R2 = 22K,  Nmax(12bits) = 2^12 -1 = 4095
 
-#define AI_K_ADC_3_3V_10K_CTN_12bits	AI_MAKE_K_ADC_R1_R2(3.3f, 10.f*1000.f, 100.f*1000.f, 4095)	// Vref = 3.3V, R1 = 10K, R2 = 100K, Nmax(12bits) = 2^12 -1 = 4095
-
-
 /******************************************************************************/
 // Définitions pour la Gestion de l'ADC n°1 :
 
@@ -139,7 +136,7 @@ void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
 {
 	tAI_IntValue* pData = pVar;
-	pData->nbPtADC = (uint16_t)(newValue-AI_OFFSET_PT_CTN);
+	pData->nbPtADC = (uint16_t)(newValue);
 	pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
 }
 

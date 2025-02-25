@@ -22,14 +22,6 @@
 
 
 ## Etape III : connexion de la librairie avec AnalogInputs
-** Dans le fichier Conf.h ("AnalogInputsConf.h") : **
-1) ajouter les maccros suivantes (si inexistantes):
-
-	```
-	#define AI_VALIM_REELLE				3.3416f //ref pour ctn
-	#define AI_MAX_PT_CONV_REEL 		((AI_VALIM_TYPIC*AI_MAX_PT_CONV)/AI_VALIM_REELLE)
-	```
-
 ** Dans le fichier User.h ("AnalogInputsUser.h") : **
 1) Déclarer la structure suivante (si inexistante):
 	```
@@ -56,7 +48,7 @@
 	void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
 	{
 		tAI_IntValue* pData = pVar;
-		pData->nbPtADC = (uint16_t)(newValue*(float)AI_MAX_PT_CONV/AI_MAX_PT_CONV_REEL);
+		pData->nbPtADC = (uint16_t)(newValue);
 		pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
 	}
 	```
