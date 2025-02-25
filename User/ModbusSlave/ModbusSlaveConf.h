@@ -18,7 +18,8 @@
  *-> 12/08/2021 : Added by Jp to RMD_Firmware (STM32G0B1CETx : productprojects/ventilation/tertiaire/rmd/rmd_firmware)
  *-> 05/01/2022 : Added by Jp to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
  *-> 25/02/2022 : Added by AB to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
- *
+ * Add TFlow4
+ * Add Msp430i2021_Test1 au 27 nov. 2024
  */
 
 #ifndef UART_COM_UARTCOMMODBUSCONF_H_
@@ -260,6 +261,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 // Pour "ModbusSlaveCore.c" :
 
 //#define DISABLE_MODBUS_SLAVE_SUPPORT
+//#define DISABLE_MAX_WRITE_REGISTERS_ONCE	// Désactiver la Limitation officielle (à 124 Registres max) sur WriteMultipleRegisters
 
 //#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
 //#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_5
@@ -267,6 +269,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 // Activation des Fonctions Modbus Standard supportées :
 #define MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS 	// Enable support for 0x03 "Read Holding Registers"
 #define MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS	// Enable support for 0x10 "Write Multiple Registers"
+#define MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER  	// Enable support for 0x06 "Write Single Register"
 
 // Activation des "User Defined Function codes" supportés sur la Mémoire Externe :
 //#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// Enable support for 0x74 "Write Custom Resources to External Memory"
@@ -286,8 +289,11 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 // Pour "ModbusSlaveCore.h/c" :
 
 // Activation des spécificités supportées :
-#define MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// Pour le transfert de Float de très petite valeur, à fort coefficient de multiplication nécessaire
-#define MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// Pour le transfert de Float & Doubles en mode RAW
+#define MODBUS_SLAVE_SUPPORT_LONG_INT32  	// Pour supporter le transfert des "Long 32bits" en 2*Int16
+#define MODBUS_SLAVE_SUPPORT_LONG_LONG  	// Pour supporter le transfert des "LongLong 64bits" en 4*Int16
+//#define MODBUS_SLAVE_SUPPORT_FLOAT_INT  	// Pour le transfert de Float en Int16, avec coefficient de multiplication
+//#define MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// Pour le transfert de Float de très petite valeur, à fort coefficient de multiplication nécessaire
+//#define MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// Pour le transfert de Float & Doubles en mode RAW
 
 #define MODBUS_SLAVE_DEFAULT_UINT16_VALUE 0xFFFF
 
@@ -372,6 +378,9 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 #define MODBUS_SLAVE_BASE_OF_TABLE	BaseOfTableModbusSlave
 #define MODBUS_SLAVE_END_OF_TABLE	EndOfTableModbusSlave
 UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tModbusSlaveItem, MODBUS_SLAVE_BASE_OF_TABLE, MODBUS_SLAVE_END_OF_TABLE);
+
+#define MODBUS_SLAVE_BASE_OF_PSWD	BaseOfPswdModbusSlave
+MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_OF_TABLE(uint16_t, MODBUS_SLAVE_BASE_OF_PSWD);
 
 /******************************************************************************/
 // Pour "UartComUser.c" (ne pas modifier ces réglages) :

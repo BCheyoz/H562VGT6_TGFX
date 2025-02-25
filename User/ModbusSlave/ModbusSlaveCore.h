@@ -82,6 +82,8 @@ typedef enum {
     TVarUIntGetFctSetVar,
     TVarUIntGetFctSetFct,
 
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32 // (cf. "ModbusSlaveConf.h")
+    //----------------------------------------
     // Type Signed Long (4 Bytes = 2x 16 bits) :
     TVarSLongGetVarSetVar,
     TVarSLongGetVarSetFct,
@@ -93,7 +95,10 @@ typedef enum {
     TVarULongGetVarSetFct,
     TVarULongGetFctSetVar,
     TVarULongGetFctSetFct,
+#endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG // (cf. "ModbusSlaveConf.h")
+    //----------------------------------------
     // Type Signed LongLong (8 Bytes = 4x 16 bits) :
     TVarSLongLongGetVarSetVar,
     TVarSLongLongGetVarSetFct,
@@ -105,7 +110,10 @@ typedef enum {
     TVarULongLongGetVarSetFct,
     TVarULongLongGetFctSetVar,
     TVarULongLongGetFctSetFct,
+#endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT // (cf. "ModbusSlaveConf.h")
+    //----------------------------------------
     // Type Float Int x1 (2 Bytes = 1x 16 bits) :
     TVarFloatIntX1GetVarSetVar,
     TVarFloatIntX1GetVarSetFct,
@@ -129,8 +137,9 @@ typedef enum {
     TVarFloatIntX1000GetVarSetFct,
     TVarFloatIntX1000GetFctSetVar,
     TVarFloatIntX1000GetFctSetFct,
+#endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG // (cf. "ModbusSlaveConf.h")
 	//----------------------------------------
 	// Type Float Long x10 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX10GetVarSetVar,
@@ -170,7 +179,7 @@ typedef enum {
 
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW // (cf. "ModbusSlaveConf.h")
 	//----------------------------------------
 	// Type Float Long Raw (4 Bytes = 2x 16 bits) :
 	TVarFloatLongRawGetVarSetVar,

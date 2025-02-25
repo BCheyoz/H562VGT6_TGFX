@@ -58,6 +58,9 @@ uint16_t InstallCodePin = 405;	// For IHM Himalaya2
 /******************************************************************************/
 // Prototypes de Fonctions locales & externes, suivant les besoins :
 
+uint16_t GetVersionSoft16(void);
+uint32_t GetVersionSoft32(void);
+
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */
@@ -70,7 +73,7 @@ uint16_t InstallCodePin = 405;	// For IHM Himalaya2
 
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
 
-const tModbusSlaveItem TableModbusSlave[] = {
+static const tModbusSlaveItem TableModbusSlave[] = {
 //   Adresse,       RdMinLevel,         WrMinLevel,             VarType and Get/Set Method,     RdPtr,                                      WrPtr :
 
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// EXPORT = 1
@@ -606,6 +609,19 @@ UART_COM_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(tModbusSlaveItem, MODBUS_SLAVE_BAS
 
 /******************************************************************************/
 
+const uint16_t accessPswdTable[] =
+{
+	9781,	// Level 1 : (not used yet)
+	5476,	// Level 2 : Outils de Configuration
+	32184,	// Level 3 : IHM Produit
+	2794,	// Level 4 : Banc de Test Produit complet
+	941,	// Level 5 : Banc de Test Carte nue
+	0		// End of Levels List (0 is required to close the List).
+};
+MODBUS_SLAVE_MAKE_CONST_BASE_PTR_OF_TABLE(uint16_t, MODBUS_SLAVE_BASE_OF_PSWD, accessPswdTable);
+
+/******************************************************************************/
+
 inline void ModbusSlaveInitUserMST(void)
 {
 #if defined(UART_COM_NB_OF_UART_MODBUS_SLAVE_ONLY) && (UART_COM_NB_OF_UART_MODBUS_SLAVE_ONLY > 0)
@@ -653,7 +669,11 @@ void initModbusUserParamsFromMemHisto(void) // Ajout_Jp le 22/06/2020 : en cas d
 
 /******************************************************************************/
 
-__attribute__((weak)) uint32_t GetVersionSoft(void) // Pour proposer un Pseudo Versionning en l'absence de la Librairie "VersionInfos"
+__attribute__((weak)) uint16_t GetVersionSoft16(void) // Pour proposer un Pseudo Versionning en l'absence de la Librairie "VersionInfos"
+{
+	return 0xA001; // Alpha A001 sur 16bits
+}
+__attribute__((weak)) uint32_t GetVersionSoft32(void) // Pour proposer un Pseudo Versionning en l'absence de la Librairie "VersionInfos"
 {
 	return 0xA0000001; // Alpha v0.00.01 sur 32bits
 }

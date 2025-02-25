@@ -16,7 +16,9 @@
 #define MODBUSSLAVE_MODBUSSLAVEUTILS_H_
 
 #include <stdint.h>		// Pour les types "int*_t" & "uint*_t"
-#include "utils.h"				// Pour accès aux éléments utiles génériques
+//#if (__has_include("utils.h"))	// Macro spéciale de 'Code Composer Studio' pour µC de 'Texas Instruments'
+	#include "utils.h"  	// Pour accès aux éléments utiles génériques
+//#endif
 
 /******************************************************************************/
 
@@ -148,8 +150,12 @@ typedef union {
 
 /******************************************************************************/
 
+#define MODBUS_SLAVE_MAKE_CONST_BASE_PTR_OF_TABLE(t,b,a)	const t* b = a
+#define MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_OF_TABLE(t,b)	extern const t* b
+
 #define MODBUS_SLAVE_MAKE_CONST_END_OF_TABLE(t,n,b)	const t* n = ((void*)b) + (sizeof(b))
-#define MODBUS_SLAVE_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(t,b,e,a)	const t* b = a; const t* e = ((void*)a) + (sizeof(a))
+//#define MODBUS_SLAVE_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(t,b,e,a)	const t* b = a; const t* e = ((void*)a) + (sizeof(a))
+#define MODBUS_SLAVE_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(t,b,e,a)	const t* b = a; const t* e = (t*)(((void*)a) + (sizeof(a)))
 #define MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(t,b,e)	extern const t* b; extern const t* e
 
 #define MODBUS_SLAVE_MAKE_ARRAY_PARAMS(name,count)	tModbusSlaveParams name[count]
