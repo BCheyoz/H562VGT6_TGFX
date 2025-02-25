@@ -223,7 +223,8 @@ void PeriphCommonClock_Config(void)
   /** Initializes the peripherals clock
   */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_USART3
-                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5;
+                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5
+							  |RCC_PERIPHCLK_I2C1;
   PeriphClkInitStruct.PLL3.PLL3Source = RCC_PLL3_SOURCE_HSE;
   PeriphClkInitStruct.PLL3.PLL3M = 1;
   PeriphClkInitStruct.PLL3.PLL3N = 16;
@@ -233,10 +234,11 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3_VCIRANGE_1;
   PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3_VCORANGE_WIDE;
   PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
-  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVQ;
+  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVR|RCC_PLL3_DIVQ;
   PeriphClkInitStruct.Usart3ClockSelection = RCC_USART3CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart4ClockSelection = RCC_UART4CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart5ClockSelection = RCC_UART5CLKSOURCE_PLL3Q;
+  PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PLL3R;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL3Q;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
