@@ -1,14 +1,14 @@
 /*
- * ctn.cpp
+ * ctn.c
  *
  *  Created on: Feb 20, 2025
  *      Author: m.faget
  */
 
-#ifndef CTN_TT4_10KC3_CTN_CPP_
-#define CTN_TT4_10KC3_CTN_CPP_
+#ifndef CTN_TT4_10KC3_CTN_C_
+#define CTN_TT4_10KC3_CTN_C_
 
-#include <ctn.hpp>
+#include "ctn.h"
 
 const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955,3946,3936,3926,3915,3904,3892,3880,3866,3853,3838,3823,
         3807,3791,3773,3755,3736,3716,3696,3675,3652,3629,3605,3581,3555,3528,3501,3472,3443,3413,3381,3349,3316,3282,3248,3212,
@@ -75,4 +75,4 @@ int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
     }
 }
 
-#endif /* CTN_TT4_10KC3_CTN_CPP_ */
+#endif /* CTN_TT4_10KC3_CTN_C_ */

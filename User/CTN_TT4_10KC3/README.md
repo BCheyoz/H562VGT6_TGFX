@@ -35,7 +35,7 @@
 ** Dans le fichier User.c ("AnalogInputsUser.c") : **
 1) ajouter en entete de fichier l'include :
 	```
-	#include <ctn.hpp>
+	#include <ctn.h>
 	```
 	
 2) Déclarer dans la zone "// Prototypes des Fonctions de Conversion ... Résulat Final" la fonction suivante :
