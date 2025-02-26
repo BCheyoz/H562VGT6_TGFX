@@ -7,6 +7,8 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
+ *  Version 1.0
+ *
  */
 
 #include "AnalogInputsCore.h"	// Pour accès à nos propres déclarations publiques
@@ -126,7 +128,7 @@ uint16_t AnalogInputs_Register_InitParam(tAdcInitParams* pNewInitParam, void* pT
 	if(0 != pNewInitParam->pFnInit) { pNewInitParam->pFnInit(); }	// Appele la Fonction d'Init si elle est définie
 
 #ifdef AI_REQUEST_CALIB_AT_MST
-    HAL_ADCEx_Calibration_Start(pNewInitParam->hHandle);	// Calibrate The ADC On Power-Up For Better Accuracy
+    HAL_ADCEx_Calibration_Start(pNewInitParam->hHandle,ADC_SINGLE_ENDED);	// Calibrate The ADC On Power-Up For Better Accuracy
 #endif // AI_REQUEST_CALIB_AT_MST
 
 	pManager->pInitParams = pNewInitParam;	// Sauvegarde le lien vers les Infos d'Init pour s'y référer ultérieurement

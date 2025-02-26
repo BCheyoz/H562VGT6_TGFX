@@ -7,6 +7,8 @@
  *  Updated on: 18 Feb. 2025
  *  Updated by: m.faget
  *
+ *  Version 1.0
+ *
  */
 
 #ifndef ANALOGINPUTS_ANALOGINPUTSCORE_H_
