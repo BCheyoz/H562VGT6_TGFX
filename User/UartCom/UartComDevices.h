@@ -81,20 +81,20 @@
 #define UART_COM_NB_OF_USB_CHANGEABLE_USAGE 	1	// USB_FS partagé entre USB_Device et USB_Host
 
 // Pour partager des Ressources entre USB_Host & USB_Device :
-#define UART_COM_NB_OF_USB_MODBUS_SLAVE_FTFL	1	// ModbusSlave partagé entre USB_Host & USB_Device
+#define UART_COM_NB_OF_USB_MODBUS_SLAVE_FTFL	0	// ModbusSlave NON partagé entre USB_Host & USB_Device
 #define UART_COM_NB_OF_USB_MODBUS_MASTER_FTFL	0	// 0 car Non prévu
 
 // Détail des USB_DEVICE par usage :
 #define UART_COM_NB_OF_USBD_CHANGEABLE_USAGE	0	// 0 car USB partagé entre USB_Host & USB_Device
 #define UART_COM_NB_OF_USBD_MODBUS_SLAVE_ONLY	0	// 0 car USB partagé entre USB_Host & USB_Device
-#define UART_COM_NB_OF_USBD_MODBUS_SLAVE_FTFL	1	// USB_FS_Device -> ModbusSlave partagé avec USB_Host
+#define UART_COM_NB_OF_USBD_MODBUS_SLAVE_FTFL	0	// USB_FS_Device -> ModbusSlave NON partagé avec USB_Host
 #define UART_COM_NB_OF_USBD_MODBUS_MASTER_ONLY	0	// 0 car Non prévu
 #define UART_COM_NB_OF_USBD_MODBUS_MASTER_FTFL	0	// 0 car Non prévu
 
 // Détail des USB_HOST par usage :
 #define UART_COM_NB_OF_USBH_CHANGEABLE_USAGE	0	// 0 car USB partagé entre USB_Host & USB_Device
 #define UART_COM_NB_OF_USBH_MODBUS_SLAVE_ONLY	0	// 0 car USB partagé entre USB_Host & USB_Device
-#define UART_COM_NB_OF_USBH_MODBUS_SLAVE_FTFL	1	// USB_FS_HOST -> ModbusSlave partagé avec USB_Device
+#define UART_COM_NB_OF_USBH_MODBUS_SLAVE_FTFL	0	// USB_FS_HOST -> ModbusSlave NON partagé avec USB_Device
 #define UART_COM_NB_OF_USBH_MODBUS_MASTER_ONLY	0	// 0 car Non prévu
 #define UART_COM_NB_OF_USBH_MODBUS_MASTER_FTFL	0	// 0 car Non prévu
 

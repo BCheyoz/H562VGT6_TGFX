@@ -4,7 +4,7 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 06 Jan. 2022
+ *  Updated on: 25 Fev. 2025
  *  Updated by: j.proux
  *
  *  Pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau Projet :
@@ -22,8 +22,8 @@
 
 /* USER CODE BEGIN ManageParams */
 
-#define MODBUS_SLAVE_UART_IHM_PARAMS	&ModbusSlaveParam[0]
-//#define MODBUS_SLAVE_UART_USER_PARAMS	&ModbusSlaveParam[1]
+//#define MODBUS_SLAVE_UART_IHM_PARAMS	&ModbusSlaveParam[0]
+#define MODBUS_SLAVE_UART_USER_PARAMS	&ModbusSlaveParam[0]
 //#define MODBUS_SLAVE_UART_EXT_PARAMS	&ModbusSlaveParam[2]
 //#define MODBUS_SLAVE_USBD_CDC_PARAMS	&ModbusSlaveParam[3]
 //#define MODBUS_SLAVE_USBH_CDC_PARAMS	&ModbusSlaveParam[3]	// UsbHost_ModbusSlave partage les même Params que UsbDevice_ModbusSlave

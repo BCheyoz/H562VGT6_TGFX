@@ -91,8 +91,10 @@ Exemple 2 : 1050 bytes en Réception et en Réponse pour la Taille 3 :
 II.5) Activer ou Désactiver les fonctions de ModbusSlave qui devront être supportées,
  par exemple : "MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS",
 		 et/ou "MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS"
+		 et/ou "MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER"
 
-II.6) Activer ou Désactiver les spécificités "float" qui devront être supportées (ou pas), parmi
+II.6) Activer ou Désactiver les spécificités "long" & "float" qui devront être supportées (ou pas), parmi
+ "MODBUS_SLAVE_SUPPORT_LONG_INT32", "MODBUS_SLAVE_SUPPORT_LONG_LONG", "#define MODBUS_SLAVE_SUPPORT_FLOAT_INT",
  "MODBUS_SLAVE_SUPPORT_FLOAT_LONG" et/ou "MODBUS_SLAVE_SUPPORT_FLOAT_RAW"
 
 II.7) Activer ou Désactiver le support des Statistiques ModbusSlave, ainsi que leur éventuel
@@ -252,7 +254,10 @@ VI.1) Ajouter le Dossier "ModbusSlave" à l' "IncludePath" pour toutes les Confi
 (Attention : CubeIDE a l'habitude de stocker les chemins relatifs au Workspace, et non au Dossier)
 -> il est souvent préférable d'utiliser la formulation "../User/ModbusSlave" (sans les guillemets)
 Info : Pour vérifier, sélectionner "Properties" du Projet -> "C/C++ Build" -> "Settings" -> "Tool Settings"
- -> "MCU GCC Compiler" -> "Include paths".
+ -> "MCU GCC Compiler" (si proposé) -> "Include paths",
+ -> "MCU/MPU GCC Assembler" (si proposé) -> "Include paths",
+ -> "MCU/MPU GCC Compiler" (si proposé) -> "Include paths",
+ -> "MCU/MPU G++ Compiler" (si proposé) -> "Include paths".
 
 VI.2) Vérifier que le Dossier "ModbusSlave" ne soit "Exclude From Build" d'aucune des Configs.
  (y compris "Debug" & "Release")
@@ -317,8 +322,8 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 //#define DISABLE_MODBUS_SLAVE_SUPPORT
 //#define DISABLE_MAX_WRITE_REGISTERS_ONCE	// Désactiver la Limitation officielle (à 124 Registres max) sur WriteMultipleRegisters
 
-#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
-//#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_5
+//#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
+#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_5
 
 // Activation des Fonctions Modbus Standard supportées :
 #define MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS 	// Enable support for 0x03 "Read Holding Registers"
@@ -327,17 +332,17 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 // Activation des "User Defined Function codes" supportés sur la Mémoire Externe :
 //#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// Enable support for 0x74 "Write Custom Resources to External Memory"
-//#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_MEMORY  	// Enable support for 0x75 "Write External Memory Bloc"
-//#define MODBUS_SLAVE_SUPPORT_ERASE_EXTERNAL_MEMORY  	// Enable support for 0x76 "Erase External Memory Bloc"
-#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY		// Enable support for 0x77 "Read External Memory Bloc"
+#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_MEMORY  	// Enable support for 0x75 "Write External Memory Bloc"
+#define MODBUS_SLAVE_SUPPORT_ERASE_EXTERNAL_MEMORY  	// Enable support for 0x76 "Erase External Memory Bloc"
+//#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY		// Enable support for 0x77 "Read External Memory Bloc"
 
 // Activation des "User Defined Function codes" supportés sur l'EEPROM Externe :
-//#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_EEPROM		// Enable support for 0x78 "Read External EEPROM Bloc"
+#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_EEPROM		// Enable support for 0x78 "Read External EEPROM Bloc"
 
 // Activation des "User Defined Function codes" supportés sur la Flash Interne :
 //#define MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC		// Enable support for 0x69 "Write Firmware Program Bloc"
 //#define MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE 		// Enable support for 0x68 "Check & Validate Firmware Program"
-//#define MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// Enable support for 0x6A "Read an Internal Firmware Program Bloc"
+#define MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// Enable support for 0x6A "Read an Internal Firmware Program Bloc"
 
 /******************************************************************************/
 // Pour "ModbusSlaveCore.h/c" :
@@ -345,9 +350,9 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 // Activation des spécificités supportées :
 #define MODBUS_SLAVE_SUPPORT_LONG_INT32  	// Pour supporter le transfert des "Long 32bits" en 2*Int16
 #define MODBUS_SLAVE_SUPPORT_LONG_LONG  	// Pour supporter le transfert des "LongLong 64bits" en 4*Int16
-//#define MODBUS_SLAVE_SUPPORT_FLOAT_INT  	// Pour le transfert de Float en Int16, avec coefficient de multiplication
-//#define MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// Pour le transfert de Float de très petite valeur, à fort coefficient de multiplication nécessaire
-//#define MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// Pour le transfert de Float & Doubles en mode RAW
+#define MODBUS_SLAVE_SUPPORT_FLOAT_INT  	// Pour le transfert de Float en Int16, avec coefficient de multiplication
+#define MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// Pour le transfert de Float de très petite valeur, à fort coefficient de multiplication nécessaire
+#define MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// Pour le transfert de Float & Doubles en mode RAW
 
 #define MODBUS_SLAVE_DEFAULT_UINT16_VALUE 0xFFFF
 

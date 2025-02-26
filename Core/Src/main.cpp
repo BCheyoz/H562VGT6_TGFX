@@ -119,7 +119,7 @@ int main(void)
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
-  MX_UART4_Init();
+//  MX_UART4_Init();
 //  MX_UART5_Init();
 //  MX_USART3_UART_Init();
   MX_USB_HCD_Init();

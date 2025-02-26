@@ -77,7 +77,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //   Adresse,       RdMinLevel,         WrMinLevel,             VarType and Get/Set Method,     RdPtr,                                      WrPtr :
 
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// EXPORT = 1
-
+/*
 	// Identification :
 	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetVarSetVar},		&Fab_CodeSapProduct,	&Fab_CodeSapProduct},	// Code SAP du Produit complet (Name = "Code SAP Produit", \
 	Enum = "11023471:VEX 40 T CLASSIC 3471/11023472:VEX 40 T PREMIUM 3472/11023473:INSPIRAIR TOP 300 CLASSIC 3473/11023474:INSPIRAIR TOP 300 PREMIUM 3474/11023475:INSPIRAIR TOP 450 CLASSIC 3475/\
@@ -90,16 +90,24 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},		&Fab_DateTstMainCard,	&Fab_DateTstMainCard},	// Date dernier test sous traitant (Name = "Date Test Carte")
 	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&Fab_CodeSapMainCard,	&Fab_CodeSapMainCard},	// Code SAP de la Carte Principale (Name = "Code SAP Carte", Enum = "11029476:Classic/11029475:Pression")
 	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&Fab_SN_ThisMainCard,	&Fab_SN_ThisMainCard},	// S/N de la Carte Pincipale (Name = "SN Carte Principale")
-	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetVersionSoft,			0},	// Version du Firmware (SHOW_HEX", DefVal = "B150")
-	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetSoftTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
+*/
+	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetVersionSoft16,		0},	// Version du Firmware sur 16bits (SHOW_HEX", DefVal = "B150")
+//	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetSoftTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
+
+#if defined(VERSION_INFOS_VERSION_INFOS_H_) && defined(VI_SUPPORT_FW_CRC)	// EXPORT = 1
 	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC Soft", SHOW_HEX)
-	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						RegisterNewAccessPswd},	// Code d'Accès aux Niveaux Protégés (Name = "UserLevel", DefVal = "0", Enum = "0:Normal/2345:Lvl_1/12054:Lvl_2/34102:Lvl_3"Enum4Dbg="/38194:Lvl_4/7546:Lvl_5")
-	{ 0x11,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},		&Fab_MdbUserSlaveId,	SetModbusUserSlaveAdr},	// Nouvelle Adresse ModBus Client (Name = "ID Modbus User", DefVal = "2")
+#endif // VERSION_INFOS_VERSION_INFOS_H_ && VI_SUPPORT_FW_CRC
+
+	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getCurAccessLevel,		RegisterNewAccessPswd},	// Code d'accès aux Niveaux Proteges (Name = "UserLevel", DefVal = "0", \
+	Enum = "0:Normal/1:Level 1/2:Level 2/3:Level 3/4:Level 4/5:Level 5/9781:Accès 1/5476:Configurator/32184:IHM Produit/2794:Banc ALDES/941:Carte nue")
+
+//	{ 0x11,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},		&Fab_MdbUserSlaveId,	SetModbusUserSlaveAdr},	// Nouvelle Adresse ModBus Client (Name = "ID Modbus User", DefVal = "2")
 //	{ 0x12,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		0,						0},	// fonctionnalitées, type de fonctions disponibles
 	{ 0x14,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						SaveParamsOnOrder},	// Ordre Sauvegarde param (Name = "Save Params", Enum = "0:Idle/22577:Product Params/31028:Factory Params")
-	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetNukubModelSizeFromParamsSets,	0},			// Name = "Model Size", Enum = "0:Inconnu/16:Nükub 300/17:Nükub 450/18:Nükub 150/19:Nükub 180/65535:Indéterminé", DefVal = "0"
+//	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetNukubModelSizeFromParamsSets,	0},			// Name = "Model Size", Enum = "0:Inconnu/16:Nükub 300/17:Nükub 450/18:Nükub 150/19:Nükub 180/65535:Indéterminé", DefVal = "0"
 // $16 -> $1F = non affectés (au 24/07/2020).
 
+/*
 	// Réglages Usine :
 	{ 0x20,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		getProductConfigStatus,					handleNewProductConfig},	// Enum = "3:Product Complete/2:Config Ready/1:Product Ready/0:Board Ready/9545:Start Service" (9545 = 0x2549 = Start Service), DefVal = "0"
 	{ 0x21,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		0,										handleQueryReInitFactory},	// Name = "ReInit Factory", Enum = "0:NoAction/18213:ConfigReset"Enum4Dbg="/38483:ProductReset"
@@ -148,14 +156,9 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		INF_GetSapBoard,		INF_WriteSapBoard},	// Code SAP de la Carte Principale (Name = "Code SAP Carte")
 	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		INF_GetSnBoard,			INF_WriteSnBoard},	// S/N de la Carte Pincipale (Name = "SN Carte Principale")
 	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		GetVersionSoft16,		0},	// Version du Firmware (SHOW_HEX) Modif_Jp le 03/08/2023 pour Ticket #148
+*/
 
-#ifdef VERSION_INFOS_VERSION_INFOS_H_
-	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetVar},		INF_GetSoftTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:France/1:Belgique")
-  #ifdef VI_SUPPORT_FW_CRC
-	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC Soft", SHOW_HEX)
-  #endif // VI_SUPPORT_FW_CRC
-#endif // VERSION_INFOS_VERSION_INFOS_H_
-
+/*
 	// Fonctionnement GTB :
 	{ 0x100,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getGestionModeVentilateur,				setGestionModeVentilateur},					// A partir de A10F : Name = "Mode Régul", Enum = "0:Débit/1:Hygro/2:Vitesse", MinVal = "0", MaxVal = "2", DefVal = "0"
 	{ 0x101,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarSCharGetFctSetFct},		getActionUser,							setActionUser},								// Name = "Demande User", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/255:Ignorer/4:MaxSpeed(DK)/65535:Transparent", MinVal = "0", MaxVal = "4", DefVal = "1"
@@ -165,8 +168,6 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //	{ 0x104,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		0,										0},	// Méthode de Régulation : Europe / France -> non configurable sur Nükub !
 	{ 0x105,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A0_0_10v.currentCapteurActif,	setCurrentCapteurActifA0_0_10V}, // Type de Capteur 0-10V sur AI0 : Name = "Type 0-10V AI0", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
 	{ 0x106,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A1_0_10v.currentCapteurActif,	setCurrentCapteurActifA1_0_10V}, // Type de Capteur 0-10V sur AI1 : Name = "Type 0-10V AI1", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
-
-	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getCurAccessLevel,		RegisterNewAccessPswd},	// Code d'accès aux Niveaux Proteges : Enum = "0:Normal/1:Level 1/2:Level 2/3:Level 3/4:Level 4/5:Level 5/9781:Accès 1/5476:Configurator/32184:IHM Produit/2794:Banc ALDES/941:Carte nue"
 
 	// Réglages Usine :
 	{ 0x20,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,								requestToSwitchToFactoryState},	// Factory license : l'écriture de 147 provoque un passage en FACTORY_STATE (Enum = "0:NoChange/147:FACTORY_STATE")
@@ -404,7 +405,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x3002,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},	getTimeRegulationFiltre1h,					setTimeRegulationFiltre1h},
 	{ 0x3003,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetFct},	0,											setUserActionFiltreChange},
 
-
+*/
 
 	// code installation lue par l'ihm
 	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
@@ -412,47 +413,47 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	// Commandes Test ModbusUserMode :
 #ifdef MODBUS_SLAVE_ENABLE_STATS_ACCESS	// EXPORT = 0
 #warning "Commandes Test & Stats ModbusSlave actives !!!"
-	{ 14000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},		&ModbusUserCurMode,		&ModbusUserCurMode},
-	{ 14001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},		&ModbusUserNewMode,		&ModbusUserNewMode},
+//	{ 14000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},		&ModbusUserCurMode,		&ModbusUserCurMode},
+//	{ 14001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},		&ModbusUserNewMode,		&ModbusUserNewMode},
 
     // Statistiques Modbus 0 :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS	// EXPORT = 0
+#if defined(MODBUS_SLAVE_SUPPORT_STATS) && defined(MODBUS_SLAVE_UART_IHM_PARAMS)	// EXPORT = 0
 	{ 15000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRx,		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRx},
 	{ 15004,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxCrcOk,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxCrcOk},
 	{ 15008,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxCrcErr,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxCrcErr},
 	{ 15012,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxAdrOk,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxAdrOk},
 	{ 15016,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxAdrErr,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRxAdrErr},
-	{ 15020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.NbTramesTx,		MODBUS_SLAVE_UART_IHM_PARAMS.NbTramesTx},
+	{ 15020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbTramesTx,		MODBUS_SLAVE_UART_IHM_PARAMS.nbTramesTx},
 	// Répartition par Handler :
 	{ 15024,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRead03,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesRead03},
 	{ 15028,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesWrit16,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesWrit16},
 	{ 15032,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesNoFnHand,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesNoFnHand},
 	{ 15036,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesTxExcept,	MODBUS_SLAVE_UART_IHM_PARAMS.nbFramesTxExcept},
-#endif // MODBUS_SLAVE_SUPPORT_STATS
+#endif // MODBUS_SLAVE_SUPPORT_STATS && MODBUS_SLAVE_UART_IHM_PARAMS
 
     // Statistiques Modbus 1 :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS	// EXPORT = 0
+#if defined(MODBUS_SLAVE_SUPPORT_STATS) && defined(MODBUS_SLAVE_UART_USER_PARAMS)	// EXPORT = 0
 	{ 15100,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRx,		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRx},
 	{ 15104,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxCrcOk,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxCrcOk},
 	{ 15108,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxCrcErr,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxCrcErr},
 	{ 15112,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxAdrOk,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxAdrOk},
 	{ 15116,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxAdrErr,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRxAdrErr},
-	{ 15120,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.NbTramesTx,		MODBUS_SLAVE_UART_USER_PARAMS.NbTramesTx},
+	{ 15120,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbTramesTx,		MODBUS_SLAVE_UART_USER_PARAMS.nbTramesTx},
 	// Répartition par Handler :
 	{ 15124,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRead03,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesRead03},
 	{ 15128,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesWrit16,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesWrit16},
 	{ 15132,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesNoFnHand,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesNoFnHand},
 	{ 15136,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_UART_USER_PARAMS.nbFramesTxExcept,	MODBUS_SLAVE_UART_USER_PARAMS.nbFramesTxExcept},
-#endif // MODBUS_SLAVE_SUPPORT_STATS
+#endif // MODBUS_SLAVE_SUPPORT_STATS && MODBUS_SLAVE_UART_USER_PARAMS
 
     // Statistiques Modbus USBD_CDC 0 :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS	// EXPORT = 0
+#if defined(MODBUS_SLAVE_SUPPORT_STATS) && defined(MODBUS_SLAVE_USBD_CDC_PARAMS)	// EXPORT = 0
 	{ 15400,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRx,		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRx},
 	{ 15404,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxCrcOk,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxCrcOk},
 	{ 15408,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxCrcErr,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxCrcErr},
 	{ 15412,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxAdrOk,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxAdrOk},
 	{ 15416,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxAdrErr,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRxAdrErr},
-	{ 15420,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.NbTramesTx,		MODBUS_SLAVE_USBD_CDC_PARAMS.NbTramesTx},
+	{ 15420,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbTramesTx,		MODBUS_SLAVE_USBD_CDC_PARAMS.nbTramesTx},
 	// Répartition par Handler :
 	{ 15424,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRead03,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesRead03},
 	{ 15428,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesWrit16,	MODBUS_SLAVE_USBD_CDC_PARAMS.nbFramesWrit16},
@@ -461,19 +462,21 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
     // Statistiques Modbus USBH_CDC 0 :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS	// EXPORT = 0
+#if defined(MODBUS_SLAVE_SUPPORT_STATS) && defined(MODBUS_SLAVE_USBH_CDC_PARAMS)	// EXPORT = 0
 	{ 15500,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRx,		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRx},
 	{ 15504,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxCrcOk,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxCrcOk},
 	{ 15508,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxCrcErr,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxCrcErr},
 	{ 15512,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxAdrOk,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxAdrOk},
 	{ 15516,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxAdrErr,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRxAdrErr},
-	{ 15520,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.NbTramesTx,		MODBUS_SLAVE_USBH_CDC_PARAMS.NbTramesTx},
+	{ 15520,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbTramesTx,		MODBUS_SLAVE_USBH_CDC_PARAMS.nbTramesTx},
 	// Répartition par Handler :
 	{ 15524,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRead03,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesRead03},
 	{ 15528,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesWrit16,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesWrit16},
 	{ 15532,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesNoFnHand,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesNoFnHand},
 	{ 15536,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesTxExcept,	MODBUS_SLAVE_USBH_CDC_PARAMS.nbFramesTxExcept},
 #endif // MODBUS_SLAVE_SUPPORT_STATS
+
+#endif // MODBUS_SLAVE_ENABLE_STATS_ACCESS
 
 	// Statistiques iBus :
 #ifdef IBUS_SUPPORT_STATS	// EXPORT = 0
@@ -494,7 +497,6 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 16052,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesClavSystem,	&iBusInfos[0].nbFramesClavSystem},
 	{ 16056,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesNoRxHandler,	&iBusInfos[0].nbFramesNoRxHandler},
 #endif // IBUS_SUPPORT_STATS
-
 
 	// RTC spy :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
@@ -534,7 +536,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xF046,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[6],	&mI2CCM_Rtc_RV3028_RxBuf[6]},	// Name = "rtcRv3028RxBuffer_6"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
-	{ 0xF100,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},  resetMemoriesState,     requestResetMemories},   // Name = "reset memories" code 3854
+//	{ 0xF100,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},  resetMemoriesState,     requestResetMemories},   // Name = "reset memories" code 3854
 
 	// [ Début de Zone spéciale avec emplacements communs Applicatif / BootLoader / Outils ]
 
@@ -626,13 +628,19 @@ inline void ModbusSlaveInitUserMST(void)
 {
 #if defined(UART_COM_NB_OF_UART_MODBUS_SLAVE_ONLY) && (UART_COM_NB_OF_UART_MODBUS_SLAVE_ONLY > 0)
 	// Initialise l'Identité & Adresse Esclave de chaque ModbusSlave :
-	InitModbusSlaveStruct(MODBUS_SLAVE_UART_IHM_PARAMS, 	COM_MODBUS_SLAVE_IHM_SRC_ID,	MODBUS_SLAVE_IHM_DEF_SLAVE_ID);
-	InitModbusSlaveStruct(MODBUS_SLAVE_UART_USER_PARAMS,	COM_MODBUS_SLAVE_USER_SRC_ID,	MODBUS_SLAVE_USER_DEF_SLAVE_ID);	// Sera reconfiguré ultérieurement, à la Lecture de MemHisto
-	InitModbusSlaveStruct(MODBUS_SLAVE_UART_EXT_PARAMS, 	COM_MODBUS_SLAVE_EXT_SRC_ID,	MODBUS_SLAVE_EXT_DEF_SLAVE_ID);
-//#endif // NB_OF_COM_MODBUS
-	InitModbusSlaveStruct(MODBUS_SLAVE_UART_IHM_PARAMS, 	COM_UART_MODBUS_IHM_SRC_ID,	MODBUS_SLAVE_IHM_DEF_SLAVE_ID);
-//	InitModbusSlaveStruct(MODBUS_SLAVE_UART_USER_PARAMS,	COM_UART_MODBUS_USER_SRC_ID,	MODBUS_SLAVE_USER_DEF_SLAVE_ID);	// Sera reconfiguré ultérieurement, à la Lecture de MemHisto
-//	InitModbusSlaveStruct(MODBUS_SLAVE_UART_EXT_PARAMS, 	COM_UART_MODBUS_EXT_SRC_ID,	MODBUS_SLAVE_EXT_DEF_SLAVE_ID);
+
+  #ifdef MODBUS_SLAVE_UART_IHM_PARAMS
+	InitModbusSlaveStruct(MODBUS_SLAVE_UART_IHM_PARAMS, 	COM_UART_MODBUS_IHM_SRC_ID, 	MODBUS_SLAVE_IHM_DEF_SLAVE_ID);
+  #endif // MODBUS_SLAVE_UART_IHM_PARAMS
+
+  #ifdef MODBUS_SLAVE_UART_USER_PARAMS
+	InitModbusSlaveStruct(MODBUS_SLAVE_UART_USER_PARAMS,	COM_UART_MODBUS_USER_SRC_ID,	MODBUS_SLAVE_USER_DEF_SLAVE_ID);	// Init nécessaire ici, ID éventuellement reconfiguré à la Lecture de MemHisto.
+  #endif // MODBUS_SLAVE_UART_USER_PARAMS
+
+  #ifdef MODBUS_SLAVE_UART_EXT_PARAMS
+	InitModbusSlaveStruct(MODBUS_SLAVE_UART_EXT_PARAMS, 	COM_UART_MODBUS_EXT_SRC_ID, 	MODBUS_SLAVE_EXT_DEF_SLAVE_ID);
+  #endif // MODBUS_SLAVE_UART_EXT_PARAMS
+
 #endif // UART_COM_NB_OF_UART_MODBUS_SLAVE_ONLY
 }
 

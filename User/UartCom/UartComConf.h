@@ -409,8 +409,9 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 // Paramètres User à Activer / Configurer :
 
 //#define UART_COM_ENABLE_IBUS    			// Pour activer la liaison avec la Librairie "iBus"
-//(temporaire)	#define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
+#define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
+//#define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
 
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
 //#define UART_COM_SUPPORT_STATS  			// Pour Activer les compteurs de Stats dans UartCom
@@ -444,13 +445,17 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 
 //#include "UsbDeviceCdcConf.h"	// Pour accès à la Config USB Modbus
 
+#ifdef UART_COM_ENABLE_EMBRACO_INVERTER
+	#include "EmbracoInverterConf.h" // Pour accès à la Config de l'Inverter Embraco
+#endif // UART_COM_ENABLE_EMBRACO_INVERTER
+
 /********************************************************************************************/
 
 // Synthèse (automatique) pour "UartComCore.c" des différentes Sources & Applications :
 #define NB_OF_COM_INIT_PARAMS	UART_COM_NB_OF_DEVICES_USED	// Synthèse automatique issu de la Configuration dans "UartComDevices.h"
-#define NB_OF_UART_COM_IBUS		NB_OF_IBUS			// 1
-//#define NB_OF_UART_COM_MODBUS	NB_OF_MODBUS_SLAVE_UART	// 3
-//#define NB_OF_USB_DEVICE_MODBUS	NB_OF_MODBUS_SLAVE_USB	// 1
+//#define NB_OF_UART_COM_IBUS 	NB_OF_IBUS				// None
+//#define NB_OF_UART_COM_MODBUS	NB_OF_MODBUS_SLAVE_UART	// None
+//#define NB_OF_USB_DEVICE_MODBUS	NB_OF_MODBUS_SLAVE_USB	// None
 
 // Tableau des Liens à charger automatiquement à la Mise sous Tension (pendant UartCom_Devices_Init) :
 UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tUartComInitParams, UC_BaseInitParam, UC_EndInitParams);
@@ -466,7 +471,7 @@ UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tUartComInitParams, UC_BaseInitP
 
 #define UART_COM_SHARED_BUF_TX_SIZE		500	// Taille du Buffer Interne partagé en cas de besoin exceptionnel
 
-#define UART_COM_SUPPORT_FRAME_TTL		// Pour Activer le support de la durée de Vie d'une Trame
+#define UART_COM_SUPPORT_FRAME_TTL			// Nécessaire : Activer le support de la durée de Vie d'une Trame
 
 // Paramètres pour Réinit Uart avec de nouveaux BaudRate/Parity/Stops (Ajout_Jp le 16/04/2024 pour Ticket #33) :
 #define UART_COM_SUPPORT_REINIT
