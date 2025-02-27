@@ -2,7 +2,12 @@
  * ctn.h
  *
  *  Created on: Feb 20, 2025
- *      Author: m.faget
+ *  Author: m.faget
+ *
+ *  Updated on: 27 Feb. 2025
+ *  Updated by: b.chhay
+ *
+ *  Version : 1.1
  */
 
 #ifndef CTN_TT4_10KC3_CTN_H_
@@ -10,13 +15,16 @@
 
 #include <stdint.h>
 
-#define SIZE_TAB_CTN        146
-#define TEMPERATURE_MIN     -4000
-#define TEMPERATURE_MAX     10500
-#define ADC 0
-#define TEMP 1
+#define NB_CTN_USE 5
 
-int16_t convertADC_to_CTN_10K(uint16_t Val_ADC);
+typedef struct {
+	uint16_t nbPtADC;
+	int16_t value;
+} tAI_IntValue;
+
+extern tAI_IntValue tAi_CTN[NB_CTN_USE];
+
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
 
 
 

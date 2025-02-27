@@ -8,7 +8,7 @@
 
 
 ## Etape II : Ajout de la librairie
-** Dans le dossier User **
+**Dans le dossier User**
 1) Ajouter le dossier "CTN_TT4_10KC3"
 
 2) Ajouter le Dossier "CTN_TT4_10KC3" à l' "IncludePath" pour toutes les Configs de Build
@@ -22,80 +22,29 @@
 
 
 ## Etape III : connexion de la librairie avec AnalogInputs
-** Dans le fichier User.h ("AnalogInputsUser.h") : **
-1) Déclarer la structure suivante (si inexistante):
-	```
-	typedef struct {
-	uint16_t nbPtADC;
-	int16_t TempValue;
-	} tAI_IntValue;
-	```
-	(déclaration en dessous de tAI_FloatValue)
 
-** Dans le fichier User.c ("AnalogInputsUser.c") : **
+**Dans le fichier ctn.h :**
+1) parametrer le nombre de CTN utiliser 
+	```
+	#define NB_CTN_USE 5
+	```
+
+
+**Dans le fichier AnalogInputsUser.c :**  
 1) ajouter en entete de fichier l'include :
 	```
 	#include <ctn.h>
 	```
 	
-2) Déclarer dans la zone "// Prototypes des Fonctions de Conversion ... Résulat Final" la fonction suivante :
-	```
-	void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
-	```
 
-3) Déclarer dans la zone "// Fonctions User de Finalisation de la Conversion " la fonction suivante :
-	```
-	void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
-	{
-		tAI_IntValue* pData = pVar;
-		pData->nbPtADC = (uint16_t)(newValue);
-		pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
-	}
-	```
-	
-4) Dans la zone "// Variables finales pour le Stockage des Résultats ADC " 
-	déclarer les variables qui vont stocker les données ctn
-	
-	Exemple 1 :
-	```
-	tAI_IntValue tAi0_T0 = {0};
-	```
-
-5) Dans la zone "// Tableau des Fonctions de Conversion à appeler & Variables Finales, en fonction du Channel considéré"
+2) Dans la zone "// Tableau des Fonctions de Conversion à appeler & Variables Finales, en fonction du Channel considéré"
 	ajouter la variable et la fonction de Handle associée dans l'adc concerné:
 	
 	Exemple 1 :
 	```
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi0_T0 }
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[0] }
 	```
 
-
-6) Ajouter d'éventuelles fonctions "Get" pour récupérer la/les valeur(s) utile(s) à partir des variables crées précédemment )
-
-	Exemple 1 : Récupérer sur 16bits la valeur de "tAi0_T0"
-	```
-	int16_t getAi0_T0(void)
-	{
-		return tAi0_T0.TempValue);
-	}
-	```
-
-
-7) Dans le fichier User.h ("AnalogInputsUser.h"),
-	1) Ajouter éventuellement comme "extern" les variables crées précédemment)
-
-		Exemple 1 : Autoriser l'accès externe à la Variable "tAi0_T0"
-		```
-		extern tAI_IntValue tAi0_T0;
-		```
-
-		
-	2) Ajouter éventuellement "publiquement" le(s) prototype(s) de fonction(s) de "GET" crée(s) aprécédemment)
-	
-		Exemple 1 : Donner accès sur 16bits à la valeur de "tAi0_T0"
-		```
-		int16_t getAi1_T1(void);
-		```
 
 Compiler et,
 Félicitations, c'est prêt :-) !

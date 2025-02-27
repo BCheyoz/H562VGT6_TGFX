@@ -27,29 +27,12 @@ typedef struct {
 	float value;
 } tAI_FloatValue;
 
-typedef struct {
-	uint16_t nbPtADC;
-	int16_t TempValue;
-} tAI_IntValue;
-
 /******************************************************************************/
 extern tAI_FloatValue tAiRefAlim;
-extern tAI_IntValue tAi1_T1;
-extern tAI_IntValue tAi0_T2;
-extern tAI_IntValue tAi18_T3;
-extern tAI_IntValue tAi15_T4;
-extern tAI_IntValue tAi14_T5;
 
 #if defined(AI_ENABLE_SUPPORT_STATS) && (AI_NB_MAX_OF_INIT_PARAMS > 0)
 	extern tAiStats mAiStats[AI_NB_MAX_OF_INIT_PARAMS];
 #endif // AI_ENABLE_SUPPORT_STATS && AI_NB_MAX_OF_INIT_PARAMS
-
-/******************************************************************************/
-int16_t getAi1_T1(void);
-int16_t getAi0_T2(void);
-int16_t getAi18_T3(void);
-int16_t getAi15_T4(void);
-int16_t getAi14_T5(void);
 
 /******************************************************************************/
 #ifdef __cplusplus

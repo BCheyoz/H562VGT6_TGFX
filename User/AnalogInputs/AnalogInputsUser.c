@@ -4,10 +4,10 @@
  *  Created on: 8 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 18 Feb. 2025
- *  Updated by: m.faget
+ *  Updated on: 27 Feb. 2025
+ *  Updated by: b.chhay
  *
- *  Version 1.0
+ *  Version : 1.0
  *
  */
 
@@ -76,12 +76,6 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 // Variables finales pour le Stockage des Résultats ADC :
 
 tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
-tAI_IntValue tAi1_T1 = {0};// ADC1_IN1
-tAI_IntValue tAi0_T2 = {0};// ADC1_IN0
-tAI_IntValue tAi18_T3 = {0};// ADC1_IN18
-tAI_IntValue tAi15_T4 = {0};// ADC1_IN15
-tAI_IntValue tAi14_T5 = {0};// ADC1_IN14
-
 uint32_t nbConvDone = 0;
 
 /******************************************************************************/
@@ -89,7 +83,6 @@ uint32_t nbConvDone = 0;
 
 void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue);
 void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue);
-void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
 void AnalogInput_HandleEndOfConv(void* pVar);
 
 /******************************************************************************/
@@ -97,11 +90,11 @@ void AnalogInput_HandleEndOfConv(void* pVar);
 
 tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
 	{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi1_T1 },	// Valeur n°2 = ADC1_IN1 = tAi_T1
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi0_T2 },	// Valeur n°3 = ADC1_IN0 = tAi_T2
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi18_T3 },	// Valeur n°4 = ADC1_IN18 = tAi_T3
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi15_T4 },	// Valeur n°5 = ADC1_IN15 = tAi_T4
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi14_T5 },	// Valeur n°6 = ADC1_IN14 = tAi_T5
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[0] },	// Valeur n°2 = ADC1_IN1 = tAi_CTN1
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[1] },	// Valeur n°3 = ADC1_IN0 = tAi_CTN2
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[2] },	// Valeur n°4 = ADC1_IN18 = tAi_CTN3
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[3] },	// Valeur n°5 = ADC1_IN15 = tAi_CTN4
+	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[4] },	// Valeur n°6 = ADC1_IN14 = tAi_CTN5
 };
 
 /******************************************************************************/
@@ -133,41 +126,9 @@ void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 	pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
 }
 
-void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
-{
-	tAI_IntValue* pData = pVar;
-	pData->nbPtADC = (uint16_t)(newValue);
-	pData->TempValue = convertADC_to_CTN_10K(pData->nbPtADC);
-}
-
 void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers les Paramètres d'Initialisation, dans mAdcInitParam, dont la Librairie vient de clôturer les Conversions
 {	// Remarque_Jp le 24/12/2021 : Comme on n'a besoin de notifier personne que de nouvelles valeurs ADC sont disponibles ...
 	nbConvDone++; // On se contente de compter de nb de Conversions effectuées ;-) !
-}
-
-int16_t getAi1_T1(void)
-{
-	return tAi1_T1.TempValue;
-}
-
-int16_t getAi0_T2(void)
-{
-	return tAi0_T2.TempValue;
-}
-
-int16_t getAi18_T3(void)
-{
-	return tAi18_T3.TempValue;
-}
-
-int16_t getAi15_T4(void)
-{
-	return tAi15_T4.TempValue;
-}
-
-int16_t getAi14_T5_x10(void)
-{
-	return tAi14_T5.TempValue;
 }
 
 #ifdef __cplusplus

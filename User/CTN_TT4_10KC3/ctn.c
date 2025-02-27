@@ -2,13 +2,24 @@
  * ctn.c
  *
  *  Created on: Feb 20, 2025
- *      Author: m.faget
+ *  Author: m.faget
+ *
+ *  Updated on: 27 Feb. 2025
+ *  Updated by: b.chhay
+ *
+ *  Version : 1.1
  */
 
 #ifndef CTN_TT4_10KC3_CTN_C_
 #define CTN_TT4_10KC3_CTN_C_
 
 #include "ctn.h"
+
+#define SIZE_TAB_CTN        146
+#define TEMPERATURE_MIN     -4000
+#define TEMPERATURE_MAX     10500
+#define ADC_IDX 0
+#define TEMP_IDX 1
 
 const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955,3946,3936,3926,3915,3904,3892,3880,3866,3853,3838,3823,
         3807,3791,3773,3755,3736,3716,3696,3675,3652,3629,3605,3581,3555,3528,3501,3472,3443,3413,3381,3349,3316,3282,3248,3212,
@@ -22,17 +33,30 @@ const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955
         94, 95,96,97,98,99,100, 101,102, 103,104,105}
            };
 
-/****************************/
 
+tAI_IntValue tAi_CTN[NB_CTN_USE] = {0};
+
+/*** Private declaration function *******************************************************************/
+int16_t convertADC_to_CTN_10K(uint16_t Val_ADC);
+
+/*** Public body function *******************************************************************/
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
+{
+	tAI_IntValue* pData = pVar;
+	pData->nbPtADC = (uint16_t)(newValue);
+	pData->value = convertADC_to_CTN_10K(pData->nbPtADC);
+}
+
+/*** Private body function *******************************************************************/
 int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
 {
     uint8_t i;
-    float Ax, B;// 0 is convPoint  / 1 is temp
+    float Ax, B;// 0 is convPoint  / 1 is TEMP_IDX
 
-    if (Val_ADC >= (uint16_t)TableConversionsAdc12bCtn3977[ADC][0]) {
+    if (Val_ADC >= (uint16_t)TableConversionsAdc12bCtn3977[ADC_IDX][0]) {
     	return (int16_t)TEMPERATURE_MIN;
 
-    } else if (Val_ADC <= (uint16_t)TableConversionsAdc12bCtn3977[ADC][(SIZE_TAB_CTN - 1)]) {
+    } else if (Val_ADC <= (uint16_t)TableConversionsAdc12bCtn3977[ADC_IDX][(SIZE_TAB_CTN - 1)]) {
     	return (int16_t)TEMPERATURE_MAX;
     }
 
@@ -44,7 +68,7 @@ int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
     while(border_b > border_a + 1)
     {
     	middle = (border_a + border_b)/2;
-    	if(TableConversionsAdc12bCtn3977[ADC][middle] < Val_ADC)
+    	if(TableConversionsAdc12bCtn3977[ADC_IDX][middle] < Val_ADC)
 		{
     		border_b = middle;
 		}
@@ -56,23 +80,26 @@ int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
     i = border_a+1;
 
     //On calcule la pente (extrapolation lineaire)
-    Ax = ((float) TableConversionsAdc12bCtn3977[TEMP][i]*100
-            - (float) TableConversionsAdc12bCtn3977[TEMP][i - 1]*100)
-            / ((float) TableConversionsAdc12bCtn3977[ADC][i]
-                    - (float) TableConversionsAdc12bCtn3977[ADC][i - 1]);
-    B = TableConversionsAdc12bCtn3977[1][i]*100
-            - Ax * TableConversionsAdc12bCtn3977[ADC][i];
+    Ax = ((float) TableConversionsAdc12bCtn3977[TEMP_IDX][i]*100
+            - (float) TableConversionsAdc12bCtn3977[TEMP_IDX][i - 1]*100)
+            / ((float) TableConversionsAdc12bCtn3977[ADC_IDX][i]
+                    - (float) TableConversionsAdc12bCtn3977[ADC_IDX][i - 1]);
+    B = TableConversionsAdc12bCtn3977[TEMP_IDX][i]*100
+            - Ax * TableConversionsAdc12bCtn3977[ADC_IDX][i];
 
     //On calcul la Textrapol
+    float r = ((float) Val_ADC) * Ax + B;
     //gestion de l'arrondi  l'unit
-    if((((float) Val_ADC) * Ax + B) < 0) // TODO: Verifier l'ajout +/- 0.5f ...
+    if(r < 0)
     {
-    	return (int16_t) ((((float) Val_ADC) * Ax + B) - 0.5);
+    	return (int16_t) (r - 0.5);
     }
     else
     {
-    	return (int16_t) (((float) Val_ADC * Ax + B) + 0.5);
+    	return (int16_t) (r + 0.5);
     }
 }
+
+
 
 #endif /* CTN_TT4_10KC3_CTN_C_ */
