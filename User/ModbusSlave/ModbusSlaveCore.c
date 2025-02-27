@@ -18,7 +18,7 @@
 
 #include "ModbusSlaveCore.h"	// Pour nos propres déclarations publiques
 #include "main.h"				// Pour accès aux bons includes des HAL
-#include "aldes_crc.h"				// Pour les calculs de CRC nécessaires sur le Modbus
+#include "CrcSoft.h"			// Pour les calculs de CRC nécessaires sur le Modbus
 
 /******************************************************************************/
 // Includes Optionnels :
