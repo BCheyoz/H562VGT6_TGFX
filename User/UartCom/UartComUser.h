@@ -93,7 +93,7 @@ void UartCom_InitUserMST(void);
 void initUartUserParamsFromMemHisto(void);
 void checkUartUserParamsFromMemHisto(void);
 void USART3_Custom_Init(void);			// Pour Initialiser l'UART3 avec des Paramètres User Custom
-void HandleNewUart3Stops(uint8_t newStops); // Pour Activer le changement de BaudRate/Parity & Stops
+void HandleNewUartModbusUserStops(uint8_t newStops); // Pour Activer le changement de BaudRate/Parity & Stops
 void HandleValidateNewUart3Params(uint16_t key); // Pour Valider le changement de BaudRate/Parity & Stops
 
 /*

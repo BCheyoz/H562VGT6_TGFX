@@ -23,32 +23,32 @@
 
 /******************************************************************************/
 
-#ifdef UART_COM_ENABLE_IBUS
+#ifdef UART_COM_ENABLE_IBUS 	// cf. "UartComConf.h"
 	#if defined(UART_COM_NB_MAX_OF_IBUS) && (UART_COM_NB_MAX_OF_IBUS > 0)
 		#include "iBusUser.h"	// Pour accès aux Paramètres & Traitement iBus
 	#endif // UART_COM_NB_OF_UART_IBUS_ONLY
 #endif // UART_COM_ENABLE_IBUS
 
-#ifdef UART_COM_ENABLE_MODBUS_SLAVE
+#ifdef UART_COM_ENABLE_MODBUS_SLAVE 	// cf. "UartComConf.h"
 	#if defined(UART_COM_NB_MAX_OF_MODBUS_SLAVE) && (UART_COM_NB_MAX_OF_MODBUS_SLAVE > 0)
 		#include "ModbusSlaveUser.h"	// Pour accès aux Paramètres & Traitement ModbusSlave
 	#endif // UART_COM_NB_MAX_OF_MODBUS_SLAVE
 #endif // UART_COM_ENABLE_MODBUS_SLAVE
 
-#ifdef UART_COM_ENABLE_MODBUS_MASTER
+#ifdef UART_COM_ENABLE_MODBUS_MASTER	// cf. "UartComConf.h"
 	#if defined(UART_COM_NB_MAX_OF_MODBUS_MASTER) && (UART_COM_NB_MAX_OF_MODBUS_MASTER > 0)
 		#include "ModbusMasterUser.h"	// Pour accès aux Paramètres & Traitement ModbusMaster
 	#endif // UART_COM_NB_MAX_OF_MODBUS_MASTER
 #endif // UART_COM_ENABLE_MODBUS_MASTER
 
-#if defined(UART_COM_NB_MAX_OF_USBD) && (UART_COM_NB_MAX_OF_USBD > 0)
+#if defined(UART_COM_NB_MAX_OF_USBD) && (UART_COM_NB_MAX_OF_USBD > 0)	// cf. "UartComConf.h"
 	#include "UsbDeviceCDC.h"	// Pour accès aux Paramètres & Fonctions USB_Device_CDC
 //	#include "UsbModbusUtils.h"		// Pour accès aux Paramètres & Fonctions USB_Device_CDC
 //	#include "UsbDeviceSlaveUser.h"
 //	#include "UsbModbusCore.h"
 #endif // UART_COM_NB_MAX_OF_USBD
 
-#if defined(UART_COM_NB_MAX_OF_USBH) && (UART_COM_NB_MAX_OF_USBH > 0)
+#if defined(UART_COM_NB_MAX_OF_USBH) && (UART_COM_NB_MAX_OF_USBH > 0)	// cf. "UartComConf.h"
 //(temporaire)	#include "UsbHostCDC.h"		// Pour accès aux Paramètres & Fonctions USB_Host_CDC
 #endif // UART_COM_NB_MAX_OF_USBH
 
@@ -59,15 +59,15 @@
 	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tIbusBuffer, IBUS_BUF_DEF_RX_SIZE, IBUS_BUF_DEF_TX_SIZE, iBusBuf, NB_IBUS_BUF_DEF_SIZE);
 #endif // NB_COM_IBUS
 
-#if defined(NB_MODBUS_SLAVE_BUF_DEF_SIZE) && (NB_MODBUS_SLAVE_BUF_DEF_SIZE > 0)
+#if defined(NB_MODBUS_SLAVE_BUF_DEF_SIZE) && (NB_MODBUS_SLAVE_BUF_DEF_SIZE > 0)	// cf. "ModbusSlaveConf.h"
 	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tModbusSlaveBuf, MODBUS_SLAVE_BUF_DEF_RX_SIZE, MODBUS_SLAVE_BUF_DEF_TX_SIZE, ModbusSlaveBuf, NB_MODBUS_SLAVE_BUF_DEF_SIZE);
 #endif // NB_COM_MODBUS
 
-#if defined(NB_MODBUS_SLAVE_BUF_SIZE_2) && (NB_MODBUS_SLAVE_BUF_SIZE_2 > 0)
+#if defined(NB_MODBUS_SLAVE_BUF_SIZE_2) && (NB_MODBUS_SLAVE_BUF_SIZE_2 > 0)	// cf. "ModbusSlaveConf.h"
 	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tModbusSlaveBuf2, MODBUS_SLAVE_BUF_SIZE_2_RX, MODBUS_SLAVE_BUF_SIZE_2_TX, ModbusSlaveBuf2, NB_MODBUS_SLAVE_BUF_SIZE_2);
 #endif // NB_COM_MODBUS
 
-#if defined(NB_MODBUS_SLAVE_BUF_SIZE_3) && (NB_MODBUS_SLAVE_BUF_SIZE_3 > 0)
+#if defined(NB_MODBUS_SLAVE_BUF_SIZE_3) && (NB_MODBUS_SLAVE_BUF_SIZE_3 > 0)	// cf. "ModbusSlaveConf.h"
 	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tModbusSlaveBuf3, MODBUS_SLAVE_BUF_SIZE_3_RX, MODBUS_SLAVE_BUF_SIZE_3_TX, ModbusSlaveBuf3, NB_MODBUS_SLAVE_BUF_SIZE_3);
 #endif // NB_COM_MODBUS
 
@@ -83,7 +83,7 @@
 //	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tUartModbusMasterBufFtFl, MODBUS_MASTER_BUF_DEF_RX_SIZE, MODBUS_MASTER_BUF_DEF_TX_SIZE, UartModbusMasterBufFtFl, UART_COM_NB_OF_UART_MODBUS_MASTER_FTFL);
 #endif // UART_COM_NB_OF_UART_CHANGEABLE_USAGE
 
-	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tEmbracoInverterBuf, 100, 50, EmbracoInverterBuf, 1);	// Temporaire : en attendant de déplacer dans le .c/h du EmbracoInverter
+	UART_COM_MAKE_STRUCT_BUF_VAR_ARRAY(tEmbracoInverterBuf, 100, 50, EmbracoInverterBuf, 1);	// Temporaire : en attendant de définir dans le .c/h du EmbracoInverter
 
 //#if defined(NB_OF_USB_DEVICE_MODBUS) && (NB_OF_USB_DEVICE_MODBUS > 0)
 ////	UART_COM_MAKE_STRUCT_BUF(tUsbModbusSlaveBuf, USBD_RX_BUF_SIZE, USBD_TX_BUF_SIZE);
@@ -126,16 +126,16 @@ const tUartComInitParams mUartComInitParam[] = {
 	{ UartComIbus,		UART_IBUS_EXT,		MX_USART3_UART_Init,	UART_COM_STRUCT_BUF_INFOS(iBusBuf[1]),			iBusRxHandler,	 		IBUS_EXT_PARAMS,			UART_COM_GPIO_TX_NONE,	IBUS_EOF_RX,			IBUS_EOB_RX,			IBUS_ACK_TO,			IBUS_NO_TX_INIT,			IBUS_NO_TX_FRAME,			IBUS_NO_TX_BYTE,			IBUS_NO_RX_TO,			IBUS_MIN_RX_SIZE,			IBUS_MIN_TX_SIZE,			IBUS_MAX_RX_BLOC_SZ,			IBUS_DEF_REPLY_SZ,	 		IBUS_ERR_RX_FRAME,	  		IBUS_ERR_TX_RETRY,   		IBUS_ERR_TX_FRAME,   		IBUS_INIT_DO_LOAD_FLAGS,			UART_COM_CLASS_TX_IT_RX_IT },	// iBus sur Uart3
 #endif // NB_IBUS_BUF_DEF_SIZE > 0
 
-#if defined(NB_MODBUS_SLAVE_BUF_DEF_SIZE) && (NB_MODBUS_SLAVE_BUF_DEF_SIZE > 0)
+#if defined(NB_MODBUS_SLAVE_BUF_DEF_SIZE) && (NB_MODBUS_SLAVE_BUF_DEF_SIZE > 0)	// cf. "ModbusSlaveConf.h"
 //	{ UartComModbus,	UART_MODBUS_IHM,	MX_USART1_UART_Init,	UART_COM_STRUCT_BUF_INFOS(ModbusSlaveBuf[0]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_UART_IHM_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_SLAVE_EOF_RX,	MODBUS_SLAVE_EOB_RX,	MODBUS_SLAVE_REPLY_TO,	MODBUS_SLAVE_NO_TX_INIT,	MODBUS_SLAVE_NO_TX_FRAME,	MODBUS_SLAVE_NO_TX_BYTE,	MODBUS_SLAVE_NO_RX_TO,	MODBUS_SLAVE_MIN_RX_SIZE,	MODBUS_SLAVE_MIN_TX_SIZE,	MODBUS_SLAVE_MAX_RX_BLOC_SZ,	MODBUS_SLAVE_DEF_REPLY_SZ,	MODBUS_SLAVE_ERR_RX_FRAME,	MODBUS_SLAVE_ERR_TX_RETRY,	MODBUS_SLAVE_ERR_TX_FRAME,	MODBUS_SLAVE_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusSlave IHM sur Uart1
-	{ UartComModbus,	UART_MODBUS_USER,	MX_UART5_Init,			UART_COM_STRUCT_BUF_INFOS(ModbusSlaveBuf[0]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_UART_USER_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_SLAVE_EOF_RX,	MODBUS_SLAVE_EOB_RX,	MODBUS_SLAVE_REPLY_TO,	MODBUS_SLAVE_NO_TX_INIT,	MODBUS_SLAVE_NO_TX_FRAME,	MODBUS_SLAVE_NO_TX_BYTE,	MODBUS_SLAVE_NO_RX_TO,	MODBUS_SLAVE_MIN_RX_SIZE,	MODBUS_SLAVE_MIN_TX_SIZE,	MODBUS_SLAVE_MAX_RX_BLOC_SZ,	MODBUS_SLAVE_DEF_REPLY_SZ,	MODBUS_SLAVE_ERR_RX_FRAME,	MODBUS_SLAVE_ERR_TX_RETRY,	MODBUS_SLAVE_ERR_TX_FRAME,	MODBUS_SLAVE_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusSlave User sur Uart5
+	{ UartComModbus,	UART_MODBUS_USER,	MX_UART5_Init,			UART_COM_STRUCT_BUF_INFOS(ModbusSlaveBuf[0]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_UART_USER_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_SLAVE_EOF_RX,	MODBUS_SLAVE_EOB_RX,	MODBUS_SLAVE_REPLY_TO,	MODBUS_SLAVE_NO_TX_INIT,	MODBUS_SLAVE_NO_TX_FRAME,	MODBUS_SLAVE_NO_TX_BYTE,	MODBUS_SLAVE_NO_RX_TO,	MODBUS_SLAVE_MIN_RX_SIZE,	MODBUS_SLAVE_MIN_TX_SIZE,	MODBUS_SLAVE_MAX_RX_BLOC_SZ,	MODBUS_SLAVE_DEF_REPLY_SZ,	MODBUS_SLAVE_ERR_RX_FRAME,	MODBUS_SLAVE_ERR_TX_RETRY,	MODBUS_SLAVE_ERR_TX_FRAME,	MODBUS_SLAVE_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusSlave User sur Uart5 en TX_DMA & RX_IT
 //	{ UartComModbus,	UART_MODBUS_USER,	USART3_Custom_Init, 	UART_COM_STRUCT_BUF_INFOS(ModbusSlaveBuf[1]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_UART_USER_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_SLAVE_EOF_RX,	MODBUS_SLAVE_EOB_RX,	MODBUS_SLAVE_REPLY_TO,	MODBUS_SLAVE_NO_TX_INIT,	MODBUS_SLAVE_NO_TX_FRAME,	MODBUS_SLAVE_NO_TX_BYTE,	MODBUS_SLAVE_NO_RX_TO,	MODBUS_SLAVE_MIN_RX_SIZE,	MODBUS_SLAVE_MIN_TX_SIZE,	MODBUS_SLAVE_MAX_RX_BLOC_SZ,	MODBUS_SLAVE_DEF_REPLY_SZ,	MODBUS_SLAVE_ERR_RX_FRAME,	MODBUS_SLAVE_ERR_TX_RETRY,	MODBUS_SLAVE_ERR_TX_FRAME,	MODBUS_SLAVE_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusSlave User sur Uart3
 
 // Essai de ModbusMaster sur Uart3 (désactivé @ MST) :
 //	{ UartComModbus,	UART_MODBUS_USER,	MX_USART3_UART_Init,	UART_COM_STRUCT_BUF_INFOS(ModbusBuf[1]),	ModbusMasterRxHandler,	MODBUS_MASTER_UART_IHM_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_MASTER_EOF_RX,	MODBUS_MASTER_EOB_RX,	MODBUS_MASTER_REPLY_TO,	MODBUS_MASTER_NO_TX_INIT,	MODBUS_MASTER_NO_TX_FRAME,	MODBUS_MASTER_NO_TX_BYTE,	MODBUS_MASTER_NO_RX_TO,	MODBUS_MASTER_MIN_RX_SIZE,	MODBUS_MASTER_MIN_TX_SIZE,	MODBUS_MASTER_MAX_RX_BLC_SZ,	MODBUS_MASTER_DEF_REPLY_SZ,	MODBUS_MASTER_ERR_RX_FRAME,	MODBUS_MASTER_ERR_TX_RETRY,	MODBUS_MASTER_ERR_TX_FRAME,	MODBUS_MASTER_INIT_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusMaster User sur Uart3
 #endif // NB_MODBUS_SLAVE_BUF_DEF_SIZE > 0
 
-#if defined(NB_MODBUS_SLAVE_BUF_SIZE_2) && (NB_MODBUS_SLAVE_BUF_SIZE_2 > 0)
+#if defined(NB_MODBUS_SLAVE_BUF_SIZE_2) && (NB_MODBUS_SLAVE_BUF_SIZE_2 > 0)	// cf. "ModbusSlaveConf.h"
 	{ UartComModbus,	UART_MODBUS_EXT,	MX_UART8_Init,			UART_COM_STRUCT_BUF_INFOS(ModbusSlaveBuf2[0]),	ModbusSlaveRxHandler,	MODBUS_SLAVE_UART_EXT_PARAMS,	UART_COM_GPIO_TX_NONE,	MODBUS_SLAVE_EOF_RX,	MODBUS_SLAVE_EOB_RX,	MODBUS_SLAVE_REPLY_TO,	MODBUS_SLAVE_NO_TX_INIT,	MODBUS_SLAVE_NO_TX_FRAME,	MODBUS_SLAVE_NO_TX_BYTE,	MODBUS_SLAVE_NO_RX_TO,	MODBUS_SLAVE_MIN_RX_SIZE,	MODBUS_SLAVE_MIN_TX_SIZE,	MODBUS_SLAVE_MAX_RX_BLOC_SZ,	MODBUS_SLAVE_REPLY_SIZE_2,	MODBUS_SLAVE_ERR_RX_FRAME2,	MODBUS_SLAVE_ERR_TX_RETRY2,	MODBUS_SLAVE_ERR_TX_FRAME2,	MODBUS_SLAVE_INIT_DO_LOAD_FLAGS,	UART_COM_CLASS_TX_DMA_RX_IT },	// ModbusSlave Ext sur Uart8
 #endif // NB_MODBUS_SLAVE_BUF_SIZE_2
 
@@ -190,17 +190,18 @@ const tUartComInitParams mUartComInitUsbHostModbusSlave = { UartComModbus, USBH_
 /* USER CODE END Dynamic_InitParams */
 
 // Variables pour le changement de BaudRate / Parity / Stop sur l'un des UART parmi mUartComInitParam (Ajout_Jp le 16/04/2024 pour Ticket #33):
-UartReInitUserParams Uart3ReInitUserParams = { eUartReInitBaud9600, eUartReInitParityNone, eUartReInitStopOne, 0 }; // 9600, None, 1 Stop, Normal Init
-UartReInitUserParams Uart3ReInitRealParams = { 0 };	// Config réelle pour Sauvegarde en Mémoire Externe
+UartReInitUserParams UartModbusUser_ReInitUserParams = { eUartReInitBaud9600, eUartReInitParityNone, eUartReInitStopOne, 0 }; // 9600, None, 1 Stop, Normal Init
+UartReInitUserParams UartModbusUser_ReInitRealParams = { 0 };	// Config réelle pour Sauvegarde en Mémoire Externe
 //UART_AdvFeatureInitTypeDef Uart3ReInitAdvInit = { .TxPinLevelInvert = UART_ADVFEATURE_TXINV_ENABLE,	.RxPinLevelInvert = UART_ADVFEATURE_RXINV_ENABLE };
 //UartReInitUserParams Uart3ReInitUserParams = { eUartReInitBaud9600, eUartReInitParityNone, eUartReInitStopOne, &Uart3ReInitAdvInit }; // 9600, None, 1 Stop + Advanced Init
-UartReInitCoreVars Uart3ReInitCoreVars = { .ReInitFlags.InitRS485Ex = 1, }; // Pour Init via "HAL_RS485Ex_Init", comme dans "MX_USART3_UART_Init"
+UartReInitCoreVars UartModbusUser_ReInitCoreVars = { .ReInitFlags.InitRS485Ex = 1, }; // Pour Init via "HAL_RS485Ex_Init", comme dans "MX_USART3_UART_Init"
 
 //#define UART_MODBUS_USER_REINIT_ITEM	UART_MAKE_REINIT_ITEM(UART_MODBUS_USER, USART3, Uart3ReInitUserParams, Uart3ReInitCoreVars, UartReInit9600N1)
 
 const UartReInitItem mUartReInitItems[] = {
 //	UART_MODBUS_USER_REINIT_ITEM,
-	{ UART_MODBUS_USER, USART3, &Uart3ReInitUserParams, &Uart3ReInitCoreVars, &Uart3ReInitRealParams, &UartReInit9600N1 },
+//	{ UART_MODBUS_USER, USART3, &UartModbusUser_ReInitUserParams, &UartModbusUser_ReInitCoreVars, &UartModbusUser_ReInitRealParams, &UartReInit9600N1 },
+	{ UART_MODBUS_USER, UART5, &UartModbusUser_ReInitUserParams, &UartModbusUser_ReInitCoreVars, &UartModbusUser_ReInitRealParams, &UartReInit115200N1 },
 };
 UART_COM_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(UartReInitItem, UC_BaseUartReInitItems, UC_EndUartReInitItems, mUartReInitItems);
 
@@ -279,19 +280,24 @@ void UartCom_InitUserMST(void)
 	}
 
 	// Initialise l'Identité & Adresse Esclave de chaque Handler déjà configuréss :
-#if defined(UART_COM_ENABLE_IBUS) && defined(IBUS_INIT_USER_MST)
+#if defined(UART_COM_ENABLE_IBUS) && defined(IBUS_INIT_USER_MST)	// cf. "UartComConf.h"
 	IBUS_INIT_USER_MST();		// Initialise @ MST les Variables spécifiques iBus
 #endif // UART_COM_ENABLE_IBUS & IBUS_INIT_USER_MST
 
-#ifdef UART_COM_ENABLE_MODBUS_SLAVE
+#ifdef UART_COM_ENABLE_MODBUS_SLAVE	// cf. "UartComConf.h"
 	ModbusSlaveInitUserMST();	// Initialise @ MST les ModbusSlave Statiques sur UART
 #endif // UART_COM_ENABLE_MODBUS_SLAVE
 
-#ifdef UART_COM_ENABLE_MODBUS_MASTER
+#ifdef UART_COM_ENABLE_MODBUS_MASTER	// cf. "UartComConf.h"
 	ModbusMasterInitUserMST();	// Initialise @ MST les ModbusMaster Statiques sur UART
 #endif // UART_COM_ENABLE_MODBUS_MASTER
 
 //	UsbDeviceSlaveInitUser();	// Initialise @ MST les ModbusSlave Statiques sur USB_Device
+
+#ifdef UART_COM_ENABLE_EMBRACO_INVERTER	// cf. "UartComConf.h"
+	EmbracoInverterInitUserMST();	// Initialise @ MST les EmbracoInverter sur UART
+#endif // UART_COM_ENABLE_EMBRACO_INVERTER
+
 }
 
 /******************************************************************************/
@@ -326,27 +332,12 @@ void ManageModbusIhmMode(void) // ATTENTION : Ne jamais appeler dans une IT, ni 
 	}
 }
 
+/******************************************************************************/
+
 uint8_t ModbusIhmGetCurMode(void) { return ModbusIhmCurMode; }
 void ModbusIhmSetNewMode(uint8_t newMode) { ModbusIhmNewMode = newMode; }
 
-void initUartUserParamsFromMemHisto(void)	// Ajout_Jp le 16/04/2024 pour Ticket #33 : en cas de ReInitFact
-{
-//	UartCom_CopyMemory((void*)&Uart3ReInitRealParams, (void*)&UartReInit9600N1, sizeof(UartReInitUserParams));
-//	UartCom_CopyMemory((void*)&Uart3ReInitUserParams, (void*)&UartReInit9600N1, sizeof(UartReInitUserParams));
-	Uart3ReInitCoreVars.ReInitFlags.InitDefault = 1; // Demande l'Init avec DefaultParams
-	Uart3ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_REINIT; // Active le Sablier d'application d
-}
-
-/******************************************************************************/
-
 #endif // UART_COM_NB_UART_MODBUS_MAST_SLAV_FTFL
-
-void checkUartUserParamsFromMemHisto(void) // Ajout_Jp le 16/04/2024 pour Ticket #33 : Vérifier & Appliquer après chaque MST :
-{
-	UartCom_CopyMemory((void*)&Uart3ReInitUserParams, (void*)&Uart3ReInitRealParams, sizeof(UartReInitUserParams)); // Récupération depuis la Sauvegarde en Mémoire
-	Uart3ReInitCoreVars.ReInitFlags.InitDefault = 0; // Autorise l'Init avec UserParams
-	Uart3ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_AT_MST; // Active le Sablier d'application différé pour la MST -> Sera Vérifié au moment d'appliquer
-}
 
 /******************************************************************************/
 // Pour Basculer Manuellement ModbusSlave <-> ModbusMaster sur UART_IHM :
@@ -369,14 +360,6 @@ void UnloadUartIhmModbusSlave(void)
 	ModbusIhmCurMode = ModbusModeNone;
 }
 
-void USART3_Custom_Init(void) // Demande une Initialisation Custom d'après nos UserParams :
-{
-	if(HAL_OK != UartCom_ReInitUartFromUserParams(&Uart3ReInitUserParams)) // Si é
-	{
-		MX_USART3_UART_Init(); // Tente une Initialisation par la fonction CubeMx
-	}
-}
-
 /******************************************************************************/
 
 void LoadUartIhmModbusMaster(void)
@@ -395,13 +378,6 @@ void UnloadUartIhmModbusMaster(void)
 }
 
 #endif // UART_COM_NB_UART_MODBUS_MAST_SLAV_FTFL
-
-void HandleNewUart3Stops(uint8_t newStops)
-{
-	Uart3ReInitUserParams.nbStops = newStops; // Mémorise la nouvelle valeur demandée
-	Uart3ReInitCoreVars.ReInitFlags.InitDefault = 0; // Autorise l'Init avec UserParams
-	Uart3ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_REINIT; // Active le Sablier d'application d
-}
 
 /******************************************************************************/
 // Pour Basculer automatiquement ModbusSlave <-> ModbusMaster sur UART_USER :
@@ -432,18 +408,6 @@ void ManageModbusUserMode(void) // ATTENTION : Ne jamais appeler dans une IT, ni
 }
 
 #endif // UART_COM_NB_UART_MODBUS_MAST_SLAV_FTFL
-
-void HandleValidateNewUart3Params(uint16_t key)
-{
-	if((UART_COM_REINIT_VALID_KEY == key) && (0 != Uart3ReInitCoreVars.ReInitFlags.CanValidate))
-	{
-		Uart3ReInitCoreVars.SabApply = COM_FRAME_TTL_DISABLED;	// Validate current Params
-		UartCom_CopyMemory((void*)&Uart3ReInitRealParams, (void*)&Uart3ReInitUserParams, sizeof(UartReInitUserParams)); // OK pour Sauvegarde en Mémoire
-	} else if(UART_COM_FORCE_REINIT_NOW == key)
-	{
-		Uart3ReInitCoreVars.SabApply = COM_FRAME_TTL_EXPIRED;	// Force Apply Now
-	}
-}
 
 /******************************************************************************/
 // Pour Basculer Manuellement ModbusSlave sur USB_DEVICE <-> ModbusSlave sur USB_HOST :
@@ -511,4 +475,56 @@ void ManageModbusUserMode(void) // ATTENTION : Ne jamais appeler dans une IT, ni
 		ModbusUserCurMode = ModbusUserNewMode;
 	}
 */
+}
+
+/******************************************************************************/
+
+void initUartUserParamsFromMemHisto(void)	// En cas de ReInitFact
+{
+//	UartCom_CopyMemory((void*)&Uart3ReInitRealParams, (void*)&UartReInit9600N1, sizeof(UartReInitUserParams));
+//	UartCom_CopyMemory((void*)&Uart3ReInitUserParams, (void*)&UartReInit9600N1, sizeof(UartReInitUserParams));
+	UartModbusUser_ReInitCoreVars.ReInitFlags.InitDefault = 1; // Demande l'Init avec DefaultParams
+	UartModbusUser_ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_REINIT; // Active le Sablier d'application d
+}
+
+/******************************************************************************/
+
+void checkUartUserParamsFromMemHisto(void) // Vérifier & Appliquer après chaque MST :
+{
+	UartCom_CopyMemory((void*)&UartModbusUser_ReInitUserParams, (void*)&UartModbusUser_ReInitRealParams, sizeof(UartReInitUserParams)); // Récupération depuis la Sauvegarde en Mémoire
+	UartModbusUser_ReInitCoreVars.ReInitFlags.InitDefault = 0; // Autorise l'Init avec UserParams
+	UartModbusUser_ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_AT_MST; // Active le Sablier d'application différé pour la MST -> Sera Vérifié au moment d'appliquer
+}
+
+/******************************************************************************/
+
+void USART3_Custom_Init(void) // Demande une Initialisation Custom d'après nos UserParams :
+{
+	if(HAL_OK != UartCom_ReInitUartFromUserParams(&UartModbusUser_ReInitUserParams)) // Si é
+	{
+		MX_USART3_UART_Init(); // Tente une Initialisation par la fonction CubeMx
+	}
+}
+
+/******************************************************************************/
+
+void HandleNewUartModbusUserStops(uint8_t newStops)
+{
+	UartModbusUser_ReInitUserParams.nbStops = newStops; // Mémorise la nouvelle valeur demandée
+	UartModbusUser_ReInitCoreVars.ReInitFlags.InitDefault = 0; // Autorise l'Init avec UserParams
+	UartModbusUser_ReInitCoreVars.SabApply = UART_COM_SAB_APPLY_REINIT; // Active le Sablier d'application d
+}
+
+/******************************************************************************/
+
+void HandleValidateNewUart3Params(uint16_t key)
+{
+	if((UART_COM_REINIT_VALID_KEY == key) && (0 != UartModbusUser_ReInitCoreVars.ReInitFlags.CanValidate))
+	{
+		UartModbusUser_ReInitCoreVars.SabApply = COM_FRAME_TTL_DISABLED;	// Validate current Params
+		UartCom_CopyMemory((void*)&UartModbusUser_ReInitRealParams, (void*)&UartModbusUser_ReInitUserParams, sizeof(UartReInitUserParams)); // OK pour Sauvegarde en Mémoire
+	} else if(UART_COM_FORCE_REINIT_NOW == key)
+	{
+		UartModbusUser_ReInitCoreVars.SabApply = COM_FRAME_TTL_EXPIRED;	// Force Apply Now
+	}
 }

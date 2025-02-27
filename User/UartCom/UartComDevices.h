@@ -4,7 +4,7 @@
  *  Created on: May 18, 2021
  *  Original Author: j.proux
  *
- *  Updated on: 21 Feb. 2025
+ *  Updated on: 26 Feb. 2025
  *  Updated by: j.proux
  *
  *  Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
@@ -73,12 +73,12 @@
 
 
 // Répartition des USB par usage :
-#define UART_COM_NB_OF_USB_DEVICE_ONLY			0	// 0 car USB partagé entre USB_Host & USB_Device
-#define UART_COM_NB_OF_USB_HOST_ONLY			0	// 0 car USB partagé entre USB_Host & USB_Device
+#define UART_COM_NB_OF_USB_DEVICE_ONLY			0	// PAS de COM sur USB (Non partagé entre USB_Host & USB_Device)
+#define UART_COM_NB_OF_USB_HOST_ONLY			0	// PAS de COM sur USB (Non partagé entre USB_Host & USB_Device)
 // ...
-#define UART_COM_NB_OF_USB_DEVICE_FITFUL		1	// USB_FS est aussi partagé avec USB_Host
-#define UART_COM_NB_OF_USB_HOST_FITFUL  		1	// USB_FS est aussi partagé avec USB_Device
-#define UART_COM_NB_OF_USB_CHANGEABLE_USAGE 	1	// USB_FS partagé entre USB_Device et USB_Host
+#define UART_COM_NB_OF_USB_DEVICE_FITFUL		0	// PAS de COM sur USB_FS (Non partagé avec USB_Host)
+#define UART_COM_NB_OF_USB_HOST_FITFUL  		0	// PAS de COM sur USB_FS (Non partagé avec USB_Device)
+#define UART_COM_NB_OF_USB_CHANGEABLE_USAGE 	0	// PAS de COM sur USB_FS (Non partagé entre USB_Device et USB_Host)
 
 // Pour partager des Ressources entre USB_Host & USB_Device :
 #define UART_COM_NB_OF_USB_MODBUS_SLAVE_FTFL	0	// ModbusSlave NON partagé entre USB_Host & USB_Device

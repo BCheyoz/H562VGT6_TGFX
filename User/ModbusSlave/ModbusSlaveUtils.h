@@ -2,18 +2,22 @@
  * ModbusSlaveUtils.h
  *
  *  Created on: 28 avr. 2021
- *      Author: j.proux
+ *  Original Author: j.proux
  *
- *  Updated on: 19 Déc. 2023
+ *  Updated on: 27 Feb. 2025
  *  Updated by: j.proux
+ *
+ * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
+ * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
+ * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  Pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau Projet :
  *   -> Suivre les indications dans "ModbusSlaveConf.h"
  *
  */
 
-#ifndef MODBUSSLAVE_MODBUSSLAVEUTILS_H_
-#define MODBUSSLAVE_MODBUSSLAVEUTILS_H_
+#ifndef MODBUS_SLAVE_MODBUS_SLAVE_UTILS_H_
+#define MODBUS_SLAVE_MODBUS_SLAVE_UTILS_H_
 
 #include <stdint.h>		// Pour les types "int*_t" & "uint*_t"
 //#if (__has_include("utils.h"))	// Macro spéciale de 'Code Composer Studio' pour µC de 'Texas Instruments'
@@ -176,6 +180,8 @@ typedef union {
 // Prototypes des Fonctions Internes Modbus accessibles depuis une Table ModbusSlave externe :
 
 void RegisterNewAccessPswd(uint16_t NewPswd);
+uint8_t isInModbusHandlerContext();
+uint8_t isModbusWriteHandlerInFactoryLevel();
 void SaveParamsOnOrder(uint16_t Order2Save);
 void handleQueryReInitFactory(uint16_t pswd);
 
@@ -189,10 +195,6 @@ uint32_t GetUID_2(void);
 uint32_t GetUID_3(void);
 uint16_t GetFlashSize(void);
 uint16_t GetPackageData(void);
-//uint16_t GetPackageSize_0(void);
-//uint16_t GetPackageSize_1(void);
-//uint16_t GetPackageSize_2(void);
-//uint16_t GetPackageSize_3(void);
 
 uint16_t getThisModbusSrcId(void);
 uint16_t getThisModbusRxBufSize(void);
@@ -206,4 +208,4 @@ uint16_t getThisModbusTxBufSize(void);
 void ModbusSlave_FillMemory(uint8_t* pDest, uint8_t Value, uint16_t BytesCt);
 void ModbusSlave_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
 
-#endif /* MODBUSSLAVE_MODBUSSLAVEUTILS_H_ */
+#endif /* MODBUS_SLAVE_MODBUS_SLAVE_UTILS_H_ */

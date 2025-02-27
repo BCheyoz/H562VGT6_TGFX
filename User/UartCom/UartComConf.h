@@ -4,7 +4,7 @@
  *  Created on: Dec 15, 2020
  *  Original Author: j.proux
  *
- *  Updated on: 24 Feb. 2025
+ *  Updated on: 26 Feb. 2025
  *  Updated by: j.proux
  *
  *  Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
@@ -20,8 +20,8 @@
  *-> 04/01/2022 : Added by Jp	to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
  *-> 25/02/2022 : Added by AB	to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
  *-> 08/04/2022 : Added by Jp	to SensorsAcquisition_G071RB (STM32G071RBT6 : innoprojects/sensors-acquisition/firmware-kit-stm32g071rb)
- *-> 30/11/2023 : Added by Ab	to MV_By_ALDES
- *-> 21/02/2025 : Added by Jp	to TFlow4
+ *-> 30/11/2023 : Added by Ab	to MV_By_ALDES (STM32G030C8T6 : productprojects/ventilation/individuel/mvbyaldes/mv-by-aldes-app)
+ *-> 21/02/2025 : Added by Jp	to TFlow4_CarteMere_App (STM32H562VGTX : be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
  *
  */
 
@@ -473,7 +473,9 @@ UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tUartComInitParams, UC_BaseInitP
 
 #define UART_COM_SUPPORT_FRAME_TTL			// Nécessaire : Activer le support de la durée de Vie d'une Trame
 
-// Paramètres pour Réinit Uart avec de nouveaux BaudRate/Parity/Stops (Ajout_Jp le 16/04/2024 pour Ticket #33) :
+/********************************************************************************************/
+
+// Paramètres pour Réinit Uart avec de nouveaux BaudRate/Parity/Stops :
 #define UART_COM_SUPPORT_REINIT
 #define UART_COM_SAB_APPLY_AT_MST	50	// Délai Apply = 5s, par pas de 100ms
 #define UART_COM_SAB_APPLY_REINIT	50	// Délai Apply = 5s, par pas de 100ms
@@ -482,12 +484,9 @@ UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tUartComInitParams, UC_BaseInitP
 #define UART_COM_REINIT_VALID_KEY	0x5a5a // = 23130 = 2313 *10
 #define UART_COM_FORCE_REINIT_NOW	0x500d // = 20493
 
-/********************************************************************************************/
-
-extern UartReInitUserParams Uart3ReInitUserParams;
-extern UartReInitUserParams Uart3ReInitRealParams;
-extern UartReInitCoreVars Uart3ReInitCoreVars;
-
+extern UartReInitUserParams UartModbusUser_ReInitUserParams;
+extern UartReInitUserParams UartModbusUser_ReInitRealParams;
+extern UartReInitCoreVars	UartModbusUser_ReInitCoreVars;
 
 UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(UartReInitItem, UC_BaseUartReInitItems, UC_EndUartReInitItems);
 #define FIRST_COM_REINIT_ITEMS	UC_BaseUartReInitItems

@@ -38,7 +38,8 @@ typedef enum // Liste des Protocoles actuellement suppotés :
 	UartComCustom	= 3, // Protocole Custom, par exemple "Inverter Embraco"
 } eUartComType;
 #define UART_COM_TYPE_MIN	UartComIbus
-#define UART_COM_TYPE_MAX	UartComModbus
+//#define UART_COM_TYPE_MAX	UartComModbus
+#define UART_COM_TYPE_MAX	UartComCustom
 
 typedef struct _tBufInfo
 {
@@ -73,10 +74,12 @@ typedef struct _tFrameInfo
 	uint8_t	nbReTries;	// Nb de Tentatives d'envoi restantes
 	uint8_t	time2Live;	// Sablier Expiration ?
 } __attribute__ ((__packed__)) tComFrameParams;
+
 #define COM_FRAME_TTL_DISABLED		0
 #define COM_FRAME_TTL_EXPIRED		1
 #define COM_FRAME_DEF_TTL_IBUS		50
 #define COM_FRAME_DEF_TTL_MODBUS	UINT8_MAX
+#define COM_FRAME_DEF_TTL_CUSTOM	UINT8_MAX
 
 //// Mode Statique : RxIT && TxDMA :
 //#define UART_COM_FN_RECEIVE 		HAL_UART_Receive_IT
@@ -113,9 +116,11 @@ typedef struct _tUartComClassFn
 } tUartComClassFn;
 
 extern const tUartComClassFn UartCom_TxDMA_RxIT;	// Pour le Modbus et chaque fois que possible
+extern const tUartComClassFn UartCom_TxDMA_RxDMA;	// Pour Tests RxDMA
 extern const tUartComClassFn UartCom_TxIT_RxIT; 	// Pour l'iBus esentiellement
-#define UART_COM_CLASS_TX_DMA_RX_IT	&UartCom_TxDMA_RxIT	// Pour DMA & IT
-#define UART_COM_CLASS_TX_IT_RX_IT	&UartCom_TxIT_RxIT	// Pour IT & IT
+#define UART_COM_CLASS_TX_DMA_RX_IT 	&UartCom_TxDMA_RxIT 	// Pour DMA & IT
+#define UART_COM_CLASS_TX_DMA_RX_DMA	&UartCom_TxDMA_RxDMA	// Pour DMA & DMA
+#define UART_COM_CLASS_TX_IT_RX_IT  	&UartCom_TxIT_RxIT  	// Pour IT & IT
 
 typedef struct _tUartComInitRegularTx
 {
@@ -259,7 +264,8 @@ typedef enum
 	eUartReInitBaud460800 = 4608,	// 460800 bauds (pas demandé)
 	eUartReInitBaud921600 = 9216,	// 921600 bauds (pas demandé, Rx&Tx OK mais erreurs de réception PC sur Nükub au 12/04/2024)
 	eUartReInitBaud2Def	  = 0,
-	eUartReInitBaudDefault = eUartReInitBaud9600,
+//	eUartReInitBaudDefault = eUartReInitBaud9600,	// Default is 9600 bauds
+	eUartReInitBaudDefault = eUartReInitBaud115200,	// Default is 115200 bauds
 } eUartReInitBaudRate;
 
 typedef enum
@@ -294,6 +300,7 @@ typedef struct
 
 extern const UART_AdvFeatureInitTypeDef UART_AdvInitTxInvRxInv;
 extern const UartReInitUserParams UartReInit9600N1;
+extern const UartReInitUserParams UartReInit115200N1;	// 115200, Parity_None, 1_Stop
 extern const UartReInitUserParams UartReInitDefaults;
 HAL_StatusTypeDef UartCom_ReInitUartFromUserParams(UartReInitUserParams* pUserParams);
 HAL_StatusTypeDef UartCom_ReInitUartWithCustomParams(UartReInitItem* pReInitItem);

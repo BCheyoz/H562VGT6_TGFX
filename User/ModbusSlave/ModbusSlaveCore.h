@@ -4,20 +4,19 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 25 Feb. 2025
+ *  Updated on: 27 Feb. 2025
  *  Updated by: j.proux
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
- * -> il te faudra peut-être forcer manuellement l'affichage de cette "Ressource"
+ * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
  * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  Pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau Projet :
  *   -> Suivre les indications dans "ModbusSlaveConf.h"
  *
  */
-
-#ifndef UART_COM_MODBUSSLAVECORE_H_
-#define UART_COM_MODBUSSLAVECORE_H_
+#ifndef MODBUS_SLAVE_MODBUS_SLAVE_CORE_H_
+#define MODBUS_SLAVE_MODBUS_SLAVE_CORE_H_
 
 #include "ModbusSlaveConf.h"	// Pour accès à la Configuration ModbusSlave du User
 #include "UartComUtils.h"		// Pour pouvoir s'appuyer sur la Librairie UART_COM
@@ -32,11 +31,14 @@ typedef struct _tModbusSlaveParams
 	// Pour la Gestion du Niveau d'accès :
 	uint16_t AccessLevel; // Niveau d'accès actuellement autorisé
 	uint16_t nbPswdTries;// Pour éviter les attaques en brute force
+
 	// Infos complémentaires :
+#ifdef MODBUS_SLAVE_HAS_LAST_FRAM_RESULT	// cf. "ModbusSlaveConf.h"
 	uint16_t lastFrameResult; // Pour Mémoire du résultat de traitement de la dernière Réception Modbus
+#endif // MODBUS_SLAVE_HAS_LAST_FRAM_RESULT
 
 	// Statistiques ModbusSlave :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS	// (cf. "ModbusSlaveConf.h"
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 	uint32_t nbFramesRx;
 	uint32_t nbFramesRxLowSz;
 	uint32_t nbFramesRxCrcOk;
@@ -82,7 +84,7 @@ typedef enum {
 	TVarUIntGetFctSetVar,
 	TVarUIntGetFctSetFct,
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
 	//----------------------------------------
 	// Type Signed Long (4 Bytes = 2x 16 bits) :
 	TVarSLongGetVarSetVar,
@@ -97,7 +99,7 @@ typedef enum {
 	TVarULongGetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
 	//----------------------------------------
 	// Type Signed LongLong (8 Bytes = 4x 16 bits) :
 	TVarSLongLongGetVarSetVar,
@@ -112,7 +114,7 @@ typedef enum {
 	TVarULongLongGetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT // (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT // cf. "ModbusSlaveConf.h"
 	//----------------------------------------
 	// Type Float Int x1 (2 Bytes = 1x 16 bits) :
 	TVarFloatIntX1GetVarSetVar,
@@ -139,7 +141,7 @@ typedef enum {
 	TVarFloatIntX1000GetFctSetFct,
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG // (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG // cf. "ModbusSlaveConf.h"
 	//----------------------------------------
 	// Type Float Long x10 (4 Bytes = 2x 16 bits) :
 	TVarFloatLongX10GetVarSetVar,
@@ -179,7 +181,7 @@ typedef enum {
 
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW // (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW // cf. "ModbusSlaveConf.h"
 	//----------------------------------------
 	// Type Float Long Raw (4 Bytes = 2x 16 bits) :
 	TVarFloatLongRawGetVarSetVar,
@@ -204,12 +206,6 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam);	// Nécessite
 
 extern tModbusSlaveParams	ModbusSlaveParam[UART_COM_NB_OF_MODBUS_SLAVE];
 
-//#define MODBUS_SLAVE_UART_IHM_PARAMS	&ModbusSlaveParam[0]
-//#define MODBUS_SLAVE_UART_USER_PARAMS	&ModbusSlaveParam[1]
-//#define MODBUS_SLAVE_UART_EXT_PARAMS	&ModbusSlaveParam[2]
-//#define MODBUS_SLAVE_USBD_CDC_PARAMS	&ModbusSlaveParam[3]
-//#define MODBUS_SLAVE_USBH_CDC_PARAMS	&ModbusSlaveParam[3]	// UsbHost_ModbusSlave partage les même Params que UsbDevice_ModbusSlave
-
 /******************************************************************************/
 // Prototypes des fonctions Internes de ModbusSlave autorisées dans la Table Modbus :
 
@@ -222,4 +218,4 @@ void RequestRunMode4ThisModbus(uint8_t newRunMode);
 
 /******************************************************************************/
 
-#endif /* UART_COM_MODBUSSLAVECORE_H_ */
+#endif /* MODBUS_SLAVE_MODBUS_SLAVE_CORE_H_ */

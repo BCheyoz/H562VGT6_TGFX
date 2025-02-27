@@ -4,11 +4,11 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 25 Fev. 2025
+ *  Updated on: 27 Feb. 2025
  *  Updated by: j.proux
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
- * -> il te faudra peut-être forcer manuellement l'affichage de cette "Ressource"
+ * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
  * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  History Usage :
@@ -27,6 +27,8 @@
 
 #ifndef MODBUS_SLAVE_MODBUS_SLAVE_CONF_H_
 #define MODBUS_SLAVE_MODBUS_SLAVE_CONF_H_
+
+// Remarque_Jp le 22/10/2021 : Merci de conserver les commentaires, pour Exemple, svp.
 
 /********************************************************************************************
 * Procédure pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau projet : *
@@ -361,6 +363,8 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 //#define MODBUS_SLAVE_SUPPORT_STATS		// Pour activer le support des Variables de Stat ModbusSlave
 //#define MODBUS_SLAVE_ENABLE_STATS_ACCESS	// Pour activer l'accès, dans le Modbus, aux Stats de DEBUG
+//#define MODBUS_SLAVE_HAS_LAST_FRAM_RESULT	// Pour activer la récupération du dernier FrameResult
+//#define MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// Pour activer l'utilisation de la fonction commune de WriteRegister
 
 /******************************************************************************/
 // Pour "ModbusSlaveUser.c" :

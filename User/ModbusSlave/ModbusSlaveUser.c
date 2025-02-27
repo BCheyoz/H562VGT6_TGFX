@@ -8,7 +8,7 @@
  *  Updated by: j.proux
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
- * -> il te faudra peut-être forcer manuellement l'affichage de cette "Ressource"
+ * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
  * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  Pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau Projet :
@@ -74,7 +74,7 @@ uint32_t GetVersionSoft32(void);
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
 
 static const tModbusSlaveItem TableModbusSlave[] = {
-//   Adresse,       RdMinLevel,         WrMinLevel,             VarType and Get/Set Method,     RdPtr,                                      WrPtr :
+//	Adresse,		RdMinLevel,			WrMinLevel,				VarType and Get/Set Method,		RdPtr,				WrPtr :
 
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// EXPORT = 1
 /*

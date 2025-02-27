@@ -4,11 +4,11 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 25 Feb. 2025
+ *  Updated on: 27 Feb. 2025
  *  Updated by: j.proux
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
- * -> il te faudra peut-être forcer manuellement l'affichage de cette "Ressource"
+ * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
  * en "Text file encoding" = "Other: UTF-8" (clic-droit sur le Fichier -> "Properties").
  *
  *  Pour intégrer facilement cette Librairie "ModbusSlave" dans un nouveau Projet :
@@ -29,31 +29,31 @@
 /******************************************************************************/
 // Includes automatiques suivant les besoins :
 
-#if defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)
+#if defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_EXT_MEM_MAX_ADR" (cf. "ModbusSlaveConf.h"), par exemple "MEM_DEV_MAX_ADR" from "MemHistoCore.h"
 	#include "MemHistoCore.h"	// Pour accès à MEM_DEV_MAX_ADR
 	#include "Memoire.h"		// Pour accès aux Fonctions sur la Mémoire Externe, Requires Library "MemoryBridge" (cf. FW HII_CarteMere_App)
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
-#if defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)
+#if defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_EXT_RES_MAX_SIZE" (cf. "ModbusSlaveConf.h"), par exemple "MEM_HISTO_RES_MAX_SIZE", Max = 64K words
 	#include "MemHistoConf.h"	// Pour accès à MEM_HISTO_RES_MAX_SIZE
 	#include "IhmRes.h" 		// Pour accès aux Fonctions de Gestion des Ressources en Mémoire Externe, Requires Library "IhmRes" (cf. FW IHM EasyKub)
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
 
-#if defined(MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM)
+#if defined(MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM)	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_FIRMWARE_BASE_ADR" (cf. "ModbusSlaveConf.h"), par exemple "FIRMWARE_BASE_ADR" from "VersionInfos.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_FIRMWARE_MAX_SIZE" (cf. "ModbusSlaveConf.h"), par exemple "FIRMWARE_MAX_SIZE" from "VersionInfos.h"
 	#include "FlashInfos.h"		// Pour accès à "FIRMWARE_BASE_ADR" & "FIRMWARE_MAX_SIZE", Requires Library "VersionInfos" (cf. FW HII_CarteMere_App)
 #endif // MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
 
-#if defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)
+#if defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_FIRMWARE_MAX_SIZE" (cf. "ModbusSlaveConf.h"), par exemple "FIRMWARE_MAX_SIZE" from "VersionInfos.h"
 	#include "UpgradeFirmware.h"// Pour accès aux Fonctions de Mise à Jour du Firmware, Requires Library "UpgradeFirmware" (cf. FW HII_CarteMere_App)
 	#include "FlashInfos.h"		// Pour accès à "FIRMWARE_MAX_SIZE", Requires Library "VersionInfos" (cf. FW HII_CarteMere_App)
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
 
-#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
+#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_FIRMWARE_MAX_SIZE" (cf. "ModbusSlaveConf.h"), par exemple "FIRMWARE_MAX_SIZE" from "VersionInfos.h"
 	#include "UpgradeFirmware.h"// Pour accès aux Fonctions de Mise à Jour du Firmware, Requires Library "UpgradeFirmware" (cf. FW HII_CarteMere_App)
 #endif // MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
@@ -64,8 +64,8 @@
 
 // Liste des Fonctions Modbus Standard supportées :
 #define MODBUS_SLAVE_FCT_READ_REG	0x03 // Read Holding Registers   ("Modbus_Application_Protocol_V1_1b3.pdf" page 15)
-#define MODBUS_SLAVE_FCT_WR_1REG	0x06 // Write Single Register	 ("Modbus_Application_Protocol_V1_1b3.pdf" page 19)
 #define MODBUS_SLAVE_FCT_WRITE_REG	0x10 // Write Multiple registers ("Modbus_Application_Protocol_V1_1b3.pdf" page 30)
+#define MODBUS_SLAVE_FCT_WR_1REG	0x06 // Write Single Register	 ("Modbus_Application_Protocol_V1_1b3.pdf" page 19)
 
 // Liste des "User Defined Function codes" supportés ("Modbus_Application_Protocol_V1_1b3.pdf" page 10) :
 #define MODBUS_FCT_FLASH_FIRMWARE	0x69 // $69 = 105 : Write a Firmware Program Bloc
@@ -92,7 +92,7 @@
 
 /******************************************************************************/
 
-#ifndef DISABLE_MODBUS_SLAVE_SUPPORT
+#ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 
 #define MODBUS_GET_BYTE_N(a,b)		(uint8_t)(((a) >> ((b)*8)) & 0xFF) // Récupère le ByteN (n = [0, 3] sur 32 bits)
 #define MODBUS_MAKE_WORD_LE(l,h)	(uint16_t)((((h) & 0xFF)<<8) | (((l) & 0xFF) << 0)) // h = Byte1; l = Byte0
@@ -117,46 +117,46 @@ tRxTxBufInfo* pCurRxTxBI = 0;			// Pour certaines Fonctions qui ont besoin d'Inf
 /******************************************************************************/
 // Prototypes des Fonctions Internes à usage local :
 
-#ifdef MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS		// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS		// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS 	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS 	// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER		// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER		// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
 
-#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY		// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
-#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 		// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
 
-#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  		// cf. "ModbusSlaveConf.h"
 	static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
 #endif // MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
 
 static uint16_t getThisModbusItemSizeW(eTVarGetSet varType);
 static inline uint16_t getAccessLevelAccordingToPswd(uint16_t Pswd);
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
 	static int16_t Float_to_Int16(float value, float coef);
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
 	static int32_t Float_to_Int32(float value, float coef);
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
@@ -177,12 +177,12 @@ void InitModbusSlaveStruct(tModbusSlaveParams* pStruct, uint16_t srcId, uint16_t
 #if defined(__DEBUG) || defined(DEBUG) // Only under DEBUG conditions :
 	#ifndef APP_WITH_BOOT	// Hors Target for BootLoader
 
-		#if defined(COM_UART_MODBUS_IHM_SRC_ID) && defined(MODBUS_SLAVE_DEF_LVL_ACCESS_IHM)
+		#if defined(COM_UART_MODBUS_IHM_SRC_ID) && defined(MODBUS_SLAVE_DEF_LVL_ACCESS_IHM)	// cf. "ModbusSlaveConf.h"
 			#warning "Debug MODBUS_SLAVE_DEF_LVL_ACCESS_IHM enabled !"
 			if(COM_UART_MODBUS_IHM_SRC_ID	== srcId) { pStruct->AccessLevel = MODBUS_SLAVE_DEF_LVL_ACCESS_IHM; } // 1 = src_IHM -> start DEBUG with Level 5
 		#endif // COM_UART_MODBUS_IHM_SRC_ID & MODBUS_SLAVE_DEF_LVL_ACCESS_IHM
 
-		#if defined(COM_UART_MODBUS_USER_SRC_ID) && defined(MODBUS_SLAVE_DEF_LVL_ACCESS_USER)
+		#if defined(COM_UART_MODBUS_USER_SRC_ID) && defined(MODBUS_SLAVE_DEF_LVL_ACCESS_USER)	// cf. "ModbusSlaveConf.h"
 			#warning "Debug MODBUS_SLAVE_DEF_LVL_ACCESS_USER enabled !"
 			if(COM_UART_MODBUS_USER_SRC_ID	== srcId) { pStruct->AccessLevel = MODBUS_SLAVE_DEF_LVL_ACCESS_USER; } // 2 = src_User -> start DEBUG with Level 5
 		#endif // COM_UART_MODBUS_USER_SRC_ID & MODBUS_SLAVE_DEF_LVL_ACCESS_USER
@@ -199,7 +199,7 @@ void InitModbusSlaveStruct(tModbusSlaveParams* pStruct, uint16_t srcId, uint16_t
 int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 {
 
-#ifndef DISABLE_MODBUS_SLAVE_SUPPORT
+#ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 
 	if(0 == pVoidParam) return 0;
 	tModbusSlaveParams* pModbusSlave = pVoidParam;
@@ -207,7 +207,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 	int wasHandled = MODBUS_SLAVE_FRAME_NOT_HANDLED;	// Par défaut : not Handled yet !
 	int nbBytes = 0;	// ToDo: voir pour passer en uint16_t, ainsi que les prototypes des Handlers de CodeFonction ...
 
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 	if(UINT32_MAX > pModbusSlave->nbFramesRx) { pModbusSlave->nbFramesRx++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
@@ -243,7 +243,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//--------------------------------------------
 				// Gestion Ordre de Lecture (sauf Broadcast) :
 				//--------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS		// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS		// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionReadHoldingRegisters(pRxTxBI, pModbusSlave, &nbBytes);
@@ -253,14 +253,14 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Ecriture (Broadcast autorisé) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteMultipleRegisters(pRxTxBI, pModbusSlave, &nbBytes);
 				}
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS
 
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER		// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER		// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteSingleRegister(pRxTxBI, pModbusSlave, &nbBytes);
@@ -270,7 +270,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//--------------------------------------------------
 				// Gestion Ecriture Ressource (Broadcast autorisé) :
 				//--------------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteExternalRessource(pRxTxBI, pModbusSlave, &nbBytes);
@@ -280,7 +280,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//------------------------------------------------
 				// Gestion Ordre de Dump Memory (sauf Broadcast) :
 				//------------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionDumpExternalMemory(pRxTxBI, pModbusSlave, &nbBytes);
@@ -290,7 +290,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Ecriture Programme Interne (Broadcast autorisé) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionWriteFirmwareBloc(pRxTxBI, pModbusSlave, &nbBytes);
@@ -300,7 +300,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Vérification Programme (sauf Broadcast) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionValidateFirmwareProgram(pRxTxBI, pModbusSlave, &nbBytes);
@@ -310,7 +310,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				//----------------------------------------------
 				// Gestion Ordre Lecture Programme (sauf Broadcast) :
 				//----------------------------------------------
-#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// (cf. "ModbusSlaveConf.h
+#ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					wasHandled = HandleModbusFunctionReadInternalProgram(pRxTxBI, pModbusSlave, &nbBytes);
@@ -321,7 +321,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				// ToDo: Add above here support for new Modbus functions ...
 				//----------------------------------------------
 
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 				if(MODBUS_SLAVE_FRAME_NOT_HANDLED == wasHandled)
 				{
 					if(UINT32_MAX > pModbusSlave->nbFramesNoFnHand) { pModbusSlave->nbFramesNoFnHand++; } // Pour les Stats
@@ -363,25 +363,26 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 				}
 			} else {
 				// L'identifiant ne nous correspond pas !
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
-            	if(UINT32_MAX > pModbusSlave->nbFramesRxAdrErr) { pModbusSlave->nbFramesRxAdrErr++; } // Pour les Stats
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
+				if(UINT32_MAX > pModbusSlave->nbFramesRxAdrErr) { pModbusSlave->nbFramesRxAdrErr++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 			}
 		} else {
 			// Le CRC n'est pas correct !
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
-        	if(UINT32_MAX > pModbusSlave->nbFramesRxCrcErr) { pModbusSlave->nbFramesRxCrcErr++; } // Pour les Stats
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
+			if(UINT32_MAX > pModbusSlave->nbFramesRxCrcErr) { pModbusSlave->nbFramesRxCrcErr++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 		}
 	} else { // Taille Trame Insuffisante :
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 		if(UINT32_MAX > pModbusSlave->nbFramesRxLowSz) { pModbusSlave->nbFramesRxLowSz++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
 	}
 
-	// ToDo: ajouter ifdef registerLastFrameResult
+#ifdef MODBUS_SLAVE_HAS_LAST_FRAM_RESULT	// cf. "ModbusSlaveConf.h"
 	pModbusSlave->lastFrameResult = (uint16_t)wasHandled;	// Pour Mémoire du résultat du dernier traitement
+#endif // MODBUS_SLAVE_HAS_LAST_FRAM_RESULT
 
 	//------------------------------------------------------
 	// Si ça a été Traité et qu'il y a des Bytes à envoyer :
@@ -389,7 +390,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 	if( (MODBUS_SLAVE_FRAME_NOT_HANDLED != wasHandled) && (0 != nbBytes) &&
 		(pRxTxBI->TxBuf.maxBytes >= (nbBytes +2)) ) // Et assez de place pour ajouter le CRC
 	{
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 		if(UINT32_MAX > pModbusSlave->nbTramesTx) { pModbusSlave->nbTramesTx++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
@@ -412,7 +413,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS)	// (cf. "ModbusSlaveConf.h")
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -428,7 +429,7 @@ static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModb
 // inutile	*retValue = 0; // Par défaut : rien à Répondre
 	if(pRxTxBI->TxBuf.maxBytes < MIN_READ_REGISTERS_TX_FRAME_SIZE) { return MODBUS_SLAVE_FRAME_WAS_HANDLED; } // Handled, mais Impossible de Préparer une Réponse !
 
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 	if(UINT32_MAX > pModbusSlave->nbFramesRead03) { pModbusSlave->nbFramesRead03++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
@@ -457,252 +458,249 @@ static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModb
 
 	while(0 < nbRegister)
 	{
-        Data16 = MODBUS_SLAVE_DEFAULT_UINT16_VALUE;
-        while( (curModbusItem < MODBUS_SLAVE_END_OF_TABLE) && (idRegister >= curModbusItem->Adr) )
-        {
-            curModBusItmSize = getThisModbusItemSizeW(curModbusItem->typeGetSet);
-            if( (idRegister >= curModbusItem->Adr) && (idRegister < (curModbusItem->Adr + curModBusItmSize)) )
-            {
-                if(0 != curModbusItem->getPtr) // On a un Pointeur d'accès en Lecture :
-                {
-                    if(curModbusItem->readMinLevel <= pModbusSlave->AccessLevel)
-                    {
-                        if(idRegister == curModbusItem->Adr)
-                        {
-                            tmpQWordVar.ULongLong = 0;
-                            switch (curModbusItem->typeGetSet) {
-                            	// Type Signed Char (1 Byte = 8 bits) :
-                            case TVarSCharGetVarSetVar:
-                            case TVarSCharGetVarSetFct:
-                                tmpQWordVar.SChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int8_t, curModbusItem->getPtr));
-                                break;
-                            case TVarSCharGetFctSetVar:
-                            case TVarSCharGetFctSetFct:
-                                tmpQWordVar.SChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int8_t, curModbusItem->getPtr));
-                                break;
-                                // Type Unsigned Char (1 Byte = 8 bits) :
-                            case TVarUCharGetVarSetVar:
-                            case TVarUCharGetVarSetFct:
-                                tmpQWordVar.UChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint8_t, curModbusItem->getPtr));
-                                break;
-                            case TVarUCharGetFctSetVar:
-                            case TVarUCharGetFctSetFct:
-                                tmpQWordVar.UChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint8_t, curModbusItem->getPtr));
-                                break;
+		Data16 = MODBUS_SLAVE_DEFAULT_UINT16_VALUE;	// cf. "ModbusSlaveConf.h"
+		while( (curModbusItem < MODBUS_SLAVE_END_OF_TABLE) && (idRegister >= curModbusItem->Adr) )
+		{
+			curModBusItmSize = getThisModbusItemSizeW(curModbusItem->typeGetSet);
+			if( (idRegister >= curModbusItem->Adr) && (idRegister < (curModbusItem->Adr + curModBusItmSize)) )
+			{
+				if(0 != curModbusItem->getPtr) // On a un Pointeur d'accès en Lecture :
+				{
+					if(curModbusItem->readMinLevel <= pModbusSlave->AccessLevel)
+					{
+						if(idRegister == curModbusItem->Adr)
+						{
+							tmpQWordVar.ULongLong = 0;
+							switch (curModbusItem->typeGetSet) {
+								// Type Signed Char (1 Byte = 8 bits) :
+							case TVarSCharGetVarSetVar:
+							case TVarSCharGetVarSetFct:
+								tmpQWordVar.SChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int8_t, curModbusItem->getPtr));
+								break;
+							case TVarSCharGetFctSetVar:
+							case TVarSCharGetFctSetFct:
+								tmpQWordVar.SChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int8_t, curModbusItem->getPtr));
+								break;
+								// Type Unsigned Char (1 Byte = 8 bits) :
+							case TVarUCharGetVarSetVar:
+							case TVarUCharGetVarSetFct:
+								tmpQWordVar.UChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint8_t, curModbusItem->getPtr));
+								break;
+							case TVarUCharGetFctSetVar:
+							case TVarUCharGetFctSetFct:
+								tmpQWordVar.UChar0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint8_t, curModbusItem->getPtr));
+								break;
 
-                                // Type Signed Int (2 Bytes = 1x 16 bits) :
-                            case TVarSIntGetVarSetVar:
-                            case TVarSIntGetVarSetFct:
-                                tmpQWordVar.SInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int16_t, curModbusItem->getPtr));
-                                break;
-                            case TVarSIntGetFctSetVar:
-                            case TVarSIntGetFctSetFct:
-                                tmpQWordVar.SInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int16_t, curModbusItem->getPtr));
-                                break;
-                                // Type Unsigned Int (2 Bytes = 1x 16 bits) :
-                            case TVarUIntGetVarSetVar:
-                            case TVarUIntGetVarSetFct:
-                                tmpQWordVar.UInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint16_t, curModbusItem->getPtr));
-                                break;
-                            case TVarUIntGetFctSetVar:
-                            case TVarUIntGetFctSetFct:
-                                tmpQWordVar.UInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint16_t, curModbusItem->getPtr));
-                                break;
+								// Type Signed Int (2 Bytes = 1x 16 bits) :
+							case TVarSIntGetVarSetVar:
+							case TVarSIntGetVarSetFct:
+								tmpQWordVar.SInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int16_t, curModbusItem->getPtr));
+								break;
+							case TVarSIntGetFctSetVar:
+							case TVarSIntGetFctSetFct:
+								tmpQWordVar.SInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int16_t, curModbusItem->getPtr));
+								break;
+								// Type Unsigned Int (2 Bytes = 1x 16 bits) :
+							case TVarUIntGetVarSetVar:
+							case TVarUIntGetVarSetFct:
+								tmpQWordVar.UInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint16_t, curModbusItem->getPtr));
+								break;
+							case TVarUIntGetFctSetVar:
+							case TVarUIntGetFctSetFct:
+								tmpQWordVar.UInt0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint16_t, curModbusItem->getPtr));
+								break;
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
-                                //----------------------------------------
-                                // Type Signed Long (4 Bytes = 2x 16 bits) :
-                            case TVarSLongGetVarSetVar:
-                            case TVarSLongGetVarSetFct:
-                                tmpQWordVar.SLong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int32_t, curModbusItem->getPtr));
-                                break;
-                            case TVarSLongGetFctSetVar:
-                            case TVarSLongGetFctSetFct:
-                                tmpQWordVar.SLong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int32_t, curModbusItem->getPtr));
-                                break;
-                                // Type Unsigned Long (4 Bytes = 2x 16 bits) :
-                            case TVarULongGetVarSetVar:
-                            case TVarULongGetVarSetFct:
-                                tmpQWordVar.ULong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint32_t, curModbusItem->getPtr));
-                                break;
-                            case TVarULongGetFctSetVar:
-                            case TVarULongGetFctSetFct:
-                                tmpQWordVar.ULong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint32_t, curModbusItem->getPtr));
-                                break;
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Signed Long (4 Bytes = 2x 16 bits) :
+							case TVarSLongGetVarSetVar:
+							case TVarSLongGetVarSetFct:
+								tmpQWordVar.SLong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int32_t, curModbusItem->getPtr));
+								break;
+							case TVarSLongGetFctSetVar:
+							case TVarSLongGetFctSetFct:
+								tmpQWordVar.SLong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int32_t, curModbusItem->getPtr));
+								break;
+							// Type Unsigned Long (4 Bytes = 2x 16 bits) :
+							case TVarULongGetVarSetVar:
+							case TVarULongGetVarSetFct:
+								tmpQWordVar.ULong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint32_t, curModbusItem->getPtr));
+								break;
+							case TVarULongGetFctSetVar:
+							case TVarULongGetFctSetFct:
+								tmpQWordVar.ULong0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint32_t, curModbusItem->getPtr));
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
-                                //----------------------------------------
-                                // Type Signed LongLong (8 Bytes = 4x 16 bits) :
-                            case TVarSLongLongGetVarSetVar:
-                            case TVarSLongLongGetVarSetFct:
-                                tmpQWordVar.SLongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int64_t, curModbusItem->getPtr));
-                                break;
-                            case TVarSLongLongGetFctSetVar:
-                            case TVarSLongLongGetFctSetFct:
-                                tmpQWordVar.SLongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int64_t, curModbusItem->getPtr));
-                                break;
-
-                                // Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
-                            case TVarULongLongGetVarSetVar:
-                            case TVarULongLongGetVarSetFct:
-                                tmpQWordVar.ULongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint64_t, curModbusItem->getPtr));
-                                break;
-                            case TVarULongLongGetFctSetVar:
-                            case TVarULongLongGetFctSetFct:
-                                tmpQWordVar.ULongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint64_t, curModbusItem->getPtr));
-                                break;
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Signed LongLong (8 Bytes = 4x 16 bits) :
+							case TVarSLongLongGetVarSetVar:
+							case TVarSLongLongGetVarSetFct:
+								tmpQWordVar.SLongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(int64_t, curModbusItem->getPtr));
+								break;
+							case TVarSLongLongGetFctSetVar:
+							case TVarSLongLongGetFctSetFct:
+								tmpQWordVar.SLongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(int64_t, curModbusItem->getPtr));
+								break;
+								// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
+							case TVarULongLongGetVarSetVar:
+							case TVarULongLongGetVarSetFct:
+								tmpQWordVar.ULongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint64_t, curModbusItem->getPtr));
+								break;
+							case TVarULongLongGetFctSetVar:
+							case TVarULongLongGetFctSetFct:
+								tmpQWordVar.ULongLong = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(uint64_t, curModbusItem->getPtr));
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// (cf. "ModbusSlaveConf.h")
-                                //----------------------------------------
-                                // Type Float Int x1 (2 Bytes = 1x 16 bits) :
-                            case TVarFloatIntX1GetVarSetVar:
-                            case TVarFloatIntX1GetVarSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1.0f);
-                                break;
-                            case TVarFloatIntX1GetFctSetVar:
-                            case TVarFloatIntX1GetFctSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1.0f);
-                                break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Int x1 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX1GetVarSetVar:
+							case TVarFloatIntX1GetVarSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1.0f);
+								break;
+							case TVarFloatIntX1GetFctSetVar:
+							case TVarFloatIntX1GetFctSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1.0f);
+								break;
 
-                                // Type Float Int x10 (2 Bytes = 1x 16 bits) :
-                            case TVarFloatIntX10GetVarSetVar:
-                            case TVarFloatIntX10GetVarSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10.0f);
-                                break;
-                            case TVarFloatIntX10GetFctSetVar:
-                            case TVarFloatIntX10GetFctSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10.0f);
-                                break;
+								// Type Float Int x10 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX10GetVarSetVar:
+							case TVarFloatIntX10GetVarSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10.0f);
+								break;
+							case TVarFloatIntX10GetFctSetVar:
+							case TVarFloatIntX10GetFctSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10.0f);
+								break;
 
-                                // Type Float Int x100 (2 Bytes = 1x 16 bits) :
-                            case TVarFloatIntX100GetVarSetVar:
-                            case TVarFloatIntX100GetVarSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100.0f);
-                                break;
-                            case TVarFloatIntX100GetFctSetVar:
-                            case TVarFloatIntX100GetFctSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100.0f);
-                                break;
+								// Type Float Int x100 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX100GetVarSetVar:
+							case TVarFloatIntX100GetVarSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100.0f);
+								break;
+							case TVarFloatIntX100GetFctSetVar:
+							case TVarFloatIntX100GetFctSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100.0f);
+								break;
 
-                                // Type Float Int x1000 (2 Bytes = 1x 16 bits) :
-                            case TVarFloatIntX1000GetVarSetVar:
-                            case TVarFloatIntX1000GetVarSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000.0f);
-                                break;
-                            case TVarFloatIntX1000GetFctSetVar:
-                            case TVarFloatIntX1000GetFctSetFct:
-                                tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000.0f);
-                                break;
+								// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX1000GetVarSetVar:
+							case TVarFloatIntX1000GetVarSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000.0f);
+								break;
+							case TVarFloatIntX1000GetFctSetVar:
+							case TVarFloatIntX1000GetFctSetFct:
+								tmpQWordVar.SInt0 = Float_to_Int16(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000.0f);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// (cf. "ModbusSlaveConf.h")
-                                //----------------------------------------
-                                // Type Float Long x10 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX10GetVarSetVar:
-                            case TVarFloatLongX10GetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10.0f);
-                                break;
-                            case TVarFloatLongX10GetFctSetVar:
-                            case TVarFloatLongX10GetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10.0f);
-                                break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Long x10 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX10GetVarSetVar:
+							case TVarFloatLongX10GetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10.0f);
+								break;
+							case TVarFloatLongX10GetFctSetVar:
+							case TVarFloatLongX10GetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10.0f);
+								break;
 
-                                // Type Float Long x100 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX100GetVarSetVar:
-                            case TVarFloatLongX100GetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100.0f);
-                                break;
-                            case TVarFloatLongX100GetFctSetVar:
-                            case TVarFloatLongX100GetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100.0f);
-                                break;
+								// Type Float Long x100 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX100GetVarSetVar:
+							case TVarFloatLongX100GetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100.0f);
+								break;
+							case TVarFloatLongX100GetFctSetVar:
+							case TVarFloatLongX100GetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100.0f);
+								break;
 
-                                // Type Float Long x1000 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX1KGetVarSetVar:
-                            case TVarFloatLongX1KGetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000.0f);
-                                break;
-                            case TVarFloatLongX1KGetFctSetVar:
-                            case TVarFloatLongX1KGetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000.0f);
-                                break;
+								// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX1KGetVarSetVar:
+							case TVarFloatLongX1KGetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000.0f);
+								break;
+							case TVarFloatLongX1KGetFctSetVar:
+							case TVarFloatLongX1KGetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000.0f);
+								break;
 
-                                // Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX10KGetVarSetVar:
-                            case TVarFloatLongX10KGetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10000.0f);
-                                break;
-                            case TVarFloatLongX10KGetFctSetVar:
-                            case TVarFloatLongX10KGetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10000.0f);
-                                break;
+								// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX10KGetVarSetVar:
+							case TVarFloatLongX10KGetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 10000.0f);
+								break;
+							case TVarFloatLongX10KGetFctSetVar:
+							case TVarFloatLongX10KGetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 10000.0f);
+								break;
 
-                                // Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX100KGetVarSetVar:
-                            case TVarFloatLongX100KGetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100000.0f);
-                                break;
-                            case TVarFloatLongX100KGetFctSetVar:
-                            case TVarFloatLongX100KGetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100000.0f);
-                                break;
+							// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX100KGetVarSetVar:
+							case TVarFloatLongX100KGetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 100000.0f);
+								break;
+							case TVarFloatLongX100KGetFctSetVar:
+							case TVarFloatLongX100KGetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 100000.0f);
+								break;
 
-                                // Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongX1MGetVarSetVar:
-                            case TVarFloatLongX1MGetVarSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000000.0f);
-                                break;
-                            case TVarFloatLongX1MGetFctSetVar:
-                            case TVarFloatLongX1MGetFctSetFct:
-                                tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000000.0f);
-                                break;
-
+								// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX1MGetVarSetVar:
+							case TVarFloatLongX1MGetVarSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr), 1000000.0f);
+								break;
+							case TVarFloatLongX1MGetFctSetVar:
+							case TVarFloatLongX1MGetFctSetFct:
+								tmpQWordVar.SLong0 = Float_to_Int32(MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr), 1000000.0f);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// (cf. "ModbusSlaveConf.h")
-                                //----------------------------------------
-                                // Type Float Long Raw (4 Bytes = 2x 16 bits) :
-                            case TVarFloatLongRawGetVarSetVar:
-                            case TVarFloatLongRawGetVarSetFct:
-                                tmpQWordVar.Float0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr));
-                                break;
-                            case TVarFloatLongRawGetFctSetVar:
-                            case TVarFloatLongRawGetFctSetFct:
-                                tmpQWordVar.Float0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr));
-                                break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Long Raw (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongRawGetVarSetVar:
+							case TVarFloatLongRawGetVarSetFct:
+								tmpQWordVar.Float0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(float, curModbusItem->getPtr));
+								break;
+							case TVarFloatLongRawGetFctSetVar:
+							case TVarFloatLongRawGetFctSetFct:
+								tmpQWordVar.Float0 = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(float, curModbusItem->getPtr));
+								break;
 
-                                // Type Double LongLong Raw (8 Bytes = 4x 16 bits) :
-                            case TVarDoubleLongLongRawGetVarSetVar:
-                            case TVarDoubleLongLongRawGetVarSetFct:
-                                tmpQWordVar.Double = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(double, curModbusItem->getPtr));
-                                break;
-                            case TVarDoubleLongLongRawGetFctSetVar:
-                            case TVarDoubleLongLongRawGetFctSetFct:
-                                tmpQWordVar.Double = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(double, curModbusItem->getPtr));
-                                break;
-
+								// Type Double LongLong Raw (8 Bytes = 4x 16 bits) :
+							case TVarDoubleLongLongRawGetVarSetVar:
+							case TVarDoubleLongLongRawGetVarSetFct:
+								tmpQWordVar.Double = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(double, curModbusItem->getPtr));
+								break;
+							case TVarDoubleLongLongRawGetFctSetVar:
+							case TVarDoubleLongLongRawGetFctSetFct:
+								tmpQWordVar.Double = (MODBUS_GET_CASTED_VALUE_FROM_POINTED_FCT(double, curModbusItem->getPtr));
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 
-                            case TVarUnknown:
-                                break;
-                            default:
-                                break;
-                            }
-                        }
-                        Data16 = tmpQWordVar.Word[(curModBusItmSize - (idRegister - curModbusItem->Adr) -1)];
-                    }
-                }
-                if(idRegister == (curModbusItem->Adr + curModBusItmSize -1))
-                {
-                    curModbusItem++;
-                }
-                break; // Passer tout de suite à la demande suivante ...
-            } else {
-                curModbusItem++;
-            }
-        }
+							case TVarUnknown:
+								break;
+							default:
+								break;
+							}
+						}
+						Data16 = tmpQWordVar.Word[(curModBusItmSize - (idRegister - curModbusItem->Adr) -1)];
+					}
+				}
+				if(idRegister == (curModbusItem->Adr + curModBusItmSize -1))
+				{
+					curModbusItem++;
+				}
+				break; // Passer tout de suite à la demande suivante ...
+			} else {
+				curModbusItem++;
+			}
+		}
 
 		// Placer le Word en BigIndian dans la Trame de Réponse :
 		myTx[nbBytes++] = MODBUS_GET_BYTE_N(Data16, 1); // HighByte first
@@ -715,9 +713,9 @@ static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModb
 //            break;
 //        }
 
-        idRegister++;
-        nbRegister--;
-    }
+		idRegister++;
+		nbRegister--;
+	}
 
 	*retValue = nbBytes;
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
@@ -740,10 +738,10 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 	if(MODBUS_SLAVE_FCT_WRITE_REG != myRx[1]) { return MODBUS_SLAVE_FRAME_NOT_HANDLED; } // Not Handled
 	if(pRxTxBI->RxBuf.nbBytes < MIN_WRITE_REGISTERS_RX_FRAME_SIZE) { *retValue = MODBUS_SLAVE_ERR_ILL_DATA; return MODBUS_SLAVE_FRAME_WAS_EXCEPTION; }		// Taille Trame Insuffisante
 
-// inutile	*retValue = 0; // Par défaut : rien à  Répondre
+// inutile	*retValue = 0; // Par défaut : rien à Répondre
 	if(pRxTxBI->TxBuf.maxBytes < MIN_WRITE_REGISTERS_TX_FRAME_SIZE) { return MODBUS_SLAVE_FRAME_WAS_HANDLED; } // Handled, mais Impossible de Préparer une Réponse !
 
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 	if(UINT32_MAX > pModbusSlave->nbFramesWrit16) { pModbusSlave->nbFramesWrit16++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
@@ -754,7 +752,7 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 
 	if(pRxTxBI->RxBuf.nbBytes < (INDEX_WRITE_REGISTERS_FIRST_VALUE + (nbRegister <<1) + MODBUS_SLAVE_FOOTER_SIZE)) { *retValue = MODBUS_SLAVE_ERR_ILL_ADR; return MODBUS_SLAVE_FRAME_WAS_EXCEPTION; } // Taille Trame Incorecte
 
-#ifndef DISABLE_MAX_WRITE_REGISTERS_ONCE	// (cf. "ModbusSlaveConf.h")
+#ifndef DISABLE_MAX_WRITE_REGISTERS_ONCE	// cf. "ModbusSlaveConf.h"
 	if(MAX_WRITE_REGISTERS_ONCE < nbRegister) { nbRegister = MAX_WRITE_REGISTERS_ONCE; } // Max 124 registres 16bits pour rentrer dans 256 Bytes
 #endif // DISABLE_MAX_WRITE_REGISTERS_ONCE
 
@@ -767,14 +765,14 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 		myTx[nbBytes++] = myRx[1];  // Code Fonction identique
 		myTx[nbBytes++] = myRx[2];	// Starting Address Hi
 		myTx[nbBytes++] = myRx[3];	// Starting Address Lo
-#ifdef DISABLE_MAX_WRITE_REGISTERS_ONCE	// (cf. "ModbusSlaveConf.h")
+#ifdef DISABLE_MAX_WRITE_REGISTERS_ONCE	// cf. "ModbusSlaveConf.h"
 		myTx[nbBytes++] = myRx[4];	// Quantity of Registers Hi
 		myTx[nbBytes++] = myRx[5];	// Quantity of Registers Lo
 #else // ! DISABLE_MAX_WRITE_REGISTERS_ONCE
 		myTx[nbBytes++] = MODBUS_GET_BYTE_N(nbRegister, 1); // HighByte first
 		myTx[nbBytes++] = MODBUS_GET_BYTE_N(nbRegister, 0); // then LowByte
 #endif // DISABLE_MAX_WRITE_REGISTERS_ONCE
-	    *retValue = nbBytes;	// Renseigne déjà la taille finale de la Réponse !
+		*retValue = nbBytes;	// Renseigne déjà la taille finale de la Réponse !
 	}
 
 	// Variables spécifiques à l'opération :
@@ -785,260 +783,264 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 
 	// Parcours de la Table Modbus :
 	tModbusSlaveItem* curModbusItem = (tModbusSlaveItem*)MODBUS_SLAVE_BASE_OF_TABLE; // Pointe la base du Tableau à parcourir
-    while(0 < nbRegister)
-    {
-        Data16 = MODBUS_MAKE_WORD_BE(myRx[IndexTrame], myRx[IndexTrame +1]); // Recompose en BigEndian
-        IndexTrame += 2;	// Chaque valeur Modbus est sur 16bits, soit 2 Bytes
-	while( (curModbusItem < MODBUS_SLAVE_END_OF_TABLE) && (idRegister >= curModbusItem->Adr) )
+	while(0 < nbRegister)
 	{
-            curModBusItmSize = getThisModbusItemSizeW((eTVarGetSet)curModbusItem->typeGetSet);
-		if( (idRegister >= curModbusItem->Adr) && (idRegister < (curModbusItem->Adr + curModBusItmSize)) )
+		Data16 = MODBUS_MAKE_WORD_BE(myRx[IndexTrame], myRx[IndexTrame +1]); // Recompose en BigEndian
+		IndexTrame += 2;	// Chaque valeur Modbus est sur 16bits, soit 2 Bytes
+		while( (curModbusItem < MODBUS_SLAVE_END_OF_TABLE) && (idRegister >= curModbusItem->Adr) )
 		{
-			if(0 != curModbusItem->setPtr) // On a un Pointeur d'accès en Ecriture :
+			curModBusItmSize = getThisModbusItemSizeW((eTVarGetSet)curModbusItem->typeGetSet);
+			if( (idRegister >= curModbusItem->Adr) && (idRegister < (curModbusItem->Adr + curModBusItmSize)) )
 			{
-				if(curModbusItem->writeMinLevel <= pModbusSlave->AccessLevel)
+				if(0 != curModbusItem->setPtr) // On a un Pointeur d'accès en Ecriture :
 				{
-					// Etape 1 : Mise en Mémoire Tampon :
-					VarTampon.Word[(curModBusItmSize - (idRegister - curModbusItem->Adr) -1)] = Data16;
-
-					// Etape 2 : Ecrire si Valeur est Complète :
-					if(idRegister == (curModbusItem->Adr + curModBusItmSize -1)) // AdrEnCours = LowWord
+					if(curModbusItem->writeMinLevel <= pModbusSlave->AccessLevel)
 					{
-						// Transfère la Data Complète :
-						switch(curModbusItem->typeGetSet)
+						// Etape 1 : Mise en Mémoire Tampon :
+						VarTampon.Word[(curModBusItmSize - (idRegister - curModbusItem->Adr) -1)] = Data16;
+
+						// Etape 2 : Ecrire si Valeur est Complète :
+						if(idRegister == (curModbusItem->Adr + curModBusItmSize -1)) // AdrEnCours = LowWord
 						{
-							// Type Signed Char (1 Byte = 8 bits) :
-						case TVarSCharGetVarSetVar:
-						case TVarSCharGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(int8_t, curModbusItem->setPtr) = VarTampon.SChar0;
-							break;
-						case TVarSCharGetVarSetFct:
-						case TVarSCharGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(int8_t, curModbusItem->setPtr)(VarTampon.SChar0);
-							break;
-							// Type Unsigned Char (1 Byte = 8 bits) :
-						case TVarUCharGetVarSetVar:
-						case TVarUCharGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(uint8_t, curModbusItem->setPtr) = VarTampon.UChar0;
-							break;
-						case TVarUCharGetVarSetFct:
-						case TVarUCharGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(uint8_t, curModbusItem->setPtr)(VarTampon.UChar0);
-							break;
+#ifdef MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// cf. "ModbusSlaveConf.h"
+							HandleWrite2RegisterFromVarTampon(curModbusItem, &VarTampon);
+#else // !MODBUS_SLAVE_USE_COMMON_WR_REG_FN
 
-							// Type Signed Int (2 Bytes = 1x 16 bits) :
-						case TVarSIntGetVarSetVar:
-						case TVarSIntGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(int16_t, curModbusItem->setPtr) = VarTampon.SInt0;
-							break;
-						case TVarSIntGetVarSetFct:
-						case TVarSIntGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(int16_t, curModbusItem->setPtr)(VarTampon.SInt0);
-							break;
-							// Type Unsigned Int (2 Bytes = 1x 16 bits) :
-						case TVarUIntGetVarSetVar:
-						case TVarUIntGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(uint16_t, curModbusItem->setPtr) = VarTampon.UInt0;
-							break;
-						case TVarUIntGetVarSetFct:
-						case TVarUIntGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon.UInt0);
-							break;
+							// Transfère la Data Complète :
+							switch(curModbusItem->typeGetSet)
+							{
+								// Type Signed Char (1 Byte = 8 bits) :
+							case TVarSCharGetVarSetVar:
+							case TVarSCharGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(int8_t, curModbusItem->setPtr) = VarTampon.SChar0;
+								break;
+							case TVarSCharGetVarSetFct:
+							case TVarSCharGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(int8_t, curModbusItem->setPtr)(VarTampon.SChar0);
+								break;
+								// Type Unsigned Char (1 Byte = 8 bits) :
+							case TVarUCharGetVarSetVar:
+							case TVarUCharGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(uint8_t, curModbusItem->setPtr) = VarTampon.UChar0;
+								break;
+							case TVarUCharGetVarSetFct:
+							case TVarUCharGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(uint8_t, curModbusItem->setPtr)(VarTampon.UChar0);
+								break;
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
-							//----------------------------------------
-							// Type Signed Long (4 Bytes = 2x 16 bits) :
-						case TVarSLongGetVarSetVar:
-						case TVarSLongGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(int32_t, curModbusItem->setPtr) = VarTampon.SLong0;
-							break;
-						case TVarSLongGetVarSetFct:
-						case TVarSLongGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(int32_t, curModbusItem->setPtr)(VarTampon.SLong0);
-							break;
-							// Type Unsigned Long (4 Bytes = 2x 16 bits) :
-						case TVarULongGetVarSetVar:
-						case TVarULongGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(uint32_t, curModbusItem->setPtr) = VarTampon.ULong0;
-							break;
-						case TVarULongGetVarSetFct:
-						case TVarULongGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(uint32_t, curModbusItem->setPtr)(VarTampon.ULong0);
-							break;
+								// Type Signed Int (2 Bytes = 1x 16 bits) :
+							case TVarSIntGetVarSetVar:
+							case TVarSIntGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(int16_t, curModbusItem->setPtr) = VarTampon.SInt0;
+								break;
+							case TVarSIntGetVarSetFct:
+							case TVarSIntGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(int16_t, curModbusItem->setPtr)(VarTampon.SInt0);
+								break;
+								// Type Unsigned Int (2 Bytes = 1x 16 bits) :
+							case TVarUIntGetVarSetVar:
+							case TVarUIntGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(uint16_t, curModbusItem->setPtr) = VarTampon.UInt0;
+								break;
+							case TVarUIntGetVarSetFct:
+							case TVarUIntGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon.UInt0);
+								break;
+
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Signed Long (4 Bytes = 2x 16 bits) :
+							case TVarSLongGetVarSetVar:
+							case TVarSLongGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(int32_t, curModbusItem->setPtr) = VarTampon.SLong0;
+								break;
+							case TVarSLongGetVarSetFct:
+							case TVarSLongGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(int32_t, curModbusItem->setPtr)(VarTampon.SLong0);
+								break;
+								// Type Unsigned Long (4 Bytes = 2x 16 bits) :
+							case TVarULongGetVarSetVar:
+							case TVarULongGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(uint32_t, curModbusItem->setPtr) = VarTampon.ULong0;
+								break;
+							case TVarULongGetVarSetFct:
+							case TVarULongGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(uint32_t, curModbusItem->setPtr)(VarTampon.ULong0);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
-							//----------------------------------------
-							// Type Signed LongLong (8 Bytes = 4x 16 bits) :
-						case TVarSLongLongGetVarSetVar:
-						case TVarSLongLongGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(int64_t, curModbusItem->setPtr) = VarTampon.SLongLong;
-							break;
-						case TVarSLongLongGetVarSetFct:
-						case TVarSLongLongGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(int64_t, curModbusItem->setPtr)(VarTampon.SLongLong);
-							break;
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Signed LongLong (8 Bytes = 4x 16 bits) :
+							case TVarSLongLongGetVarSetVar:
+							case TVarSLongLongGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(int64_t, curModbusItem->setPtr) = VarTampon.SLongLong;
+								break;
+							case TVarSLongLongGetVarSetFct:
+							case TVarSLongLongGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(int64_t, curModbusItem->setPtr)(VarTampon.SLongLong);
+								break;
 
-							// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
-						case TVarULongLongGetVarSetVar:
-						case TVarULongLongGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(uint64_t, curModbusItem->setPtr) = VarTampon.ULongLong;
-							break;
-						case TVarULongLongGetVarSetFct:
-						case TVarULongLongGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(uint64_t, curModbusItem->setPtr)(VarTampon.ULongLong);
-							break;
+								// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
+							case TVarULongLongGetVarSetVar:
+							case TVarULongLongGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(uint64_t, curModbusItem->setPtr) = VarTampon.ULongLong;
+								break;
+							case TVarULongLongGetVarSetFct:
+							case TVarULongLongGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(uint64_t, curModbusItem->setPtr)(VarTampon.ULongLong);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// (cf. "ModbusSlaveConf.h")
-							//----------------------------------------
-							// Type Float Int x1 (2 Bytes = 1x 16 bits) :
-						case TVarFloatIntX1GetVarSetVar:
-						case TVarFloatIntX1GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1.0f);
-							break;
-						case TVarFloatIntX1GetVarSetFct:
-						case TVarFloatIntX1GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1.0f);
-							break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Int x1 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX1GetVarSetVar:
+							case TVarFloatIntX1GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1.0f);
+								break;
+							case TVarFloatIntX1GetVarSetFct:
+							case TVarFloatIntX1GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1.0f);
+								break;
 
-							// Type Float Int x10 (2 Bytes = 1x 16 bits) :
-						case TVarFloatIntX10GetVarSetVar:
-						case TVarFloatIntX10GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 10.0f);
-							break;
-						case TVarFloatIntX10GetVarSetFct:
-						case TVarFloatIntX10GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 10.0f);
-							break;
+								// Type Float Int x10 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX10GetVarSetVar:
+							case TVarFloatIntX10GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 10.0f);
+								break;
+							case TVarFloatIntX10GetVarSetFct:
+							case TVarFloatIntX10GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 10.0f);
+								break;
 
-							// Type Float Int x100 (2 Bytes = 1x 16 bits) :
-						case TVarFloatIntX100GetVarSetVar:
-						case TVarFloatIntX100GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 100.0f);
-							break;
-						case TVarFloatIntX100GetVarSetFct:
-						case TVarFloatIntX100GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 100.0f);
-							break;
+								// Type Float Int x100 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX100GetVarSetVar:
+							case TVarFloatIntX100GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 100.0f);
+								break;
+							case TVarFloatIntX100GetVarSetFct:
+							case TVarFloatIntX100GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 100.0f);
+								break;
 
-							// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
-						case TVarFloatIntX1000GetVarSetVar:
-						case TVarFloatIntX1000GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1000.0f);
-							break;
-						case TVarFloatIntX1000GetVarSetFct:
-						case TVarFloatIntX1000GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1000.0f);
-							break;
+								// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
+							case TVarFloatIntX1000GetVarSetVar:
+							case TVarFloatIntX1000GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1000.0f);
+								break;
+							case TVarFloatIntX1000GetVarSetFct:
+							case TVarFloatIntX1000GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1000.0f);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// (cf. "ModbusSlaveConf.h")
-							//----------------------------------------
-							// Type Float Long x10 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX10GetVarSetVar:
-						case TVarFloatLongX10GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10.0f);
-							break;
-						case TVarFloatLongX10GetVarSetFct:
-						case TVarFloatLongX10GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10.0f);
-							break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Long x10 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX10GetVarSetVar:
+							case TVarFloatLongX10GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10.0f);
+								break;
+							case TVarFloatLongX10GetVarSetFct:
+							case TVarFloatLongX10GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10.0f);
+								break;
 
-							// Type Float Long x100 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX100GetVarSetVar:
-						case TVarFloatLongX100GetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100.0f);
-							break;
-						case TVarFloatLongX100GetVarSetFct:
-						case TVarFloatLongX100GetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100.0f);
-							break;
+								// Type Float Long x100 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX100GetVarSetVar:
+							case TVarFloatLongX100GetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100.0f);
+								break;
+							case TVarFloatLongX100GetVarSetFct:
+							case TVarFloatLongX100GetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100.0f);
+								break;
 
-							// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX1KGetVarSetVar:
-						case TVarFloatLongX1KGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000.0f);
-							break;
-						case TVarFloatLongX1KGetVarSetFct:
-						case TVarFloatLongX1KGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000.0f);
-							break;
+								// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX1KGetVarSetVar:
+							case TVarFloatLongX1KGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000.0f);
+								break;
+							case TVarFloatLongX1KGetVarSetFct:
+							case TVarFloatLongX1KGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000.0f);
+								break;
 
-							// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX10KGetVarSetVar:
-						case TVarFloatLongX10KGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10000.0f);
-							break;
-						case TVarFloatLongX10KGetVarSetFct:
-						case TVarFloatLongX10KGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10000.0f);
-							break;
+								// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX10KGetVarSetVar:
+							case TVarFloatLongX10KGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10000.0f);
+								break;
+							case TVarFloatLongX10KGetVarSetFct:
+							case TVarFloatLongX10KGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10000.0f);
+								break;
 
-							// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX100KGetVarSetVar:
-						case TVarFloatLongX100KGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100000.0f);
-							break;
-						case TVarFloatLongX100KGetVarSetFct:
-						case TVarFloatLongX100KGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100000.0f);
-							break;
+								// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX100KGetVarSetVar:
+							case TVarFloatLongX100KGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100000.0f);
+								break;
+							case TVarFloatLongX100KGetVarSetFct:
+							case TVarFloatLongX100KGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100000.0f);
+								break;
 
-							// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongX1MGetVarSetVar:
-						case TVarFloatLongX1MGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000000.0f);
-							break;
-						case TVarFloatLongX1MGetVarSetFct:
-						case TVarFloatLongX1MGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000000.0f);
-							break;
+								// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongX1MGetVarSetVar:
+							case TVarFloatLongX1MGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000000.0f);
+								break;
+							case TVarFloatLongX1MGetVarSetFct:
+							case TVarFloatLongX1MGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000000.0f);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// (cf. "ModbusSlaveConf.h")
-							//----------------------------------------
-							// Type Float Long Raw (4 Bytes = 2x 16 bits) :
-						case TVarFloatLongRawGetVarSetVar:
-						case TVarFloatLongRawGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = VarTampon.Float0;
-							break;
-						case TVarFloatLongRawGetVarSetFct:
-						case TVarFloatLongRawGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)(VarTampon.Float0);
-							break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// cf. "ModbusSlaveConf.h"
+								//----------------------------------------
+								// Type Float Long Raw (4 Bytes = 2x 16 bits) :
+							case TVarFloatLongRawGetVarSetVar:
+							case TVarFloatLongRawGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = VarTampon.Float0;
+								break;
+							case TVarFloatLongRawGetVarSetFct:
+							case TVarFloatLongRawGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)(VarTampon.Float0);
+								break;
 
-							// Type Double LongLong Raw (4 Bytes = 2x 16 bits) :
-						case TVarDoubleLongLongRawGetVarSetVar:
-						case TVarDoubleLongLongRawGetFctSetVar:
-							MODBUS_MAKE_CASTED_POINTED_VAR(double, curModbusItem->setPtr) = VarTampon.Double;
-							break;
-						case TVarDoubleLongLongRawGetVarSetFct:
-						case TVarDoubleLongLongRawGetFctSetFct:
-							MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon.Double);
-							break;
-
+								// Type Double LongLong Raw (4 Bytes = 2x 16 bits) :
+							case TVarDoubleLongLongRawGetVarSetVar:
+							case TVarDoubleLongLongRawGetFctSetVar:
+								MODBUS_MAKE_CASTED_POINTED_VAR(double, curModbusItem->setPtr) = VarTampon.Double;
+								break;
+							case TVarDoubleLongLongRawGetVarSetFct:
+							case TVarDoubleLongLongRawGetFctSetFct:
+								MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon.Double);
+								break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 
-						case TVarUnknown:
-						default:
-							break;
+							case TVarUnknown:
+							default:
+								break;
+							}
+#endif // !MODBUS_SLAVE_USE_COMMON_WR_REG_FN
 						}
 					}
 				}
-			}
-			if(idRegister == (curModbusItem->Adr + curModBusItmSize -1))
-			{
+				if(idRegister == (curModbusItem->Adr + curModBusItmSize -1))
+				{
+					curModbusItem++;
+				}
+				break;
+			} else {
 				curModbusItem++;
 			}
-			break;
-		} else {
-			curModbusItem++;
 		}
+		idRegister++;
+		nbRegister--;
 	}
-        idRegister++;
-        nbRegister--;
-    }
 
 //	// Finaliser la Réponse :
 //	if(MODBUS_SLAVE_BROADCAST_ALL_ADR == myRx[0]) { return MODBUS_SLAVE_FRAME_WAS_HANDLED; } // Broadcast => Commands handled, but no reply to send
@@ -1052,15 +1054,15 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 //	myTx[nbBytes++] = myRx[4];
 //	myTx[nbBytes++] = myRx[5];
 
-//    *retValue = nbBytes;	// Déjà à 0 si Broadcast OU Buffer insuffisant !
+//	*retValue = nbBytes;	// Déjà à 0 si Broadcast OU Buffer insuffisant !
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SUPPORT_WRITE_MULTIPLE_REGISTERS
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SUPPORT_WRITE_MULTIPLE_REGISTERS
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER)	// (cf. "ModbusSlaveConf.h")
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1075,7 +1077,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 // inutile	*retValue = 0; // Par défaut : rien à  Répondre
 //	if(pRxTxBI->TxBuf.maxBytes < MIN_WRITE_REGISTER_TX_FRAME_SIZE) { return MODBUS_SLAVE_FRAME_WAS_HANDLED; } // Handled, mais Impossible de Préparer une Réponse !
 
-#ifdef MODBUS_SLAVE_SUPPORT_STATS
+#ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 //	if(UINT32_MAX > pModbusSlave->nbFramesWrite6) { pModbusSlave->nbFramesWrite6++; } // Pour les Stats
 #endif // MODBUS_SLAVE_SUPPORT_STATS
 
@@ -1094,7 +1096,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 		myTx[nbBytes++] = myRx[3];	// Starting Address Lo
 		myTx[nbBytes++] = myRx[4];	// Register Value Hi
 		myTx[nbBytes++] = myRx[5];	// Register Value Lo
-	    *retValue = nbBytes;	// Renseigne déjà la taille finale de la Réponse !
+		*retValue = nbBytes;	// Renseigne déjà la taille finale de la Réponse !
 	}
 
 	// Variables spécifiques à l'opération :
@@ -1119,6 +1121,10 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 					// Etape 2 : Ecrire si Valeur est Complète :
 					if(idRegister == (curModbusItem->Adr + curModBusItmSize -1)) // AdrEnCours = LowWord
 					{
+#ifdef MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// cf. "ModbusSlaveConf.h"
+						HandleWrite2RegisterFromVarTampon(curModbusItem, &VarTampon);
+#else // !MODBUS_SLAVE_USE_COMMON_WR_REG_FN
+
 						// Transfère la Data Complète :
 						switch(curModbusItem->typeGetSet)
 						{
@@ -1160,7 +1166,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 							MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon.UInt0);
 							break;
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
 							//----------------------------------------
 							// Type Signed Long (4 Bytes = 2x 16 bits) :
 						case TVarSLongGetVarSetVar:
@@ -1182,8 +1188,8 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 							break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
-                            //----------------------------------------
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
+							//----------------------------------------
 							// Type Signed LongLong (8 Bytes = 4x 16 bits) :
 						case TVarSLongLongGetVarSetVar:
 						case TVarSLongLongGetFctSetVar:
@@ -1205,7 +1211,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 							break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
 							//----------------------------------------
 							// Type Float Int x1 (2 Bytes = 1x 16 bits) :
 						case TVarFloatIntX1GetVarSetVar:
@@ -1248,7 +1254,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 							break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
 							//----------------------------------------
 							// Type Float Long x10 (4 Bytes = 2x 16 bits) :
 						case TVarFloatLongX10GetVarSetVar:
@@ -1311,7 +1317,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 							break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// (cf. "ModbusSlaveConf.h")
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// cf. "ModbusSlaveConf.h"
 							//----------------------------------------
 							// Type Float Long Raw (4 Bytes = 2x 16 bits) :
 						case TVarFloatLongRawGetVarSetVar:
@@ -1332,13 +1338,13 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 						case TVarDoubleLongLongRawGetFctSetFct:
 							MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon.Double);
 							break;
-
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 
 						case TVarUnknown:
 						default:
 							break;
 						}
+#endif // !MODBUS_SLAVE_USE_COMMON_WR_REG_FN
 					}
 				}
 			}
@@ -1352,15 +1358,15 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 		}
 	}
 
-//    *retValue = nbBytes;	// Déjà à 0 si Broadcast OU Buffer insuffisant !
+//	*retValue = nbBytes;	// Déjà à 0 si Broadcast OU Buffer insuffisant !
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1403,11 +1409,11 @@ static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbus
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1450,11 +1456,11 @@ static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tMo
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1506,11 +1512,11 @@ static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusS
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE)
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1561,11 +1567,11 @@ static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tM
 	return MODBUS_SLAVE_FRAME_WAS_HANDLED; // Traitement Terminé avec succès
 }
 
-#endif // !DISABLE_MODBUS_SUPPORT && MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
 
 /******************************************************************************/
 
-#if !defined(DISABLE_MODBUS_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM)
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM)	// cf. "ModbusSlaveConf.h"
 
 static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
 {
@@ -1608,6 +1614,236 @@ static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbu
 
 /******************************************************************************/
 
+#if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_USE_COMMON_WR_REG_FN) && \
+	(defined(MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS) || defined(MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER))	// cf. "ModbusSlaveConf.h"
+
+static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, tModbusSlaveQWordVar* VarTampon)
+{
+	// Transfère la Data Complète :
+	switch(curModbusItem->typeGetSet)
+	{
+		// Type Signed Char (1 Byte = 8 bits) :
+	case TVarSCharGetVarSetVar:
+	case TVarSCharGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(int8_t, curModbusItem->setPtr) = VarTampon.SChar0;
+		break;
+	case TVarSCharGetVarSetFct:
+	case TVarSCharGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(int8_t, curModbusItem->setPtr)(VarTampon.SChar0);
+		break;
+		// Type Unsigned Char (1 Byte = 8 bits) :
+	case TVarUCharGetVarSetVar:
+	case TVarUCharGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint8_t, curModbusItem->setPtr) = VarTampon.UChar0;
+		break;
+	case TVarUCharGetVarSetFct:
+	case TVarUCharGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint8_t, curModbusItem->setPtr)(VarTampon.UChar0);
+		break;
+
+		// Type Signed Int (2 Bytes = 1x 16 bits) :
+	case TVarSIntGetVarSetVar:
+	case TVarSIntGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(int16_t, curModbusItem->setPtr) = VarTampon.SInt0;
+		break;
+	case TVarSIntGetVarSetFct:
+	case TVarSIntGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(int16_t, curModbusItem->setPtr)(VarTampon.SInt0);
+		break;
+		// Type Unsigned Int (2 Bytes = 1x 16 bits) :
+	case TVarUIntGetVarSetVar:
+	case TVarUIntGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint16_t, curModbusItem->setPtr) = VarTampon.UInt0;
+		break;
+	case TVarUIntGetVarSetFct:
+	case TVarUIntGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon.UInt0);
+		break;
+
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
+		//----------------------------------------
+		// Type Signed Long (4 Bytes = 2x 16 bits) :
+	case TVarSLongGetVarSetVar:
+	case TVarSLongGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(int32_t, curModbusItem->setPtr) = VarTampon.SLong0;
+		break;
+	case TVarSLongGetVarSetFct:
+	case TVarSLongGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(int32_t, curModbusItem->setPtr)(VarTampon.SLong0);
+		break;
+		// Type Unsigned Long (4 Bytes = 2x 16 bits) :
+	case TVarULongGetVarSetVar:
+	case TVarULongGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint32_t, curModbusItem->setPtr) = VarTampon.ULong0;
+		break;
+	case TVarULongGetVarSetFct:
+	case TVarULongGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint32_t, curModbusItem->setPtr)(VarTampon.ULong0);
+		break;
+#endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
+
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
+		//----------------------------------------
+		// Type Signed LongLong (8 Bytes = 4x 16 bits) :
+	case TVarSLongLongGetVarSetVar:
+	case TVarSLongLongGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(int64_t, curModbusItem->setPtr) = VarTampon.SLongLong;
+		break;
+	case TVarSLongLongGetVarSetFct:
+	case TVarSLongLongGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(int64_t, curModbusItem->setPtr)(VarTampon.SLongLong);
+		break;
+
+		// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
+	case TVarULongLongGetVarSetVar:
+	case TVarULongLongGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint64_t, curModbusItem->setPtr) = VarTampon.ULongLong;
+		break;
+	case TVarULongLongGetVarSetFct:
+	case TVarULongLongGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint64_t, curModbusItem->setPtr)(VarTampon.ULongLong);
+		break;
+#endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
+
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
+		//----------------------------------------
+		// Type Float Int x1 (2 Bytes = 1x 16 bits) :
+	case TVarFloatIntX1GetVarSetVar:
+	case TVarFloatIntX1GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1.0f);
+		break;
+	case TVarFloatIntX1GetVarSetFct:
+	case TVarFloatIntX1GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1.0f);
+		break;
+
+		// Type Float Int x10 (2 Bytes = 1x 16 bits) :
+	case TVarFloatIntX10GetVarSetVar:
+	case TVarFloatIntX10GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 10.0f);
+		break;
+	case TVarFloatIntX10GetVarSetFct:
+	case TVarFloatIntX10GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 10.0f);
+		break;
+
+		// Type Float Int x100 (2 Bytes = 1x 16 bits) :
+	case TVarFloatIntX100GetVarSetVar:
+	case TVarFloatIntX100GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 100.0f);
+		break;
+	case TVarFloatIntX100GetVarSetFct:
+	case TVarFloatIntX100GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 100.0f);
+		break;
+
+		// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
+	case TVarFloatIntX1000GetVarSetVar:
+	case TVarFloatIntX1000GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1000.0f);
+		break;
+	case TVarFloatIntX1000GetVarSetFct:
+	case TVarFloatIntX1000GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1000.0f);
+		break;
+#endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
+
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
+		//----------------------------------------
+		// Type Float Long x10 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX10GetVarSetVar:
+	case TVarFloatLongX10GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10.0f);
+		break;
+	case TVarFloatLongX10GetVarSetFct:
+	case TVarFloatLongX10GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10.0f);
+		break;
+
+		// Type Float Long x100 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX100GetVarSetVar:
+	case TVarFloatLongX100GetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100.0f);
+		break;
+	case TVarFloatLongX100GetVarSetFct:
+	case TVarFloatLongX100GetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100.0f);
+		break;
+
+		// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX1KGetVarSetVar:
+	case TVarFloatLongX1KGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000.0f);
+		break;
+	case TVarFloatLongX1KGetVarSetFct:
+	case TVarFloatLongX1KGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000.0f);
+		break;
+
+		// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX10KGetVarSetVar:
+	case TVarFloatLongX10KGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10000.0f);
+		break;
+	case TVarFloatLongX10KGetVarSetFct:
+	case TVarFloatLongX10KGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10000.0f);
+		break;
+
+		// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX100KGetVarSetVar:
+	case TVarFloatLongX100KGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100000.0f);
+		break;
+	case TVarFloatLongX100KGetVarSetFct:
+	case TVarFloatLongX100KGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100000.0f);
+		break;
+
+		// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongX1MGetVarSetVar:
+	case TVarFloatLongX1MGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000000.0f);
+		break;
+	case TVarFloatLongX1MGetVarSetFct:
+	case TVarFloatLongX1MGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000000.0f);
+		break;
+#endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
+
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// cf. "ModbusSlaveConf.h"
+		//----------------------------------------
+		// Type Float Long Raw (4 Bytes = 2x 16 bits) :
+	case TVarFloatLongRawGetVarSetVar:
+	case TVarFloatLongRawGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = VarTampon.Float0;
+		break;
+	case TVarFloatLongRawGetVarSetFct:
+	case TVarFloatLongRawGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)(VarTampon.Float0);
+		break;
+
+		// Type Double LongLong Raw (4 Bytes = 2x 16 bits) :
+	case TVarDoubleLongLongRawGetVarSetVar:
+	case TVarDoubleLongLongRawGetFctSetVar:
+		MODBUS_MAKE_CASTED_POINTED_VAR(double, curModbusItem->setPtr) = VarTampon.Double;
+		break;
+	case TVarDoubleLongLongRawGetVarSetFct:
+	case TVarDoubleLongLongRawGetFctSetFct:
+		MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon.Double);
+		break;
+#endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
+
+	case TVarUnknown:
+	default:
+		break;
+	}
+}
+
+#endif // !DISABLE_MODBUS_SLAVE_SUPPORT && MODBUS_SLAVE_USE_COMMON_WR_REG_FN && (MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS || MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER)
+
+/******************************************************************************/
+
 uint16_t getCurAccessLevel(void)
 {
 	if(0 == pCurModbus) { return 0; }
@@ -1643,195 +1879,181 @@ uint16_t getThisModbusTxBufSize(void)
 static uint16_t getThisModbusItemSizeW(eTVarGetSet varType)
 {
 
-#ifndef DISABLE_MODBUS_SLAVE_SUPPORT
+#ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 
-    switch(varType)
-        {
-            // Type Signed Char (1 Byte = 8 bits) :
-        case TVarSCharGetVarSetVar:
-        case TVarSCharGetVarSetFct:
-        case TVarSCharGetFctSetVar:
-        case TVarSCharGetFctSetFct:
-            // Type Unsigned Char (1 Byte = 8 bits) :
-        case TVarUCharGetVarSetVar:
-        case TVarUCharGetVarSetFct:
-        case TVarUCharGetFctSetVar:
-        case TVarUCharGetFctSetFct:
-            return 1;   // Même si ça remplit pas tout le Word en entier
-            break;
+	switch(varType)
+	{
+			// Type Signed Char (1 Byte = 8 bits) :
+		case TVarSCharGetVarSetVar:
+		case TVarSCharGetVarSetFct:
+		case TVarSCharGetFctSetVar:
+		case TVarSCharGetFctSetFct:
+			// Type Unsigned Char (1 Byte = 8 bits) :
+		case TVarUCharGetVarSetVar:
+		case TVarUCharGetVarSetFct:
+		case TVarUCharGetFctSetVar:
+		case TVarUCharGetFctSetFct:
+			return 1;	// Même si ça ne remplit pas tout le Word en entier
+			break;
 
-            // Type Signed Int (2 Bytes = 1x 16 bits) :
-        case TVarSIntGetVarSetVar:
-        case TVarSIntGetVarSetFct:
-        case TVarSIntGetFctSetVar:
-        case TVarSIntGetFctSetFct:
-            // Type Unsigned Int (2 Bytes = 1x 16 bits) :
-        case TVarUIntGetVarSetVar:
-        case TVarUIntGetVarSetFct:
-        case TVarUIntGetFctSetVar:
-        case TVarUIntGetFctSetFct:
-            return 1;
-            break;
+			// Type Signed Int (2 Bytes = 1x 16 bits) :
+		case TVarSIntGetVarSetVar:
+		case TVarSIntGetVarSetFct:
+		case TVarSIntGetFctSetVar:
+		case TVarSIntGetFctSetFct:
+			// Type Unsigned Int (2 Bytes = 1x 16 bits) :
+		case TVarUIntGetVarSetVar:
+		case TVarUIntGetVarSetFct:
+		case TVarUIntGetFctSetVar:
+		case TVarUIntGetFctSetFct:
+			return 1;
+			break;
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// (cf. "ModbusSlaveConf.h")
-            //----------------------------------------
-            // Type Signed Long (4 Bytes = 2x 16 bits) :
-        case TVarSLongGetVarSetVar:
-        case TVarSLongGetVarSetFct:
-        case TVarSLongGetFctSetVar:
-        case TVarSLongGetFctSetFct:
-            // Type Unsigned Long (4 Bytes = 2x 16 bits) :
-        case TVarULongGetVarSetVar:
-        case TVarULongGetVarSetFct:
-        case TVarULongGetFctSetVar:
-        case TVarULongGetFctSetFct:
-            return 2;
-            break;
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
+			//----------------------------------------
+			// Type Signed Long (4 Bytes = 2x 16 bits) :
+		case TVarSLongGetVarSetVar:
+		case TVarSLongGetVarSetFct:
+		case TVarSLongGetFctSetVar:
+		case TVarSLongGetFctSetFct:
+			// Type Unsigned Long (4 Bytes = 2x 16 bits) :
+		case TVarULongGetVarSetVar:
+		case TVarULongGetVarSetFct:
+		case TVarULongGetFctSetVar:
+		case TVarULongGetFctSetFct:
+			return 2;
+			break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
-#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// (cf. "ModbusSlaveConf.h")
-            //----------------------------------------
-            // Type Signed LongLong (8 Bytes = 4x 16 bits) :
-        case TVarSLongLongGetVarSetVar:
-        case TVarSLongLongGetVarSetFct:
-        case TVarSLongLongGetFctSetVar:
-        case TVarSLongLongGetFctSetFct:
+#ifdef MODBUS_SLAVE_SUPPORT_LONG_LONG	// cf. "ModbusSlaveConf.h"
+			//----------------------------------------
+			// Type Signed LongLong (8 Bytes = 4x 16 bits) :
+		case TVarSLongLongGetVarSetVar:
+		case TVarSLongLongGetVarSetFct:
+		case TVarSLongLongGetFctSetVar:
+		case TVarSLongLongGetFctSetFct:
 
-            // Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
-        case TVarULongLongGetVarSetVar:
-        case TVarULongLongGetVarSetFct:
-        case TVarULongLongGetFctSetVar:
-        case TVarULongLongGetFctSetFct:
-            return 4;
-            break;
+			// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
+		case TVarULongLongGetVarSetVar:
+		case TVarULongLongGetVarSetFct:
+		case TVarULongLongGetFctSetVar:
+		case TVarULongLongGetFctSetFct:
+			return 4;
+			break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// (cf. "ModbusSlaveConf.h")
-            //----------------------------------------
-            // Type Float Int x1 (2 Bytes = 1x 16 bits) :
-        case TVarFloatIntX1GetVarSetVar:
-        case TVarFloatIntX1GetVarSetFct:
-        case TVarFloatIntX1GetFctSetVar:
-        case TVarFloatIntX1GetFctSetFct:
-            return 1;
-            break;
-            // Type Float Int x10 (2 Bytes = 1x 16 bits) :
-        case TVarFloatIntX10GetVarSetVar:
-        case TVarFloatIntX10GetVarSetFct:
-        case TVarFloatIntX10GetFctSetVar:
-        case TVarFloatIntX10GetFctSetFct:
-            return 1;
-            break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_INT	// cf. "ModbusSlaveConf.h"
+			//----------------------------------------
+			// Type Float Int x1 (2 Bytes = 1x 16 bits) :
+		case TVarFloatIntX1GetVarSetVar:
+		case TVarFloatIntX1GetVarSetFct:
+		case TVarFloatIntX1GetFctSetVar:
+		case TVarFloatIntX1GetFctSetFct:
+			return 1;
+			break;
+			// Type Float Int x10 (2 Bytes = 1x 16 bits) :
+		case TVarFloatIntX10GetVarSetVar:
+		case TVarFloatIntX10GetVarSetFct:
+		case TVarFloatIntX10GetFctSetVar:
+		case TVarFloatIntX10GetFctSetFct:
+			return 1;
+			break;
 
-            // Type Float Int x100 (2 Bytes = 1x 16 bits) :
-        case TVarFloatIntX100GetVarSetVar:
-        case TVarFloatIntX100GetVarSetFct:
-        case TVarFloatIntX100GetFctSetVar:
-        case TVarFloatIntX100GetFctSetFct:
-            return 1;
-            break;
+			// Type Float Int x100 (2 Bytes = 1x 16 bits) :
+		case TVarFloatIntX100GetVarSetVar:
+		case TVarFloatIntX100GetVarSetFct:
+		case TVarFloatIntX100GetFctSetVar:
+		case TVarFloatIntX100GetFctSetFct:
+			return 1;
+			break;
 
-            // Type Float Int x1000 (2 Bytes = 1x 16 bits) :
-        case TVarFloatIntX1000GetVarSetVar:
-        case TVarFloatIntX1000GetVarSetFct:
-        case TVarFloatIntX1000GetFctSetVar:
-        case TVarFloatIntX1000GetFctSetFct:
-            return 1;
-            break;
+		// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
+		case TVarFloatIntX1000GetVarSetVar:
+		case TVarFloatIntX1000GetVarSetFct:
+		case TVarFloatIntX1000GetFctSetVar:
+		case TVarFloatIntX1000GetFctSetFct:
+			return 1;
+			break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// (cf. "ModbusSlaveConf.h")
-        	//----------------------------------------
-        	// Type Float Long x10 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX10GetVarSetVar:
-        case TVarFloatLongX10GetVarSetFct:
-        case TVarFloatLongX10GetFctSetVar:
-        case TVarFloatLongX10GetFctSetFct:
-            return 2;
-            break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_LONG	// cf. "ModbusSlaveConf.h"
+			//----------------------------------------
+			// Type Float Long x10 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX10GetVarSetVar:
+		case TVarFloatLongX10GetVarSetFct:
+		case TVarFloatLongX10GetFctSetVar:
+		case TVarFloatLongX10GetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Float Long x100 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX100GetVarSetVar:
-        case TVarFloatLongX100GetVarSetFct:
-        case TVarFloatLongX100GetFctSetVar:
-        case TVarFloatLongX100GetFctSetFct:
-            return 2;
-            break;
+			// Type Float Long x100 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX100GetVarSetVar:
+		case TVarFloatLongX100GetVarSetFct:
+		case TVarFloatLongX100GetFctSetVar:
+		case TVarFloatLongX100GetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX1KGetVarSetVar:
-        case TVarFloatLongX1KGetVarSetFct:
-        case TVarFloatLongX1KGetFctSetVar:
-        case TVarFloatLongX1KGetFctSetFct:
-            return 2;
-            break;
+			// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX1KGetVarSetVar:
+		case TVarFloatLongX1KGetVarSetFct:
+		case TVarFloatLongX1KGetFctSetVar:
+		case TVarFloatLongX1KGetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX10KGetVarSetVar:
-        case TVarFloatLongX10KGetVarSetFct:
-        case TVarFloatLongX10KGetFctSetVar:
-        case TVarFloatLongX10KGetFctSetFct:
-            return 2;
-            break;
+			// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX10KGetVarSetVar:
+		case TVarFloatLongX10KGetVarSetFct:
+		case TVarFloatLongX10KGetFctSetVar:
+		case TVarFloatLongX10KGetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX100KGetVarSetVar:
-        case TVarFloatLongX100KGetVarSetFct:
-        case TVarFloatLongX100KGetFctSetVar:
-        case TVarFloatLongX100KGetFctSetFct:
-            return 2;
-            break;
+			// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX100KGetVarSetVar:
+		case TVarFloatLongX100KGetVarSetFct:
+		case TVarFloatLongX100KGetFctSetVar:
+		case TVarFloatLongX100KGetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongX1MGetVarSetVar:
-        case TVarFloatLongX1MGetVarSetFct:
-        case TVarFloatLongX1MGetFctSetVar:
-        case TVarFloatLongX1MGetFctSetFct:
-            return 2;
-            break;
-
+			// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongX1MGetVarSetVar:
+		case TVarFloatLongX1MGetVarSetFct:
+		case TVarFloatLongX1MGetFctSetVar:
+		case TVarFloatLongX1MGetFctSetFct:
+			return 2;
+			break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
-#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// (cf. "ModbusSlaveConf.h")
-        	//----------------------------------------
-        	// Type Float Long Raw (4 Bytes = 2x 16 bits) :
-        case TVarFloatLongRawGetVarSetVar:
-        case TVarFloatLongRawGetVarSetFct:
-        case TVarFloatLongRawGetFctSetVar:
-        case TVarFloatLongRawGetFctSetFct:
-            return 2;
-            break;
+#ifdef MODBUS_SLAVE_SUPPORT_FLOAT_RAW	// cf. "ModbusSlaveConf.h"
+			//----------------------------------------
+			// Type Float Long Raw (4 Bytes = 2x 16 bits) :
+		case TVarFloatLongRawGetVarSetVar:
+		case TVarFloatLongRawGetVarSetFct:
+		case TVarFloatLongRawGetFctSetVar:
+		case TVarFloatLongRawGetFctSetFct:
+			return 2;
+			break;
 
-        	// Type Double LongLong Raw (8 Bytes = 4x 16 bits) :
-        case TVarDoubleLongLongRawGetVarSetVar:
-        case TVarDoubleLongLongRawGetVarSetFct:
-        case TVarDoubleLongLongRawGetFctSetVar:
-        case TVarDoubleLongLongRawGetFctSetFct:
-            return 4;
-            break;
-
+			// Type Double LongLong Raw (8 Bytes = 4x 16 bits) :
+		case TVarDoubleLongLongRawGetVarSetVar:
+		case TVarDoubleLongLongRawGetVarSetFct:
+		case TVarDoubleLongLongRawGetFctSetVar:
+		case TVarDoubleLongLongRawGetFctSetFct:
+			return 4;
+			break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 
-        case TVarUnknown:
-        default:
-            return 0;
-            break;
-        }
-
+		case TVarUnknown:
+		default:
+			return 0;
+			break;
+	}
 #endif // DISABLE_MODBUS_SLAVE_SUPPORT
 
-    return 0;
-}
-
-/******************************************************************************/
-
-void RequestRunMode4ThisModbus(uint8_t newRunMode)
-{
-#if defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)
-	HandleRequest4NewRunMode(newRunMode, getThisModbusSrcId());
-#else
-	UNUSED(newRunMode);	// Pour éviter le Warning de la Variable non utilisée
-#endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
+	return 0;
 }
 
 /******************************************************************************/
@@ -1839,7 +2061,7 @@ void RequestRunMode4ThisModbus(uint8_t newRunMode)
 void RegisterNewAccessPswd(uint16_t NewPswd)
 {
 
-#ifndef DISABLE_MODBUS_SLAVE_SUPPORT
+#ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 	if(0 != pCurModbus)
 	{
 		if(10 > pCurModbus->nbPswdTries)
@@ -1851,20 +2073,6 @@ void RegisterNewAccessPswd(uint16_t NewPswd)
 #endif // DISABLE_MODBUS_SLAVE_SUPPORT
 
 }
-
-//// ToDo : Remarque_Jp le 05/01/2022 : Voir pour déplacer éventuellement la liste des codes dans la partie User ...
-//
-//// volontairement limite a 6 niveaux d'acces car les autres ne sont pas utilises pour l'instant
-//#define NB_NIVEAUX_EFFECTIVEMENT_UTILISES 		6
-//const uint16_t accessPswdTable[NB_NIVEAUX_EFFECTIVEMENT_UTILISES] =
-//{
-//	0,		// Level 0 : Normal & Default Access
-//	9781,	// Level 1
-//	5476,	// Level 2 : Configurator
-//	32184,	// Level 3 : IHM du Produit
-//	2794,	// Level 4 : Banc de Test fin de chaîne ALDES
-//	941		// Level 5 : Banc de Test sous-traitant carte nue
-//};
 
 /******************************************************************************/
 
@@ -1882,6 +2090,34 @@ static inline uint16_t getAccessLevelAccordingToPswd(uint16_t Pswd)
 	return 0;
 }
 
+/******************************************************************************/
+
+uint8_t isModbusWriteHandlerInFactoryLevel()
+{
+	if(0 == pCurModbus) return 0;
+//	return (getCurAccessLevel(pCurModbus->AccessPswd) >= ACCESS_MIN_LEVEL_4) ? 1 :0;
+	return (pCurModbus->AccessLevel >= ACCESS_MIN_LEVEL_4) ? 1 :0;
+}
+
+/******************************************************************************/
+
+uint8_t isInModbusHandlerContext()
+{
+	return (0 != pCurModbus) ? 1 : 0;
+}
+
+/******************************************************************************/
+
+void RequestRunMode4ThisModbus(uint8_t newRunMode)
+{
+
+#if defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)	// cf. "ModbusSlaveConf.h"
+	HandleRequest4NewRunMode(newRunMode, getThisModbusSrcId());
+#else
+	UNUSED(newRunMode);	// Pour éviter le Warning de la Variable non utilisée
+#endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
+
+}
 
 /******************************************************************************/
 
@@ -1950,9 +2186,9 @@ inline void ModbusSlave_FillMemory(uint8_t* pDest, uint8_t Value, uint16_t Bytes
 static int16_t Float_to_Int16(float value, float coef)
 {
 #ifndef _MATH_H_
-    return (int16_t)((value * coef) + 0.49f); // Ajoute une demi-portion d'entier pour "forcer" l'arrondi
+	return (int16_t)((value * coef) + 0.49f); // Ajoute une demi-portion d'entier pour "forcer" l'arrondi
 #else // _MATH_H_
-    return (int16_t)roundf(value * coef);	// Arrondi correct en valeur négative également !
+	return (int16_t)roundf(value * coef);	// Arrondi correct en valeur négative également !
 #endif // _MATH_H_
 }
 
@@ -1965,9 +2201,9 @@ static int16_t Float_to_Int16(float value, float coef)
 static int32_t Float_to_Int32(float value, float coef)
 {
 #ifndef _MATH_H_
-    return (int32_t)((value * coef) + 0.49f); // Ajoute une demi-portion d'entier pour "forcer" l'arrondi
+	return (int32_t)((value * coef) + 0.49f); // Ajoute une demi-portion d'entier pour "forcer" l'arrondi
 #else // _MATH_H_
-    return (int32_t)roundf(value * coef);	// Arrondi correct en valeur négative également !
+	return (int32_t)roundf(value * coef);	// Arrondi correct en valeur négative également !
 #endif // _MATH_H_
 }
 
@@ -1994,7 +2230,7 @@ void DiscardWriteU16(uint16_t __attribute__((unused)) NewValue)
 /******************************************************************************/
 // Mise à disposition Modbus des Identifiants & Infos spécifiques ST :
 
-#ifndef DISABLE_MODBUS_SLAVE_SUPPORT
+#ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 
 #ifdef UID_BASE
 	uint32_t GetUID_0(void) { return MODBUS_GET_CASTED_VALUE_FROM_POINTED_VAR(uint32_t, (UID_BASE + (0 <<2))); }
