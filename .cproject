@@ -36,6 +36,7 @@
 									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
@@ -91,6 +92,7 @@
 									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
 									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
@@ -139,6 +141,7 @@
 									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
@@ -242,6 +245,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/Utils"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
@@ -295,6 +299,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/Utils"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
@@ -343,6 +348,7 @@
 									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
 									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/Utils"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
 									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>

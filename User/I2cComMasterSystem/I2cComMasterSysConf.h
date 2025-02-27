@@ -19,8 +19,8 @@
 
 /******************************************************************************/
 
-#define I2CCM_HANDLE		&hi2c1
-#define I2CCM_FN_INIT		MX_I2C1_Init
+#define I2CCM_HANDLE		&hi2c3
+#define I2CCM_FN_INIT		MX_I2C3_Init
 
 //#define I2CCM_RESET_PIN 	Rst_Sensor_Pin
 //#define I2CCM_RESET_PORT	Rst_Sensor_GPIO_Port

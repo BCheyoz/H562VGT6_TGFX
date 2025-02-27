@@ -12,7 +12,9 @@
  *-> 23/12/2021 : Added by AM	to HII_Manta_App (STM32G070CBTx : productprojects/ventilation/individuel/himalaya2/manta/h2_manta_app)
  *-> 07/01/2022 : Added by Jp	to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
  *-> 30/11/2023 : Added by AB	to MV_By_Aldes (STM32G030K8Tx : innoprojects/mv_by_aldes)
- *-> 18/02/2025 : Added by Mf	to Tfl4 (STM32H562VGTX : /be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
+ *-> 18/02/2025 : Added by Mf	to Tfl4 (STM32H562VGTX : be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
+ *
+ *  Version 1.0
  *
  */
 
@@ -30,7 +32,7 @@ extern "C" {
 //#define AI_NB_MAX_OF_INIT_PARAMS		1+1 // 2 pour essais avec 1 vide
 
 #define AI_DISCARD_MIN_MAX_VALUE	// Pour demander à ignorer les valeurs Min & Max des échantillons ADC_DMA
-//#define AI_REQUEST_CALIB_AT_MST 	// Pour demander une Calibration de l'ADC à l'Init
+#define AI_REQUEST_CALIB_AT_MST 	// Pour demander une Calibration de l'ADC à l'Init
 #define AI_SUPPORT_ADJUST_TO_REF	// Pour demander un ajustement des échantillons à une Référence fixe connue
 
 #define AI_ENABLE_SUPPORT_STATS		// Pour demander à collecter des Statistiques spécifiques par ADC

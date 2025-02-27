@@ -81,6 +81,14 @@ void Error_Handler(void);
 #define ModBus_User_DE_GPIO_Port GPIOC
 #define DI_J_N_Pin GPIO_PIN_3
 #define DI_J_N_GPIO_Port GPIOD
+#define Sensor_IC2_SDA_Pin GPIO_PIN_9
+#define Sensor_IC2_SDA_GPIO_Port GPIOC
+#define Sensor_IC2_SCL_Pin GPIO_PIN_8
+#define Sensor_IC2_SCL_GPIO_Port GPIOA
+#define TouchScreen_I2C_SDA_Pin GPIO_PIN_7
+#define TouchScreen_I2C_SDA_GPIO_Port GPIOB
+#define TouchScreen_I2C_SCL_Pin GPIO_PIN_8
+#define TouchScreen_I2C_SCL_GPIO_Port GPIOB
 #define DI_SMART_Pin GPIO_PIN_4
 #define DI_SMART_GPIO_Port GPIOD
 #define ModBus_User_Rx_Pin GPIO_PIN_5
