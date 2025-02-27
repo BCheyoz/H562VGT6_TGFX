@@ -129,8 +129,11 @@ typedef struct _tUartComManager
 
 	// Variables pour la Gestion des Envois espacés dans le temps :
 	uint16_t sabMayTxNextByte;	// Tempo avant autorisation envoi du prochain Byte (base = IT @ 1ms)
+
+#ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
 	uint8_t  sabPrediv8ms;		// Spécial iBus : Rediviseur 1ms -> 8ms pour la Synchro iBus
 	uint8_t  iBusSync;			// Valeur de Synchro Temporelle iBus
+#endif // UART_COM_ENABLE_IBUS
 
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 	uint32_t nbFramesRx;
@@ -302,7 +305,7 @@ void UartCom_Devices_Init(void) // A appeler dans la partie Init Hardware
 	for( ; (pComInitParams < (tUartComInitParams*)AFTER_COM_INIT_PARAM)
 		&& (pComManager < (tUartComManager*)EndOfUartFrame); pComInitParams++)
 	{
-		if(0 == pComInitParams->flag.loadMst) continue;	// S'il faut bien charger à la Mise sous Tension
+		if(0 == pComInitParams->flag.loadMst) continue;	// Ignore si pas besoin de charger à la Mise sous Tension
 
 		if(0 != UartCom_Register_InitParam(pComInitParams, pComManager))
 		{
@@ -630,7 +633,7 @@ void Gestion_UartCom(void)
 							//mRxTxBI.pVoidParam = pCurInitParam->pVoidParam;
 							mayReleaseTx = 1; // Par défaut, il faudra libérer tout de suite le TxFrameBuffer
 
-							ret = pFnRxHandler(&mRxTxBI,  pInitParam->pVoidParam);	// Appel du Handler du Protocole associé
+							ret = pFnRxHandler(&mRxTxBI, pInitParam->pVoidParam);	// Appel du Handler du Protocole associé
 							if(pComManager->sabTimeOut4Reply > 0) // s'il est encore temps de transmettre une Réponse immédiate
 							{
 								if( (0 != ret) && (mRxTxBI.TxBuf.nbBytes > 0) ) // Il y a une Réponse à transmettre :
@@ -899,7 +902,9 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 		}
 
 		// Sablier Spécial iBus :
+#ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
 		if(0 == (++pComManager->sabPrediv8ms & 0x07)) { pComManager->iBusSync++; }	// Pour la Synchro iBus
+#endif // UART_COM_ENABLE_IBUS
 
 		// Traitement des Envois spécifiques :
 		if( (pComManager->curTxBufInfo.nbBytes > 0) && (0 != pComManager->curTxBufInfo.pBufBase) ) // S'il y a des envois "bas niveau" restants :
@@ -908,7 +913,9 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 			{
 				if( (0 == pComManager->sabReady4Tx) || (0 != pComManager->canTxNow) )	// Si le Bus est libre pour une Emission Tx
 				{
+#ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
 					if( (0 == pComManager->wait4Sync) || (*(uint8_t*)(pComManager->curTxBufInfo.pBufBase) == pComManager->iBusSync) ) // Si la Synchro Tx est acceptée
+#endif // UART_COM_ENABLE_IBUS
 					{
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 						if(2 == pComManager->curTxBufInfo.nbBytes) { pComManager->nbTxAck2++; }
@@ -928,10 +935,12 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 							if(UINT32_MAX > pComManager->nbTxBytesNotSentIT) { pComManager->nbTxBytesNotSentIT++; }
 #endif // UART_COM_SUPPORT_STATS
 						}
+#ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
 					} else {
-#ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
+  #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 						if(UINT32_MAX > pComManager->nbTxBytesDlyd4Sync) { pComManager->nbTxBytesDlyd4Sync++; }
-#endif // UART_COM_SUPPORT_STATS
+  #endif // UART_COM_SUPPORT_STATS
+#endif // UART_COM_ENABLE_IBUS
 					}
 				} else {
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
@@ -968,7 +977,7 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 	#endif // NB_SHARED_UART_COM_FRAME_PARAMS
 #endif // UART_COM_SUPPORT_FRAME_TTL
 
-		// S'il y a des UARTs à Ré-Initialiser (Ajout_Jp le 16/04/2024 pour Ticket #33) :
+		// S'il y a des UARTs à Ré-Initialiser :
 #ifdef UART_COM_SUPPORT_REINIT	// cf. "UartComConf.h"
 		UartReInitCoreVars* pCoreVars;
 		UART_MAKE_FOR_VAR_FROM_TO(UartReInitItem*, pUartReInitItem, FIRST_COM_REINIT_ITEMS, AFTER_COM_REINIT_ITEMS)

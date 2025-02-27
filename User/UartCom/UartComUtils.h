@@ -171,8 +171,8 @@ typedef union _tUartComInitFlags
 		unsigned maySyncTx:1;
 		unsigned replySync:1;
 		unsigned onTxPin:1;		// GPIO_PinState pour passer (ou signaler) le mode Transmission
-	};
-	uint8_t All;
+// ToDo: Remarque_Jp le 27/02/2025 : voir pour ajouter pê un Flag "InitRS485Ex", si besoin de ReInit ultérieur ?
+	}; 	uint8_t All;
 } __attribute__ ((__packed__)) tUartComInitFlags;
 
 typedef struct _tUartComInitParams

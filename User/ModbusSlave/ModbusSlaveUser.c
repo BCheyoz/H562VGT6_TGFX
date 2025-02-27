@@ -634,7 +634,7 @@ inline void ModbusSlaveInitUserMST(void)
   #endif // MODBUS_SLAVE_UART_IHM_PARAMS
 
   #ifdef MODBUS_SLAVE_UART_USER_PARAMS
-	InitModbusSlaveStruct(MODBUS_SLAVE_UART_USER_PARAMS,	COM_UART_MODBUS_USER_SRC_ID,	MODBUS_SLAVE_USER_DEF_SLAVE_ID);	// Init nécessaire ici, ID éventuellement reconfiguré à la Lecture de MemHisto.
+	InitModbusSlaveStruct(MODBUS_SLAVE_UART_USER_PARAMS,	COM_UART_MODBUS_USER_SRC_ID,	MODBUS_SLAVE_USER_DEF_SLAVE_ID);	// Init nécessaire ici, puis ID éventuellement reconfiguré à la Lecture de MemHisto.
   #endif // MODBUS_SLAVE_UART_USER_PARAMS
 
   #ifdef MODBUS_SLAVE_UART_EXT_PARAMS

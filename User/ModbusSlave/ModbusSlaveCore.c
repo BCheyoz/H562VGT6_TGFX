@@ -118,35 +118,35 @@ tRxTxBufInfo* pCurRxTxBI = 0;			// Pour certaines Fonctions qui ont besoin d'Inf
 // Prototypes des Fonctions Internes à usage local :
 
 #ifdef MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS		// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS
 
 #ifdef MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS 	// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS
 
 #ifdef MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER		// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER
 
 #ifdef MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE
 
 #ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY		// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
 #ifdef MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM
 
 #ifdef MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC 		// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC
 
 #ifdef MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE  		// cf. "ModbusSlaveConf.h"
-	static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue);
+	static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue);
 #endif // MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE
 
 static uint16_t getThisModbusItemSizeW(eTVarGetSet varType);
@@ -205,7 +205,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 	tModbusSlaveParams* pModbusSlave = pVoidParam;
 
 	int wasHandled = MODBUS_SLAVE_FRAME_NOT_HANDLED;	// Par défaut : not Handled yet !
-	int nbBytes = 0;	// ToDo: voir pour passer en uint16_t, ainsi que les prototypes des Handlers de CodeFonction ...
+	uint16_t nbBytes = 0;
 
 #ifdef MODBUS_SLAVE_SUPPORT_STATS	// cf. "ModbusSlaveConf.h"
 	if(UINT32_MAX > pModbusSlave->nbFramesRx) { pModbusSlave->nbFramesRx++; } // Pour les Stats
@@ -397,12 +397,12 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 		//uint8_t* myTx = pRxTxBI->TxBuf.pBufBase;
 
 		// Ajouter le CRC16 (+ placer en Little Endian) :
-		uint16_t CRC_Trame = CRC16(myTx, (uint16_t)nbBytes, 0xFFFF);
+		uint16_t CRC_Trame = CRC16(myTx, nbBytes, 0xFFFF);
 		myTx[nbBytes++] = MODBUS_GET_BYTE_N(CRC_Trame, 0); // LowByte first
 		myTx[nbBytes++] = MODBUS_GET_BYTE_N(CRC_Trame, 1); // then HighByte
 
 		// Activer le Tranfert :
-		pRxTxBI->TxBuf.nbBytes = (uint16_t)nbBytes;
+		pRxTxBI->TxBuf.nbBytes = nbBytes;
 		return 1;  // Envoyer la Réponse préparée
 	}
 
@@ -415,7 +415,7 @@ int ModbusSlaveRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 #define MIN_READ_REGISTERS_RX_FRAME_SIZE	(MODBUS_SLAVE_HEADER_SIZE + 2 + 2 + MODBUS_SLAVE_FOOTER_SIZE)	// idRegister = 2, nbRegister = 2 => 8
 #define MIN_READ_REGISTERS_TX_FRAME_SIZE	(MODBUS_SLAVE_HEADER_SIZE + 1 + 2 + MODBUS_SLAVE_FOOTER_SIZE)	// byteCount = 1, Data >= 2 => 7
@@ -436,9 +436,12 @@ static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModb
 	// Récupère les Paramètres :
 	uint16_t idRegister = MODBUS_MAKE_WORD_BE(myRx[2], myRx[3]); // HighByte @2, LowByte @ 3
 	uint16_t nbRegister = MODBUS_MAKE_WORD_BE(myRx[4], myRx[5]); // HighByte @4, LowByte @ 5
-	uint16_t nbBytes = (pRxTxBI->TxBuf.maxBytes - MODBUS_SLAVE_HEADER_SIZE - 1 - MODBUS_SLAVE_FOOTER_SIZE) >> 1; // Max allowed Registers
 
+	// Applique la Limite par rapport à la taille du Buffer de Réponse :
+	uint16_t nbBytes = (pRxTxBI->TxBuf.maxBytes - MODBUS_SLAVE_HEADER_SIZE - 1 - MODBUS_SLAVE_FOOTER_SIZE) >> 1; // Max possible Registers to send
+#ifndef DISABLE_MAX_READ_REGISTERS_ONCE	// cf. "ModbusSlaveConf.h"
 	if(MAX_READ_REGISTERS_ONCE < nbRegister) { nbRegister = MAX_READ_REGISTERS_ONCE; } // Max 125 registres 16bits pour rentrer dans 256 Bytes
+#endif // DISABLE_MAX_READ_REGISTERS_ONCE
 	if(nbRegister > nbBytes) { nbRegister = nbBytes; }	// Plafonne au nb max de Registres qu'on peut envoyer sur le Buffer de Réponse
 
 	// Début de la Réponse :
@@ -727,7 +730,7 @@ static int HandleModbusFunctionReadHoldingRegisters(tRxTxBufInfo* pRxTxBI, tModb
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_MULTIPLE_REGISTERS)	// (cf. "ModbusSlaveConf.h")
 
-static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 #define INDEX_WRITE_REGISTERS_FIRST_VALUE	(MODBUS_SLAVE_HEADER_SIZE + 2 + 2 + 1)	// idRegister = 2, nbRegister = 2, byteCount = 1 => 7
 #define MIN_WRITE_REGISTERS_RX_FRAME_SIZE	(INDEX_WRITE_REGISTERS_FIRST_VALUE + 2 + MODBUS_SLAVE_FOOTER_SIZE) // Data >= 2 => 11
@@ -1064,7 +1067,7 @@ static int HandleModbusFunctionWriteMultipleRegisters(tRxTxBufInfo* pRxTxBI, tMo
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_SINGLE_REGISTER)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 #define INDEX_WRITE_REGISTER_VALUE			(MODBUS_SLAVE_HEADER_SIZE + 2)	// idRegister = 2 => 4
 #define MIN_WRITE_REGISTER_RX_FRAME_SIZE	(INDEX_WRITE_REGISTER_VALUE + 2 + MODBUS_SLAVE_FOOTER_SIZE) // Data = 2 => 8
@@ -1368,7 +1371,7 @@ static int HandleModbusFunctionWriteSingleRegister(tRxTxBufInfo* pRxTxBI, tModbu
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 // inutile	*retValue = 0; // Par défaut : rien à répondre
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
@@ -1415,7 +1418,7 @@ static int HandleModbusFunctionDumpExternalMemory(tRxTxBufInfo* pRxTxBI, tModbus
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 // inutile	*retValue = 0; // Par défaut : rien à répondre
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
@@ -1462,7 +1465,7 @@ static int HandleModbusFunctionWriteExternalRessource(tRxTxBufInfo* pRxTxBI, tMo
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 	// inutile	*retValue = 0; // Par défaut : rien à répondre
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
@@ -1518,7 +1521,7 @@ static int HandleModbusFunctionWriteFirmwareBloc(tRxTxBufInfo* pRxTxBI, tModbusS
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 	// inutile	*retValue = 0; // Par défaut : rien à répondre
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
@@ -1573,7 +1576,7 @@ static int HandleModbusFunctionValidateFirmwareProgram(tRxTxBufInfo* pRxTxBI, tM
 
 #if !defined(DISABLE_MODBUS_SLAVE_SUPPORT) && defined(MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM)	// cf. "ModbusSlaveConf.h"
 
-static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, int *retValue)
+static int HandleModbusFunctionReadInternalProgram(tRxTxBufInfo* pRxTxBI, tModbusSlaveParams* pModbusSlave, uint16_t* retValue)
 {
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
 	if( (MODBUS_FCT_READ_INT_PRGM != myRx[1]) || (MODBUS_SLAVE_BROADCAST_ALL_ADR == myRx[0]) ) { return MODBUS_SLAVE_FRAME_NOT_HANDLED; } // Not Handled

@@ -322,10 +322,11 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 // Pour "ModbusSlaveCore.c" :
 
 //#define DISABLE_MODBUS_SLAVE_SUPPORT
-//#define DISABLE_MAX_WRITE_REGISTERS_ONCE	// Désactiver la Limitation officielle (à 124 Registres max) sur WriteMultipleRegisters
+//#define DISABLE_MAX_READ_REGISTERS_ONCE 	// Désactiver la Limitation officielle (à 125 Registres max) sur ReadMultipleRegisters pour rentrer dans 256 Bytes
+//#define DISABLE_MAX_WRITE_REGISTERS_ONCE	// Désactiver la Limitation officielle (à 124 Registres max) sur WriteMultipleRegisters pour rentrer dans 256 Bytes
 
-//#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_5
-#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_5
+//#define MODBUS_SLAVE_DEF_LVL_ACCESS_IHM 	ACCESS_MIN_LEVEL_MAX	// Full Access for Internal usage only
+#define MODBUS_SLAVE_DEF_LVL_ACCESS_USER 	ACCESS_MIN_LEVEL_MAX	// Full Access for Internal usage only
 
 // Activation des Fonctions Modbus Standard supportées :
 #define MODBUS_SLAVE_SUPPORT_READ_HOLDING_REGISTERS 	// Enable support for 0x03 "Read Holding Registers"
