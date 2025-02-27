@@ -687,3 +687,53 @@ __attribute__((weak)) uint32_t GetVersionSoft32(void) // Pour proposer un Pseudo
 }
 
 /******************************************************************************/
+
+void SaveParamsOnOrder(uint16_t Order2Save)
+{
+#define SAVE_FACT_PARAMS_NOW	0x7934	// Save Factory Params now (0x7934 = 31028)
+#define SAVE_USER_PARAMS_NOW	0x5831	// Save User Params Now (0x5831 = 22577)
+//*
+	int targetFlags = 0;
+	switch(Order2Save)
+	{
+	case SAVE_FACT_PARAMS_NOW:
+		if( (0 != isModbusWriteHandlerInFactoryLevel()) || (0 == isInModbusHandlerContext()) ) // FactoryLevel OR InternalRequest :
+		{
+			targetFlags = 1;
+		}
+		if(0 != (targetFlags & 1))
+		{
+//			ForceSaveSystemParams(MEM_HISTO_FORCE_CAPTURE_NOW);
+		} // ToDo: Ajouter l'info comme quoi l'opération se serait bien passée (ou pas) !
+		break;
+	case SAVE_USER_PARAMS_NOW:
+//		ForceCaptureStats2(MEM_HISTO_FORCE_CAPTURE_NOW | MEM_HISTO_RESYNC_AUTO_CAPTURE);
+		targetFlags |= 2;
+		break;
+	default:
+		break;
+	}
+	UNUSED(targetFlags); // ToDo : Transférer le résultat "targetFlags" vers une variable RAM pour Modbus
+//*/
+}
+
+/******************************************************************************/
+
+void handleQueryReInitFactory(uint16_t pswd)
+{
+#define CONFIG_RESET	0x4725	// RESET_TO_PRODUCT_READY
+#define PRODUCT_RESET	0x9653	// RESET_TO_BOARD_READY
+	int tmpFlags = (pswd == CONFIG_RESET) ? 1 : 0; // Uniquement le Niveau 1
+	if(0 != isModbusWriteHandlerInFactoryLevel())	// FactoryLevel4 requis !
+//	if(pCurModbus->AccessLevel >= ACCESS_MIN_LEVEL_4) // Niveau 4 requis !
+	{
+		if(pswd == PRODUCT_RESET) { tmpFlags = 3; } // RéInitialiser les Niveaux 1 & 2
+	}
+	if(tmpFlags != 0)
+	{
+//		doReInitFactory(tmpFlags);
+//		ForceCaptureStats2(MEM_HISTO_FORCE_CAPTURE_NOW | MEM_HISTO_RESYNC_AUTO_CAPTURE);
+	}
+}
+
+/******************************************************************************/

@@ -182,8 +182,6 @@ typedef union {
 void RegisterNewAccessPswd(uint16_t NewPswd);
 uint8_t isInModbusHandlerContext();
 uint8_t isModbusWriteHandlerInFactoryLevel();
-void SaveParamsOnOrder(uint16_t Order2Save);
-void handleQueryReInitFactory(uint16_t pswd);
 
 uint16_t GetNullU16(void);
 uint32_t GetNullU32(void);

@@ -2124,57 +2124,6 @@ void RequestRunMode4ThisModbus(uint8_t newRunMode)
 
 /******************************************************************************/
 
-void SaveParamsOnOrder(uint16_t Order2Save)
-{
-#define SAVE_FACT_PARAMS_NOW	0x7934	// Save Factory Params now (0x7934 = 31028)
-#define SAVE_USER_PARAMS_NOW	0x5831	// Save User Params Now (0x5831 = 22577)
-/*
-	int targetFlags = 0;
-	switch(Order2Save)
-	{
-	case SAVE_FACT_PARAMS_NOW:
-		if(pCurModbus != 0)
-		{
-			targetFlags = (pCurModbus->AccessLevel >= ACCESS_MIN_LEVEL_4) ? 1 :0;
-		} else {
-			targetFlags = 1;
-		}
-		if(0 != (targetFlags & 1))
-		{
-			ForceSaveSystemParams(MEM_HISTO_FORCE_CAPTURE_NOW);
-		} // ToDo: Ajouter l'info comme quoi l'opération se serait bien passée (ou pas) !
-		break;
-	case SAVE_USER_PARAMS_NOW:
-		ForceCaptureStats2(MEM_HISTO_FORCE_CAPTURE_NOW | MEM_HISTO_RESYNC_AUTO_CAPTURE);
-		targetFlags |= 2;
-		break;
-	default:
-		break;
-	}
-	UNUSED(targetFlags); // ToDo : Transférer le résultat "targetFlags" vers une variable RAM pour Modbus
-*/
-}
-
-/******************************************************************************/
-
-void handleQueryReInitFactory(uint16_t pswd)
-{
-#define CONFIG_RESET	0x4725	// RESET_TO_PRODUCT_READY
-#define PRODUCT_RESET	0x9653	// RESET_TO_BOARD_READY
-	int tmpFlags = (pswd == CONFIG_RESET) ? 1 : 0; // Uniquement le Niveau 1
-	if(pCurModbus->AccessLevel >= ACCESS_MIN_LEVEL_4) // Niveau 4 requis !
-	{
-		if(pswd == PRODUCT_RESET) { tmpFlags = 3; } // RéInitialiser les Niveaux 1 & 2
-	}
-	if(tmpFlags != 0)
-	{
-//		doReInitFactory(tmpFlags);
-//		ForceCaptureStats2(MEM_HISTO_FORCE_CAPTURE_NOW | MEM_HISTO_RESYNC_AUTO_CAPTURE);
-	}
-}
-
-/******************************************************************************/
-
 #ifndef UTILS_UTILS_H_	// en cas d'absence de "utils.h" :
 inline void ModbusSlave_FillMemory(uint8_t* pDest, uint8_t Value, uint16_t BytesCt)
 {
