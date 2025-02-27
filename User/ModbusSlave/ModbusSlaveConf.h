@@ -335,17 +335,17 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 // Activation des "User Defined Function codes" supportés sur la Mémoire Externe :
 //#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE	// Enable support for 0x74 "Write Custom Resources to External Memory"
-#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_MEMORY  	// Enable support for 0x75 "Write External Memory Bloc"
-#define MODBUS_SLAVE_SUPPORT_ERASE_EXTERNAL_MEMORY  	// Enable support for 0x76 "Erase External Memory Bloc"
+//#define MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_MEMORY  	// Enable support for 0x75 "Write External Memory Bloc"
+//#define MODBUS_SLAVE_SUPPORT_ERASE_EXTERNAL_MEMORY  	// Enable support for 0x76 "Erase External Memory Bloc"
 //#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY		// Enable support for 0x77 "Read External Memory Bloc"
 
 // Activation des "User Defined Function codes" supportés sur l'EEPROM Externe :
-#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_EEPROM		// Enable support for 0x78 "Read External EEPROM Bloc"
+//#define MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_EEPROM		// Enable support for 0x78 "Read External EEPROM Bloc"
 
 // Activation des "User Defined Function codes" supportés sur la Flash Interne :
 //#define MODBUS_SLAVE_SUPPORT_WRITE_FIRMWARE_BLOC		// Enable support for 0x69 "Write Firmware Program Bloc"
 //#define MODBUS_SLAVE_SUPPORT_VALIDATE_FW_UPDATE 		// Enable support for 0x68 "Check & Validate Firmware Program"
-#define MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// Enable support for 0x6A "Read an Internal Firmware Program Bloc"
+//#define MODBUS_SLAVE_SUPPORT_READ_INTERNAL_FLASH_PRGM	// Enable support for 0x6A "Read an Internal Firmware Program Bloc"
 
 /******************************************************************************/
 // Pour "ModbusSlaveCore.h/c" :
@@ -365,7 +365,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 //#define MODBUS_SLAVE_SUPPORT_STATS		// Pour activer le support des Variables de Stat ModbusSlave
 //#define MODBUS_SLAVE_ENABLE_STATS_ACCESS	// Pour activer l'accès, dans le Modbus, aux Stats de DEBUG
 //#define MODBUS_SLAVE_HAS_LAST_FRAM_RESULT	// Pour activer la récupération du dernier FrameResult
-//#define MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// Pour activer l'utilisation de la fonction commune de WriteRegister
+#define MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// Pour activer l'utilisation de la fonction commune de WriteRegister
 
 /******************************************************************************/
 // Pour "ModbusSlaveUser.c" :

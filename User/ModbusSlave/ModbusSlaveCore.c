@@ -160,6 +160,10 @@ static inline uint16_t getAccessLevelAccordingToPswd(uint16_t Pswd);
 	static int32_t Float_to_Int32(float value, float coef);
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
+#ifdef MODBUS_SLAVE_USE_COMMON_WR_REG_FN	// cf. "ModbusSlaveConf.h"
+	static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, tModbusSlaveQWordVar* VarTampon);
+#endif // MODBUS_SLAVE_USE_COMMON_WR_REG_FN
+
 /******************************************************************************/
 
 void InitModbusSlaveStruct(tModbusSlaveParams* pStruct, uint16_t srcId, uint16_t slaveAdr) //, tModbusItem *baseTable)
@@ -1628,39 +1632,39 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Signed Char (1 Byte = 8 bits) :
 	case TVarSCharGetVarSetVar:
 	case TVarSCharGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(int8_t, curModbusItem->setPtr) = VarTampon.SChar0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(int8_t, curModbusItem->setPtr) = VarTampon->SChar0;
 		break;
 	case TVarSCharGetVarSetFct:
 	case TVarSCharGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(int8_t, curModbusItem->setPtr)(VarTampon.SChar0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(int8_t, curModbusItem->setPtr)(VarTampon->SChar0);
 		break;
 		// Type Unsigned Char (1 Byte = 8 bits) :
 	case TVarUCharGetVarSetVar:
 	case TVarUCharGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(uint8_t, curModbusItem->setPtr) = VarTampon.UChar0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint8_t, curModbusItem->setPtr) = VarTampon->UChar0;
 		break;
 	case TVarUCharGetVarSetFct:
 	case TVarUCharGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(uint8_t, curModbusItem->setPtr)(VarTampon.UChar0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint8_t, curModbusItem->setPtr)(VarTampon->UChar0);
 		break;
 
 		// Type Signed Int (2 Bytes = 1x 16 bits) :
 	case TVarSIntGetVarSetVar:
 	case TVarSIntGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(int16_t, curModbusItem->setPtr) = VarTampon.SInt0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(int16_t, curModbusItem->setPtr) = VarTampon->SInt0;
 		break;
 	case TVarSIntGetVarSetFct:
 	case TVarSIntGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(int16_t, curModbusItem->setPtr)(VarTampon.SInt0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(int16_t, curModbusItem->setPtr)(VarTampon->SInt0);
 		break;
 		// Type Unsigned Int (2 Bytes = 1x 16 bits) :
 	case TVarUIntGetVarSetVar:
 	case TVarUIntGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(uint16_t, curModbusItem->setPtr) = VarTampon.UInt0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint16_t, curModbusItem->setPtr) = VarTampon->UInt0;
 		break;
 	case TVarUIntGetVarSetFct:
 	case TVarUIntGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon.UInt0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint16_t, curModbusItem->setPtr)(VarTampon->UInt0);
 		break;
 
 #ifdef MODBUS_SLAVE_SUPPORT_LONG_INT32	// cf. "ModbusSlaveConf.h"
@@ -1668,20 +1672,20 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Signed Long (4 Bytes = 2x 16 bits) :
 	case TVarSLongGetVarSetVar:
 	case TVarSLongGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(int32_t, curModbusItem->setPtr) = VarTampon.SLong0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(int32_t, curModbusItem->setPtr) = VarTampon->SLong0;
 		break;
 	case TVarSLongGetVarSetFct:
 	case TVarSLongGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(int32_t, curModbusItem->setPtr)(VarTampon.SLong0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(int32_t, curModbusItem->setPtr)(VarTampon->SLong0);
 		break;
 		// Type Unsigned Long (4 Bytes = 2x 16 bits) :
 	case TVarULongGetVarSetVar:
 	case TVarULongGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(uint32_t, curModbusItem->setPtr) = VarTampon.ULong0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint32_t, curModbusItem->setPtr) = VarTampon->ULong0;
 		break;
 	case TVarULongGetVarSetFct:
 	case TVarULongGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(uint32_t, curModbusItem->setPtr)(VarTampon.ULong0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint32_t, curModbusItem->setPtr)(VarTampon->ULong0);
 		break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_INT32
 
@@ -1690,21 +1694,21 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Signed LongLong (8 Bytes = 4x 16 bits) :
 	case TVarSLongLongGetVarSetVar:
 	case TVarSLongLongGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(int64_t, curModbusItem->setPtr) = VarTampon.SLongLong;
+		MODBUS_MAKE_CASTED_POINTED_VAR(int64_t, curModbusItem->setPtr) = VarTampon->SLongLong;
 		break;
 	case TVarSLongLongGetVarSetFct:
 	case TVarSLongLongGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(int64_t, curModbusItem->setPtr)(VarTampon.SLongLong);
+		MODBUS_MAKE_CASTED_POINTED_FCT(int64_t, curModbusItem->setPtr)(VarTampon->SLongLong);
 		break;
 
 		// Type Unsigned LongLong (8 Bytes = 4x 16 bits) :
 	case TVarULongLongGetVarSetVar:
 	case TVarULongLongGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(uint64_t, curModbusItem->setPtr) = VarTampon.ULongLong;
+		MODBUS_MAKE_CASTED_POINTED_VAR(uint64_t, curModbusItem->setPtr) = VarTampon->ULongLong;
 		break;
 	case TVarULongLongGetVarSetFct:
 	case TVarULongLongGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(uint64_t, curModbusItem->setPtr)(VarTampon.ULongLong);
+		MODBUS_MAKE_CASTED_POINTED_FCT(uint64_t, curModbusItem->setPtr)(VarTampon->ULongLong);
 		break;
 #endif // MODBUS_SLAVE_SUPPORT_LONG_LONG
 
@@ -1713,41 +1717,41 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Float Int x1 (2 Bytes = 1x 16 bits) :
 	case TVarFloatIntX1GetVarSetVar:
 	case TVarFloatIntX1GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SInt0 / 1.0f);
 		break;
 	case TVarFloatIntX1GetVarSetFct:
 	case TVarFloatIntX1GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SInt0 / 1.0f);
 		break;
 
 		// Type Float Int x10 (2 Bytes = 1x 16 bits) :
 	case TVarFloatIntX10GetVarSetVar:
 	case TVarFloatIntX10GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 10.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SInt0 / 10.0f);
 		break;
 	case TVarFloatIntX10GetVarSetFct:
 	case TVarFloatIntX10GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 10.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SInt0 / 10.0f);
 		break;
 
 		// Type Float Int x100 (2 Bytes = 1x 16 bits) :
 	case TVarFloatIntX100GetVarSetVar:
 	case TVarFloatIntX100GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 100.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SInt0 / 100.0f);
 		break;
 	case TVarFloatIntX100GetVarSetFct:
 	case TVarFloatIntX100GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 100.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SInt0 / 100.0f);
 		break;
 
 		// Type Float Int x1000 (2 Bytes = 1x 16 bits) :
 	case TVarFloatIntX1000GetVarSetVar:
 	case TVarFloatIntX1000GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SInt0 / 1000.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SInt0 / 1000.0f);
 		break;
 	case TVarFloatIntX1000GetVarSetFct:
 	case TVarFloatIntX1000GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SInt0 / 1000.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SInt0 / 1000.0f);
 		break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_INT
 
@@ -1756,61 +1760,61 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Float Long x10 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX10GetVarSetVar:
 	case TVarFloatLongX10GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 10.0f);
 		break;
 	case TVarFloatLongX10GetVarSetFct:
 	case TVarFloatLongX10GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 10.0f);
 		break;
 
 		// Type Float Long x100 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX100GetVarSetVar:
 	case TVarFloatLongX100GetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 100.0f);
 		break;
 	case TVarFloatLongX100GetVarSetFct:
 	case TVarFloatLongX100GetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 100.0f);
 		break;
 
 		// Type Float Long x1000 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX1KGetVarSetVar:
 	case TVarFloatLongX1KGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 1000.0f);
 		break;
 	case TVarFloatLongX1KGetVarSetFct:
 	case TVarFloatLongX1KGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 1000.0f);
 		break;
 
 		// Type Float Long x10.000 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX10KGetVarSetVar:
 	case TVarFloatLongX10KGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 10000.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 10000.0f);
 		break;
 	case TVarFloatLongX10KGetVarSetFct:
 	case TVarFloatLongX10KGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 10000.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 10000.0f);
 		break;
 
 		// Type Float Long x100.000 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX100KGetVarSetVar:
 	case TVarFloatLongX100KGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 100000.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 100000.0f);
 		break;
 	case TVarFloatLongX100KGetVarSetFct:
 	case TVarFloatLongX100KGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 100000.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 100000.0f);
 		break;
 
 		// Type Float Long x1.000.000 (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongX1MGetVarSetVar:
 	case TVarFloatLongX1MGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon.SLong0 / 1000000.0f);
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = ((float)VarTampon->SLong0 / 1000000.0f);
 		break;
 	case TVarFloatLongX1MGetVarSetFct:
 	case TVarFloatLongX1MGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon.SLong0 / 1000000.0f);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)((float)VarTampon->SLong0 / 1000000.0f);
 		break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_LONG
 
@@ -1819,21 +1823,21 @@ static void HandleWrite2RegisterFromVarTampon(tModbusSlaveItem* curModbusItem, t
 		// Type Float Long Raw (4 Bytes = 2x 16 bits) :
 	case TVarFloatLongRawGetVarSetVar:
 	case TVarFloatLongRawGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = VarTampon.Float0;
+		MODBUS_MAKE_CASTED_POINTED_VAR(float, curModbusItem->setPtr) = VarTampon->Float0;
 		break;
 	case TVarFloatLongRawGetVarSetFct:
 	case TVarFloatLongRawGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)(VarTampon.Float0);
+		MODBUS_MAKE_CASTED_POINTED_FCT(float, curModbusItem->setPtr)(VarTampon->Float0);
 		break;
 
 		// Type Double LongLong Raw (4 Bytes = 2x 16 bits) :
 	case TVarDoubleLongLongRawGetVarSetVar:
 	case TVarDoubleLongLongRawGetFctSetVar:
-		MODBUS_MAKE_CASTED_POINTED_VAR(double, curModbusItem->setPtr) = VarTampon.Double;
+		MODBUS_MAKE_CASTED_POINTED_VAR(double, curModbusItem->setPtr) = VarTampon->Double;
 		break;
 	case TVarDoubleLongLongRawGetVarSetFct:
 	case TVarDoubleLongLongRawGetFctSetFct:
-		MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon.Double);
+		MODBUS_MAKE_CASTED_POINTED_FCT(double, curModbusItem->setPtr)(VarTampon->Double);
 		break;
 #endif // MODBUS_SLAVE_SUPPORT_FLOAT_RAW
 
@@ -2067,11 +2071,10 @@ void RegisterNewAccessPswd(uint16_t NewPswd)
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// cf. "ModbusSlaveConf.h"
 	if(0 != pCurModbus)
 	{
-		if(10 > pCurModbus->nbPswdTries)
+		if(10 > pCurModbus->nbPswdTries++)
 		{
-			pCurModbus->nbPswdTries++;
 			pCurModbus->AccessLevel = getAccessLevelAccordingToPswd(NewPswd);
-		}
+		} else { pCurModbus->AccessLevel = ACCESS_MIN_LEVEL_MIN; } // Force / Return to Basic Level !
 	}
 #endif // DISABLE_MODBUS_SLAVE_SUPPORT
 
