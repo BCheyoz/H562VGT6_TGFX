@@ -11,7 +11,6 @@
  *
  */
 
-#include "ctn.h"
 #include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
 #include "adc.h"				// Pour accès aux Variables & Fonctions d'Init ADC
 #include "AnalogInputsConf.h"	// Pour accès à la Configuration User souhaitée
@@ -76,6 +75,7 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 // Variables finales pour le Stockage des Résultats ADC :
 
 tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
+tAI_IntValue tAi_CTN[NB_CTN_USE] = {0};
 uint32_t nbConvDone = 0;
 
 /******************************************************************************/
@@ -83,6 +83,7 @@ uint32_t nbConvDone = 0;
 
 void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue);
 void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue);
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
 void AnalogInput_HandleEndOfConv(void* pVar);
 
 /******************************************************************************/
@@ -124,6 +125,13 @@ void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
 	pData->value = newValue * AI_K_ADC_3_3V_10K_22K_12bits;	// Effectue la Conversion PointsAdc -> Volts
+}
+
+void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
+{
+	tAI_IntValue* pData = pVar;
+	pData->nbPtADC = (uint16_t)(newValue);
+	pData->value = convertADC_to_CTN_10K(pData->nbPtADC);
 }
 
 void AnalogInput_HandleEndOfConv(void* pVar) // pVar contient le Pointeur vers les Paramètres d'Initialisation, dans mAdcInitParam, dont la Librairie vient de clôturer les Conversions

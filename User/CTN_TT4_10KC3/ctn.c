@@ -34,20 +34,6 @@ const int TableConversionsAdc12bCtn3977[2][SIZE_TAB_CTN] = {{3980,3972,3964,3955
            };
 
 
-tAI_IntValue tAi_CTN[NB_CTN_USE] = {0};
-
-/*** Private declaration function *******************************************************************/
-int16_t convertADC_to_CTN_10K(uint16_t Val_ADC);
-
-/*** Public body function *******************************************************************/
-void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue)
-{
-	tAI_IntValue* pData = pVar;
-	pData->nbPtADC = (uint16_t)(newValue);
-	pData->value = convertADC_to_CTN_10K(pData->nbPtADC);
-}
-
-/*** Private body function *******************************************************************/
 int16_t convertADC_to_CTN_10K(uint16_t Val_ADC)
 {
     uint8_t i;

@@ -15,17 +15,8 @@
 
 #include <stdint.h>
 
-#define NB_CTN_USE 5
 
-typedef struct {
-	uint16_t nbPtADC;
-	int16_t value;
-} tAI_IntValue;
-
-extern tAI_IntValue tAi_CTN[NB_CTN_USE];
-
-void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
-
+int16_t convertADC_to_CTN_10K(uint16_t Val_ADC);
 
 
 #endif /* CTN_TT4_10KC3_CTN_H_ */
