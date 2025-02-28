@@ -13,7 +13,7 @@
 #ifndef CTN_TT4_10KC3_CTN_C_
 #define CTN_TT4_10KC3_CTN_C_
 
-#include "ctn.h"
+#include <ctn_tt4_10kc3.h>
 
 #define SIZE_TAB_CTN        146
 #define TEMPERATURE_MIN     -4000

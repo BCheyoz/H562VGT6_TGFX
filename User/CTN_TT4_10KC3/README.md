@@ -23,29 +23,38 @@
 
 ## Etape III : connexion de la librairie avec AnalogInputs
 
-**Dans le fichier ctn.h :**
-1) parametrer le nombre de CTN utiliser 
+**Dans le fichier AnalogInputsUser.h :**
+1) ajouter en entete de fichier l'include :
 	```
-	#define NB_CTN_USE 5
+	#include "ctn_tt4_10kc3.h"
+	```
+	
+2) parametrer le nombre de CTN utiliser 
+	```
+	#define NB_CTN_TT4_10KC3_USE 5
 	```
 
 
 **Dans le fichier AnalogInputsUser.c :**  
-1) ajouter en entete de fichier l'include :
-	```
-	#include <ctn.h>
-	```
-	
-
-2) Dans la zone "// Tableau des Fonctions de Conversion à appeler & Variables Finales, en fonction du Channel considéré"
+1) Dans la zone "// Tableau des Fonctions de Conversion à appeler & Variables Finales, en fonction du Channel considéré"
 	ajouter la variable et la fonction de Handle associée dans l'adc concerné:
 	
-	Exemple 1 :
+	Exemple :
 	```
 	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[0] }
 	```
 
+2) configuer la fonction "AnalogInput_HandleNewFloat_CTN" pour quelle appel la fonction de convertion "convertADC_to_CTN_10K"   
 
+	Exemple :
+	```
+	tAI_IntValue* pData = pVar;
+	pData->nbPtADC = (uint16_t)(newValue);
+	pData->value = convertADC_to_CTN_10K(pData->nbPtADC);
+	```
+	
+	
+	
 Compiler et,
 Félicitations, c'est prêt :-) !
 

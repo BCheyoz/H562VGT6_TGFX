@@ -75,7 +75,7 @@ AI_MAKE_ADC_ACCU_RAW_BUF(ADC1_ACCU_RAW_BUF_NAME, ADC1_NB_OF_CHANNELS, ADC1_MOY_N
 // Variables finales pour le Stockage des Résultats ADC :
 
 tAI_FloatValue tAiRefAlim = {0}; // Pt Convertisseurs vRefInt & Tension d'Alim correspondante
-tAI_IntValue tAi_CTN[NB_CTN_USE] = {0};
+tAI_IntValue tAi_CTN[NB_CTN_TT4_10KC3_USE] = {0};
 uint32_t nbConvDone = 0;
 
 /******************************************************************************/

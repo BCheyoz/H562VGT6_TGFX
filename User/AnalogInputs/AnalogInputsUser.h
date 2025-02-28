@@ -16,13 +16,13 @@
 
 #include "AnalogInputsConf.h"		// Pour accès à notre propre Config & Outils utiles
 
-#include "ctn.h"
+#include "ctn_tt4_10kc3.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define NB_CTN_USE 5
+#define NB_CTN_TT4_10KC3_USE 5
 
 /********************************************************************************************/
 typedef struct {
@@ -36,7 +36,7 @@ typedef struct {
 } tAI_IntValue;
 /******************************************************************************/
 extern tAI_FloatValue tAiRefAlim;
-extern tAI_IntValue tAi_CTN[NB_CTN_USE];
+extern tAI_IntValue tAi_CTN[NB_CTN_TT4_10KC3_USE];
 
 #if defined(AI_ENABLE_SUPPORT_STATS) && (AI_NB_MAX_OF_INIT_PARAMS > 0)
 	extern tAiStats mAiStats[AI_NB_MAX_OF_INIT_PARAMS];
