@@ -42,6 +42,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
 #include "I2cComMasterSystem.h"
+#include "GestionInputSensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -138,6 +139,7 @@ int main(void)
   //I2cComMaster_Init_System(); // désactiver car il appele MX_I2C1_Init qui est déja appeler plus haut
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+  InitInputSensor();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -148,6 +150,7 @@ int main(void)
 	  ComputeMyInfos();
 	  Gestion_AnalogInputs();
 	  GestionI2cSystem();
+	  GestionInputSensor();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
