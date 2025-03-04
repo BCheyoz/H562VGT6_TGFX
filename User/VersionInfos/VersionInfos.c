@@ -14,7 +14,7 @@
 //#include "main.h"			// Pour accès direct aux bons includes des HAL
 
 #if defined(VI_SUPPORT_FW_CRC) || defined(VI_SUPPORT_BL_CRC)
-	#include "aldes_crc.h"		// Pour le Calcul du CRC32 du Firmware et/ou BootLoader
+	#include "CrcSoft.h"	// Pour le Calcul du CRC32 du Firmware et/ou BootLoader
 #endif // VI_SUPPORT_FW_CRC || VI_SUPPORT_BL_CRC
 
 #ifdef FIRMWARE_IS_BOOTLOADER

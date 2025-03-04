@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -29,7 +29,7 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
+//#include "usart.h"
 #include "usb.h"
 #include "app_usbx_host.h"
 #include "gpio.h"
@@ -37,12 +37,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include "BaseDeTemps.h"
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
+#include "UartComCore.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +72,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -116,9 +120,9 @@ int main(void)
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
-  MX_UART4_Init();
-  MX_UART5_Init();
-  MX_USART3_UART_Init();
+//  MX_UART4_Init();
+//  MX_UART5_Init();
+//  MX_USART3_UART_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -133,28 +137,36 @@ int main(void)
   MX_USBX_Host_Init();
   MX_I2C3_Init();
   MX_TouchGFX_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+
   InitBaseDeTemps();
   InitComputeInfos();
-  //I2cComMaster_Init_System(); // désactiver car il appele MX_I2C1_Init qui est déja appeler plus haut
+  //I2cComMaster_Init_System(); // Désactivé car il appele MX_I2C1_Init(), qui est déjà appelé plus haut
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
   InitInputSensor();
+  UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
+  UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  GestionBaseDeTemps();
-	  ComputeMyInfos();
-	  Gestion_AnalogInputs();
-	  GestionI2cSystem();
-	  GestionInputSensor();
+	GestionBaseDeTemps();
+	ComputeMyInfos();
+	Gestion_AnalogInputs();
+	GestionI2cSystem();
+	GestionInputSensor();
+	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
     /* USER CODE END WHILE */
-	  MX_TouchGFX_Process();
+	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
-	  FwManager->run();
+	FwManager->run();
   }
   /* USER CODE END 3 */
 }
@@ -253,6 +265,32 @@ void PeriphCommonClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* GPDMA1_Channel0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
+  /* GPDMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
+  /* TIM1_CC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
+  /* UART5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART5_IRQn);
+  /* GPDMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
