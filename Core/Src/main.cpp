@@ -43,6 +43,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
 #include "I2cComMasterSystem.h"
+#include "GestionInputSensor.h"
 #include "UartComCore.h"
 
 /* USER CODE END Includes */
@@ -146,6 +147,7 @@ int main(void)
   //I2cComMaster_Init_System(); // Désactivé car il appele MX_I2C1_Init(), qui est déjà appelé plus haut
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+  InitInputSensor();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
@@ -159,8 +161,8 @@ int main(void)
 	ComputeMyInfos();
 	Gestion_AnalogInputs();
 	GestionI2cSystem();
+	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
-
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
