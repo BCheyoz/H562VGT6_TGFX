@@ -263,7 +263,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     PC2     ------> ADC2_INP12
     PC3     ------> ADC2_INP13
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
+    GPIO_InitStruct.Pin = TouchScreen_Y__Pin|TouchScreen_Y_C1_Pin|TouchScreen_X__Pin|TouchScreen_X_C3_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -321,7 +321,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     PC2     ------> ADC2_INP12
     PC3     ------> ADC2_INP13
     */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
+    HAL_GPIO_DeInit(GPIOC, TouchScreen_Y__Pin|TouchScreen_Y_C1_Pin|TouchScreen_X__Pin|TouchScreen_X_C3_Pin);
 
   /* USER CODE BEGIN ADC2_MspDeInit 1 */
 

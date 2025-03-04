@@ -309,4 +309,3 @@ uint16_t getI2cSystemCo2SCD3xErrorsCt(void)
 	return getI2cSystemErrorsCtFromExtPtr(&mCo2SCD3);
 }
 #endif // I2CCM_ENABLE_I2C_DEBUG
-

@@ -54,49 +54,49 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, AFF_D_C_Pin|LED_ALIVE_Pin|GPIO_PIN_0, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, AFF_D_C_Pin|LED_ALIVE_Pin|DO_Appoint_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(AFF_RESET_GPIO_Port, AFF_RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BLE_EN_GPIO_Port, BLE_EN_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PEPin PEPin PE0 */
-  GPIO_InitStruct.Pin = AFF_D_C_Pin|LED_ALIVE_Pin|GPIO_PIN_0;
+  /*Configure GPIO pins : AFF_D_C_Pin LED_ALIVE_Pin DO_Appoint_Pin */
+  GPIO_InitStruct.Pin = AFF_D_C_Pin|LED_ALIVE_Pin|DO_Appoint_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  /*Configure GPIO pin : DI_Anode_Pin */
+  GPIO_InitStruct.Pin = DI_Anode_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(DI_Anode_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PtPin */
+  /*Configure GPIO pin : AFF_RESET_Pin */
   GPIO_InitStruct.Pin = AFF_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(AFF_RESET_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PD8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  /*Configure GPIO pin : BLE_EN_Pin */
+  GPIO_InitStruct.Pin = BLE_EN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  HAL_GPIO_Init(BLE_EN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PtPin */
+  /*Configure GPIO pin : BLE_IRQ_Pin */
   GPIO_InitStruct.Pin = BLE_IRQ_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BLE_IRQ_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PD3 PD4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
+  /*Configure GPIO pins : DI_J_N_Pin DI_SMART_Pin */
+  GPIO_InitStruct.Pin = DI_J_N_Pin|DI_SMART_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);

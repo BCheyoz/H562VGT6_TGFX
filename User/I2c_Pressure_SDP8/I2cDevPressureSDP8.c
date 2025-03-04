@@ -26,7 +26,7 @@
 #include "I2cComMasterConf.h"		// Pour accès à la Configuration User souhaitée
 #include "I2cComMasterUtils.h"  	// Pour accès aux Outils de support I2cComMaster
 
-#include "aldes_crc.h"					// Pour calcul du CRC8 de la Trame SDP8x
+#include "CrcSoft.h"				// Pour calcul du CRC8 de la Trame SDP8x
 
 #ifdef __cplusplus
  extern "C" {

@@ -1,16 +1,16 @@
 /*
- * crc.h
+ * CrcSoft.h
  *
  *  Created on: 4 avr. 2019
  *
- *  Updated on: 31 Janv. 2024
+ *  Updated on: 27 Feb. 2025
  *  Updated by: j.proux
  *
  *  Version 1.0
  */
 
-#ifndef CRC_H_
-#define CRC_H_
+#ifndef CRC_SOFT_CRC_SOFT_H_
+#define CRC_SOFT_CRC_SOFT_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,4 +61,4 @@ void FreeCRC32_Table(void);
 }
 #endif
 
-#endif /* CRC_H_ */
+#endif /* CRC_SOFT_CRC_SOFT_H_ */
