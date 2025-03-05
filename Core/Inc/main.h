@@ -73,7 +73,8 @@ void Error_Handler(void);
 #define TouchScreen_I2C_SDA_GPIO_Port GPIOB
 #define TouchScreen_I2C_SCL_Pin GPIO_PIN_8
 #define TouchScreen_I2C_SCL_GPIO_Port GPIOB
-
+#define Anode_Pin	GPIO_PIN_5
+#define Anode_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
