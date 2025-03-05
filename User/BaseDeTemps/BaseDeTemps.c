@@ -130,6 +130,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 		//	UserFn_RT_100ms();	// Exemple de fonction à exécuter au RunTime dans le Programme Principal @ 100ms
 			Handle_Led_RT_100ms();
 			Handle_Infos_RT_100ms();
+			Handle_DigitalInputs_RT_100ms();
 		/* USER CODE END RT_100ms */
 
 // Fin de Zone des Appels exécutés au RumTime dans le Programme Principal @ 100ms.

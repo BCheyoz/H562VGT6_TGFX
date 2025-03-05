@@ -8,7 +8,9 @@
 #include "LedBlinker.hpp"
 #endif
 
+#ifdef USE_DI_ANODE
 #include "DigitalInputs.hpp"
+#endif
 
 /* Attention class Singleton (instance unique) */
 
@@ -44,6 +46,10 @@ public :
 	inline uint16_t blinkMode(){return (uint16_t)ledAlive->GetBlinkMode();}
 #endif
 
+#ifdef USE_DI_ANODE
+	inline uint8_t getAnodeState() {return (uint8_t)Di_Anode->getState();}
+#endif
+
 private :
 	FwMng();
 
@@ -70,7 +76,9 @@ private :
 #ifdef USE_ALIVE_LED
 	LedBlinker *ledAlive;
 #endif
-	DigitalInputs *Anode;
+#ifdef USE_DI_ANODE
+	DigitalInputs *Di_Anode;
+#endif
 };
 
 
