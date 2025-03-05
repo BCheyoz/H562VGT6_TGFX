@@ -11,12 +11,18 @@
 std::list<DigitalInputs*> DigitalInputs::allInputs;
 
 /******************************************************************************/
+// Pour compatibilité avec la lib BaseDeTemps en C
+void GestionDigitalInputs() 		{DigitalInputs::GestionDigitalInputs();}
+void Handle_DigitalInputs_RT_10ms() { DigitalInputs::Handle_RT_10ms();}
+void Handle_DigitalInputs_RT_100ms() { DigitalInputs::Handle_RT_100ms();}
+
+/******************************************************************************/
 DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState) {
 	// init
 	_workState = (WorkState == GPIO_PIN_SET);
 	_GPIOPort = GPIOx;
 	_GPIOPin = GPIO_Pin;
-
+	allInputs.push_front(this);
 	// etat par défaut de l'entrée (1 ou 0 ) -> WORKING_STATE_IS_0/GPIO_PIN_RESET = 0 / WORKING_STATE_IS_1/GPIO_PIN_SET = 1
 }
 

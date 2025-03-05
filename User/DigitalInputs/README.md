@@ -1,6 +1,6 @@
-# Anode Lib v1.0
+# DigitalInputs v1.0
 
-
+****************************** brouillon *****
 alim anode -> pas besoin de gérer
 
 retour anode pin 5 connecteur J2 ?
@@ -13,3 +13,4 @@ Suivant la référence de l'anode choisi :
     
 pin PA5 GPIO_Input | DI_Anode
 
+***********************************************

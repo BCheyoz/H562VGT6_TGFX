@@ -17,6 +17,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "LedBlinkerInterface.h"
+#include "DigitalInputsInterface.h"
 #include "VersionInfos.h"
 #include "AnalogInputsCore.h"
 /* USER CODE END Includes */
@@ -96,7 +97,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 
 	/* USER CODE BEGIN RT_10ms */
 		Handle_AnalogInputs_RT_10ms();
-
+		Handle_DigitalInputs_RT_10ms();
 
 // Ajout_Jp for MultiExecution and Capture I2c avec PulseView @ 500K :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW // from "I2cDevRtc_RV3028.h"

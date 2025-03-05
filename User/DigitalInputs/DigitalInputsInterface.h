@@ -30,8 +30,8 @@
 extern "C" {
 #endif
 	void GestionDigitalInputs();
-	void Handle_RT_10ms();
-	void Handle_RT_100ms();
+	void Handle_DigitalInputs_RT_10ms();
+	void Handle_DigitalInputs_RT_100ms();
 #ifdef __cplusplus
 }
 #endif

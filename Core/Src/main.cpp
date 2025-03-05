@@ -147,6 +147,7 @@ int main(void)
 	  GestionBaseDeTemps();
 	  ComputeMyInfos();
 	  Gestion_AnalogInputs();
+	  GestionDigitalInputs();
 	  GestionI2cSystem();
     /* USER CODE END WHILE */
 	  MX_TouchGFX_Process();
