@@ -41,13 +41,13 @@ typedef enum // Liste des Protocoles actuellement suppotés :
 //#define UART_COM_TYPE_MAX	UartComModbus
 #define UART_COM_TYPE_MAX	UartComCustom
 
-typedef struct _tBufInfo
+typedef struct _tBufParams
 {
 	void*	pBufBase;	// Pointeur sur la Base du Buffer
 	uint16_t nbBytes;	// Nb de Bytes Disponibles ou Utiles
 } tBufParams;
 
-typedef struct _tSzBufInfo
+typedef struct _tBufSzBloc
 {
 	// Base tBufParams :
 	void*	pBufBase;	// Pointeur sur la Base du Buffer
@@ -64,7 +64,7 @@ typedef struct _tRxTxBufInfo
 	tBufSzBloc	TxBuf;
 } tRxTxBufInfo;
 
-typedef struct _tFrameInfo
+typedef struct _tComFrameParams
 {
 	void*	hHandle;	// Pointeur sur la Structure *_HandleTypeDef du Périphérique concerné
 	// Base tBufInfo :
@@ -288,7 +288,7 @@ typedef enum
 	eUartReInitStopDefault = eUartReInitStopOne,
 } eUartReInitStop;
 
-typedef struct
+typedef struct _UartReInitItem
 {
 	UART_HandleTypeDef* huart;
 	USART_TypeDef* Instance;

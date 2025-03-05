@@ -114,14 +114,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_GPDMA1_Init();
-  MX_ADC1_Init();
+//  MX_ADC1_Init(); 		// Désactivé_Jp le 28/02/2025 -> laisser "InitAnalogInputs" faire le nécessaire !
   MX_OCTOSPI1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
 //  MX_UART4_Init();
-//  MX_UART5_Init();
-//  MX_USART3_UART_Init();
+//  MX_UART5_Init();		// Désactivé_Jp le 28/02/2025 -> laisser "UartCom_Devices_Init" faire le nécessaire !
+//  MX_USART3_UART_Init();	// Désactivé_Jp le 28/02/2025 -> laisser "UartCom_Devices_Init" faire le nécessaire !
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();

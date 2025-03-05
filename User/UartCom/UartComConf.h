@@ -411,7 +411,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 //#define UART_COM_ENABLE_IBUS    			// Pour activer la liaison avec la Librairie "iBus"
 #define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
-//#define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
+#define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
 
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
 //#define UART_COM_SUPPORT_STATS  			// Pour Activer les compteurs de Stats dans UartCom
