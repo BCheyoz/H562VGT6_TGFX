@@ -47,7 +47,7 @@ public :
 #endif
 
 #ifdef USE_DI_ANODE
-	inline uint8_t getAnodeState() {return (uint8_t)Di_Anode->getState();}
+	inline uint8_t getAnodeState() {return (uint8_t)Di_Anode->getcurState();}
 #endif
 
 private :
