@@ -30,7 +30,6 @@ extern "C" {
 #include "main.h"
 #include "ux_host_msc.h"
 #include "ux_host_cdc_acm.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
