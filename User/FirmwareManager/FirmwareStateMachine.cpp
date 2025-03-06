@@ -82,6 +82,7 @@ FwMng::FwMng()
 #ifdef USE_ALIVE_LED
 	ledAlive = new LedBlinker(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin, E_LED_SLOW_BLINK);
 #endif
+	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 
 }
 
