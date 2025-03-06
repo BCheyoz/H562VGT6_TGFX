@@ -132,6 +132,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			Handle_Led_RT_100ms();
 			Handle_Infos_RT_100ms();
 			Handle_InputSensor_RT_100ms();
+			Handle_DigitalInputs_RT_100ms();
 		/* USER CODE END RT_100ms */
 
 // Fin de Zone des Appels exécutés au RumTime dans le Programme Principal @ 100ms.

@@ -27,7 +27,81 @@ héritage de la librairie DigitalInputs en c de joel.p
 
 Remarque : je recommande de re- "GENERATE CODE" si l'un des paramètres ci-dessus a été modifié dans CubeMX
 
-## Etape II : Configurer le Projet :
+## Attention au code généré pour un projet en c++ !!!!! il faut trier ce qui est utile ou pas
+	* voir Boris Chay pour + d'infos
+
+## Etape II : Configuration de la librairie
+** Dans le fichier "DigitalInputsInterface.h" **
+
+2) Activer (ou Désactiver) le support des entrées Groupées "DigitalGroupedInputs" :
+	* utiliser le define "DI_ENABLE_DIGITAL_GROUPED_INPUTS" pour autoriser (ou non) les entrées Groupées
+
+3) Configurer la plage des Anti-Rebonds :
+	a) les paramètres "DI_MAX_CT_ON" et "DI_MIN_CT_ON" définissent la dynamique de détection de la position "working"
+	b) les paramètres "DI_SEUIL_ON" et "DI_SEUIL_OFF" définissent les seuils d'Hystérésis de l'anti-rebond
+
+Remarque : il est recommandé de laisser la Configuration des "délais" avec les valeurs par défaut,
+ c'est à dire "10" pour 1s, "30" pour 3s, "100" pour 10s, aini que "15" et "2" pour les délai d' "autoFire"
+
+## Etape III : Création et initialisation de DigitalInput
+
+1) Pour chaque "DigitalInput" (entrée digitale) configuré dans CubeMx, 
+	* créer une instance dans la partie du MainStateMachine ou du main.c
+	* initialiser les arguments du constructeur:
+		* le port utilisé 
+		* le pin utilisé
+		* "état" attendu du signal en position "travail" (NO ou NF)
+	
+Exemple 1 : Une instance "Di_Anode" est initialisée en fonctionnement "Normalement Ouvert" ('1' = position active) :
+```
+	Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1);
+```
+
+Exemple 2 : Une instance "Di_Anode" est initialisée en fonctionnement "Normalement Fermé" ('0' = position active) :
+```
+	Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NF_WORKING_STATE_IS_0);
+```
+
+	* ne pas oublier de déclarer l'entité dans le .h
+
+4) Pour les entrées où c'est utile, enregistrer, dans la partie "USER CODE * Init_Vars",
+ les éventuels Handlers custom pour les évènements souhaités, parmi les "DI_EVENT_*" disponibles.
+// TODO gestion evenements
+
+5) Ajouter également, dans cette même partie "USER CODE * Init_Vars", l'Initialisation
+ de chaque variable de Groupe, de type "DigitalGroupedInput" (cf. III.2).
+Remarque : le support pour les variables de Groupe doit être activé à l'aide du mot-clef "DI_ENABLE_DIGITAL_GROUPED_INPUTS".
+// TODO a voir gestion des entrées groupées
+
+6) Pour les Groupes où c'est utile, enregistrer, dans la partie "USER CODE * Init_Vars",
+ les éventuels Handlers custom pour les évènements souhaités, parmi les "DI_EVENT_*" disponibles.
+Remarque 1 : le support pour les variables de Groupe doit être activé à l'aide du mot-clef "DI_ENABLE_DIGITAL_GROUPED_INPUTS" ci-dessous.
+// TODO a voir gestion des entrées groupées
+
+8) Dans la partie "USER CODE * DispatchDI", appeler la fonction "DispatchDigitalInputEvents" pour chaque
+ "DigitalInput" à gérer.
+Remarque : la fonction "DispatchDigitalInputArrayEvents", qui prend en argument supplémentaire le nb d'éléments à
+ surveiller, permet, par exemple, de dispatcher les évènements de tous les éléments d'un même tableau.
+// TODO gestion evenements
+
+9) Dans la partie "USER CODE * DispatchDG", appeler la fonction "DispatchDigitalGroupEvents" pour chaque
+ Groupe à gérer, le cas échéant.
+// TODO a voir gestion des entrées groupées
+// TODO gestion evenements
+
+10) Dans la partie "USER CODE * RegDI_Event" de "RegisterDigitalInput2EventFnHandler", ajouter, pour chaque
+ "DigitalInput" à gérer, un appel à la macro "REGISTER_DIGITAL_INPUT_EVENT_FN_HANDLER_IF_FLAG_PRESENT".
+Remarque : utiliser la macro "REGISTER_DIGITAL_INPUT_ARRAY_EVENT_FN_HANDLER_IF_FLAG_PRESENT" à la place de l'autre
+ lorsqu'il s'agit d'un tableau d'entrées associées vers un même Groupe.
+// TODO a voir gestion des entrées groupées
+// TODO gestion evenements
+
+III.12) Dans la partie "USER CODE * HandleDI_State" de "Handle_DigitalInputs_RT_100ms", ajouter, pour chaque
+ "DigitalInput" à gérer, un appel à la fonction "ManageDigitalInputStateMaintained".
+// TODO gestion evenements
+
+
+## Etape IV : Configurer le Projet :
 
 **Dans le nouveau Projet**
 
@@ -55,61 +129,17 @@ il est souvent préférable d'utiliser la formulation "../User/DigitalInputs" (s
 	Handle_DigitalInputs_RT_10ms();		// A appeler depuis une Base de Temps RT @ 10ms
 ```
 
-5) Ajouter l'appel de Gestion dans la Boucle Principale du "main.cpp" :
+5) Ajouter le Handler @ 100ms dans une sous-partie de la Boucle Principale (RT) à 100ms :
+ (par exemple dans la zone @ 100ms "USER CODE * RT_100ms" de "GestionBaseDeTemps", dans "BaseDeTemps.c")
+```	
+	Handle_DigitalInputs_RT_100ms();	// A appeler depuis une Base de Temps RT @ 100ms
+``` 
+// TODO gestion evenements 
+
+6) Ajouter l'appel de Gestion dans la Boucle Principale du "main.cpp" :
 (Attention à bien l'insérer entre l'accolade ouvrante du "while (1)" et "USER CODE END WHILE")
 ```
 	GestionDigitalInputs();				// A appeler dans la Boucle Principale (main.c)
-```
-
-## Etape III : Configuration de la librairie DigitalInput
-** Dans le fichier "DigitalInputsInterface.h" **
-
-2) Activer (ou Désactiver) le support des entrées Groupées "DigitalGroupedInputs" :
-	* utiliser le define "DI_ENABLE_DIGITAL_GROUPED_INPUTS" pour autoriser (ou non) les entrées Groupées
-
-3) Configurer la plage des Anti-Rebonds :
-	a) les paramètres "DI_MAX_CT_ON" et "DI_MIN_CT_ON" définissent la dynamique de détection de la position "working"
-	b) les paramètres "DI_SEUIL_ON" et "DI_SEUIL_OFF" définissent les seuils d'Hystérésis de l'anti-rebond
-
-Remarque : il est recommandé de laisser la Configuration des "délais" avec les valeurs par défaut,
- c'est à dire "10" pour 1s, "30" pour 3s, "100" pour 10s, aini que "15" et "2" pour les délai d' "autoFire"
-
-## Etape IV : Interfaçage de la librairie DigitalInput
-
-1) Pour chaque "DigitalInput" (entrée digitale) configuré dans CubeMx,
-	* dans le "main.h" ajouter les "#define" des pins et ports associés au nom de l'entrée
-	
-Exemple 1 : pour l'entrée "Anode" :
-```
-	/* Private defines -----*/
-	#define Anode_Pin	GPIO_PIN_5
-	#define Anode_GPIO_Port GPIOA
-```
-2) Pour chaque "DigitalInput" (entrée digitale) configuré dans CubeMx, 
-	* créer une instance dans la partie du MainStateMachine ou du main.c
-	* initialiser les arguments du constructeur:
-		* le port utilisé 
-		* le pin utilisé
-		* "état" attendu du signal en position "travail" (NO ou NF)
-	
-Exemple 1 : Une instance "Di_Anode" est initialisée en fonctionnement "Normalement Ouvert" ('1' = position active) :
-```
-	Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1);
-```
-
-Exemple 2 : Une instance "Di_Anode" est initialisée en fonctionnement "Normalement Fermé" ('0' = position active) :
-```
-	Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NF_WORKING_STATE_IS_0);
-```
-
-	* ne pas oublier de déclarer l'entité dans le .h avec l'include associé
-En entete du fichier:
-```
-	#include "DigitalInputs.hpp"
-```
-déclaration de l'instance :
-```
-		DigitalInputs *Di_Anode;
 ```
 
 => Félicitations, c'est prêt :-) !
