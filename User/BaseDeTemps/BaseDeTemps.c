@@ -20,6 +20,7 @@
 #include "DigitalInputsInterface.h"
 #include "VersionInfos.h"
 #include "AnalogInputsCore.h"
+#include "GestionInputSensor.h"
 /* USER CODE END Includes */
 
 
@@ -130,6 +131,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 		//	UserFn_RT_100ms();	// Exemple de fonction à exécuter au RunTime dans le Programme Principal @ 100ms
 			Handle_Led_RT_100ms();
 			Handle_Infos_RT_100ms();
+			Handle_InputSensor_RT_100ms();
 		/* USER CODE END RT_100ms */
 
 // Fin de Zone des Appels exécutés au RumTime dans le Programme Principal @ 100ms.

@@ -11,8 +11,8 @@
  *
  */
 
-#include <stdint.h> // Pour les types "int*_t" & "uint*_t"
-#include "aldes_crc.h"	// Pour nos propres déclarations publiques
+#include <stdint.h> 	// Pour les types "int*_t" & "uint*_t"
+#include "CrcSoft.h"	// Pour nos propres déclarations publiques
 
 #ifdef __cplusplus
 extern "C" {
