@@ -29,7 +29,6 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-//#include "usart.h"
 #include "usb.h"
 #include "app_usbx_host.h"
 #include "gpio.h"
@@ -43,6 +42,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
 #include "I2cComMasterSystem.h"
+#include "GestionInputSensor.h"
 #include "UartComCore.h"
 
 /* USER CODE END Includes */
@@ -119,9 +119,6 @@ int main(void)
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
-//  MX_UART4_Init();
-//  MX_UART5_Init();		// Désactivé_Jp le 28/02/2025 -> laisser "UartCom_Devices_Init" faire le nécessaire !
-//  MX_USART3_UART_Init();	// Désactivé_Jp le 28/02/2025 -> laisser "UartCom_Devices_Init" faire le nécessaire !
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -134,7 +131,6 @@ int main(void)
   MX_CRC_Init();
   MX_FileX_Init();
   MX_USBX_Host_Init();
-  MX_I2C3_Init();
   MX_TouchGFX_Init();
 
   /* Initialize interrupts */
@@ -143,9 +139,10 @@ int main(void)
 
   InitBaseDeTemps();
   InitComputeInfos();
-  //I2cComMaster_Init_System(); // Désactivé car il appele MX_I2C1_Init(), qui est déjà appelé plus haut
+  I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+  InitInputSensor();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
@@ -159,10 +156,11 @@ int main(void)
 	ComputeMyInfos();
 	Gestion_AnalogInputs();
 	GestionI2cSystem();
+	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
 
     /* USER CODE END WHILE */
-	MX_TouchGFX_Process();
+  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
 	FwManager->run();
   }
