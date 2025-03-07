@@ -8,7 +8,7 @@
 #include "DigitalInputs.hpp"
 
 // Initialisation des variables static partagé entre toutes les instances de l'objet
-extern std::vector<DigitalInputs*> DigitalInputs::allInputs;
+std::vector<DigitalInputs*> DigitalInputs::allInputs;
 
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
@@ -27,7 +27,11 @@ DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinStat
 	_GPIOPin = GPIO_Pin;
 	_Flags = {0};
 #ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
-	_pFnHandler[DI_MAX_FN_HANDLERS] = {0};
+	pDI_FnHandler pFn = nullptr;
+	for(int i = 0; i < DI_MAX_FN_HANDLERS; i++)
+	{
+		_pFnHandler[i] = pFn;
+	}
 #endif // !DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 	allInputs.insert(allInputs.begin(),this);
 }
@@ -209,7 +213,9 @@ void RegisterDigitalInput2EventFnHandler(uint16_t EventSrc, uint16_t EventId, Di
 
 		for(int i = 0; i < DI_MAX_FN_HANDLERS; i++)
 		{
-			if(EventId & (1 << i)) input->setFnHandler(pFn, i);
+			if(EventId & (1 << i) || EventSrc & (1 << i)){
+				input->setFnHandler(pFn, i);
+			}
 		}
 	}
 }

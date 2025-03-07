@@ -15,6 +15,8 @@
 #define DI_NF_WORKING_STATE_IS_0	GPIO_PIN_RESET	// Type NF => '0' = Travail
 #define DI_PU_WORKING_STATE_IS_0	GPIO_PIN_RESET	// Pull-Up => '0' = Travail
 
+typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype de Callback appelés en cas d'évènement DigitalInput
+#define CASE_SET_VAR_VAL_BREAK(c,p,v)	case c:p=v;break	// Ajouter le ';' manuellement après la macro
 #define IS_IN_RANGE(val,min,max)	(((val) >= (min)) && ((val) <= (max)))
 /******************************************************************************/
 // Configuration de la plage Anti-Rebonds :
@@ -39,7 +41,6 @@
 // Configuration des Evènements :
 //#define DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS // Pour désactiver le support des Evènements DigitalInputs
 
-typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype de Callback appelés en cas d'évènement DigitalInput
 
 // Enumération des Evènements supportés :
 #define DI_EVENT_NEW_STATE  	(1<< 0)		// Un changement Working <-> Idle est intervenu

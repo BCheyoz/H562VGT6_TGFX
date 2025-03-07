@@ -42,6 +42,7 @@
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
+#include "DigitalInputs.hpp"
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
@@ -66,13 +67,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int16_t lastNO1_Event;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 static void MX_NVIC_Init(void);
+
+void HandleDI_NO_1_WorkingEvent(uint16_t EventId, uint16_t diParam);
+
+void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -147,6 +152,11 @@ int main(void)
   //I2cComMaster_Init_System(); // Désactivé car il appele MX_I2C1_Init(), qui est déjà appelé plus haut
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+
+#ifdef USE_DI_ANODE
+  DigitalInputs *Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,DI_PARAM_NO_1);
+  RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE , DI_PARAM_NO_1,Di_Anode,HandleDI_NO_1_WorkingEvent);
+#endif
   InitInputSensor();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
@@ -295,7 +305,27 @@ static void MX_NVIC_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HandleDI_NO_1_WorkingEvent(uint16_t EventId, uint16_t diParam)
+{
+	RegisterEventTraceFromEventId(&lastNO1_Event, EventId);
+}
 
+void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId)
+{
+	if(0==pTrace) return;
+	switch(EventId)
+	{
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_NEW_WORK_STATE,	*pTrace,   1);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_NEW_IDLE_STATE,	*pTrace,  -1);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_1S,	*pTrace,   2);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_1S,	*pTrace,  -2);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_3S,	*pTrace,   3);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_3S,	*pTrace,  -3);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_10S,	*pTrace,  10);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_10S,	*pTrace, -10);
+	default:break;
+	}
+}
 /* USER CODE END 4 */
 
 /**

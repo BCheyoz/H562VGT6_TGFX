@@ -82,9 +82,7 @@ FwMng::FwMng()
 #ifdef USE_ALIVE_LED
 	ledAlive = new LedBlinker(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin, E_LED_SLOW_BLINK);
 #endif
-#ifdef USE_DI_ANODE
-	Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,DI_PARAM_NO_1);
-#endif
+
 }
 
 void FwMng::run(void)
