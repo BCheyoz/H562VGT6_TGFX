@@ -17,11 +17,10 @@ void Handle_DigitalInputs_RT_10ms() { DigitalInputs::Handle_RT_10ms();}
 void Handle_DigitalInputs_RT_100ms() { DigitalInputs::Handle_RT_100ms();}
 
 /******************************************************************************/
-DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState,uint16_t diParam, uint8_t type) {
+DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState, uint8_t type) {
 	// init
 	_nbPinOn = 0;
 	_nb100ms = 0;
-	_diParam = diParam;
 	_ditype = type;
 
 	_workState = (WorkState == GPIO_PIN_SET);
@@ -80,70 +79,70 @@ void DigitalInputs::GestionDigitalInputs()
 		if(input->_newStateEvent)
 		{
 			pFn = input->_pFnNewStateHandler;
-			if(0 != pFn) pFn(DI_EVENT_NEW_STATE, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_NEW_STATE,&input->last_Event);
 			input->_newStateEvent = 0;
 		}
 
 		if(input->_newWorkEvent)
 		{
 			pFn = input->_pFnNewWorkHandler;
-			if(0 != pFn) pFn(DI_EVENT_NEW_WORK_STATE, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_NEW_WORK_STATE,&input->last_Event);
 			input->_newWorkEvent = 0;
 		}
 
 		if(input->_newIdleEvent)
 		{
 			pFn = input->_pFnNewIdleHandler;
-			if(0 != pFn) pFn(DI_EVENT_NEW_IDLE_STATE, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_NEW_IDLE_STATE,&input->last_Event);
 			input->_newIdleEvent = 0;
 		}
 
 		if(input->_newWork1sEvent)
 		{
 			pFn = input->_pFnWork1sHandler;
-			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_1S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_1S,&input->last_Event);
 			input->_newWork1sEvent = 0;
 		}
 
 		if(input->_newIdle1sEvent)
 		{
 			pFn = input->_pFnIdle1sHandler;
-			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_1S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_1S,&input->last_Event);
 			input->_newIdle1sEvent = 0;
 		}
 
 		if(input->_newWork3sEvent)
 		{
 			pFn = input->_pFnWork3sHandler;
-			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_3S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_3S,&input->last_Event);
 			input->_newWork3sEvent = 0;
 		}
 
 		if(input->_newIdle3sEvent)
 		{
 			pFn = input->_pFnIdle3sHandler;
-			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_3S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_3S,&input->last_Event);
 			input->_newIdle3sEvent = 0;
 		}
 
 		if(input->_newWork10sEvent)
 		{
 			pFn = input->_pFnWork10sHandler;
-			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_10S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_WORK_STATE_10S,&input->last_Event);
 			input->_newWork10sEvent = 0;
 		}
 
 		if(input->_newIdle10sEvent)
 		{
 			pFn = input->_pFnIdle10sHandler;
-			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_10S, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_IDLE_STATE_10S,&input->last_Event);
 			input->_newIdle10sEvent = 0;
 		}
 
 		if(input->_newAutoFireEvent)
 		{
 			pFn = input->_pFnAutoFireHandler;
-			if(0 != pFn) pFn(DI_EVENT_AUTO_FIRE, input->_diParam);
+			if(0 != pFn) pFn(DI_EVENT_AUTO_FIRE,&input->last_Event);
 			input->_newAutoFireEvent = 0;
 		}
 
@@ -275,11 +274,6 @@ void DigitalInputs::setFnHandler(pDI_FnHandler pFn,uint8_t index )
 	}
 }
 
-void DigitalInputs::setdiParam(uint16_t param)
-{
-	_diParam = param;
-}
-
 void DigitalInputs::setdiType(uint16_t diType){
 	_ditype =  diType;
 }
@@ -289,28 +283,20 @@ unsigned DigitalInputs::getcurState(void)
 	return _curState;
 }
 
-uint16_t DigitalInputs::getdiParam(void){
-	return _diParam;
-}
-
 uint8_t DigitalInputs::getdiType(void){
 	return _ditype;
 }
 
 /******************************************************************************/
 // handle functions : fonctions de callback
-int16_t lastNO1_Event;
-
-void HandleDI_NO_1_WorkingEvent(uint16_t EventId, uint16_t diParam)
+void HandleDI_Event(uint16_t EventId,int16_t *last_event)
 {
-	RegisterEventTraceFromEventId(&lastNO1_Event, EventId);
+	RegisterEventTraceFromEventId(last_event, EventId);
 }
 
-void RegisterTraceDI_All_Events(uint16_t EventId, uint16_t diParam)
+void RegisterTraceDI_All_Events(uint16_t EventId,int16_t *last_event)
 {
-	int16_t* pTrace = 0;
-	pTrace = &lastNO1_Event;
-	if( 0!= pTrace) RegisterEventTraceFromEventId(pTrace, EventId);
+	RegisterEventTraceFromEventId(last_event, EventId);
 }
 
 void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId)

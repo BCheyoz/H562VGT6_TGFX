@@ -16,7 +16,7 @@
 #define DI_NF_WORKING_STATE_IS_0	GPIO_PIN_RESET	// Type NF => '0' = Travail
 #define DI_PU_WORKING_STATE_IS_0	GPIO_PIN_RESET	// Pull-Up => '0' = Travail
 
-typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype de Callback appelés en cas d'évènement DigitalInput
+typedef void(*pDI_FnHandler)(uint16_t EventId,int16_t *last_event);	// Prototype de Callback appelés en cas d'évènement DigitalInput
 #define CASE_SET_VAR_VAL_BREAK(c,p,v)	case c:p=v;break	// Ajouter le ';' manuellement après la macro
 /******************************************************************************/
 // Configuration de la plage Anti-Rebonds :
@@ -56,10 +56,6 @@ typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype d
 #define DI_MAX_FN_HANDLERS  	10
 
 /******************************************************************************/
-// Affectation des Flags correspondants aux Digital Inputs :
-#define DI_PARAM_NO_1	(1<<0)
-#define DI_PARAM_NO_2	(1<<1)
-
 typedef enum
 {
 	E_SINGLE_INPUT = 1, //

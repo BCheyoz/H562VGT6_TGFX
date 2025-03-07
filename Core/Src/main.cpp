@@ -149,8 +149,8 @@ int main(void)
   InitAnalogInputs();
 
 #ifdef USE_DI_ANODE
-  DigitalInputs *Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,DI_PARAM_NO_1,E_SINGLE_INPUT);
-  RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_WORK_STATE,Di_Anode,HandleDI_NO_1_WorkingEvent);
+  DigitalInputs *Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,E_SINGLE_INPUT);
+  //RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_WORK_STATE,Di_Anode,HandleDI_Event);
   RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_WORK_STATE_1S | DI_EVENT_IDLE_STATE_1S |
 		  DI_EVENT_WORK_STATE_3S | DI_EVENT_IDLE_STATE_3S | DI_EVENT_WORK_STATE_10S | DI_EVENT_IDLE_STATE_10S,Di_Anode, RegisterTraceDI_All_Events);
 #endif
