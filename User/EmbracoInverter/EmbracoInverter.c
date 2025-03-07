@@ -4,94 +4,59 @@
  *  Created on: Mar 3, 2025
  *  Original Author: j.proux
  *
- *  Updated on: 4 Mar. 2025
+ *  Updated on: 6 Mar. 2025
  *  Updated by: j.proux
  *
  */
 
 #include "EmbracoInverter.h"	// Pour accès à nos propres déclarations publiques
 
-//// ToDo: déplacer dans .h :
-//#define DEF_SAB_SPEED_RAMP	(5 * 10) // 5s, par pas de 100ms
-//#define MAX_CHANGE_SPEED_HZ 	2	 // 2Hz
-//#define MAX_CHANGE_SPEED_RPM	HZ_TO_RPM(MAX_CHANGE_SPEED_HZ)
 
-//uint16_t sabSpeedRamp = 0;
-//uint16_t maxSpeedRamp = 0;
-//uint16_t curSpeedRamp = 0;
-//uint16_t curSpeedCons = 0;
-//uint16_t newSpeedCons = 0;
+/******************************************************************************/
+// Variables de Gestion de l'Inverter Embraco :
 
-tEmbracoInverterDatas EmbracoInverterDatas[NB_EMBRACO_INVERTER_BUF_DEF_SIZE] = {0};
+tEmbracoInverterManager EmbracoInverterManager[NB_EMBRACO_INVERTER_BUF_DEF_SIZE] = {0};
+
+/******************************************************************************/
+// Prototypes privés :
 
 uint16_t EmbracoInverterFinalizeRequest(tComFrameParams* TxFrame, uint16_t nbBytes);
 
+/******************************************************************************/
+
 inline void InitEmbracoInverterMST(void)
 {
-//	sabSpeedRamp = 0;
-//	maxSpeedRamp = MAX_CHANGE_SPEED;
-//	curSpeedRamp = 0;
-//	curSpeedCons = 0;
-//	newSpeedCons = 0;
+	// S'il y avait des Init particuliers à effectuer ...
 }
+
+/******************************************************************************/
 
 inline void GestionEmbracoInverter(void)
 {
-/*
-	if(0 == sabSpeedRamp) // C'est le moment d'appliquer la Rampe, si besoin :
-	{
-		if(curSpeedRamp != newSpeedCons)
-		{
-			if(newSpeedCons >= MIN_SPEED_START_RPM) // Demande Inverter ON :
-			{
-				if(curSpeedRamp < MIN_SPEED_START_RPM) // Actuellement OFF :
-				{
-#ifdef EMBRACO_INVERTER_CAN_START_ANY_SPEED
-					curSpeedRamp = newSpeedCons; // If can Start at Any Speed
-#else // !EMBRACO_INVERTER_CAN_START_ANY_SPEED
-					curSpeedRamp = MIN_SPEED_START_RPM; // Start @ Min Speed
-#endif // EMBRACO_INVERTER_CAN_START_ANY_SPEED
-				} else if(newSpeedCons > (curSpeedRamp + MAX_CHANGE_SPEED_RPM))
-				{
-					curSpeedRamp += MAX_CHANGE_SPEED_RPM; // Limite la pente
-				} else if((newSpeedCons + MAX_CHANGE_SPEED_RPM) < curSpeedRamp)
-				{
-					curSpeedRamp -= MAX_CHANGE_SPEED_RPM; // Limite la pente
-				} else // As requested :
-				{
-					curSpeedRamp = newSpeedCons;
-				}
-			} else {	// Demande Inverter OFF :
-#ifdef EMBRACO_INVERTER_CAN_STOP_ANY_SPEED
-				curSpeedRamp = 0;
-#else // !EMBRACO_INVERTER_CAN_STOP_ANY_SPEED
-
-#endif // EMBRACO_INVERTER_CAN_STOP_ANY_SPEED
-			}
-			if(newSpeedCons > (curSpeedRamp + MAX_CHANGE_SPEED_RPM))
-			{
-				newSpeedCons = curSpeedRamp + MAX_CHANGE_SPEED_RPM;
-			} else if(newSpeedCons < (curSpeedRamp - MAX_CHANGE_SPEED_RPM))
-		}
-		if(curSpeedCons != newSpeedCons)
-		{
-
-		}
-	}
-//*/
+	// S'il y avait une Gestion particulière à effectuer ...
 }
+
+/******************************************************************************/
 
 uint16_t EmbracoInverterRequestFactory(tComFrameParams* pFI, void* pVoidParam)
 {
 	if( (0 == pFI) || (0 == pVoidParam) ) return 0; // Invalid Arguments :-( !
-	UART_MAKE_VAR_AND_CAST_VALUE(tEmbracoInverterDatas*, pInvDatas, pVoidParam);	// Récupère nos Paramètres
+	UART_MAKE_VAR_AND_CAST_VALUE(tEmbracoInverterManager*, pInvDatas, pVoidParam);	// Récupère nos Paramètres
 
 	// Process noReplies => TimeOut :
 	if(pInvDatas->Flags.RequestPending)
 	{
 		if(pInvDatas->nbNoReplies < UINT8_MAX) pInvDatas->nbNoReplies++;
-//	} else {
-//		pInvDatas->nbNoReplies = 0; // RAZ compteur
+		if(pInvDatas->nbNoReplies > EMBRACO_INVERTER_MAX_ALLOW_NO_REPLY)
+		{
+			pInvDatas->Flags.IsConnected = 0;
+			pInvDatas->Flags.IsDriverLost = 1;
+			if(0 != pInvDatas->SpeedConsToSend)
+			{
+				pInvDatas->SpeedConsToSend = 0; // Force une demande d'arrêt
+				pInvDatas->nextFrameStep = EmbracoInverterStepWriteSpeed; // Force l'envoi immédiat
+			}
+		}
 	}
 
 	// Build new Request Frame :
@@ -149,10 +114,12 @@ uint16_t EmbracoInverterRequestFactory(tComFrameParams* pFI, void* pVoidParam)
 	return EmbracoInverterFinalizeRequest(pFI, EMBRACO_INVERTER_MIN_TX_SIZE);
 }
 
+/******************************************************************************/
+
 int EmbracoInverterRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 {
 	if( (0 == pRxTxBI) || (0 == pVoidParam) ) return 0; // Invalid Arguments :-( !
-	UART_MAKE_VAR_AND_CAST_VALUE(tEmbracoInverterDatas*, pInvDatas, pVoidParam);	// Récupère nos Paramètres
+	UART_MAKE_VAR_AND_CAST_VALUE(tEmbracoInverterManager*, pInvDatas, pVoidParam);	// Récupère nos Paramètres
 
 	uint8_t* myRx = pRxTxBI->RxBuf.pBufBase;
 	uint16_t nbBytesRecus = pRxTxBI->RxBuf.nbBytes;
@@ -174,8 +141,11 @@ int EmbracoInverterRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 		return 0; // Abandonner le traitement en l'état !
 	}
 
-	// OK, this Frame is Valid :
+	// OK, this Frame is Valid => Update Flags :
 	pInvDatas->Flags.RequestPending = 0;
+	pInvDatas->Flags.WasDetected = 1;
+	pInvDatas->Flags.IsConnected = 1;
+	pInvDatas->Flags.IsDriverLost = 0;
 	pInvDatas->nbNoReplies = 0; // RAZ compteur
 
 	// Process Frame Content :
@@ -213,17 +183,148 @@ int EmbracoInverterRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 	return 0;	// Aucune réponse à renvoyer
 }
 
+/******************************************************************************/
+
 inline void Handle_EmbracoInverter_RT_100ms(void)
 {
 #define DEC_NOT_EMPTY_VAR(v)	if((v) > 0) (v)--
 //	DEC_NOT_EMPTY_VAR(sabSpeedRamp);
 }
 
-void SetEmbracoInverterSpeedRPM(uint16_t newSpeedRPM)
+/******************************************************************************/
+
+uint8_t GetEmbracoManagerFlags(void)
 {
-	EmbracoInverterDatas[0].SpeedConsToSend = newSpeedRPM;
-	EmbracoInverterDatas[0].nextFrameStep = EmbracoInverterStepWriteSpeed;
+	return EmbracoInverterManager[0].Flags.AllFlags;
 }
+
+unsigned WasEmbracoInverterDetected(void)
+{
+	return EmbracoInverterManager[0].Flags.WasDetected;
+}
+
+unsigned IsEmbracoInverterConnected(void)
+{
+	return EmbracoInverterManager[0].Flags.IsConnected;
+}
+
+unsigned IsEmbracoInverterDriverLost(void)
+{
+	return EmbracoInverterManager[0].Flags.IsDriverLost;
+}
+
+/******************************************************************************/
+
+uint8_t GetEmbracoInverterNbNoReplies(void)
+{
+	return EmbracoInverterManager[0].nbNoReplies;
+}
+
+void SetEmbracoInverterNbNoReplies(uint8_t newValue)
+{
+	EmbracoInverterManager[0].nbNoReplies = newValue;
+}
+
+/******************************************************************************/
+
+uint8_t GetEmbracoInverterComError(void)
+{
+	return EmbracoInverterManager[0].CommunicationError;
+}
+
+void SetEmbracoInverterComError(uint8_t newValue)
+{
+	EmbracoInverterManager[0].CommunicationError = newValue;
+}
+
+/******************************************************************************/
+
+void SetEmbracoInverterSpeedConsRPM(uint16_t newSpeedRPM)
+{
+	if(EmbracoInverterManager[0].SpeedConsToSend != newSpeedRPM)
+	{
+		EmbracoInverterManager[0].SpeedConsToSend = newSpeedRPM;
+		EmbracoInverterManager[0].nextFrameStep = EmbracoInverterStepWriteSpeed;
+	}
+}
+
+uint16_t GetEmbracoInverterSpeedConsRPM(void)
+{
+	return EmbracoInverterManager[0].SpeedConsToSend;
+}
+
+/******************************************************************************/
+
+uint16_t GetEmbracoInverterSpeedConsRead(void)
+{
+	return EmbracoInverterManager[0].SpeedConsRead;
+}
+
+/******************************************************************************/
+
+uint8_t GetEmbracoInverterStatusFlags(void)
+{
+	return EmbracoInverterManager[0].StatusRead.LSB;
+}
+
+void RazEmbracoInverterStatusFlags(uint8_t flags2Raz)
+{
+	EmbracoInverterManager[0].StatusRead.LSB &= (~flags2Raz);
+}
+
+//#define MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(f)	unsigned IsEmbracoInverterStatusFlag##f##(void) { return EmbracoInverterManager[0].StatusRead.##f##; }
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(StartFailure)	// bit 0 <-> 01h : Start Failure
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(OverLoadProtect)	// bit 1 <-> 02h : Overload protection, If the Data High byte is 00h, compressor is still running.
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(UnderSpeed)	// bit 2 <-> 04h : Under speed (1550 rpm or lower)
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(WrongRotorPos)	// bit 3 <-> 08h : Wrong rotor position
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(ShortCircuit)	// bit 4 <-> 10h : Short circuit
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(OverTemperature)	// bit 5 <-> 20h : Over temperature failure : when the inverter turns off due to over temperature.
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(ConsOutOfSpec)	// bit 4 <-> 80h : Set speed data out of specification (cf. Notes 2 & 4)
+
+unsigned IsEmbracoInverterStatusFlagStartFailure(void)		{ return EmbracoInverterManager[0].StatusRead.StartFailure; }
+unsigned IsEmbracoInverterStatusFlagOverLoadProtect(void)	{ return EmbracoInverterManager[0].StatusRead.OverLoadProtect; }
+unsigned IsEmbracoInverterStatusFlagUnderSpeed(void)		{ return EmbracoInverterManager[0].StatusRead.UnderSpeed; }
+unsigned IsEmbracoInverterStatusFlagWrongRotorPos(void) 	{ return EmbracoInverterManager[0].StatusRead.WrongRotorPos; }
+unsigned IsEmbracoInverterStatusFlagShortCircuit(void)  	{ return EmbracoInverterManager[0].StatusRead.ShortCircuit; }
+unsigned IsEmbracoInverterStatusFlagOverTemperature(void)	{ return EmbracoInverterManager[0].StatusRead.OverTemperature; }
+unsigned IsEmbracoInverterStatusFlagConsOutOfSpec(void) 	{ return EmbracoInverterManager[0].StatusRead.ConsOutOfSpec; }
+
+/******************************************************************************/
+
+unsigned IsEmbracoCompressorRunning(void) 	{ return EMBRACO_INVERTER_COMPRESSOR_RUNNING == EmbracoInverterManager[0].StatusRead.MSB ? 1 : 0; }
+
+uint16_t GetEmbracoInverterStatus16(void)
+{
+	return EmbracoInverterManager[0].StatusRead.StatusData;
+}
+
+void SetEmbracoInverterStatus16(uint16_t newStatus)
+{
+	EmbracoInverterManager[0].StatusRead.StatusData = newStatus;
+}
+
+/******************************************************************************/
+
+//#define MAKE_GET_EMBRACO_INVERTER_VALUE(t,n)	t GetEmbracoInverter##n(void) { return EmbracoInverterManager[0].##n; }
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, PowerRead)			// Power [W]
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, NbOfTrialsRead)		// Number of trials
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, BusVoltageRead)		// Voltage [V]
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, TemperatureX10Read)	// Temperature [°C x 10]
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, PowerLimitationRead)	// Power limitation [W]
+
+uint16_t  GetEmbracoInverterPowerRead(void) { return EmbracoInverterManager[0].PowerRead; }
+uint16_t  GetEmbracoInverterNbOfTrialsRead(void) { return EmbracoInverterManager[0].NbOfTrialsRead; }
+uint16_t  GetEmbracoInverterBusVoltageRead(void) { return EmbracoInverterManager[0].BusVoltageRead; }
+uint16_t  GetEmbracoInverterTemperatureX10Read(void) { return EmbracoInverterManager[0].TemperatureX10Read; }
+uint16_t  GetEmbracoInverterPowerLimitationRead(void) { return EmbracoInverterManager[0].PowerLimitationRead; }
+
+#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint8_t,  LastOtherDataType)
+//MAKE_GET_EMBRACO_INVERTER_VALUE(uint16_t, LastOtherDataValue)
+
+uint8_t  GetEmbracoInverterLastOtherDataType(void) { return EmbracoInverterManager[0].LastOtherDataType; }
+uint16_t  GetEmbracoInverterLastOtherDataValue(void) { return EmbracoInverterManager[0].LastOtherDataValue; }
+#endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
 
 uint16_t EmbracoInverterFinalizeRequest(tComFrameParams* TxFrame, uint16_t nbBytes)
 {

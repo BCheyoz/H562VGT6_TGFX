@@ -4,7 +4,7 @@
  *  Created on: Mar 3, 2025
  *  Original Author: j.proux
  *
- *  Updated on: 4 Mar. 2025
+ *  Updated on: 6 Mar. 2025
  *  Updated by: j.proux
  *
  */
@@ -17,16 +17,7 @@
 
 #define HZ_TO_RPM(h)		((h) * 60)
 
-/******************************************************************************/
-
-#define EMBRACO_INVERTER_TX_REGULAR_FN  	EmbracoInverterRequestFactory
-#define EMBRACO_INVERTER_TX_REGULAR_PARAM	&EmbracoInverterDatas[0]
-#define EMBRACO_INVERTER_TX_FIRST_DELAY 	(3) 	// After 300ms @ MST (Base 100ms)
-#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	(5) 	// 1 FrameTx / 500ms (Base 100ms)
-#define EMBRACO_INVERTER_TX_DEF_FRAME_SIZE	5
 #define EMBRACO_INVERTER_TX_FOOTER_SIZE 	1
-
-#define EMBRACO_INVERTER_RX_FN_HANDLER  	EmbracoInverterRxHandler
 
 /******************************************************************************/
 
@@ -59,6 +50,9 @@ typedef union _tEmbracoInverterManagerFlags
 {
 	struct
 	{
+		unsigned WasDetected	: 1;	// Si détecté 1 fois depuis MST
+		unsigned IsConnected	: 1;	// Si réponse récente du Driver
+		unsigned IsDriverLost	: 1;	// Si communication avec le Driver perdue
 		unsigned RequestPending : 1;	// Pour détection non-réponses
 	} __attribute__ ((__packed__));
 	uint8_t AllFlags;
@@ -111,9 +105,8 @@ typedef struct
 	uint8_t  CommunicationError;	// Parmi EMBRACO_INVERTER_COM_ERROR_*
 	//---------------------
 	uint16_t SpeedConsToSend;		// Speed [RPM]
-//	uint16_t sabSendSpeedCons;
-	//---------------------
 	uint16_t SpeedConsRead; 		// Speed [RPM]
+	//---------------------
 	tEmbracoInverterStatusData StatusRead;
 	uint16_t PowerRead;				// Power [W]
 	uint16_t NbOfTrialsRead;		// Number of trials
@@ -125,9 +118,9 @@ typedef struct
 	uint8_t  LastOtherDataType;
 	uint16_t LastOtherDataValue;
 #endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
-} tEmbracoInverterDatas;
+} tEmbracoInverterManager;
 
-extern tEmbracoInverterDatas EmbracoInverterDatas[];
+extern tEmbracoInverterManager EmbracoInverterManager[];
 
 /******************************************************************************/
 
@@ -135,13 +128,51 @@ void InitEmbracoInverterMST(void);
 void GestionEmbracoInverter(void);
 void Handle_EmbracoInverter_RT_100ms(void);
 
-void SetEmbracoInverterSpeedRPM(uint16_t newSpeedRPM);
+uint8_t GetEmbracoManagerFlags(void);
+unsigned WasEmbracoInverterDetected(void);
+unsigned IsEmbracoInverterConnected(void);
+unsigned IsEmbracoInverterDriverLost(void);
 
-uint16_t EMBRACO_INVERTER_TX_REGULAR_FN(tComFrameParams* pFI, void* pVoidParam);
-int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
+uint8_t GetEmbracoInverterNbNoReplies(void);
+void SetEmbracoInverterNbNoReplies(uint8_t newValue);
+
+uint8_t GetEmbracoInverterComError(void);
+void SetEmbracoInverterComError(uint8_t newValue);
+
+void SetEmbracoInverterSpeedConsRPM(uint16_t newSpeedRPM);
+uint16_t GetEmbracoInverterSpeedConsRPM(void);
+uint16_t GetEmbracoInverterSpeedConsRead(void);
+
+uint8_t GetEmbracoInverterStatusFlags(void);
+void RazEmbracoInverterStatusFlags(uint8_t flags2Raz);
+unsigned IsEmbracoInverterStatusFlagStartFailure(void);
+unsigned IsEmbracoInverterStatusFlagOverLoadProtect(void);
+unsigned IsEmbracoInverterStatusFlagUnderSpeed(void);
+unsigned IsEmbracoInverterStatusFlagWrongRotorPos(void);
+unsigned IsEmbracoInverterStatusFlagShortCircuit(void);
+unsigned IsEmbracoInverterStatusFlagOverTemperature(void);
+unsigned IsEmbracoInverterStatusFlagConsOutOfSpec(void);
+
+uint16_t GetEmbracoInverterStatus16(void);
+void SetEmbracoInverterStatus16(uint16_t newStatus);
+unsigned IsEmbracoCompressorRunning(void);
+
+uint16_t  GetEmbracoInverterPowerRead(void);
+uint16_t  GetEmbracoInverterNbOfTrialsRead(void);
+uint16_t  GetEmbracoInverterBusVoltageRead(void);
+uint16_t  GetEmbracoInverterTemperatureX10Read(void);
+uint16_t  GetEmbracoInverterPowerLimitationRead(void);
+
+#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA
+	uint8_t  GetEmbracoInverterLastOtherDataType(void);
+	uint16_t  GetEmbracoInverterLastOtherDataValue(void);
+#endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
 
 /******************************************************************************/
-// Pour "UartComUser.c" (ne pas modifier ces réglages) :
+// Elements de Configuration pour "mUartComInitParam" (dans "UartComUser.c")
+//  à intégrer dans la zone des "USER CODE (...) Static_InitParams" :
+
+#define EMBRACO_INVERTER_RX_FN_HANDLER  	EmbracoInverterRxHandler
 
 #define EMBRACO_INVERTER_EOF_RX 		28		// 28ms pour sabEndOfRxFrame (base = IT @ 1ms)
 #define EMBRACO_INVERTER_EOB_RX 		56		// 56ms pour sabEndOfRxFrame lorsqu'on n'a reçu qu'un Bloc de la Trame (base = IT @ 1ms)
@@ -150,5 +181,19 @@ int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
 #define EMBRACO_INVERTER_NO_TX_FRAME	140		// 140ms pour sabReady4Tx (base = IT @ 1ms)
 #define EMBRACO_INVERTER_NO_TX_BYTE 	0		// 0ms pour sabMayTxNextByte (base = IT @ 1ms)
 #define EMBRACO_INVERTER_NO_RX_TO		(60 *10) // 60s pour sabReSetRxBufPtr (base = IT @ 100ms)
+
+int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
+
+/******************************************************************************/
+// Elements de Configuration pour "mInitRegTx" (dans "UartComUser.c")
+//  à intégrer dans la zone des "USER CODE (...) Register_RegularTx" :
+
+#define EMBRACO_INVERTER_TX_REGULAR_FN  	EmbracoInverterRequestFactory
+
+#define EMBRACO_INVERTER_TX_FIRST_DELAY 	(3) 	// After 300ms @ MST (Base 100ms)
+#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	(5) 	// 1 FrameTx / 500ms (Base 100ms)
+#define EMBRACO_INVERTER_TX_DEF_FRAME_SIZE	EMBRACO_INVERTER_BUF_DEF_TX_SIZE
+
+uint16_t EMBRACO_INVERTER_TX_REGULAR_FN(tComFrameParams* pFI, void* pVoidParam);
 
 #endif /* EMBRACOINVERTER_EMBRACOINVERTER_H_ */

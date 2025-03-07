@@ -4,7 +4,7 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 25 Feb. 2025
+ *  Updated on: 6 Mar. 2025
  *  Updated by: j.proux
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
@@ -28,6 +28,8 @@
 // Includes personnalisés, suivant les besoins :
 
 /* USER CODE BEGIN Includes */
+
+#include "EmbracoInverter.h"		// Pour accès aux Infos & Commandes manuelles Inverter Embraco
 
 //#include "GestionLedAlive.h"		// Pour accès aux Commandes de la Led de Vie
 //#include "DigitalInputsUser.h"  	// Pour accès aux Infos des DigitalInputs
@@ -66,10 +68,10 @@ uint32_t GetVersionSoft32(void);
 /* USER CODE END Prototypes */
 
 /******************************************************************************/
-// ProductInfos : Name = "Himalaya2 Product" // "HII Carte Mere App Product"
+// ProductInfos : Name = "Himalaya2 Product" // "TFlow4 App Product"
 // BusConfig : Type = "rtu", Baudrate = "115200", Data = "8", Parity = "none", Stop = "1", Port = "COM6"
-// EquipmentCfg : Name = "HII_Mere_App_A035", Slave = "2"
-// XmlConfig : varPrefix = "modbus_HII_Mere_App_", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
+// EquipmentCfg : Name = "TFlow4_App_A001", Slave = "2"
+// XmlConfig : varPrefix = "modbus_TFlow4_App_", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
 
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
 
@@ -95,7 +97,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetSoftTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
 
 #if defined(VERSION_INFOS_VERSION_INFOS_H_) && defined(VI_SUPPORT_FW_CRC)	// EXPORT = 1
-	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC Soft", SHOW_HEX)
+	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC_Soft", SHOW_HEX)
 #endif // VERSION_INFOS_VERSION_INFOS_H_ && VI_SUPPORT_FW_CRC
 
 	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getCurAccessLevel,		RegisterNewAccessPswd},	// Code d'accès aux Niveaux Proteges (Name = "UserLevel", DefVal = "0", \
@@ -103,7 +105,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 //	{ 0x11,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},		&Fab_MdbUserSlaveId,	SetModbusUserSlaveAdr},	// Nouvelle Adresse ModBus Client (Name = "ID Modbus User", DefVal = "2")
 //	{ 0x12,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		0,						0},	// fonctionnalitées, type de fonctions disponibles
-	{ 0x14,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						SaveParamsOnOrder},	// Ordre Sauvegarde param (Name = "Save Params", Enum = "0:Idle/22577:Product Params/31028:Factory Params")
+	{ 0x14,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						SaveParamsOnOrder},	// Ordre Sauvegarde param (Name = "SaveParams", Enum = "0:Idle/22577:Product Params/31028:Factory Params")
 //	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetNukubModelSizeFromParamsSets,	0},			// Name = "Model Size", Enum = "0:Inconnu/16:Nükub 300/17:Nükub 450/18:Nükub 150/19:Nükub 180/65535:Indéterminé", DefVal = "0"
 // $16 -> $1F = non affectés (au 24/07/2020).
 
@@ -407,9 +409,6 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 */
 
-	// code installation lue par l'ihm
-	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
-
 	// Commandes Test ModbusUserMode :
 #ifdef MODBUS_SLAVE_ENABLE_STATS_ACCESS	// EXPORT = 0
 #warning "Commandes Test & Stats ModbusSlave actives !!!"
@@ -498,8 +497,26 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 16056,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesNoRxHandler,	&iBusInfos[0].nbFramesNoRxHandler},
 #endif // IBUS_SUPPORT_STATS
 
+//	// Code Installation pour l'IHM :
+//	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
+
+	// Infos & Commandes EmbracoInverter :
+#ifdef EMBRACOINVERTER_EMBRACOINVERTER_H_	// EXPORT = 1
+	{ 0xE000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetFct},	GetEmbracoManagerFlags, 		0},			// SHOW_HEX
+	{ 0xE001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},	GetEmbracoInverterNbNoReplies,	SetEmbracoInverterNbNoReplies},
+	{ 0xE002,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},	GetEmbracoInverterComError, 	SetEmbracoInverterComError},	// SHOW_HEX
+
+	{ 0xE008,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},	GetEmbracoInverterSpeedConsRead,	SetEmbracoInverterSpeedConsRPM}, // Name = "EmbracoInverterSpeedCons", Unit = "RPM"
+	{ 0xE009,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},	GetEmbracoInverterStatus16, 		SetEmbracoInverterStatus16},	// SHOW_HEX
+	{ 0xE00A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetEmbracoInverterPowerRead,		0},		// Unit = "W"
+	{ 0xE00B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetEmbracoInverterNbOfTrialsRead,	0},
+	{ 0xE00C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetEmbracoInverterBusVoltageRead,	0}, 	// Unit = "V"
+	{ 0xE00D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetEmbracoInverterTemperatureX10Read, 0},	// Unit = "°c", Coef = "10"
+	{ 0xE00E,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetEmbracoInverterPowerLimitationRead, 0},	// Unit = "W"
+#endif // EMBRACOINVERTER_EMBRACOINVERTER_H_
+
 	// RTC spy :
-#ifdef RV3028_RTC_ENABLE_MANUAL_RW
+#ifdef RV3028_RTC_ENABLE_MANUAL_RW	// EXPORT = 0
 	{ 0xF020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.opType,	&rtcRV3028_ManualRW.opType},	// Name = "RV3028.opType", Enum = "0:Idle/1:Read/2:Write"
 	{ 0xF021,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.startAdr,	&rtcRV3028_ManualRW.startAdr},	// Name = "RV3028.startAdr"
 	{ 0xF022,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.nbAdr,	&rtcRV3028_ManualRW.nbAdr}, 	// Name = "RV3028.nbAdr"
@@ -507,7 +524,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xF024,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mRtcRv3028.manualStatus,	&mRtcRv3028.manualStatus},		// Name = "RV3028.manualStatus"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
-#ifdef RV3028_RTC_ENABLE_MANUAL_RW
+#ifdef RV3028_RTC_ENABLE_MANUAL_RW	// EXPORT = 0
 	{ 0xF030,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[0],	&rtcManualBuffer[0]},	// Name = "rtcManualBuffer_0"
 	{ 0xF031,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[1],	&rtcManualBuffer[1]},	// Name = "rtcManualBuffer_1"
 	{ 0xF032,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[2],	&rtcManualBuffer[2]},	// Name = "rtcManualBuffer_2"
@@ -526,7 +543,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xF03F,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[15],	&rtcManualBuffer[15]},	// Name = "rtcManualBuffer_15"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
-#ifdef RV3028_RTC_ENABLE_MANUAL_RW
+#ifdef RV3028_RTC_ENABLE_MANUAL_RW	// EXPORT = 0
 	{ 0xF040,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[0],	&mI2CCM_Rtc_RV3028_RxBuf[0]},	// Name = "rtcRv3028RxBuffer_0"
 	{ 0xF041,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[1],	&mI2CCM_Rtc_RV3028_RxBuf[1]},	// Name = "rtcRv3028RxBuffer_1"
 	{ 0xF042,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[2],	&mI2CCM_Rtc_RV3028_RxBuf[2]},	// Name = "rtcRv3028RxBuffer_2"
@@ -542,20 +559,20 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	// Infos & Commandes spéciales BootLoader & Applicatif (Base Nükub) :
 	{ 0xFF00,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getVersion16BootLoader,	0}, 						// Version du BootLoader, si présent, recherché & détecté (SHOW_HEX)
-	{ 0xFF01,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getAliveRunTime1s,		0}, 						// Temps de RunTime @ 1s (Name = "Alive_RunTime", Unit = "s")
+	{ 0xFF01,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getAliveRunTime1s,		0}, 						// Temps de RunTime @ 1s (Name = "AliveRunTime", Unit = "s")
 	{ 0xFF03,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetFct},	(void*)&curRunMode,		RequestRunMode4ThisModbus},	// Name = "RunMode", Enum = "1:BootLoader/2:Applicatif", MinVal = "1", MaxVal = "2", DefVal = "2"
 	{ 0xFF04,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getRunStatus,			0},							// Name = "RunStatus", Enum = "1:Ready for Cmd/2:Update Pending/257:Ready 4 App/513:On Jump 2 BL"
 
 #if defined(VI_SUPPORT_JUMP_BL) || defined(FIRMWARE_IS_BOOTLOADER)
-  #ifdef FIRMWARE_IS_APPLICATIF
+  #ifdef FIRMWARE_IS_APPLICATIF	// EXPORT = 1
 	{ 0xFF05,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetVar},	&sabJumpToBL,			0},							// Temps avant try to Jump BL (Unit = "s", Coef = "10")
-  #elif defined(FIRMWARE_IS_BOOTLOADER) // !FIRMWARE_IS_APPLICATIF && FIRMWARE_IS_BOOTLOADER :
+  #elif defined(FIRMWARE_IS_BOOTLOADER) // !FIRMWARE_IS_APPLICATIF && FIRMWARE_IS_BOOTLOADER (EXPORT = 0) :
 	{ 0xFF05,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetVar},	&sabKeepInBL,			0}, 						// Temps de maintient en BL (Unit = "s", Coef = "10")
   #endif // FIRMWARE_IS_APPLICATIF / FIRMWARE_IS_BOOTLOADER
 	{ 0xFF06,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetFct},	&BL_Requesters,			0},							// Enum = "0:None/4:Modbus/32768:System"/2:iBus1/8:ModbusUser" (cf. Flags Source @ UartComDevices.h::L107)
 #endif // VI_SUPPORT_JUMP_BL || FIRMWARE_IS_BOOTLOADER
 
-#ifdef UPGRADE_FIRMWARE_UPGRADE_FIRMWARE_H_
+#ifdef UPGRADE_FIRMWARE_UPGRADE_FIRMWARE_H_	// EXPORT = 0
 	{ 0xFF07,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},	&CurUpgradeAdress,		0},							// SHOW_HEX
 	{ 0xFF09,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetVar},	&CurUpgradeTimeOut, 	0},							// Temps restant pour envoyer la suite d'une MàJ (Unit = "s", Coef = "10")
 	{ 0xFF0A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},	&CurUpgradeSrcId,		UnLockFlashProgramSrc},		// Enum = "0:None/2:Modbus/15:System"/1:iBusInt/3:iBusExt" (Cf. Id Source @ UartComDevices.h::L97)
@@ -564,7 +581,9 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xFF0C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getUpdateError, 	 	0},							//
   #endif // FIRMWARE_IS_BOOTLOADER
 #endif // UPGRADE_FIRMWARE_UPGRADE_FIRMWARE_H_
-	{ 0xFF0D,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getThisModbusSrcId,		0}, 						// Name = "ModbusId", Enum = "2:Modbus"/1:iBusInt/7:iBusExt" (Cf. Id Source @ UartComDevices.h::L97)
+
+	// Modbus Infos :
+	{ 0xFF0D,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getThisModbusSrcId,		0}, 						// Name = "ModbusId", Enum = "3:ModbusUser"/1:iBusInt/7:iBusExt" (Cf. Id Source @ UartComDevices.h::L97)
 	{ 0xFF0E,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getThisModbusRxBufSize,	0}, 						// Name = "ModbusRxBufSize", Unit = "bytes"
 	{ 0xFF0F,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getThisModbusTxBufSize,	0}, 						// Name = "ModbusTxBufSize", Unit = "bytes"
 
@@ -572,26 +591,30 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xFF20,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},	(void*)&ProductKey,		0}, 						// Name = "ProductKey", SHOW_HEX, Enum = "1095321928:HimalayaMB" (<=> 0x41494948 = HIIA)
 	{ 0xFF22,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetVersionSoft,			0},							// Version du Firmware Applicatif (SHOW_HEX, Name = "VersionSoft32")
 	{ 0xFF24,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getUserApp_MaxFwSize,	0}, 						// Max allowed size for the embedded Application (SHOW_HEX, Name = "MaxUserAppSize")
-#ifdef FIRMWARE_IS_BOOTLOADER
+#ifdef FIRMWARE_IS_BOOTLOADER	// EXPORT = 0
 	{ 0xFF26,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getUserApp_EndOfStack,	0}, 						// End Of Stack for the new embedded Application (SHOW_HEX, Name = "AppEndOfStack")
 	{ 0xFF28,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getUserApp_RstVector,	0}, 						// Reset Vector for the new embedded Application (SHOW_HEX, Name = "AppResetVector")
 #endif // FIRMWARE_IS_BOOTLOADER
 
 	// Infos spéciales ST (emplacements identiques Applicatif / BootLoader) :
+#ifdef UID_BASE	// EXPORT = 1
 	{ 0xFF40,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetUID_0,			0},	// SHOW_HEX, ONLY_DBG
 	{ 0xFF42,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetUID_1,			0},	// SHOW_HEX, ONLY_DBG
 	{ 0xFF44,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetUID_2,			0},	// SHOW_HEX, ONLY_DBG
 	{ 0xFF46,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetUID_3,			0},	// SHOW_HEX, ONLY_DBG
+#endif // UID_BASE
+#ifdef FLASHSIZE_BASE	// EXPORT = 1
 	{ 0xFF48,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetFlashSize,		0},	// Unit = "KB Flash", ONLY_DBG
+#endif // FLASHSIZE_BASE
+#ifdef PACKAGE_BASE	// EXPORT = 1
 	{ 0xFF49,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetPackageData, 	0},	// SHOW_HEX, ONLY_DBG
+#endif // PACKAGE_BASE
+#ifdef DBGMCU	// EXPORT = 1
 	{ 0xFF4A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getMcuDeviceId,		0},	// SHOW_HEX, ONLY_DBG
-//	{ 0xFF49,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetPackageSize_0,	0},	// SHOW_HEX, ONLY_DBG
-//	{ 0xFF4A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetPackageSize_1,	0},	// SHOW_HEX, ONLY_DBG
-//	{ 0xFF4B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetPackageSize_2,	0},	// SHOW_HEX, ONLY_DBG
-//	{ 0xFF4C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	GetPackageSize_3,	0},	// SHOW_HEX, ONLY_DBG
+#endif // DBGMCU
 
 	// Infos spéciales Linker :
-#ifdef VI_SUPPORT_LINKER_INFOS
+#ifdef VI_SUPPORT_LINKER_INFOS	// EXPORT = 0
 	{ 0xFF60,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getLinker_EndOfStack,		0},	// SHOW_HEX, ONLY_DBG
 	{ 0xFF62,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getLinker_OriginOfFlash,	0},	// SHOW_HEX, ONLY_DBG
 	{ 0xFF64,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getLinker_EndOfFlash,		0},	// SHOW_HEX, ONLY_DBG
