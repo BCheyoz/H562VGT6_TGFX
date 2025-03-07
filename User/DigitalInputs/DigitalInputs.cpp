@@ -17,11 +17,13 @@ void Handle_DigitalInputs_RT_10ms() { DigitalInputs::Handle_RT_10ms();}
 void Handle_DigitalInputs_RT_100ms() { DigitalInputs::Handle_RT_100ms();}
 
 /******************************************************************************/
-DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState,uint16_t diParam) {
+DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState,uint16_t diParam, uint8_t type) {
 	// init
 	_nbPinOn = 0;
 	_nb100ms = 0;
 	_diParam = diParam;
+	_ditype = type;
+
 	_workState = (WorkState == GPIO_PIN_SET);
 	_GPIOPort = GPIOx;
 	_GPIOPin = GPIO_Pin;
@@ -66,7 +68,6 @@ void DigitalInputs::GestionDigitalInputs()
 		}
 
 		// DispatchingDigitalInputEvents
-		// TODO gestion evenements et callback
 #ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 
 		pDI_FnHandler pFn = 0;
@@ -203,27 +204,64 @@ void DigitalInputs::Handle_RT_100ms()
 #endif // !DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 }
 
-void RegisterDigitalInput2EventFnHandler(uint16_t EventSrc, uint16_t EventId, DigitalInputs *input, pDI_FnHandler pFn)
+/******************************************************************************/
+// event functions
+void RegisterDigitalInputEventFnHandler(DigitalInputs *input, uint16_t EventId, pDI_FnHandler pFn)
 {
-	if(EventSrc & DI_PARAM_NO_1)
-	{
-		//RegisterDigitalInputEventFnHandler
-		if(0 == input) return;
-		if(EventId <= 0) return;
 
-		for(int i = 0; i < DI_MAX_FN_HANDLERS; i++)
-		{
-			if(EventId & (1 << i) || EventSrc & (1 << i)){
-				input->setFnHandler(pFn, i);
-			}
-		}
+#ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
+
+	if(0 == input) return;
+	if(EventId <= 0) return;
+
+	for(int i = 0; i < DI_MAX_FN_HANDLERS; i++)
+	{
+		if(EventId & (1 << i)) input->setFnHandler(pFn, i);
+	}
+
+#endif // !DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
+
+}
+
+/******************************************************************************/
+// non testé
+void RegisterDigitalInputArrayEventFnHandler(DigitalInputs *input, uint16_t EventId, pDI_FnHandler pFn, uint16_t count)
+{
+	for(int i = 0 ; i < count; i++)
+	{
+		RegisterDigitalInputEventFnHandler(input, EventId, pFn);
+		input++; // Pointe l'élémet suivant dans le tableau
 	}
 }
 
-unsigned DigitalInputs::getcurState(void)
+void RegisterDigitalInput2EventFnHandler(uint16_t EventId, DigitalInputs *input, pDI_FnHandler pFn)
 {
-	return _curState;
+/* USER CODE BEGIN RegDI_Event */
+
+if(input->getdiType() == E_SINGLE_INPUT){
+	RegisterDigitalInputEventFnHandler(input, EventId, pFn);
 }
+	// TODO à gérer : rotocomutateur
+
+/*#define REGISTER_DIGITAL_INPUT_ARRAY_EVENT_FN_HANDLER_IF_FLAG_PRESENT(flag,input,ct)	\
+	if(EventSrc & (flag)) RegisterDigitalInputArrayEventFnHandler(input, EventId, pFn, ct)
+*/
+
+/*if(input->getdiType() == E_GROUPED_INPUT){
+	RegisterDigitalInputArrayEventFnHandler(input, EventId, pFn, ct);
+}
+#ifdef DI_PARAM_ADR
+	REGISTER_DIGITAL_INPUT_ARRAY_EVENT_FN_HANDLER_IF_FLAG_PRESENT(DI_PARAM_ADR, &DI_Adr_b[0], NB_MAX_DI_ADR);
+#endif // DI_PARAM_ADR
+*/
+/* USER CODE END RegDI_Event */
+
+}
+
+
+
+/******************************************************************************/
+// accesseurs et mutateurs
 
 void DigitalInputs::setcurState(unsigned state)
 {
@@ -234,5 +272,60 @@ void DigitalInputs::setFnHandler(pDI_FnHandler pFn,uint8_t index )
 {
 	if(IS_IN_RANGE(index,0,DI_MAX_FN_HANDLERS)){
 		_pFnHandler[index] = pFn;
+	}
+}
+
+void DigitalInputs::setdiParam(uint16_t param)
+{
+	_diParam = param;
+}
+
+void DigitalInputs::setdiType(uint16_t diType){
+	_ditype =  diType;
+}
+
+unsigned DigitalInputs::getcurState(void)
+{
+	return _curState;
+}
+
+uint16_t DigitalInputs::getdiParam(void){
+	return _diParam;
+}
+
+uint8_t DigitalInputs::getdiType(void){
+	return _ditype;
+}
+
+/******************************************************************************/
+// handle functions : fonctions de callback
+int16_t lastNO1_Event;
+
+void HandleDI_NO_1_WorkingEvent(uint16_t EventId, uint16_t diParam)
+{
+	RegisterEventTraceFromEventId(&lastNO1_Event, EventId);
+}
+
+void RegisterTraceDI_All_Events(uint16_t EventId, uint16_t diParam)
+{
+	int16_t* pTrace = 0;
+	pTrace = &lastNO1_Event;
+	if( 0!= pTrace) RegisterEventTraceFromEventId(pTrace, EventId);
+}
+
+void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId)
+{
+	if(0==pTrace) return;
+	switch(EventId)
+	{
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_NEW_WORK_STATE,	*pTrace,   1);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_NEW_IDLE_STATE,	*pTrace,  -1);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_1S,	*pTrace,   2);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_1S,	*pTrace,  -2);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_3S,	*pTrace,   3);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_3S,	*pTrace,  -3);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_WORK_STATE_10S,	*pTrace,  10);
+	CASE_SET_VAR_VAL_BREAK(DI_EVENT_IDLE_STATE_10S,	*pTrace, -10);
+	default:break;
 	}
 }

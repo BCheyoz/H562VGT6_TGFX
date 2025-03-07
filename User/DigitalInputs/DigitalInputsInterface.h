@@ -7,6 +7,7 @@
 
 #ifndef DIGITALINPUTS_CPP_DIGITALINPUTSINTERFACE_H_
 #define DIGITALINPUTS_CPP_DIGITALINPUTSINTERFACE_H_
+#include "utils.h"				// Pour accès aux éléments utiles génériques
 
 /******************************************************************************/
 // Init & Configuration des DigitalInputs :
@@ -17,7 +18,6 @@
 
 typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype de Callback appelés en cas d'évènement DigitalInput
 #define CASE_SET_VAR_VAL_BREAK(c,p,v)	case c:p=v;break	// Ajouter le ';' manuellement après la macro
-#define IS_IN_RANGE(val,min,max)	(((val) >= (min)) && ((val) <= (max)))
 /******************************************************************************/
 // Configuration de la plage Anti-Rebonds :
 
@@ -60,6 +60,14 @@ typedef void(*pDI_FnHandler)(uint16_t EventId, uint16_t diParam);	// Prototype d
 #define DI_PARAM_NO_1	(1<<0)
 #define DI_PARAM_NO_2	(1<<1)
 
+typedef enum
+{
+	E_SINGLE_INPUT = 1, //
+	E_ADR_INPUT,
+	E_GROUPED_INPUT,
+	//---------------
+	E_INPUT_NB_TYPES // A conserver en dernier élément : indique le nb Max d'états possibles
+} E_DIGITAL_INPUT_TYPES;
 
 /********************************************************************************************/
 // pour compatibilité avec la lib BaseDeTemps en C
