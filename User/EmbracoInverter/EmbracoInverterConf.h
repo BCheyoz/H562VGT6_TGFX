@@ -33,8 +33,14 @@
 //#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	EMBRACO_INVERTER_MIN_RX_SIZE	// Remplir tout le Buffer si réception via DMA "UART_COM_CLASS_TX_DMA_RX_DMA" !
 
 #define EMBRACO_INVERTER_MAX_ALLOW_NO_REPLY	5	// Nb max de non réponses avant signalement Absence du module EmbracoInverter
+#define EMBRACO_INVERTER_PAUSES_IN_LOOP 	3	// Nb Silences sur TX en fin de boucle (Max 10, déjà implémentés)
 
+//#define EMBRACO_INVERTER_HANDLE_FRAME_ERRORS	// for EXPLORATION only !
 //#define EMBRACO_INVERTER_GET_LAST_OTHER_DATA	// for EXPLORATION only !
+//#define EMBRACO_INVERTER_CHECK_INVALID_CMD  	// for EXPLORATION only !
+//#define EMBRACO_INVERTER_CHECK_INVALID_BYTE_3	// for EXPLORATION only !
+//#define EMBRACO_INVERTER_CHECK_INVALID_BYTE_4	// for EXPLORATION only !
+//#define EMBRACO_INVERTER_CHECK_INVALID_CHK  	// for EXPLORATION only !
 
 /******************************************************************************/
 // Pour "EmbracoInverter.c" :

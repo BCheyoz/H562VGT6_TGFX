@@ -90,11 +90,58 @@ typedef enum {
 	EmbracoInverterStepReadTemperature,
 	EmbracoInverterStepReadPowerLimit,
 	EmbracoInverterStepReadStartFails,
-//	EmbracoInverterStepRefreshSpeedCons,
-//	EmbracoInverterStepEndOfMainLoop ,
 	//-----------------
-	EmbracoInverterStepWriteSpeed,// = 10,
-	EmbracoInverterStepEndWriteSteps,
+#ifdef EMBRACO_INVERTER_CHECK_INVALID_CMD	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepGetErrorCommand,
+#endif // EMBRACO_INVERTER_POST_INVALID_CMD
+#ifdef EMBRACO_INVERTER_CHECK_INVALID_BYTE_3	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepGetErrorByte3,
+#endif // EMBRACO_INVERTER_POST_INVALID_BYTE_3
+#ifdef EMBRACO_INVERTER_CHECK_INVALID_BYTE_4	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepGetErrorByte4,
+#endif // EMBRACO_INVERTER_POST_INVALID_BYTE_4
+#ifdef EMBRACO_INVERTER_CHECK_INVALID_CHK	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepGetErrorChecksum,
+#endif // EMBRACO_INVERTER_POST_INVALID_CHK
+	//-----------------
+#if defined(EMBRACO_INVERTER_PAUSES_IN_LOOP) && (EMBRACO_INVERTER_PAUSES_IN_LOOP > 0)	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause1,
+ #ifdef __ARM_FEATURE_CMSE
+	EmbracoInverterStepPauseLast = EmbracoInverterStepPause1 + EMBRACO_INVERTER_PAUSES_IN_LOOP -1,
+ #else // __ARM_FEATURE_CMSE
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 1	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause2,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 1
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 2	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause3,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 2
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 3	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause4,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 3
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 4	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause5,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 4
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 5	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause6,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 5
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 6	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause7,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 6
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 7	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause8,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 7
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 8	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause9,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 8
+  #if EMBRACO_INVERTER_PAUSES_IN_LOOP > 9	// cf. "EmbracoInverterConf.h"
+	EmbracoInverterStepPause10,
+  #endif // EMBRACO_INVERTER_PAUSES_IN_LOOP > 9
+ #endif // __ARM_FEATURE_CMSE
+#endif // EMBRACO_INVERTER_PAUSES_IN_LOOP
+	//-----------------
+	EmbracoInverterStepWriteSpeed,
+	//-----------------
+	EmbracoInverterStepEndOfMainLoop,
 } eEmbracoInverterComStep;
 
 typedef struct
@@ -114,7 +161,7 @@ typedef struct
 	uint16_t TemperatureX10Read;	// Temperature [°C x 10]
 	uint16_t PowerLimitationRead;	// Power limitation [W]
 	//---------------------
-#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA
+#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA	// cf. "EmbracoInverterConf.h"
 	uint8_t  LastOtherDataType;
 	uint16_t LastOtherDataValue;
 #endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
@@ -157,15 +204,15 @@ uint16_t GetEmbracoInverterStatus16(void);
 void SetEmbracoInverterStatus16(uint16_t newStatus);
 unsigned IsEmbracoCompressorRunning(void);
 
-uint16_t  GetEmbracoInverterPowerRead(void);
-uint16_t  GetEmbracoInverterNbOfTrialsRead(void);
-uint16_t  GetEmbracoInverterBusVoltageRead(void);
-uint16_t  GetEmbracoInverterTemperatureX10Read(void);
-uint16_t  GetEmbracoInverterPowerLimitationRead(void);
+uint16_t GetEmbracoInverterPowerRead(void);
+uint16_t GetEmbracoInverterNbOfTrialsRead(void);
+uint16_t GetEmbracoInverterBusVoltageRead(void);
+uint16_t GetEmbracoInverterTemperatureX10Read(void);
+uint16_t GetEmbracoInverterPowerLimitationRead(void);
 
-#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA
+#ifdef EMBRACO_INVERTER_GET_LAST_OTHER_DATA	// cf. "EmbracoInverterConf.h"
 	uint8_t  GetEmbracoInverterLastOtherDataType(void);
-	uint16_t  GetEmbracoInverterLastOtherDataValue(void);
+	uint16_t GetEmbracoInverterLastOtherDataValue(void);
 #endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
 
 /******************************************************************************/
@@ -190,8 +237,8 @@ int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
 
 #define EMBRACO_INVERTER_TX_REGULAR_FN  	EmbracoInverterRequestFactory
 
-#define EMBRACO_INVERTER_TX_FIRST_DELAY 	(3) 	// After 300ms @ MST (Base 100ms)
-#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	(5) 	// 1 FrameTx / 500ms (Base 100ms)
+#define EMBRACO_INVERTER_TX_FIRST_DELAY 	(2) 	// After 300ms @ MST (Base 100ms)
+#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	(3) 	// 1 FrameTx / 500ms (Base 100ms)
 #define EMBRACO_INVERTER_TX_DEF_FRAME_SIZE	EMBRACO_INVERTER_BUF_DEF_TX_SIZE
 
 uint16_t EMBRACO_INVERTER_TX_REGULAR_FN(tComFrameParams* pFI, void* pVoidParam);
