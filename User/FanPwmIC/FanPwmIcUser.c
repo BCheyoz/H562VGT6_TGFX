@@ -54,7 +54,7 @@ extern "C" {
 
 #define FAN1_IC_TIME_OUT		FPIC_MAKE_TIME_OUT_ms(1100)	// TimeOut = 1.1s (pour RPM > 55)
 #define FAN1_IC_FAPB			FPIC_MAKE_FAPB_MHz(240)	// Tim12 sur APB1 @ 240MHz
-#define FAN1_IC_PSC 			2048	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
+#define FAN1_IC_PSC 			4028	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
 #define FAN1_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 #define FAN1_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 #define FAN1_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN1_IC_FAPB, FAN1_IC_PSC, FAN1_IC_PPT, FAN1_IC_K_UNIT)
