@@ -8,8 +8,6 @@
 #include "LedBlinker.hpp"
 #endif
 
-#include "AppointElec.hpp"
-
 /* Attention class Singleton (instance unique) */
 
 class FwMng {
@@ -69,7 +67,6 @@ private :
 
 #ifdef USE_ALIVE_LED
 	LedBlinker *ledAlive;
-	AppointElec *appointElec;
 #endif
 };
 

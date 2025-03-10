@@ -45,6 +45,7 @@
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
+#include "AppointElec.hpp"
 
 /* USER CODE END Includes */
 
@@ -151,6 +152,7 @@ int main(void)
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
+  AppointElec* appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
   /* USER CODE END 2 */
 
   /* Infinite loop */
