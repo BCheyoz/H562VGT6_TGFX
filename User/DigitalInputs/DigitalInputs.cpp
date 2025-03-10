@@ -263,8 +263,8 @@ void DigitalInputs::setdiType(uint8_t diType){
 	_ditype =  diType;
 }
 
-void DigitalInputs::setInputId(uint8_t diType){
-	_inputId =  diType;
+void DigitalInputs::setInputId(uint8_t inputId){
+	_inputId =  inputId;
 }
 
 unsigned DigitalInputs::getcurState(void)
