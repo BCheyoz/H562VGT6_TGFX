@@ -158,7 +158,6 @@ int main(void)
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
-
     /* USER CODE END WHILE */
   MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
@@ -185,12 +184,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI
-                              |RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV2;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
@@ -275,18 +270,24 @@ static void MX_NVIC_Init(void)
   /* GPDMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
-  /* TIM1_CC_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
-  /* UART5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(UART5_IRQn);
   /* GPDMA1_Channel2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
+  /* GPDMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel3_IRQn);
+  /* GPDMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel4_IRQn);
+  /* UART5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART5_IRQn);
   /* USART3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* TIM1_CC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
