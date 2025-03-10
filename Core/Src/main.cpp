@@ -29,7 +29,6 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-//#include "usart.h"
 #include "usb.h"
 #include "app_usbx_host.h"
 #include "gpio.h"
@@ -121,9 +120,6 @@ int main(void)
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
-//  MX_UART4_Init();
-//  MX_UART5_Init();
-//  MX_USART3_UART_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -136,7 +132,6 @@ int main(void)
   MX_CRC_Init();
   MX_FileX_Init();
   MX_USBX_Host_Init();
-  MX_I2C3_Init();
   MX_TouchGFX_Init();
 
   /* Initialize interrupts */
@@ -145,7 +140,7 @@ int main(void)
 
   InitBaseDeTemps();
   InitComputeInfos();
-  //I2cComMaster_Init_System(); // Désactivé car il appele MX_I2C1_Init(), qui est déjà appelé plus haut
+  I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
   InitInputSensor();

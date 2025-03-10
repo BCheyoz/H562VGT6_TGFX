@@ -32,7 +32,7 @@ void TouchGFXGeneratedHAL::initialize()
     registerEventListener(*(Application::getInstance()));
     enableLCDControllerInterrupt();
     enableInterrupts();
-    setFrameBufferStartAddresses((void*)0xC0000000, (void*)0, (void*)0);
+    setFrameBufferStartAddresses((void*)0x90000000, (void*)0, (void*)0);
 }
 
 void TouchGFXGeneratedHAL::configureInterrupts()
