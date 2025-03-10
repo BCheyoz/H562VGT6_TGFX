@@ -48,18 +48,18 @@ Exemple:
 ```
   AppointElec* appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 ```
-  	* par défaut le pin est initialisé à 0 (RESET)
+  	* par défaut le pin est initialisé à E_APPOINT_ELEC_OFF
   
 Acceder aux commande via l'instance de l'objet crée :
 	* changement de l'état du pin :
 Exemple activation :
 ```
-	appointElec->SetMode(GPIO_PIN_SET);
+	appointElec->SetMode(E_APPOINT_ELEC_ON);//E_APPOINT_ELEC_ON:1
 ```
 
 Exemple désactivation :
 ```
-	appointElec->SetMode(GPIO_PIN_RESET);
+	appointElec->SetMode(E_APPOINT_ELEC_OFF);//E_APPOINT_ELEC_OFF:0
 ```
 
 	* récupération de l'état du pin :
