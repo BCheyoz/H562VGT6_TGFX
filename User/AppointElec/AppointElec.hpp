@@ -9,8 +9,8 @@
 
 typedef enum
 {
-	E_APPOINT_ELEC_OFF = 0,		// L'appoint elec est désactivé
-	E_APPOINT_ELEC_ON,				// L'appoint elec est actif
+	E_APPOINT_ELEC_OFF = 0,	// L'appoint elec est désactivé
+	E_APPOINT_ELEC_ON,		// L'appoint elec est actif
 } E_APPOINT_ELEC_MODES;
 
 /******************************************************************************/

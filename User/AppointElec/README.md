@@ -3,7 +3,6 @@
 ## History Usage 
 * 10/03/2025 : Added by MF to [TFL4_Cartemere_App](https://git-ext.aldes.com/be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app/-/tree/develop) (STM32H562VGTX)
 
-
 # Procédure pour intégrer cette Librairie
 ## Etape I : Configurer CubeMX 
 
@@ -28,12 +27,10 @@
 1) Ajouter le Dossier "AppointElec" à l' "IncludePath" pour toutes les Configs de Build    
 (Attention : CubeIDE a l'habitude de stocker les chemins relatifs au Workspace, et non au Dossier)   
 il est souvent préférable d'utiliser la formulation "../User/AppointElec" (sans les guillemets) 
+	* Info : Pour vérifier, sélectionner "Properties" du Projet -> "C/C++ Build" -> "Settings" -> "Tool Settings" -> "MCU GCC Compiler" -> "Include paths".*
 
-*Info : Pour vérifier, sélectionner "Properties" du Projet -> "C/C++ Build" -> "Settings" -> "Tool Settings" -> "MCU GCC Compiler" -> "Include paths".*
-
-2) Vérifier que le Dossier "LED_cpp" ne soit pas "Exclude From Build" des Config. (y compris "Debug" & "Release")  
-
-*Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" -> "Settings".*
+2) Vérifier que le Dossier "LED_cpp" ne soit pas "Exclude From Build" des Config. (y compris "Debug" & "Release")
+	* Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" -> "Settings".*
 
 3) Ajouter l'Include du .h dans le "main.cpp" (par exemple parmi les "USER CODE * Includes"),
  ainsi qu'une Base de Temps appropriée (par exemple dans la zone "USER CODE * Includes" du .c
@@ -69,4 +66,3 @@ Exemple :
 ```
 
 Félicitations, c'est prêt :-) !
-

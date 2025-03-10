@@ -7,8 +7,6 @@
 
 #include "AppointElec.hpp"	// Pour accès à nos propres déclarations publiques
 
-
-
 AppointElec::AppointElec(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_APPOINT_ELEC_MODES mode)
 {
 	_GPIOPort = GPIOx;
