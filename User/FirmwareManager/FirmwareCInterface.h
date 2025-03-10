@@ -4,7 +4,6 @@
 //#define USE_SAV_STATE
 //#define USE_COMMISIONNING_STATE
 #define USE_ALIVE_LED
-#define USE_DI_ANODE
 
 typedef enum
 {

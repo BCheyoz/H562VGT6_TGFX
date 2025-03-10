@@ -17,13 +17,14 @@ void Handle_DigitalInputs_RT_10ms() { DigitalInputs::Handle_RT_10ms();}
 void Handle_DigitalInputs_RT_100ms() { DigitalInputs::Handle_RT_100ms();}
 
 /******************************************************************************/
-DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState, uint8_t type) {
+DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinState WorkState, uint8_t type, uint8_t inputId) {
 	// init
 	_nbPinOn = 0;
 	_nb100ms = 0;
-	_ditype = type;
+	_ditype = type;// for single or multiple input
+	_inputId = inputId;// for rotocomutateur
 
-	_workState = (WorkState == GPIO_PIN_SET);
+	_workState = (WorkState == GPIO_PIN_SET);// NO/NF
 	_GPIOPort = GPIOx;
 	_GPIOPin = GPIO_Pin;
 	_Flags = {0};
@@ -223,41 +224,23 @@ void RegisterDigitalInputEventFnHandler(DigitalInputs *input, uint16_t EventId, 
 }
 
 /******************************************************************************/
-// non testé
-void RegisterDigitalInputArrayEventFnHandler(DigitalInputs *input, uint16_t EventId, pDI_FnHandler pFn, uint16_t count)
-{
-	for(int i = 0 ; i < count; i++)
-	{
-		RegisterDigitalInputEventFnHandler(input, EventId, pFn);
-		input++; // Pointe l'élémet suivant dans le tableau
-	}
-}
-
+//Single Input
 void RegisterDigitalInput2EventFnHandler(uint16_t EventId, DigitalInputs *input, pDI_FnHandler pFn)
 {
-/* USER CODE BEGIN RegDI_Event */
-
-if(input->getdiType() == E_SINGLE_INPUT){
-	RegisterDigitalInputEventFnHandler(input, EventId, pFn);
+	if(input->getdiType() == E_SINGLE_INPUT ){
+		RegisterDigitalInputEventFnHandler(input, EventId, pFn);
+	}
 }
-	// TODO à gérer : rotocomutateur
-
-/*#define REGISTER_DIGITAL_INPUT_ARRAY_EVENT_FN_HANDLER_IF_FLAG_PRESENT(flag,input,ct)	\
-	if(EventSrc & (flag)) RegisterDigitalInputArrayEventFnHandler(input, EventId, pFn, ct)
-*/
-
-/*if(input->getdiType() == E_GROUPED_INPUT){
-	RegisterDigitalInputArrayEventFnHandler(input, EventId, pFn, ct);
+// Grouped Inputs
+void RegisterDigitalInputGroupedEventFnHandler(uint16_t EventId,std::vector<DigitalInputs*> GroupedInput, pDI_FnHandler pFn, uint16_t count)
+{
+	if(GroupedInput[0]->getdiType() == E_GROUPED_INPUT ){
+		for(int i = 0 ; i < count; i++)
+		{
+			RegisterDigitalInputEventFnHandler(GroupedInput[i], EventId, pFn);
+		}
+	}
 }
-#ifdef DI_PARAM_ADR
-	REGISTER_DIGITAL_INPUT_ARRAY_EVENT_FN_HANDLER_IF_FLAG_PRESENT(DI_PARAM_ADR, &DI_Adr_b[0], NB_MAX_DI_ADR);
-#endif // DI_PARAM_ADR
-*/
-/* USER CODE END RegDI_Event */
-
-}
-
-
 
 /******************************************************************************/
 // accesseurs et mutateurs
@@ -269,13 +252,19 @@ void DigitalInputs::setcurState(unsigned state)
 
 void DigitalInputs::setFnHandler(pDI_FnHandler pFn,uint8_t index )
 {
+#ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 	if(IS_IN_RANGE(index,0,DI_MAX_FN_HANDLERS)){
 		_pFnHandler[index] = pFn;
 	}
+#endif //DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 }
 
-void DigitalInputs::setdiType(uint16_t diType){
+void DigitalInputs::setdiType(uint8_t diType){
 	_ditype =  diType;
+}
+
+void DigitalInputs::setInputId(uint8_t diType){
+	_inputId =  diType;
 }
 
 unsigned DigitalInputs::getcurState(void)
@@ -287,16 +276,17 @@ uint8_t DigitalInputs::getdiType(void){
 	return _ditype;
 }
 
+uint8_t DigitalInputs::getInputId(void){
+	return _inputId;
+}
+
 /******************************************************************************/
 // handle functions : fonctions de callback
 void HandleDI_Event(uint16_t EventId,int16_t *last_event)
 {
 	RegisterEventTraceFromEventId(last_event, EventId);
-}
-
-void RegisterTraceDI_All_Events(uint16_t EventId,int16_t *last_event)
-{
-	RegisterEventTraceFromEventId(last_event, EventId);
+	// "last_event" peut etre changé par une variable externe à la classe
+	// -> auquel cas il faudra déplacer la déclaration de la fonction
 }
 
 void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId)

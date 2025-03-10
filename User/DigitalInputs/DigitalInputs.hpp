@@ -14,7 +14,7 @@
 
 class DigitalInputs {
 public:
-	DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState WorkState, uint8_t type);// constructor prototype
+	DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState WorkState, uint8_t type, uint8_t inputId = 0);// constructor prototype
 
 	static void GestionDigitalInputs();
 	static void Handle_RT_10ms();
@@ -24,10 +24,12 @@ public:
 	// set
 	void setcurState(unsigned state);
 	void setFnHandler(pDI_FnHandler pFn,uint8_t index );
-	void setdiType(uint16_t diType);
+	void setdiType(uint8_t diType);
+	void setInputId(uint8_t inputId);
 	// get
 	unsigned getcurState(void);
 	uint8_t getdiType(void);
+	uint8_t getInputId(void);
 
 	// variable d'état évènement
 	int16_t last_Event =0;
@@ -36,6 +38,7 @@ private :
 	uint16_t _nbPinOn;
 	uint16_t _nb100ms;
 	uint8_t _ditype;
+	uint8_t _inputId;
 
 	GPIO_TypeDef *_GPIOPort;
 	uint16_t _GPIOPin;
@@ -83,9 +86,9 @@ private :
 };
 
 void RegisterDigitalInputEventFnHandler(DigitalInputs *input, uint16_t EventId, pDI_FnHandler pFn);
-void RegisterDigitalInputArrayEventFnHandler(DigitalInputs *input, uint16_t EventId, pDI_FnHandler pFn, uint16_t count);
 void RegisterDigitalInput2EventFnHandler(uint16_t EventId, DigitalInputs *input, pDI_FnHandler pFn);
+void RegisterDigitalInputGroupedEventFnHandler(uint16_t EventId,std::vector<DigitalInputs*> GroupedInput, pDI_FnHandler pFn, uint16_t count);
+
 
 void HandleDI_Event(uint16_t EventId,int16_t *last_event);
-void RegisterTraceDI_All_Events(uint16_t EventId,int16_t *last_event);
 void RegisterEventTraceFromEventId(int16_t* pTrace, uint16_t EventId);

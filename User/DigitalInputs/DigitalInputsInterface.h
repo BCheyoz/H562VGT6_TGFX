@@ -40,7 +40,7 @@ typedef void(*pDI_FnHandler)(uint16_t EventId,int16_t *last_event);	// Prototype
 /******************************************************************************/
 // Configuration des Evènements :
 //#define DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS // Pour désactiver le support des Evènements DigitalInputs
-
+#define USE_DIGITAL_INPUTS
 
 // Enumération des Evènements supportés :
 #define DI_EVENT_NEW_STATE  	(1<< 0)		// Un changement Working <-> Idle est intervenu
@@ -59,7 +59,6 @@ typedef void(*pDI_FnHandler)(uint16_t EventId,int16_t *last_event);	// Prototype
 typedef enum
 {
 	E_SINGLE_INPUT = 1, //
-	E_ADR_INPUT,
 	E_GROUPED_INPUT,
 	//---------------
 	E_INPUT_NB_TYPES // A conserver en dernier élément : indique le nb Max d'états possibles
