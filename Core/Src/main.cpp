@@ -41,6 +41,7 @@
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
+#include "DigitalInputs.hpp"
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
@@ -65,7 +66,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,6 +142,12 @@ int main(void)
   I2cComMaster_Init_System();
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
+
+#ifdef USE_DIGITAL_INPUTS
+  DigitalInputs *Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,E_SINGLE_INPUT);
+  RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE,Di_Anode, HandleDI_Event);
+#endif //USE_DIGITAL_INPUTS
+
   InitInputSensor();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
@@ -158,6 +164,7 @@ int main(void)
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
+	GestionDigitalInputs();
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
