@@ -41,6 +41,7 @@
 #include "VersionInfos.h"
 #include "FirmwareStateMachine.hpp"
 #include "AnalogInputsCore.h"
+#include "FanPwmIcCore.h"
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
@@ -143,6 +144,7 @@ int main(void)
   FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
   InitInputSensor();
+  InitFanPwmIC();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
@@ -155,6 +157,7 @@ int main(void)
 	GestionBaseDeTemps();
 	ComputeMyInfos();
 	Gestion_AnalogInputs();
+	Gestion_FanPwmIC();
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)

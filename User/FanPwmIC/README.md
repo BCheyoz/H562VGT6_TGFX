@@ -301,9 +301,9 @@ uint16_t getFanSupplyFeedbackSpeed(void)
 ```
 #include "FanPwmIcCore.h"			// Pour accès à la Gestion du Ventilateur
 ```
-2) Ajouter l'appel d'Init dans le "main" du "main.c" (par exemple parmi les "USER CODE * 2") :
+2) Ajouter l'appel d'Init dans le "main" du "main.cpp" (par exemple parmi les "USER CODE * 2") :
 ```
-InitFanPwmIC();					// A appeler dans la partie Init Software (main.c)
+InitFanPwmIC();					// A appeler dans la partie Init Software (main.cpp)
 ```
 3) Ajouter le Handler @ 10ms dans une sous-partie de la Boucle Principale (RT) à 10ms :  
 (par exemple dans la zone @ 10ms "USER CODE * RT_10ms" de "GestionBaseDeTemps", dans "BaseDeTemps.c")
