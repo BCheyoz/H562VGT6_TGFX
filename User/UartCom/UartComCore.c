@@ -256,8 +256,8 @@ const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIT = { // Pour le 
 		(pUartCom_CtrlFn)HAL_UART_DeInit,
 };
 
-const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleIT = { // Pour Test Rx to IDLE en IT :
-// Remarque_Jp le 13/03/2025 : Avec cette Classe, il FAUT configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleIT = { // Pour Tx via DMA & Rx via IT, jusqu'à IDLE :
+// Remarque_Jp le 13/03/2025 : Avec cette Classe, il est recommandé de configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception
 		"Uart_TxDMA_RxIdleIT",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UARTEx_ReceiveToIdle_IT,
@@ -267,7 +267,7 @@ const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleIT = { // Pour
 		(pUartCom_CtrlFn)HAL_UART_DeInit,
 };
 
-const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Test Rx en DMA :
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Tx via DMA & Rx via DMA :
 		"Uart_TxDMA_RxDMA",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UART_Receive_DMA,
@@ -277,8 +277,8 @@ const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Te
 		(pUartCom_CtrlFn)HAL_UART_DeInit,
 };
 
-const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleDMA = { // Pour Test Rx to IDLE en DMA :
-// Remarque_Jp le 26/02/2025 : Avec cette Classe, il faudra pê configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception ?
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleDMA = { // Pour Tx via DMA & Rx via DMA, jusqu'à IDLE :
+		// Remarque_Jp le 13/03/2025 : Avec cette Classe, il est recommandé de configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception
 		"Uart_TxDMA_RxIdleDMA",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UARTEx_ReceiveToIdle_DMA,
