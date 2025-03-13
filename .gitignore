@@ -37,6 +37,7 @@ packages/
 #CubeIDE Settings, Build, Tests & DEBUG :
 .settings/
 *.prefs
+*.launch
 
 # Ceedling's outputs:
 Tests/build/*
