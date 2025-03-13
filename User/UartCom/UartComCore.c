@@ -1372,10 +1372,10 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Han
 	}
 
 	//if(Size > 0)
-	{
+//	{
 		if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
 		{
-			pComManager->mayDiscardRx = 1; // Réception Overflow => Discard Frame !
+			if(Size > 0) { pComManager->mayDiscardRx = 1; } // Réception Overflow => Discard Frame !
 		} else {	// Tant qu'on est pas sur un DMA circulaire :
 			// si HAL_UART_RXEVENT_HT | HAL_UART_RXEVENT_IDLE | HAL_UART_RXEVENT_TC :
 //			pComManager->curRxBufInfo.nbBytes = Size; // Accepte la nouvelle taille !
@@ -1387,14 +1387,15 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Han
 				pComManager->curRxBufInfo.nbBytes += Size; // en Idle OU TC => Ajoute la taille supplémentaire !
 			}
 		}
-	}
+//	}
+
 	if(HAL_UART_RXEVENT_TC == hUart->RxEventType)	// Transfer Complete event => all Requested bytes are received :
 //	if( (HAL_UART_RXEVENT_HT != hUart->RxEventType) && (HAL_UART_RXEVENT_IDLE != hUart->RxEventType) ) // HAL_UART_RXEVENT_TC OR default :
 	{
 		UartCom_ReSetRx(pComManager, 0); // Relancer la Réception SANS RéInitialiser le Buffer => Pointe sur OverFlowByte !
+	} else {
+		pComManager->sabReSetRxBufPtr = pInitParam->sabReSetRxBufPtr; // Recharge le Sablier de reconfiguration de la Réception
 	}
-
-	pComManager->sabReSetRxBufPtr = pInitParam->sabReSetRxBufPtr; // Recharge le Sablier de reconfiguration de la Réception
 
 //	switch(hUart->RxEventType)
 //	{
@@ -1442,6 +1443,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Han
 //		UartCom_ReSetRx(pComManager, 0); // Relancer la Réception SANS RéInitialiser le Buffer
 //		pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
 //	}
+
     pComManager->sabTimeOut4Reply = pInitParam->sabTimeOut4Reply;	// Recharge le Délai pour Répondre
     pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame;		// Recharge le Sablier pour Nouvelle Trame
 
