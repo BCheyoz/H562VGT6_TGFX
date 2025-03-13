@@ -339,7 +339,7 @@ Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" ->
 		FAPB = 240 Mhz, Counter period = 65535, deltaMax = 1100ms entre 2 impulsions de signal, soit 0.9Hz / 54 RPM Min  
 		PSC = "Prescaler -1" avec Prescaler minimum = (int)((FAPB * deltaMax)/(Period +1))  
 		PSC = (((240*10^(6))*(1100*10^(-3)))/(65535+1)) = 4028.3 = 4029 -1 = 4028  
-
+		- 1 pulsation par tour
 
 Félicitations, c'est prêt :-) !
 
