@@ -301,9 +301,9 @@ uint16_t getFanSupplyFeedbackSpeed(void)
 ```
 #include "FanPwmIcCore.h"			// Pour accès à la Gestion du Ventilateur
 ```
-2) Ajouter l'appel d'Init dans le "main" du "main.c" (par exemple parmi les "USER CODE * 2") :
+2) Ajouter l'appel d'Init dans le "main" du "main.c/cpp" (par exemple parmi les "USER CODE * 2") :
 ```
-InitFanPwmIC();					// A appeler dans la partie Init Software (main.c)
+InitFanPwmIC();					// A appeler dans la partie Init Software (main.c/cpp)
 ```
 3) Ajouter le Handler @ 10ms dans une sous-partie de la Boucle Principale (RT) à 10ms :  
 (par exemple dans la zone @ 10ms "USER CODE * RT_10ms" de "GestionBaseDeTemps", dans "BaseDeTemps.c")
@@ -339,7 +339,7 @@ Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" ->
 		FAPB = 240 Mhz, Counter period = 65535, deltaMax = 1100ms entre 2 impulsions de signal, soit 0.9Hz / 54 RPM Min  
 		PSC = "Prescaler -1" avec Prescaler minimum = (int)((FAPB * deltaMax)/(Period +1))  
 		PSC = (((240*10^(6))*(1100*10^(-3)))/(65535+1)) = 4028.3 = 4029 -1 = 4028  
-
+		- 1 pulsation par tour
 
 Félicitations, c'est prêt :-) !
 
