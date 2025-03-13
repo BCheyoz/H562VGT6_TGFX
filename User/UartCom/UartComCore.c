@@ -268,7 +268,6 @@ const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleIT = { // Pour
 };
 
 const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Test Rx en DMA :
-// Remarque_Jp le 26/02/2025 : Avec cette Classe, il faudra pê configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception ?
 		"Uart_TxDMA_RxDMA",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UART_Receive_DMA,
@@ -1372,7 +1371,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Han
 		nxtRxEventInfoId++;
 	}
 
-	if(Size > 0)
+	//if(Size > 0)
 	{
 		if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
 		{

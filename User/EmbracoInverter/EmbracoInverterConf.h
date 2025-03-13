@@ -29,9 +29,9 @@
 #define EMBRACO_INVERTER_BUF_DEF_RX_SIZE	EMBRACO_INVERTER_MIN_RX_SIZE //+1)	// 5 Bytes +1 vide nécessaire en Rx
 #define EMBRACO_INVERTER_BUF_DEF_TX_SIZE	EMBRACO_INVERTER_MIN_TX_SIZE		// 5 Bytes uniquement requis en Tx
 
-#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	1	// Taille Maximale à demander à chaque réception : Bytes 1 par 1 sur UART via "UART_COM_CLASS_TX_DMA_RX_IT"
+//#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	1	// Taille Maximale à demander à chaque réception : Bytes 1 par 1 sur UART via "UART_COM_CLASS_TX_DMA_RX_IT"
 //#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	1+EMBRACO_INVERTER_MIN_RX_SIZE	// Remplir tout le Buffer si réception via DMA "UART_COM_CLASS_TX_DMA_RX_DMA" !
-//#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	EMBRACO_INVERTER_BUF_DEF_RX_SIZE	// Taille de réponses fixe => Demander à remplir tout le Buffer d'un coup
+#define EMBRACO_INVERTER_MAX_RX_BLOC_SZ 	EMBRACO_INVERTER_BUF_DEF_RX_SIZE	// Taille de réponses fixe => Demander à remplir tout le Buffer d'un coup
 
 #define EMBRACO_INVERTER_MAX_ALLOW_NO_REPLY	5	// Nb max de non réponses avant signalement Absence du module EmbracoInverter
 #define EMBRACO_INVERTER_PAUSES_IN_LOOP 	3	// Nb Silences sur TX en fin de boucle (Max 10, déjà implémentés)
