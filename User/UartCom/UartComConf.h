@@ -413,6 +413,8 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
 #define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
 
+#define UART_COM_DISABLE_CHECK_ECHO			// Pour désactiver la gestion de l'écho *Rx = *Tx
+
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
 //#define UART_COM_SUPPORT_STATS  			// Pour Activer les compteurs de Stats dans UartCom
 
@@ -425,6 +427,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 //#define NEXT_HAL_UART_RxCpltCallback		USER_HAL_UART_RxCpltCallback2	// Remplacer par un nom User RxCpltCallback approprié
 //#define NEXT_HAL_UART_TxCpltCallback		USER_HAL_UART_TxCpltCallback2	// Remplacer par un nom User TxCpltCallback approprié
 //#define NEXT_HAL_UART_ErrorCallback 		USER_HAL_UART_ErrorCallback2	// Remplacer par un nom User ErrorCallback  approprié
+//#define NEXT_HAL_UARTEx_RxEventCallback 	USER_HAL_UARTEx_RxEventCallback	// Remplacer par un nom User RxEventCallback approprié
 
 /********************************************************************************************/
 

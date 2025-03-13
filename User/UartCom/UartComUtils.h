@@ -115,12 +115,16 @@ typedef struct _tUartComClassFn
 	pUartCom_CtrlFn pFnDeInit;			// Fonction pour DéConfigurer le Périphérique
 } tUartComClassFn;
 
-extern const tUartComClassFn UartCom_TxDMA_RxIT;	// Pour le Modbus et chaque fois que possible
-extern const tUartComClassFn UartCom_TxDMA_RxDMA;	// Pour Tests RxDMA
-extern const tUartComClassFn UartCom_TxIT_RxIT; 	// Pour l'iBus esentiellement
-#define UART_COM_CLASS_TX_DMA_RX_IT 	&UartCom_TxDMA_RxIT 	// Pour DMA & IT
-#define UART_COM_CLASS_TX_DMA_RX_DMA	&UartCom_TxDMA_RxDMA	// Pour DMA & DMA
-#define UART_COM_CLASS_TX_IT_RX_IT  	&UartCom_TxIT_RxIT  	// Pour IT & IT
+extern const tUartComClassFn UartCom_TxDMA_RxIT;		// Pour le Modbus et chaque fois que possible
+extern const tUartComClassFn UartCom_TxDMA_RxIdleIT;
+extern const tUartComClassFn UartCom_TxDMA_RxDMA;
+extern const tUartComClassFn UartCom_TxDMA_RxIdleDMA;	// Pour Tests RxDMA
+extern const tUartComClassFn UartCom_TxIT_RxIT; 		// Pour l'iBus esentiellement
+#define UART_COM_CLASS_TX_DMA_RX_IT 		&UartCom_TxDMA_RxIT 		// Pour Tx via DMA & Rx via IT
+#define UART_COM_CLASS_TX_DMA_RX_IDLE_IT	&UartCom_TxDMA_RxIdleIT 	// Pour Tx via DMA & Rx via IT, jusqu'à IDLE
+#define UART_COM_CLASS_TX_DMA_RX_DMA		&UartCom_TxDMA_RxDMA 		// Pour Tx via DMA & Rx via DMA
+#define UART_COM_CLASS_TX_DMA_RX_IDLE_DMA	&UartCom_TxDMA_RxIdleDMA	// Pour Tx via DMA & Rx via DMA, jusqu'à IDLE
+#define UART_COM_CLASS_TX_IT_RX_IT  		&UartCom_TxIT_RxIT  		// Pour Tx via IT & IT
 
 typedef struct _tUartComInitRegularTx
 {
@@ -218,9 +222,10 @@ typedef struct _tUartComInitParams
 typedef union _UartReInitFlags
 {
 	struct {
-		unsigned InitRS485Ex:1;
-		unsigned InitDefault:1;
+		unsigned InitRS485Ex:1;	// Init as RS485 Extended
+		unsigned InitDefault:1;	// Init to default BaudRate, Parity, Stop & AdvancedInit
 		unsigned CanValidate:1;
+		unsigned DePolarity:1;	// UART DriverEnable Polarity : default (0) => UART_DE_POLARITY_HIGH ; 1 => UART_DE_POLARITY_LOW
 	};
 	uint16_t AllFlags;
 } UartReInitFlags;

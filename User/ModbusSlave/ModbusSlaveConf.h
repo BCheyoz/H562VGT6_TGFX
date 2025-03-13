@@ -450,7 +450,7 @@ MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_OF_TABLE(uint16_t, MODBUS_SLAVE_BASE_OF_PSWD)
 // Pour "UartComUser.c" (ne pas modifier ces réglages) :
 
 #define MODBUS_SLAVE_EOF_RX 		5		// 5ms pour sabEndOfRxFrame (base = IT @ 1ms)
-#define MODBUS_SLAVE_EOB_RX 		10		// 10ms pour sabEndOfRxFrame lorsqu'on n'a reçu qu'un Bloc de la Trame (base = IT @ 1ms)
+#define MODBUS_SLAVE_EOB_RX 		60		// 10ms pour sabEndOfRxFrame lorsqu'on n'a reçu qu'un Bloc de la Trame (base = IT @ 1ms)
 #define MODBUS_SLAVE_REPLY_TO	 	(1000)	// 1s pour sabTimeOut4Reply (base = IT @ 1ms)
 //#define MODBUS_SLAVE_NO_TX_INIT 	(10 *1000) // 10s pour sabReady4Tx (base = IT @ 1ms)
 #define MODBUS_SLAVE_NO_TX_INIT 	(1 *1000) // 1s pour sabReady4Tx (base = IT @ 1ms)

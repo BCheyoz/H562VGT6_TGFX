@@ -242,7 +242,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
       Error_Handler();
     }
 
-    __HAL_LINKDMA(uartHandle, hdmarx, handle_GPDMA1_Channel4);
+//    __HAL_LINKDMA(uartHandle, hdmarx, handle_GPDMA1_Channel4);
 
     if (HAL_DMA_ConfigChannelAttributes(&handle_GPDMA1_Channel4, DMA_CHANNEL_NPRIV) != HAL_OK)
     {
@@ -329,7 +329,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
       Error_Handler();
     }
 
-    __HAL_LINKDMA(uartHandle, hdmarx, handle_GPDMA1_Channel3);
+//    __HAL_LINKDMA(uartHandle, hdmarx, handle_GPDMA1_Channel3);
 
     if (HAL_DMA_ConfigChannelAttributes(&handle_GPDMA1_Channel3, DMA_CHANNEL_NPRIV) != HAL_OK)
     {

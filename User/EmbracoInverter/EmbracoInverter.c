@@ -261,7 +261,7 @@ int EmbracoInverterRxHandler(tRxTxBufInfo* pRxTxBI, void* pVoidParam)
 #endif // EMBRACO_INVERTER_GET_LAST_OTHER_DATA
 		break;
 	}
-	return 0;	// Aucune réponse à renvoyer
+	return 0;	// Comme on est Maître => Aucune réponse à renvoyer
 }
 
 /******************************************************************************/
