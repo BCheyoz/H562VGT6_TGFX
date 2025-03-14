@@ -40,7 +40,7 @@
 //#include "iBusMantaDatas.h" 		// Pour accès à la structure de stockage interne des Datas des Mantas
 //#include "mainRegulation.h" 		// Pour accès aux données d'entrées et sortie du bloc de regulation
 //#include "DateTime32.h" 			// Pour accès à la Gestion de la DateTime
-//#include "INF_productInfo.h"		// pour la lecture de l'etat logiciel
+#include "ParamProductInfo.h"		// pour la lecture de l'etat logiciel
 //#include "iBusDevTesteur.h" 		// Pour accès aux Commandes de Test des iBus
 //#include "UpgradeFirmware.h"		// Pour accès aux Infos & Commandes de Mise à Jour Firmware
 
@@ -76,104 +76,35 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //	Adresse,		RdMinLevel,			WrMinLevel,				VarType and Get/Set Method,		RdPtr,				WrPtr :
 
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// EXPORT = 1
-/*
+
 	// Identification :
-	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetVarSetVar},		&Fab_CodeSapProduct,	&Fab_CodeSapProduct},	// Code SAP du Produit complet (Name = "Code SAP Produit", \
-	Enum = "11023471:VEX 40 T CLASSIC 3471/11023472:VEX 40 T PREMIUM 3472/11023473:INSPIRAIR TOP 300 CLASSIC 3473/11023474:INSPIRAIR TOP 300 PREMIUM 3474/11023475:INSPIRAIR TOP 450 CLASSIC 3475/\
-			11023476:INSPIRAIR TOP 450 PREMIUM 3476/11023477:INSPIRAIR TOP 300 ERV 3477/11023478:INSPIRAIR TOP 450 ERV 3478/11027104:INSPIRAIR TOP 300 FRANCE 7104/11027106:INSPIRAIR TOP 450 PREMIUM ERV NA 7106/\
-			11027107:INSPIRAIR TOP 40T CLASS ERV 7107/11027110:INSPIRAIR TOP 300 PREMIUM HY 7110/11027111:INSPIRAIR TOP 450 PREMIUM HY 7111/11027130:INSPIRAIR SIDE V2 S1 PRIMA 7130/\
-			11027131:INSPIRAIR SIDE V2 S1 CLASSIC 7131/11027132:INSPIRAIR SIDE V2 S1 CLASSIC DHU 7132/11027133:INSPIRAIR SIDE V2 S1 CLASSIC ERV 7133/11027134:INSPIRAIR SIDE V2 S2 CLASSIC 7134/\
-			11027135:INSPIRAIR SIDE V2 S2 CLASSIC DHU 7135/11027136:INSPIRAIR SIDE V2 S2 CLASSIC ERV 7136"/110236239:T.VEX 40 T CLASSIC/110236240:T.VEX 40 T PREMIUM/110236241:T.INSPIRAIR TOP 300 CLASSIC/\
-			110236242:T.INSPIRAIR TOP 300 PREMIUM/110236243:T.INSPIRAIR TOP 450 CLASSIC/110236244:T.INSPIRAIR TOP 450 PREMIUM/110236245:T.INSPIRAIR TOP 300 ERV/110236246:T.INSPIRAIR TOP 450 ERV/65535:Non Configuré")
-	{ 0x03,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongLongGetVarSetVar},	&Fab_SN_AldesProduct,	&Fab_SN_AldesProduct},	// SN du Produit ALDES (Name = "SN Produit complet")
-	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},		&Fab_DateTstMainCard,	&Fab_DateTstMainCard},	// Date dernier test sous traitant (Name = "Date Test Carte")
-	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&Fab_CodeSapMainCard,	&Fab_CodeSapMainCard},	// Code SAP de la Carte Principale (Name = "Code SAP Carte", Enum = "11029476:Classic/11029475:Pression")
-	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&Fab_SN_ThisMainCard,	&Fab_SN_ThisMainCard},	// S/N de la Carte Pincipale (Name = "SN Carte Principale")
-*/
+	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetVarSetVar},		&GetSapProduct,	&WriteSapProduct},	// Code SAP du Produit complet (Name = "Code SAP Produit")
+	{ 0x03,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongLongGetVarSetVar},	&GetSnProduct,	&WriteSnProduct},	// SN du Produit ALDES (Name = "SN Produit complet")
+	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},		&GetTestDate,	&WriteTestDate},			// Date dernier test sous traitant (Name = "Date Test Carte")
+	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&GetSapBoard,	&WriteSapBoard},			// Code SAP de la Carte Principale (Name = "Code SAP Carte", Enum = "11029476:Classic/11029475:Pression")
+	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&GetSnBoard,	&WriteSnBoard},			// S/N de la Carte Pincipale (Name = "SN Carte")
+
 	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetVersionSoft16,		0},	// Version du Firmware sur 16bits (SHOW_HEX", DefVal = "B150")
-//	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetSoftTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
+	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetZoneTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
 
 #if defined(VERSION_INFOS_VERSION_INFOS_H_) && defined(VI_SUPPORT_FW_CRC)	// EXPORT = 1
 	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC Soft", SHOW_HEX)
 #endif // VERSION_INFOS_VERSION_INFOS_H_ && VI_SUPPORT_FW_CRC
 
-	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getCurAccessLevel,		RegisterNewAccessPswd},	// Code d'accès aux Niveaux Proteges (Name = "UserLevel", DefVal = "0", \
-	Enum = "0:Normal/1:Level 1/2:Level 2/3:Level 3/4:Level 4/5:Level 5/9781:Accès 1/5476:Configurator/32184:IHM Produit/2794:Banc ALDES/941:Carte nue")
-
+	{ 0x10,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getCurAccessLevel,		RegisterNewAccessPswd},	// Code d'accès aux Niveaux Proteges (Name = "UserLevel", DefVal = "0", Enum = "0:Normal/1:Level 1/2:Level 2/3:Level 3/4:Level 4/5:Level 5/9781:Accès 1/5476:Configurator/32184:IHM Produit/2794:Banc ALDES/941:Carte nue")
 //	{ 0x11,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},		&Fab_MdbUserSlaveId,	SetModbusUserSlaveAdr},	// Nouvelle Adresse ModBus Client (Name = "ID Modbus User", DefVal = "2")
 //	{ 0x12,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		0,						0},	// fonctionnalitées, type de fonctions disponibles
 	{ 0x14,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						SaveParamsOnOrder},	// Ordre Sauvegarde param (Name = "Save Params", Enum = "0:Idle/22577:Product Params/31028:Factory Params")
-//	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetNukubModelSizeFromParamsSets,	0},			// Name = "Model Size", Enum = "0:Inconnu/16:Nükub 300/17:Nükub 450/18:Nükub 150/19:Nükub 180/65535:Indéterminé", DefVal = "0"
+	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetProductVersionId,	0},			// Name = "Model Size", Enum = "0:Inconnu/8:Individual 105/17:Individual 180/18:Collectif 105/19:Collectif 180/65535:Indéterminé"
 // $16 -> $1F = non affectés (au 24/07/2020).
 
-/*
-	// Réglages Usine :
-	{ 0x20,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		getProductConfigStatus,					handleNewProductConfig},	// Enum = "3:Product Complete/2:Config Ready/1:Product Ready/0:Board Ready/9545:Start Service" (9545 = 0x2549 = Start Service), DefVal = "0"
-	{ 0x21,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		0,										handleQueryReInitFactory},	// Name = "ReInit Factory", Enum = "0:NoAction/18213:ConfigReset"Enum4Dbg="/38483:ProductReset"
-	{ 0x22,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetVarSetFct},		&ProductId,								HandleParamsSetFromThisProductId},	// Réglage Type de Produit (=> Jeu de Paramètre, DefVal = "65535"), \
-	Enum = "3471:VEX 40 T CLASSIC 11023471/3472:VEX 40 T PREMIUM 11023472/3473:INSPIRAIR TOP 300 CLASSIC 11023473/3474:INSPIRAIR TOP 300 PREMIUM 11023474/3475:INSPIRAIR TOP 450 CLASSIC 11023475/\
-			3476:INSPIRAIR TOP 450 PREMIUM 11023476/3477:INSPIRAIR TOP 300 ERV 11023477/3478:INSPIRAIR TOP 450 ERV 11023478/7104:INSPIRAIR TOP 300 FRANCE 11027104/7106:INSPIRAIR TOP 450 PREMIUM ERV NA 11027106/\
-			7107:INSPIRAIR TOP 40T CLASSIC ERV 11027107/7110:INSPIRAIR TOP 300 PREMIUM HY 11027110/7111:INSPIRAIR TOP 450 PREMIUM HY 11027111/7130:INSPIRAIR SIDE V2 S1 PRIMA 11027130/\
-			7131:INSPIRAIR SIDE V2 S1 CLASSIC 11027131/7132:INSPIRAIR SIDE V2 S1 CLASSIC DHU 11027132/7133:INSPIRAIR SIDE V2 S1 CLASSIC ERV 11027133/7134:INSPIRAIR SIDE V2 S2 CLASSIC 11027134/\
-			7135:INSPIRAIR SIDE V2 S2 CLASSIC DHU 11027135/7136:INSPIRAIR SIDE V2 S2 CLASSIC ERV 11027136"/36239:T.VEX 40 T CLASSIC/36240:T.VEX 40 T PREMIUM/36241:T.INSPIRAIR TOP 300 CLASSIC/\
-			36242:T.INSPIRAIR TOP 300 PREMIUM/36243:T.INSPIRAIR TOP 450 CLASSIC/36244:T.INSPIRAIR TOP 450 PREMIUM/36245:T.INSPIRAIR TOP 300 ERV/36246:T.INSPIRAIR TOP 450 ERV/65535:Non Configuré"
-	{ 0x23,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetFct}, 	&TableMV_Custom[0].idCmdReel,			SetNukubFanCmdTable4CurParamsSets}, // Name = "FanCmdTable", GetNukubFanCmdTableFromParamsSets \
-	Enum = "1:Table 300_1/2:Table 450/3:Table 150/4:Table 180/5:Table 300_5/0:Table Custom/129:Internal 300_1/130:Internal 450/131:Internal 150/132:Internal 180/133:Internal 300_5"Enum4Dbg="/161:RstPrdId" (161 = Reset ProductId)
-	{ 0x24,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultFilterInsFromParamsSets,	0},			// Name = "DefaultFilterInsufflation", Enum = "1:Poussières/2:Pollens/3:Particules/4:Particules Fines/5:Bactéries/6:COV/0:Indéterminé"
-	{ 0x25,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultFlags1FromParamsSets,	0},			// Name = "HR_LED_IHM_BYP Flags", \
-	Enum = "1:HR Requise/2:Led RGB Autorisée/4:IHM Requise/3:HR + Led RGB/5:HR + IHM requises/6:Led + IHM/7:HR + Led RGB + IHM/8:Bypass inversé/0:Aucun Flag/\
-			9:HR Req+Byp Inv/10:Led RGB+Byp Inv/11:HR+Led RGB+Byp Inv/12:IHM Req+Byp Inv/13:HR+IHM+Byp Inv/14:Led+IHM+Byp Inv/15:HR+Led+IHM+Byp Inv"
-	{ 0x26,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDebitMinFromParamsSets,			0},			// Name = "Débit Min", Unit = "m³/h"
-	{ 0x27,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDebitMaxFromParamsSets,			0},			// Name = "Débit Max", Unit = "m³/h"
-	{ 0x28,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDefaultDebit0FromParamsSets,	0},			// Name = "Débit L0 par défaut", Unit = "m³/h"
-	{ 0x29,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDefaultDebit1FromParamsSets,	0},			// Name = "Débit L1 par défaut", Unit = "m³/h"
-	{ 0x2A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDefaultDebit2FromParamsSets,	0},			// Name = "Débit L2 par défaut", Unit = "m³/h"
-	{ 0x2B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getNukubDefaultDebit3FromParamsSets,	0},			// Name = "Débit L3 par défaut", Unit = "m³/h"
-	{ 0x2C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultLngIdFromParamsSets,		0},			// Name = "Default Language", Enum = "1:Français/2:Anglais/3:Allemand/4:Espagnol/5:Italien/6:Néerlandais/7:Danois/0:Inconnu"
-	{ 0x2D,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultCountryIdFromParamsSets,	0},			// Name = "Default Country", Enum = "1:France/2:Angleterre/3:Allemagne/4:Espagne/5:Italie/6:Benelux/7:Danemark/10:Nord-Amérique/15:Chine/0:Inconnu"
-	// 0x2E ... 0x2F = RESERVED
-	{ 0x30,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultTimer0FromParamsSets,	0},			// Name = "Default Timer L0", Unit = "jours"
-	{ 0x31,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultTimer2FromParamsSets,	0},			// Name = "Default Timer L2", Unit = "mn"
-	{ 0x32,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultTimer3FromParamsSets,	0},			// Name = "Default Timer L3", Unit = "heures"
-	// $33 = non affecté (au 08/11/2023).
-	{ 0x34,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultIhmUnitTemperature,  	0},			// Name = "Default IHM Unit Temperature", Enum = "0:°C/1:°F" (Ajout_Jp le 08/11/2023 pour Ticket #27)
-	{ 0x35,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultIhmUnitFlow, 			0},			// Name = "Default IHM Unit Flow", Enum = "0:m³_h/1:L_s/2:CFM" (Ajout_Jp le 08/11/2023 pour Ticket #27)
-	{ 0x36,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultIhmUnitPressure, 		0},			// Name = "Default IHM Unit Pressure", Enum = "0:Pa/1:Po.H2O" (Ajout_Jp le 08/11/2023 pour cohérence avec le Ticket #27)
-	{ 0x37,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		getNukubDefaultIhmUnitSpeed, 			0},			// Name = "Default IHM Unit Speed", Enum = "0:en %/1:RPM" (Ajout_Jp le 08/11/2023 pour cohérence avec le Ticket #27)
-	// $38 -> $FF = non affectés (au 08/11/2023).
-
-	// ModbusUser Params : // Ajout_Jp le 16/04/2024 pour Ticket #33 :
-	{ 0x40, 	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetVarSetVar},		&Uart3ReInitUserParams.BaudRateDiv100,	&Uart3ReInitUserParams.BaudRateDiv100},	// Parmi "eUartReInitBaudRate", Name = "UserBaudRate", Unit = "bauds", Coef = "x100", \
-	Enum = "96:9600 bauds/0:ResetDefault/48:4800 bauds/192:19200 bauds/384:38400 bauds/576:57600 bauds/1152:115200 bauds",2304:230400 bauds/4608:460800 bauds", DefVal = "96:9600 bauds"
-	{ 0x41, 	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetVar},		&Uart3ReInitUserParams.Parity,			&Uart3ReInitUserParams.Parity},	// Parmi "eUartReInitParity", Name = "UserParity", Enum = "0:None/1:Odd/2:Even/255:ResetDefault", DefVal = "0:None"
-	{ 0x42, 	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&Uart3ReInitUserParams.nbStops,		 	HandleNewUart3Stops}, // Parmi "eUartReInitStop", Name = "UserStops", Enum = "1:One/2:Two/0:ResetDefault", DefVal = "1:One"
-	{ 0x43, 	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetVarSetFct},		&Uart3ReInitCoreVars.SabApply,			HandleValidateNewUart3Params},	// Name = "SabApplyUartChange", Unit = "s", Coef = "10" (1 <=> 0.1s), Enum = "0:NoChange/23130:ValidateChange"
-
-	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetFctSetFct},		INF_GetSapProduct,		INF_WriteSapProduct}, // Code SAP du Produit complet (Name = "Code SAP Produit")
-	{ 0x03,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongLongGetFctSetFct},	INF_GetSnProduct,		INF_WriteSnProduct},	// SN du Produit ALDES (Name = "SN du Produit")
-	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},		INF_GetTestDate,		INF_WriteTestDate},	// Date dernier test sous traitant (Name = "Date Test Carte")
-	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		INF_GetSapBoard,		INF_WriteSapBoard},	// Code SAP de la Carte Principale (Name = "Code SAP Carte")
-	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		INF_GetSnBoard,			INF_WriteSnBoard},	// S/N de la Carte Pincipale (Name = "SN Carte Principale")
-	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		GetVersionSoft16,		0},	// Version du Firmware (SHOW_HEX) Modif_Jp le 03/08/2023 pour Ticket #148
-*/
-
-/*
-	// Fonctionnement GTB :
-	{ 0x100,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getGestionModeVentilateur,				setGestionModeVentilateur},					// A partir de A10F : Name = "Mode Régul", Enum = "0:Débit/1:Hygro/2:Vitesse", MinVal = "0", MaxVal = "2", DefVal = "0"
-	{ 0x101,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarSCharGetFctSetFct},		getActionUser,							setActionUser},								// Name = "Demande User", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/255:Ignorer/4:MaxSpeed(DK)/65535:Transparent", MinVal = "0", MaxVal = "4", DefVal = "1"
-//	{ 0x102,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getSystemModeConsigneGestionRegulation,	setSystemModeConsigneGestionRegulation},	// Name = "Demande Programmateur", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/4:MaxSpeed(DK)", MinVal = "0", MaxVal = "4", DefVal = "1"
-	{ 0x102,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getAirProgLevel,						HandleNewAirProgLevel},						// Name = "Demande Programmateur", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/4:MaxSpeed(DK)/65535:Transparent", MinVal = "0", MaxVal = "4", DefVal = "1"
-	{ 0x103,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},	TVarUCharGetFctSetVar},		getCurrentModeBypass,					0},	// A partir de A10F : Name = "Mode Bypass", Enum = "0:Manuel/1:Auto"
-//	{ 0x104,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		0,										0},	// Méthode de Régulation : Europe / France -> non configurable sur Nükub !
-	{ 0x105,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A0_0_10v.currentCapteurActif,	setCurrentCapteurActifA0_0_10V}, // Type de Capteur 0-10V sur AI0 : Name = "Type 0-10V AI0", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
-	{ 0x106,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A1_0_10v.currentCapteurActif,	setCurrentCapteurActifA1_0_10V}, // Type de Capteur 0-10V sur AI1 : Name = "Type 0-10V AI1", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
 
 	// Réglages Usine :
-	{ 0x20,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,								requestToSwitchToFactoryState},	// Factory license : l'écriture de 147 provoque un passage en FACTORY_STATE (Enum = "0:NoChange/147:FACTORY_STATE")
-	{ 0x21,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		MSM_readSoftState,				0},	// Etat logiciel : Enum = "0:Boot/1:Board ready/2:Board SAV ready/3:Product ready/4:Product complete/5:Factory state"
-	{ 0x22,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,								requestProductReset},	// Product reset: écrire 242 en FactoryState efface en mémoire les codes produit. Au prochain démarrage, reinit + retour en BOARD_READY (Enum = "0:NoChange/242:Reset Product")
-	{ 0x23,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		INF_GetProductId,				INF_WriteProductId},	// product ID. Ecriture possible uniquement en mode factory state ou board SAV ready
-	{ 0x24,		{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetFctSetFct},		INF_GetisFirstCommissionning,	INF_WriteisFirstCommissionning},	// Booléen pour savoir si c'est la première mise en service du produit. Ecriture possible uniquement en mode factory state, board ready ou board complete  (Enum = "0:False/1:True")
+	{ 0x20,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,							requestToSwitchToFactoryState},	// Factory license : l'écriture de 147 provoque un passage en FACTORY_STATE (Enum = "0:NoChange/147:FACTORY_STATE")
+	{ 0x21,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		firmwareState,				0},	// Etat logiciel : Enum = "0:Boot/1:Board ready/2:Board SAV ready/3:Product ready/4:Product complete/5:Factory state"
+	{ 0x22,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,							requestProductReset},	// Product reset: écrire 242 en FactoryState efface en mémoire les codes produit. Au prochain démarrage, reinit + retour en BOARD_READY (Enum = "0:NoChange/242:Reset Product")
+	{ 0x23,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		GetProductId,				WriteProductId},	// product ID. Ecriture possible uniquement en mode factory state ou board SAV ready
+	{ 0x24,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		0,							requestToInitRegulation},
 
 #ifdef RTC_DATETIME32_SUPPORT_ENABLED
 	// DateTime RTC :
@@ -185,26 +116,20 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xF6,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&curRTC_DateTime.Hours,		&curRTC_DateTime.Hours},	// Name = "Time_Hours", Unit = "h", MinVal = "0", MaxVal = "23", DefVal = "0"
 	{ 0xF7,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&curRTC_DateTime.Minutes,	&curRTC_DateTime.Minutes},	// Name = "Time_Minuts" Unit = "m", MinVal = "0", MaxVal = "59", DefVal = "0"
 	{ 0xF8,		{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetFct},		&curRTC_DateTime.Seconds,	HandleNewDateTimeSeconds},	// Name = "Time_Seconds", Unit = "s", MinVal = "0", MaxVal = "59", DefVal = "0"
-#endif // RTC_DATETIME32_SUPPORT_ENABLED
 	{ 0xF9, 	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetVar},		&mRtcRv3028.base.idOfDevice,	0},	// Name = "RTC.RV3028", Enum = "0:Not Loaded/17:RV3028/32785:Try RV3028"
+#endif // RTC_DATETIME32_SUPPORT_ENABLED
+/*
+	// Fonctionnement GTB :
+	{ 0x100,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getGestionModeVentilateur,				setGestionModeVentilateur},					// A partir de A10F : Name = "Mode Régul", Enum = "0:Débit/1:Hygro/2:Vitesse", MinVal = "0", MaxVal = "2", DefVal = "0"
+	{ 0x101,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarSCharGetFctSetFct},		getActionUser,							setActionUser},								// Name = "Demande User", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/255:Ignorer/4:MaxSpeed(DK)/65535:Transparent", MinVal = "0", MaxVal = "4", DefVal = "1"
+//	{ 0x102,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getSystemModeConsigneGestionRegulation,	setSystemModeConsigneGestionRegulation},	// Name = "Demande Programmateur", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/4:MaxSpeed(DK)", MinVal = "0", MaxVal = "4", DefVal = "1"
+	{ 0x102,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		getAirProgLevel,						HandleNewAirProgLevel},						// Name = "Demande Programmateur", Enum = "1:Quotidien/2:Boost/3:Invités/0:Vacances/4:MaxSpeed(DK)/65535:Transparent", MinVal = "0", MaxVal = "4", DefVal = "1"
+	{ 0x103,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},	TVarUCharGetFctSetVar},		getCurrentModeBypass,					0},	// A partir de A10F : Name = "Mode Bypass", Enum = "0:Manuel/1:Auto"
+//	{ 0x104,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUIntGetFctSetFct},		0,										0},	// Méthode de Régulation : Europe / France -> non configurable sur Nükub !
+	{ 0x105,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A0_0_10v.currentCapteurActif,	setCurrentCapteurActifA0_0_10V}, // Type de Capteur 0-10V sur AI0 : Name = "Type 0-10V AI0", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
+	{ 0x106,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarUCharGetVarSetFct},		&gestion_A1_0_10v.currentCapteurActif,	setCurrentCapteurActifA1_0_10V}, // Type de Capteur 0-10V sur AI1 : Name = "Type 0-10V AI1", Enum = "0:Co2 Aldes/2:Générique Proportionnel/1:PM 2.5 VOC China", MinVal = "0", MaxVal = "2", DefVal = "2"
 
 	// IHM :
-	{ 0x100,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},		0,								requestConfigReset},	// config reset: écrire 41 pour passer de PRODUCT COMPLETE a PRODUCT READY  (Enum = "0:NoChange/41:PRODUCT_READY")
-	{ 0x101,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},		0,								requestSAVreset},		// Enum = "0:NoChange/186:SAV_Ready"
-	{ 0x102,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_bst_ktch_req_stt,	&inData.Ss_bst_ktch_req_stt},	// Enum = "0:no Request/1:boost required/2:boost stop"
-	{ 0x103,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_fnc_rcpt_san_req,	&inData.Ss_fnc_rcpt_san_req},	// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x104,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_fnc_rcpt_ktch_req,	&inData.Ss_fnc_rcpt_ktch_req},	// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x105,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_netw_leak_req,		&inData.Ss_netw_leak_req},		// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x106,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_flw_brch_req,		&inData.Ss_flw_brch_req},		// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x107,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_chk_max_flow_req,	&inData.Ss_chk_max_flow_req},	// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x108,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ns_mnta_flw_brch_act,	&inData.Ns_mnta_flw_brch_act},	// Numero de la manta. Par defaut à 1
-	//{ 0x109,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},		getBs_from_hmi_rst,				setBs_from_hmi_rst},					// Enum = "0:no Request/1:RequestOn/2:RequestOff"
-	{ 0x10A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},		INF_GetnightCoolingEnable,	INF_WritenightCoolingEnable},	// Enum = "10:RequestOn/20:RequestOff"
-	{ 0x10B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_init_test_mode_req,	&inData.Ss_init_test_mode_req},	// Enum = "0:no Request/1:RequestOn"
-	{ 0x10C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&inData.Ss_chk_test_mode_req,	&inData.Ss_chk_test_mode_req},	// Enum = "0:no Request/1:RequestOn"
-	{ 0x10D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.RcptFnc.Ss_rcpt_san_flow_ctrl_stt, 0}, // Enum = "0:empty/10:Transitoire/20:Steady"
-	{ 0x10E,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.RcptFnc.Ss_rcpt_ktch_flow_ctrl_stt, 0}, // Enum = "0:empty/10:Transitoire/20:Steady"
-	{ 0x10F,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.AutoDiag.testNetworkLeakage.Ss_netw_leak_reg_stt, 0}, // Enum = "0:empty/10:Transitoire/20:Steady"
 	{ 0x110,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[0], 0}, // Enum = "1:OK/2:NOK"
 	{ 0x111,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[1], 0}, // Enum = "1:OK/2:NOK"
 	{ 0x112,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetVarSetVar},		&outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[2], 0}, // Enum = "1:OK/2:NOK"
@@ -229,13 +154,6 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x125,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		INF_GetlastMaintenanceDate1, 0}, //
 	{ 0x126,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		INF_GetlastMaintenanceDate2, 0}, //
 	{ 0x127,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},		getBs_maint_done, setBs_maint_done}, // Correction_Jp le 29/11/2023 : macro returns uint8_t; Maintenance effectuée
-	{ 0x128,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[7], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x129,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[8], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x12A,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[9], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x12B,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[10], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x12C,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[11], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x12D,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUCharGetVarSetVar},     &outData.AutoDiag.testNetworkLeakage.St_netw_leak_cfrm[12], 0}, // Enum = "1:OK/2:NOK"
-	{ 0x12E,    {{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},   TVarUIntGetFctSetFct},      getGlobalIAQLevel, 0}, // Enum = 0:E_GOOD_IAQ / 1:E_MEDIUM_IAQ / 2:E_BAD_IAQ
 
 	// Paramètres de Config France :
 	{ 0x128,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarSIntGetVarSetVar},		&HRVK_ConfigFR.TypeLogement,	&HRVK_ConfigFR.TypeLogement},	// MinVal = "2", MaxVal = "6", DefVal = "2", Type de Logement : Name = "Type Logement"
@@ -243,7 +161,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x12A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarSIntGetVarSetVar},		&HRVK_ConfigFR.nbWC,			&HRVK_ConfigFR.nbWC},			// MinVal = "1", MaxVal = "6", DefVal = "1", Nb de Wc : Name = "nb WC"
 	{ 0x12B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_2}},	TVarSIntGetVarSetVar},		&HRVK_ConfigFR.nbCellier,		&HRVK_ConfigFR.nbCellier},		// MinVal = "1", MaxVal = "6", DefVal = "1", Nb de Cellier : Name = "nb Pièces Eau"
 // $12C -> $12F = non affectés (au 24/07/2020).
-
+*/
 
 	// Commande Ventilateurs :
 	{ 0x140,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		fanVoltage_mV,		requestFanVoltage_mV},	// Unit = "V", Coef = "1000", MinVal = "0", MaxVal = "10"
@@ -258,9 +176,11 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //	{ 0x16B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastFeedbackSpeed,		0},	// Temporaire non moyennée Extraction (Unit = "RPM")
 //	{ 0x16C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastDeltaTime,			0},	// Temporaire deltaTime Extraction
 
+	/*
 	// Codes Erreur :
 	{ 0x180,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getError,	0},	// erreur la plus  prioritaire
 	{ 0x181,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getMantaError, 0},  // 1ere Manta en erreur trouvé
+	 */
 
 	// Données pour banc de test :
 	{ 0x190,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int0, byPassMantaCo2Int0},  // force la valeur de co2 de la manta
@@ -304,10 +224,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 // Voir si nécessaire :	{   0x1254,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetVar},         getPushButtonConsigneVitesse_MVI,               0},
     {   0x1255,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getCurrentPushButtonPressed,                    0},	// Pour Watts : Enum = "0:NotPressed/1:Pressed"
 
-// A priori pas nécessaire ici ...
-    //gestion ventilateur
     {   0x1300,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},        getGestionModeVentilateur,                      setGestionModeVentilateur},		// A partir de A10F : Name = "Mode Régul", Enum = "0:Débit/1:Hygro/2:Vitesse"
-//    {   0x1300,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},        getGestionModeVentilateur,                      setGestionModeVentilateur},		// Enum = "0:DEBIT/1:VITESSE/2:HYGRO"
+    {   0x1300,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},        getGestionModeVentilateur,                      setGestionModeVentilateur},		// Enum = "0:DEBIT/1:VITESSE/2:HYGRO"
     {   0x1301,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarSIntGetFctSetFct},         getUnbalanceCoefMVI,                            setGestionParamExtUnbalanceCoef},
 
     {   0x1302,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetFct},         getModeDebitTimeStepRegulMV,                    setModeDebitTimeStepRegulMV},	// Unit = "ms"
@@ -342,11 +260,11 @@ static const tModbusSlaveItem TableModbusSlave[] = {
     {   0x131B,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetFct},         getModeHygroSupHysteresisBorne,                 setModeHygroSupHysteresisBorne},
     {   0x131C,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetFct},         getModeHygroInfHysteresisBorne,                 setModeHygroInfHysteresisBorne},
 
-    //gestion bypass
+    // Gestion bypass
     {   0x1350,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},         getBypassCurrentSaison,                        setBypassCurrentSaison},	// A partir A10F : Enum = "0:Inconnu/1:Hiver/2:Eté"
-//    {   0x1350,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},         getBypassCurrentSaison,                        0},	// Enum = "0:SPRING/1:SUMMER/2:AUTOMN/3:WINTER"
+    {   0x1350,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},         getBypassCurrentSaison,                        0},	// Enum = "0:SPRING/1:SUMMER/2:AUTOMN/3:WINTER"
     {   0x1351,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},         getCurrentModeBypass,                          0},	// A partir A10F : Enum = "0:Manuel/1:Auto"
-//    {   0x1351,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},         getCurrentModeBypass,                          0},	// Enum = "0:Auto/1:Manuel"
+    {   0x1351,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},         getCurrentModeBypass,                          0},	// Enum = "0:Auto/1:Manuel"
     {   0x1352,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarSIntGetFctSetFct},          getBypassTSummerComfort,                       setBypassTSummerComfort},	// Unit = "°c" Coef = "100"
 
     {   0x1353,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},         getTimeRegulationBypass45min,                  setTimeRegulationBypass45min}, // Unit = "min"
