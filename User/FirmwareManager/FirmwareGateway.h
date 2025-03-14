@@ -17,6 +17,9 @@ uint16_t fanLastFeedbackSpeed();
 uint16_t fanLastDeltaTime();
 uint8_t fanVoltage_V_x10();
 
+void setAppointEnable(uint8_t enable);
+uint8_t isAppointEnable();
+
 // interface modbus pour Gestion
 #if NB_PRESSURE_SENSOR_USED > 0
 GET_SET_ARRAY_PROTOTYPE(Pressure, 0, uint16_t)

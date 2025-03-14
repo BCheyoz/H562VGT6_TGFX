@@ -12,6 +12,7 @@
 #include "FirmwareGateway.h"
 #include "utils.h"
 #include <list>
+#include <map>
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,21 +25,19 @@ typedef enum
 	E_PARAM,
 	E_INVERTER,
 	E_ANODE,
-	E_ELEC_NETWORK,
-	E_RESISTIF_HEAT,
+	E_ELEC_NETWORK,		// HP/HC
+	E_RESISTIF_HEAT,	// Appoint Elec
 }e_device;
 
-typedef struct {
-	e_device device;
-	std::list<e_softState> stateAllow;
-}s_limitAcces;
-
-
-std::list<s_limitAcces> writeLimitStateAcces = {
+std::map<e_device, std::list<e_softState>> writeLimitStateAcces = {
 		{E_FAN, {E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
-		{E_SENSOR, {E_FACTORY_STATE}}
+		{E_SENSOR, {E_FACTORY_STATE}},
+		{E_RESISTIF_HEAT, {E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
 };
 
+/******************************************************************************/
+// Initialisation des variables static
+static FwMng *fwp = FwMng::getInstance();
 
 /*** private prototype functions *******************************/
 
@@ -49,11 +48,9 @@ std::list<s_limitAcces> writeLimitStateAcces = {
 
 
 void requestFanVoltage_mV(uint16_t newVoltage){
-	FwMng *obj = FwMng::getInstance();
-
-	if(E_FACTORY_STATE == obj->getState()	//  fonction autorisee uniquement en factory state et banc
-		|| E_FACTORY_BENCH_STATE == obj->getState()){
-		//setFanExhaustVoltage_mV(newVoltage);
+	for(e_softState s : writeLimitStateAcces.at(E_FAN)){
+		//  fonction autorisée uniquement dans les modes définie dans la map writeLimitStateAcces
+		if(fwp->getState() == s){/*setFanExhaustVoltage_mV(newVoltage);*/}
 	}
 }
 
@@ -63,6 +60,16 @@ uint16_t fanLastFeedbackSpeed() { return 0; }
 uint16_t fanLastDeltaTime() { return 0; }
 uint8_t fanVoltage_V_x10() { return 0; }
 
+void setAppointEnable(uint8_t enable){
+	for(e_softState s : writeLimitStateAcces.at(E_RESISTIF_HEAT)){
+		//  fonction autorisée uniquement dans les modes définie dans la map writeLimitStateAcces
+		if(fwp->getState() == s){fwp->setAppointEnable(enable);}
+	}
+}
+
+uint8_t isAppointEnable(){
+	return fwp->isAppointEnable();
+}
 
 #if NB_PRESSURE_SENSOR_USED > 0
 GET_SET_ARRAY_DEFINITION(Pressure, 0, uint16_t)
