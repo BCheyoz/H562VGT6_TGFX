@@ -34,7 +34,7 @@
 #include "I2cComMasterSystem.h" 	// Pour accès à tous les Capteurs sur I2C_System pour le debug/PdV
 //#include "GestionInputSensor.h" 	// Pour accès à la synthèse des Capteurs d'environement
 #include "AnalogInputsUser.h"		// Pour accès aux Variables AnalogInputs pour le debug/PdV
-//#include "MSM_mainStateMachine.h"	// pour la lecture de l'etat logiciel
+#include "FirmwareCInterface.h"		// pour accès aux fonctions logiciel
 #include "FirmwareGateway.h"		// pour accès controlé aux différents composant système
 //#include "memoireNonVolatile.h" 	// Pour accès à la Mémoire non-volatile
 //#include "ERR_ErrorManager.h"		// pour la remontee des erreurs

@@ -55,8 +55,60 @@ FwMng * FwMng::getInstance(){
 
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
-extern "C" void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
+extern "C" {
+static FwMng *fwp = FwMng::getInstance();
+void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
 
+
+e_softState firmwareState(){
+	return fwp->getState();
+}
+void requestToSwitchToFactoryState(uint16_t value){
+	fwp->requestToSwitchToFactoryState(value);
+}
+
+void requestProductReset(uint16_t value){
+	fwp->requestProductReset(value);
+}
+void requestResetMemories(uint16_t code){
+	fwp->requestResetMemories(code);
+}
+uint16_t resetMemoriesState(){
+	return fwp->resetMemoriesState();
+}
+
+void requestToInitRegulation(uint16_t value){
+	fwp->requestToInitRegulation(value);
+}
+
+#ifdef USE_COMMISIONNING_STATE
+void resetCommissionningState(uint8_t code){
+	fwp->resetCommissionningState(code);
+}
+void requestEndOfCommissionning(uint8_t code){
+	fwp->requestEndOfCommissionning(code);
+}
+void requestConfigReset(uint8_t code){
+	fwp->requestConfigReset(code);
+}
+#endif
+
+#ifdef USE_SAV_STATE
+void requestSAVreset(uint8_t code){
+	fwp->requestSAVreset(code);
+}
+#endif
+
+#ifdef USE_ALIVE_LED
+void requestBlinkMode(uint16_t newBlinkMode){
+	fwp->requestBlinkMode(newBlinkMode);
+}
+uint16_t blinkMode(){
+	return fwp->blinkMode();
+}
+#endif
+
+}
 /*******************************************************************************************************/
 
 FwMng::FwMng()

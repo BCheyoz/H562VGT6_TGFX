@@ -1,6 +1,8 @@
 #ifndef FIRMWARE_MANAGER_C_INTERFACE_H
 #define FIRMWARE_MANAGER_C_INTERFACE_H
 
+#include <stdint.h>
+
 //#define USE_SAV_STATE
 //#define USE_COMMISIONNING_STATE
 #define USE_ALIVE_LED
@@ -26,7 +28,7 @@ typedef enum
 extern "C" {
 #endif
 void handleFirmwareManager_RT_100ms();
-/*
+
 e_softState firmwareState();
 void requestToSwitchToFactoryState(uint16_t value);
 
@@ -50,7 +52,7 @@ void requestSAVreset(uint8_t code);
 void requestBlinkMode(uint16_t newBlinkMode);
 uint16_t blinkMode();
 #endif
-*/
+
 #ifdef __cplusplus
 }
 #endif
