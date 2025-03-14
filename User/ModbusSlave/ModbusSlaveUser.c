@@ -4,8 +4,8 @@
  *  Created on: 27 avr. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 25 Feb. 2025
- *  Updated by: j.proux
+ *  Updated on: 07 Mars 2025
+ *  Updated by: b.chhay
  *
  * Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
  * -> il faudra peut-être forcer manuellement l'affichage de cette "Ressource"
@@ -31,7 +31,7 @@
 
 //#include "GestionLedAlive.h"		// Pour accès aux Commandes de la Led de Vie
 //#include "DigitalInputsUser.h"  	// Pour accès aux Infos des DigitalInputs
-//#include "I2cComMasterSystem.h" 	// Pour accès à tous les Capteurs sur I2C_System
+#include "I2cComMasterSystem.h" 	// Pour accès à tous les Capteurs sur I2C_System pour le debug/PdV
 //#include "GestionInputSensor.h" 	// Pour accès à la synthèse des Capteurs d'environement
 //#include "AnalogInputsUser.h"		// Pour accès aux Variables AnalogInputs
 //#include "MSM_mainStateMachine.h"	// pour la lecture de l'etat logiciel
@@ -51,7 +51,7 @@
 
 /* USER CODE BEGIN Variables */
 
-uint16_t InstallCodePin = 405;	// For IHM Himalaya2
+uint16_t InstallCodePin = 405;	// For IHM
 
 /* USER CODE END Variables */
 
@@ -66,10 +66,9 @@ uint32_t GetVersionSoft32(void);
 /* USER CODE END Prototypes */
 
 /******************************************************************************/
-// ProductInfos : Name = "Himalaya2 Product" // "HII Carte Mere App Product"
-// BusConfig : Type = "rtu", Baudrate = "115200", Data = "8", Parity = "none", Stop = "1", Port = "COM6"
-// EquipmentCfg : Name = "HII_Mere_App_A035", Slave = "2"
-// XmlConfig : varPrefix = "modbus_HII_Mere_App_", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
+// ProductInfos : Name = "TFlow4 Product" // "TFL4 Carte Mere App Product"
+// BusConfig : Type = "rtu", Baudrate = "115200", Data = "8", Parity = "none", Stop = "1"
+// EquipmentCfg : Name = "TFL4_Mere_App", Slave = "2"
 
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
 
@@ -361,43 +360,6 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{   0x135B,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetFct},			 getBypassCurSabMoveDelay,						setBypassCurSabMoveDelay}, // Unit = "s"
 
 
-// Temporairement réactivé le 12/09/2020 pour les essais de FB
-	// -> Attention : GestionDegivrageModeDIBTAllowed "Certification" (0x1400) est maintenant nécessaire !
-
-	// Commandes vers Bus[1] -> Broadcast Manta :
-	{0x8C2,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mMantaHub[1].Manta[0].hwAdress,	&mMantaHub[1].Manta[0].hwAdress},
-	{0x8C3,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mMantaHub[1].Manta[0].initReq,		&mMantaHub[1].Manta[0].initReq},
-	{0x8C4,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mMantaHub[1].Manta[0].mode,		&mMantaHub[1].Manta[0].mode},
-	{0x8C5,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mMantaHub[1].Manta[0].consigne,	&mMantaHub[1].Manta[0].consigne},
-
-    {   0x1407,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarUCharGetFctSetFct},        getGestionDegivrageHystPreheater,                      setGestionDegivrageHystPreheater},	// Enum = "0:Repos/1:Activé", DefVal = "0"
-    {   0x1408,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getGestionDegivrageErreurPreheater,                    setGestionDegivrageErreurPreheater},	// DefVal = "0"
-    {   0x1409,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getGestionDegivrageSommeErreurPreheater,               setGestionDegivrageSommeErreurPreheater}, // DefVal = "0"
-    {   0x140A,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getGestionDegivrageKpPreheater,                        setGestionDegivrageKpPreheater},		// Coef = "100", DefVal = "-0.01"
-    {   0x140B,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getGestionDegivrageKiPreheater,                        setGestionDegivrageKiPreheater},		// Coef = "100", DefVal = "-0.01"
-    {   0x140C,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getGestionDegivrageConsignePreheater,                  setGestionDegivrageConsignePreheater}, // Unit = "°c", Coef = "100", DefVal = "-3"
-    {   0x140D,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarUIntGetFctSetVar},         getGestionDegivrageSablierDegivrage,                   0},									// Unit = "s", DefVal = "0"
-    {   0x140E,   {{{ ACCESS_MIN_LEVEL_3, ACCESS_MIN_LEVEL_4}},  TVarSIntGetFctSetFct},         getConsignePreheater_BCAIBus,                          setConsignePreheater_BCAIBus},		// Unit = "°c", Coef = "100"
-
-    {   0x140F,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getNumSoft_BCA_Ibus,                                0},
-    {   0x1410,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getBcaFlagsStatus,                                  0},
-    {   0x1411,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getBca_SWB,                                         0},
-    {   0x1412,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetVar},         getMesureCtn,                                       0},
-    {   0x1413,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getPuissanceSortie,                                 0},
-    {   0x1414,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getFault,                                           0},
-
-    {   0x1415,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetVar},         getDefrostConsigneMVI_Finale,                       0},
-    {   0x1416,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetVar},         getDefrostConsigneMVE_Finale,                       0},
-
-    {   0x1417,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarSIntGetFctSetFct},          get_limit_temp_3,                           set_limit_temp_3},
-    {   0x1418,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarSIntGetFctSetFct},          get_limit_temp_minus_2,                     set_limit_temp_minus_2},
-
-    {   0x1419,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUIntGetFctSetFct},         getDefrostStateDatas,                       0},// ajout MF le 15/04/24 -> ticket #34, \
-	Champ de bits : Enum = "1:stateIntBcaPreheating/2:stateIntBcaPostheating/4:stateExtBcaPretheating/8:stateExtBcaPostheating/16:modeSafeActif/32:cycleDegivrageActif/0:None", DefVal = "0"
-
-    // Output PWM :
-    {   0x1500,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_4}},  TVarUIntGetFctSetFct},          getOutputPwmValue,                         setOutputPwmValue}, // Pour Watts : Unit = "V", Coef = "100", MinVal = "0", MaxVal = "10", DefVal = "0"
-
 
     // Gestion Filtre :
 	{ 0x3000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},	getBesoinChangementFiltreActif,				0},
@@ -497,6 +459,34 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 16052,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesClavSystem,	&iBusInfos[0].nbFramesClavSystem},
 	{ 16056,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesNoRxHandler,	&iBusInfos[0].nbFramesNoRxHandler},
 #endif // IBUS_SUPPORT_STATS
+
+	// Debug I2C :
+#ifdef I2CCM_ENABLE_I2C_DEBUG
+	{ 0xA000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cSystemNbRestart,	0},
+	{ 0xA001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresHSC,	0},
+	{ 0xA002,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresABP2,	0},
+	{ 0xA003,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresSDP8,	0},
+	{ 0xA004,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresLMI,	0},
+
+	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},
+	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},
+	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
+	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
+	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
+
+	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},
+	{ 0xA00B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Temperature,	&mPresABP2.Temperature},
+	{ 0xA00C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mPresABP2.status,	&mPresABP2.status},
+	{ 0xA00D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresABP2.newFlags,	&mPresABP2.newFlags},
+
+	{ 0xA00E,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Pressure,	&mPresSDP8.Pressure},
+	{ 0xA00F,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Temperature,	&mPresSDP8.Temperature},
+	{ 0xA010,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresSDP8.newFlags,	&mPresSDP8.newFlags},
+
+	{ 0xA011,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Pressure,	&mPresLMI.Pressure},
+	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},
+	{ 0xA013,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresLMI.newFlags,	&mPresLMI.newFlags},
+#endif // I2CCM_ENABLE_I2C_DEBUG
 
 	// RTC spy :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW

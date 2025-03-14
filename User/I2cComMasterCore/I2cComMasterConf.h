@@ -45,7 +45,7 @@
 // Périphériques RTC supportés :
 #define I2CCM_NB_MAX_DEV_RTC_RV3028 	0	// 1 seul Périphérique RTC "RV3028" à gérer simultanément sur l'ensemble des I2C
 
-//#define I2CCM_ENABLE_I2C_DEBUG				// Pour activer la mise à disposition générale d'Infos I2c Interne
+#define I2CCM_ENABLE_I2C_DEBUG				// Pour activer la mise à disposition générale d'Infos I2c Interne
 //#define I2CCM_ENABLE_I2C_IBUS_DEBUG		// Pour activer la capture d'Infos I2c Interne vers l'iBus
 //#define I2CCM_ENABLE_DEBUG_MULTI_EXECUTION	// Pour activer les envois multiples de DEBUG I2C_RTC
 
