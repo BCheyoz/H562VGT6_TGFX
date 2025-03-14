@@ -35,6 +35,7 @@
 //#include "GestionInputSensor.h" 	// Pour accès à la synthèse des Capteurs d'environement
 #include "AnalogInputsUser.h"		// Pour accès aux Variables AnalogInputs pour le debug/PdV
 //#include "MSM_mainStateMachine.h"	// pour la lecture de l'etat logiciel
+#include "FirmwareGateway.h"		// pour accès controlé aux différents composant système
 //#include "memoireNonVolatile.h" 	// Pour accès à la Mémoire non-volatile
 //#include "ERR_ErrorManager.h"		// pour la remontee des erreurs
 //#include "iBusMantaDatas.h" 		// Pour accès à la structure de stockage interne des Datas des Mantas
@@ -182,40 +183,25 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x181,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		getMantaError, 0},  // 1ere Manta en erreur trouvé
 	 */
 
-	// Données pour banc de test :
-	{ 0x190,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int0, byPassMantaCo2Int0},  // force la valeur de co2 de la manta
-	{ 0x191,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int1, byPassMantaCo2Int1},  // force la valeur de co2 de la manta
-	{ 0x192,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int2, byPassMantaCo2Int2},  // force la valeur de co2 de la manta
-	{ 0x193,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int3, byPassMantaCo2Int3},  // force la valeur de co2 de la manta
-	{ 0x194,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int4, byPassMantaCo2Int4},  // force la valeur de co2 de la manta
-	{ 0x195,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int5, byPassMantaCo2Int5},  // force la valeur de co2 de la manta
-	{ 0x196,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Int6, byPassMantaCo2Int6},  // force la valeur de co2 de la manta
-	{ 0x197,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext0, byPassMantaCo2Ext0},  // force la valeur de co2 de la manta
-    { 0x198,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext1, byPassMantaCo2Ext1},  // force la valeur de co2 de la manta
-    { 0x199,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext2, byPassMantaCo2Ext2},  // force la valeur de co2 de la manta
-    { 0x19A,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext3, byPassMantaCo2Ext3},  // force la valeur de co2 de la manta
-    { 0x19B,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext4, byPassMantaCo2Ext4},  // force la valeur de co2 de la manta
-    { 0x19C,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext5, byPassMantaCo2Ext5},  // force la valeur de co2 de la manta
-    { 0x19D,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},      read_byPassMantaCo2Ext6, byPassMantaCo2Ext6},  // force la valeur de co2 de la manta
-    { 0x19E,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[0].raw, &bypassMantaErrorInt[0].raw},  // force les flag d'erreur de la manta
-    { 0x19F,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[1].raw, &bypassMantaErrorInt[1].raw},  // force les flag d'erreur de la manta
-    { 0x1A0,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[2].raw, &bypassMantaErrorInt[2].raw},  // force les flag d'erreur de la manta
-    { 0x1A1,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[3].raw, &bypassMantaErrorInt[3].raw},  // force les flag d'erreur de la manta
-    { 0x1A2,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[4].raw, &bypassMantaErrorInt[4].raw},  // force les flag d'erreur de la manta
-    { 0x1A3,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[5].raw, &bypassMantaErrorInt[5].raw},  // force les flag d'erreur de la manta
-    { 0x1A4,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorInt[6].raw, &bypassMantaErrorInt[6].raw},  // force les flag d'erreur de la manta
-    { 0x1A5,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[0].raw, &bypassMantaErrorExt[0].raw},  // force les flag d'erreur de la manta
-    { 0x1A6,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[1].raw, &bypassMantaErrorExt[1].raw},  // force les flag d'erreur de la manta
-    { 0x1A7,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[2].raw, &bypassMantaErrorExt[2].raw},  // force les flag d'erreur de la manta
-    { 0x1A8,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[3].raw, &bypassMantaErrorExt[3].raw},  // force les flag d'erreur de la manta
-    { 0x1A9,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[4].raw, &bypassMantaErrorExt[4].raw},  // force les flag d'erreur de la manta
-    { 0x1AA,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[5].raw, &bypassMantaErrorExt[5].raw},  // force les flag d'erreur de la manta
-    { 0x1AB,    {{{ ACCESS_MIN_LEVEL_5, ACCESS_MIN_LEVEL_5}},   TVarUIntGetVarSetVar},      &bypassMantaErrorExt[6].raw, &bypassMantaErrorExt[6].raw},  // force les flag d'erreur de la manta
+	// Gestion Banc de test
+	{ 0x1200,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		blinkMode,					requestBlinkMode},
 
-    {   0x120E,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},        getCurrentCapteurActifA0_0_10V,                         setCurrentCapteurActifA0_0_10V}, // Type de Capteur 0-10V n°1 : Name = "Type 0-10V #1", Enum = "0:Aldes Co2/2:Générique Proportionnel/1:PM 2.5 VOC China"
-    {   0x120F,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetFct},        getCurrentCapteurActifA1_0_10V,                         setCurrentCapteurActifA1_0_10V}, // Type de Capteur 0-10V n°2 : Name = "Type 0-10V #2", Enum = "0:Aldes Co2/2:Générique Proportionnel/1:PM 2.5 VOC China"
+	// Gestion bypass
+	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},
+	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getPressure0,				byPassPressure0},
+	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},
+	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn0,					byPassCtn0},
+	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},
+	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn1,					byPassCtn1},
+	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},
+	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn2,					byPassCtn2},
+	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},
+	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn3,					byPassCtn3},
+	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},
+	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn4,					byPassCtn4},
+	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},
 
-
+	/*
     // Push Button :
 // Voir si nécessaire :	{   0x1250,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getStartTimerPushButton,                        0},
 // Voir si nécessaire :	{   0x1251,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_0}},  TVarUCharGetFctSetVar},        getPushButtonClosedLongTime,                    0},

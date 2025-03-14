@@ -13,6 +13,10 @@
 #include "utils.h"
 #include <list>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum
 {
 	E_FAN = 0,
@@ -36,6 +40,14 @@ std::list<s_limitAcces> writeLimitStateAcces = {
 };
 
 
+/*** private prototype functions *******************************/
+
+#define GET_SET_ARRAY_DEFINITION(a, b, c)		c get##a##b(void){return get##a(b);} \
+												uint8_t getID##a##b(void){return getID##a(b);} \
+												void byPass##a##b(c val){ byPass##a(b, val);}
+
+
+
 void requestFanVoltage_mV(uint16_t newVoltage){
 	FwMng *obj = FwMng::getInstance();
 
@@ -51,3 +63,32 @@ uint16_t fanLastFeedbackSpeed() { return 0; }
 uint16_t fanLastDeltaTime() { return 0; }
 uint8_t fanVoltage_V_x10() { return 0; }
 
+
+#if NB_PRESSURE_SENSOR_USED > 0
+GET_SET_ARRAY_DEFINITION(Pressure, 0, uint16_t)
+#endif
+
+#if NB_COV_SENSOR_USED > 0
+GET_SET_ARRAY_DEFINITION(Cov, 0, uint16_t)
+#endif
+
+#if NB_CO2_SENSOR_USED > 0
+GET_SET_ARRAY_DEFINITION(Co2, 0, uint16_t)
+#endif
+
+#if NB_HR_TEMP_SENSOR_USED > 0
+GET_SET_ARRAY_DEFINITION(Hr, 0, uint16_t)
+GET_SET_ARRAY_DEFINITION(Temp, 0, int16_t)
+#endif
+
+#if NB_CTN_TT4_10KC3_USE > 0
+GET_SET_ARRAY_DEFINITION(Ctn, 0, int16_t)
+GET_SET_ARRAY_DEFINITION(Ctn, 1, int16_t)
+GET_SET_ARRAY_DEFINITION(Ctn, 2, int16_t)
+GET_SET_ARRAY_DEFINITION(Ctn, 3, int16_t)
+GET_SET_ARRAY_DEFINITION(Ctn, 4, int16_t)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
