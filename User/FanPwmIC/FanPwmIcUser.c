@@ -39,7 +39,7 @@ extern "C" {
 #define FAN1_DATA_POS			0				// Position 0 dans mFanData (PWM & IC)
 
 #define FAN1_PWM_HANDLE 		&htim4
-#define FAN1_PWM_CHANNEL_ID 	TIM_CHANNEL_3	// TIM4_CH3
+#define FAN1_PWM_CHANNEL_ID 	TIM_CHANNEL_3	// TIM4_CH3 sur APB1
 #define FAN1_PWM_DATAS  		&mFanData[FAN1_DATA_POS].PwmDatas
 //#define FAN1_PWM_DATAS  		&mFanCmdOnlyData[FAN1_DATA_POS]	// suffisant en cas de PWM sans FeedBack
 #define FAN1_PWM_K_FACTOR		1				// Correspondance User 1mv => PWM = 1
@@ -53,8 +53,8 @@ extern "C" {
 #define FAN1_IC_GET_DATAS		&mFanData[FAN1_DATA_POS].IcDatas
 
 #define FAN1_IC_TIME_OUT		FPIC_MAKE_TIME_OUT_ms(1100)	// TimeOut = 1.1s (pour RPM > 55)
-#define FAN1_IC_FAPB			FPIC_MAKE_FAPB_MHz(240)	// Tim12 sur APB1 @ 240MHz
-#define FAN1_IC_PSC 			4048	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
+#define FAN1_IC_FAPB			FPIC_MAKE_FAPB_MHz(240)	// Tim1 sur APB1 @ 240MHz
+#define FAN1_IC_PSC 			4028	// Valeur du Prescaler PSC de CubeMx (= htim#.Init.Prescaler dans "tim.c")
 #define FAN1_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 #define FAN1_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 #define FAN1_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN1_IC_FAPB, FAN1_IC_PSC, FAN1_IC_PPT, FAN1_IC_K_UNIT)
