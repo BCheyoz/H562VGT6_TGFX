@@ -8,6 +8,8 @@
 /*       and in the root directory of this software.                      */
 /*                                                                        */
 /**************************************************************************/
+// Template_Src = "%ProgramFiles%\STMicroelectronics\STM32Cube\STM32CubeMX\db\templates\azure_rtos\fx_user_h.ftl"
+// Template_Src = "%STM32CubeMX_PATH%\db\templates\azure_rtos\fx_user_h.ftl"
 
 /**************************************************************************/
 /**************************************************************************/
