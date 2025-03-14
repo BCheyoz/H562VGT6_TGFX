@@ -33,7 +33,7 @@
 //#include "DigitalInputsUser.h"  	// Pour accès aux Infos des DigitalInputs
 #include "I2cComMasterSystem.h" 	// Pour accès à tous les Capteurs sur I2C_System pour le debug/PdV
 //#include "GestionInputSensor.h" 	// Pour accès à la synthèse des Capteurs d'environement
-//#include "AnalogInputsUser.h"		// Pour accès aux Variables AnalogInputs
+#include "AnalogInputsUser.h"		// Pour accès aux Variables AnalogInputs pour le debug/PdV
 //#include "MSM_mainStateMachine.h"	// pour la lecture de l'etat logiciel
 //#include "memoireNonVolatile.h" 	// Pour accès à la Mémoire non-volatile
 //#include "ERR_ErrorManager.h"		// pour la remontee des erreurs
@@ -487,6 +487,18 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},
 	{ 0xA013,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresLMI.newFlags,	&mPresLMI.newFlags},
 #endif // I2CCM_ENABLE_I2C_DEBUG
+
+	// ADC Debug
+	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
+	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
+	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
+	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
+	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].value,		0},
+	{ 0xA025,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].nbPtADC,	0},
+	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].value,		0},
+	{ 0xA027,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].nbPtADC,	0},
+	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
+	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
 
 	// RTC spy :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
