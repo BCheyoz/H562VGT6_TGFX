@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 
+// Template_Src = "%STM32CubeMX_PATH%\db\templates\stm32xx_it_c.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32h5xx_it.h"
@@ -120,7 +121,7 @@ void MemManage_Handler(void)
 }
 
 /**
-  * @brief This function handles Pre-fetch fault, memory access fault.
+  * @brief This function handles Prefetch fault, memory access fault.
   */
 void BusFault_Handler(void)
 {

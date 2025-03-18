@@ -26,6 +26,7 @@
 extern "C" {
 #endif
 
+// Template_Src = "%STM32CubeMX_PATH%\db\templates\tpl_main_h.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h5xx_hal.h"
 

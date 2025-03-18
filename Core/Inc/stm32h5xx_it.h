@@ -22,9 +22,10 @@
 #define __STM32H5xx_IT_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
+// Template_Src = "%STM32CubeMX_PATH%\db\templates\stm32xx_it_h.ftl"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 

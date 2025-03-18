@@ -66,9 +66,6 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hcdHandle)
   /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
 
   /* USER CODE END USB_DRD_FS_MspInit 0 */
-
-    /* Enable VDDUSB */
-    HAL_PWREx_EnableVddUSB();
     /* USB_DRD_FS clock enable */
     __HAL_RCC_USB_CLK_ENABLE();
   /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */

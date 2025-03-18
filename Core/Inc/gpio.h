@@ -17,6 +17,7 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __GPIO_H__
 #define __GPIO_H__
@@ -25,6 +26,7 @@
 extern "C" {
 #endif
 
+// Template_Src = "%STM32CubeMX_PATH%\db\templates\gpio_h.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
