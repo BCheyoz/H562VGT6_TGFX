@@ -414,9 +414,15 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 #define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
 
 #define UART_COM_DISABLE_CHECK_ECHO			// Pour désactiver la gestion de l'écho *Rx = *Tx
+#define UART_COM_IGNORE_EXCEDENT_INIT_PARAMS// Pour désactiver la Vérification des Inits excédentaires/mauvaise Config au RunTime
+
+//#define UART_COM_HANDLE_RX_STD_CALLBACK 	// Pour activer le CallBack Rx classique "HAL_UART_RxCpltCallback" (via HAL_UART_Receive_IT)
+#define UART_COM_HANDLE_RX_EVENT_CALLBACK	// Pour activer le CallBack Rx en DMA ou ReceiveToIdle => "HAL_UARTEx_RxEventCallback"
+//#define UART_COM_HANDLE_RX_EXTERNAL_BLOCS	// Pour activer la Réception de Blocs depuis d'autres Périphériques (par ex : USB_D ou USB_H)
 
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
-//#define UART_COM_SUPPORT_STATS  			// Pour Activer les compteurs de Stats dans UartCom
+//#define UART_COM_SUPPORT_STATS  			// Pour activer les compteurs de Stats dans UartCom
+//#define UART_COM_START_SAB_EOF_AT_HT		// Pour activer le lancement du sabEndOfRxFrame au "Half Transfer" event
 
 #define UART_COM_MAX_REG_TX 		1		// nb Max de RegularTx à Gérer (1 par Trame iBus Auto ou Callback )
 
