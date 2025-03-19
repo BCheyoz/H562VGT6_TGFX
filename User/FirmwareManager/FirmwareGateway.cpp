@@ -24,15 +24,17 @@ typedef enum
 	E_SENSOR,
 	E_PARAM,
 	E_INVERTER,
-	E_ANODE,
-	E_ELEC_NETWORK,		// HP/HC
-	E_RESISTIF_HEAT,	// Appoint Elec
+	E_ELEC_NETWORK_INFO,	// Info reseaux electrique HP/HC - SmartGrid
+	E_RESISTIF_HEAT,		// Appoint Elec
 }e_device;
 
 std::map<e_device, std::list<e_softState>> writeLimitStateAcces = {
-		{E_FAN, {E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
-		{E_SENSOR, {E_FACTORY_STATE}},
-		{E_RESISTIF_HEAT, {E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
+		{E_FAN, 				{E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
+		{E_SENSOR, 				{E_FACTORY_STATE, E_FACTORY_BENCH_STATE, E_PRODUCT_COMPLETE_STATE}},
+		{E_PARAM, 				{E_FACTORY_STATE, E_FACTORY_BENCH_STATE, E_BOARD_READY_STATE}},
+		{E_INVERTER, 			{E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
+		{E_ELEC_NETWORK_INFO, 	{E_FACTORY_STATE, E_FACTORY_BENCH_STATE, E_PRODUCT_COMPLETE_STATE}},
+		{E_RESISTIF_HEAT, 		{E_FACTORY_STATE, E_FACTORY_BENCH_STATE}},
 };
 
 /******************************************************************************/
