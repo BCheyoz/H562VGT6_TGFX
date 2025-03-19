@@ -23,7 +23,7 @@ typedef enum
 } e_softState;
 
 /********************************************************************************************/
-// pour compatibilité avec la lib BaseDeTemps en C
+// pour compatibilité avec les libs en C
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -52,6 +52,11 @@ void requestSAVreset(uint8_t code);
 void requestBlinkMode(uint16_t newBlinkMode);
 uint16_t blinkMode();
 #endif
+
+/********************************************************************************************/
+// User varaible
+uint8_t isAnodeFlags();
+uint8_t isAnodeState();
 
 #ifdef __cplusplus
 }

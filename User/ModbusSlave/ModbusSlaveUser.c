@@ -186,6 +186,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	// Gestion Banc de test
 	{ 0x1200,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		blinkMode,					requestBlinkMode},
 	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAppointEnable,			setAppointEnable},
+	{ 0x1202,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeState,				0},
+	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAnodeFlags,				0},
 
 	// Gestion bypass
 	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},

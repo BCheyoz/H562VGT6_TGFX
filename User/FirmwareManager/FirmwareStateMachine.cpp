@@ -54,7 +54,7 @@ FwMng * FwMng::getInstance(){
 }
 
 /******************************************************************************/
-// Pour compatibilité avec la lib BaseDeTemps en C
+// Pour compatibilité avec les libs en C
 extern "C" {
 static FwMng *fwp = FwMng::getInstance();
 void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
@@ -107,6 +107,15 @@ uint16_t blinkMode(){
 	return fwp->blinkMode();
 }
 #endif
+
+/********************************************************************************************/
+// User function
+uint8_t isAnodeFlags(){
+	return fwp->isAnodeFlags();
+}
+uint8_t isAnodeState(){
+	return fwp->isAnodeState();
+}
 
 }
 /*******************************************************************************************************/

@@ -49,6 +49,8 @@ public :
 	inline uint16_t blinkMode(){return (uint16_t)ledAlive->GetBlinkMode();}
 #endif
 
+/********************************************************************************************/
+// User method
 	void setAppointEnable(uint8_t enable){
 		if(enable == 1)	appointElec->SetMode(E_APPOINT_ELEC_ON);
 		else appointElec->SetMode(E_APPOINT_ELEC_OFF);
@@ -56,7 +58,12 @@ public :
 
 	inline uint8_t isAppointEnable(){return appointElec->GetMode();}
 
+	inline uint8_t isAnodeFlags(){return (uint8_t)di_Anode->getFlags();}
+	inline uint8_t isAnodeState(){return (uint8_t)di_Anode->getcurState();}
+
 private :
+/********************************************************************************************/
+// Core variable
 	FwMng();
 
 	static FwMng *d; // instance singleton
