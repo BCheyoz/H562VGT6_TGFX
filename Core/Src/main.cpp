@@ -141,19 +141,13 @@ int main(void)
   InitBaseDeTemps();
   InitComputeInfos();
   I2cComMaster_Init_System();
-  FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
-
-#ifdef USE_DIGITAL_INPUTS
-  DigitalInputs *Di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,E_SINGLE_INPUT);
-  RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE,Di_Anode, HandleDI_Event);
-#endif //USE_DIGITAL_INPUTS
-
   InitInputSensor();
   InitFanPwmIC();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
+  FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
   /* USER CODE END 2 */
 
   /* Infinite loop */

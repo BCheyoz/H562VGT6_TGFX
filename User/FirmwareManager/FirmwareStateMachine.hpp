@@ -8,15 +8,17 @@
 #include "LedBlinker.hpp"
 #endif
 
-
 /********************************************************************************************/
 // User Include
 #include "AppointElec.hpp"
+#include "DigitalInputs.hpp"
 
 /* Attention class Singleton (instance unique) */
 
 class FwMng {
 public :
+/********************************************************************************************/
+// Core method
 	static FwMng* getInstance();
 
 
@@ -85,6 +87,7 @@ private :
 /********************************************************************************************/
 // User varaible
 	AppointElec *appointElec;
+	DigitalInputs *di_Anode;
 };
 
 
