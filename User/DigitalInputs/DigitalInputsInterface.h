@@ -40,7 +40,6 @@ typedef void(*pDI_FnHandler)(uint16_t EventId,int16_t *last_event);	// Prototype
 /******************************************************************************/
 // Configuration des Evènements :
 //#define DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS // Pour désactiver le support des Evènements DigitalInputs
-#define USE_DIGITAL_INPUTS
 
 // Enumération des Evènements supportés :
 #define DI_EVENT_NEW_STATE  	(1<< 0)		// Un changement Working <-> Idle est intervenu

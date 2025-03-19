@@ -245,11 +245,6 @@ void RegisterDigitalInputGroupedEventFnHandler(uint16_t EventId,std::vector<Digi
 /******************************************************************************/
 // accesseurs et mutateurs
 
-void DigitalInputs::setcurState(unsigned state)
-{
-	_curState = state;
-}
-
 void DigitalInputs::setFnHandler(pDI_FnHandler pFn,uint8_t index )
 {
 #ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
@@ -267,9 +262,9 @@ void DigitalInputs::setInputId(uint8_t inputId){
 	_inputId =  inputId;
 }
 
-unsigned DigitalInputs::getcurState(void)
+uint8_t DigitalInputs::getcurState(void)
 {
-	return _curState;
+	return (uint8_t)_curState;
 }
 
 uint8_t DigitalInputs::getdiType(void){

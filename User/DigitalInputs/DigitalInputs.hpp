@@ -25,12 +25,12 @@ public:
 
 	// accesseurs et mutateurs
 	// set
-	void setcurState(unsigned state);
 	void setFnHandler(pDI_FnHandler pFn,uint8_t index );
 	void setdiType(uint8_t diType);
 	void setInputId(uint8_t inputId);
 	// get
-	unsigned getcurState(void);
+	uint8_t getcurState(void);
+	inline uint16_t getFlags(void) {return _Flags;}
 	uint8_t getdiType(void);
 	uint8_t getInputId(void);
 
