@@ -79,11 +79,11 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 #ifndef DISABLE_MODBUS_SLAVE_SUPPORT	// EXPORT = 1
 
 	// Identification :
-	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetVarSetVar},		&GetSapProduct,	&WriteSapProduct},	// Code SAP du Produit complet (Name = "Code SAP Produit")
-	{ 0x03,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongLongGetVarSetVar},	&GetSnProduct,	&WriteSnProduct},	// SN du Produit ALDES (Name = "SN Produit complet")
-	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},		&GetTestDate,	&WriteTestDate},			// Date dernier test sous traitant (Name = "Date Test Carte")
-	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&GetSapBoard,	&WriteSapBoard},			// Code SAP de la Carte Principale (Name = "Code SAP Carte", Enum = "11029476:Classic/11029475:Pression")
-	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetVarSetVar},		&GetSnBoard,	&WriteSnBoard},			// S/N de la Carte Pincipale (Name = "SN Carte")
+	{ 0x01,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetFctSetFct},		&GetSapProduct,	&WriteSapProduct},	// Code SAP du Produit complet (Name = "Code SAP Produit")
+	{ 0x03,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongLongGetFctSetFct},	&GetSnProduct,	&WriteSnProduct},	// SN du Produit ALDES (Name = "SN Produit complet")
+	{ 0x07,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},		&GetTestDate,	&WriteTestDate},			// Date dernier test sous traitant (Name = "Date Test Carte")
+	{ 0x08,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		&GetSapBoard,	&WriteSapBoard},			// Code SAP de la Carte Principale (Name = "Code SAP Carte", Enum = "11029476:Classic/11029475:Pression")
+	{ 0x0A,		{{{ ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_5}},	TVarULongGetFctSetFct},		&GetSnBoard,	&WriteSnBoard},			// S/N de la Carte Pincipale (Name = "SN Carte")
 
 	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetVersionSoft16,		0},	// Version du Firmware sur 16bits (SHOW_HEX", DefVal = "B150")
 	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetZoneTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
@@ -369,80 +369,80 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	// Debug I2C :
 #ifdef I2CCM_ENABLE_I2C_DEBUG
-	{ 0xA000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cSystemNbRestart,	0},
-	{ 0xA001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresHSC,	0},
-	{ 0xA002,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresABP2,	0},
-	{ 0xA003,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresSDP8,	0},
-	{ 0xA004,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	getI2cDeviceErrorsCtmPresLMI,	0},
+	{ 0xA000,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cSystemNbRestart,	0},
+	{ 0xA001,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresHSC,	0},
+	{ 0xA002,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresABP2,	0},
+	{ 0xA003,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresSDP8,	0},
+	{ 0xA004,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresLMI,	0},
 
-	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},
-	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},
-	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
-	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
-	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
+	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},
+	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},
+	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
+	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
+	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
 
-	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},
-	{ 0xA00B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Temperature,	&mPresABP2.Temperature},
-	{ 0xA00C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mPresABP2.status,	&mPresABP2.status},
-	{ 0xA00D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresABP2.newFlags,	&mPresABP2.newFlags},
+	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},
+	{ 0xA00B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Temperature,	&mPresABP2.Temperature},
+	{ 0xA00C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mPresABP2.status,	&mPresABP2.status},
+	{ 0xA00D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresABP2.newFlags,	&mPresABP2.newFlags},
 
-	{ 0xA00E,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Pressure,	&mPresSDP8.Pressure},
-	{ 0xA00F,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Temperature,	&mPresSDP8.Temperature},
-	{ 0xA010,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresSDP8.newFlags,	&mPresSDP8.newFlags},
+	{ 0xA00E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Pressure,	&mPresSDP8.Pressure},
+	{ 0xA00F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Temperature,	&mPresSDP8.Temperature},
+	{ 0xA010,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresSDP8.newFlags,	&mPresSDP8.newFlags},
 
-	{ 0xA011,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Pressure,	&mPresLMI.Pressure},
-	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},
-	{ 0xA013,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&mPresLMI.newFlags,	&mPresLMI.newFlags},
+	{ 0xA011,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Pressure,	&mPresLMI.Pressure},
+	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},
+	{ 0xA013,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresLMI.newFlags,	&mPresLMI.newFlags},
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
 	// ADC Debug
-	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
-	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
-	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
-	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
-	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].value,		0},
-	{ 0xA025,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].nbPtADC,	0},
-	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].value,		0},
-	{ 0xA027,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].nbPtADC,	0},
-	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
-	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
+	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
+	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
+	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
+	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
+	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].value,		0},
+	{ 0xA025,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].nbPtADC,	0},
+	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].value,		0},
+	{ 0xA027,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].nbPtADC,	0},
+	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
+	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
 
 	// RTC spy :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
-	{ 0xF020,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.opType,	&rtcRV3028_ManualRW.opType},	// Name = "RV3028.opType", Enum = "0:Idle/1:Read/2:Write"
-	{ 0xF021,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.startAdr,	&rtcRV3028_ManualRW.startAdr},	// Name = "RV3028.startAdr"
-	{ 0xF022,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.nbAdr,	&rtcRV3028_ManualRW.nbAdr}, 	// Name = "RV3028.nbAdr"
-	{ 0xF023,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.nbTries,	&rtcRV3028_ManualRW.nbTries},	// Name = "RV3028.Execute
-	{ 0xF024,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mRtcRv3028.manualStatus,	&mRtcRv3028.manualStatus},		// Name = "RV3028.manualStatus"
+	{ 0xF020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.opType,	&rtcRV3028_ManualRW.opType},	// Name = "RV3028.opType", Enum = "0:Idle/1:Read/2:Write"
+	{ 0xF021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.startAdr,	&rtcRV3028_ManualRW.startAdr},	// Name = "RV3028.startAdr"
+	{ 0xF022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.nbAdr,	&rtcRV3028_ManualRW.nbAdr}, 	// Name = "RV3028.nbAdr"
+	{ 0xF023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcRV3028_ManualRW.nbTries,	&rtcRV3028_ManualRW.nbTries},	// Name = "RV3028.Execute
+	{ 0xF024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mRtcRv3028.manualStatus,	&mRtcRv3028.manualStatus},		// Name = "RV3028.manualStatus"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
-	{ 0xF030,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[0],	&rtcManualBuffer[0]},	// Name = "rtcManualBuffer_0"
-	{ 0xF031,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[1],	&rtcManualBuffer[1]},	// Name = "rtcManualBuffer_1"
-	{ 0xF032,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[2],	&rtcManualBuffer[2]},	// Name = "rtcManualBuffer_2"
-	{ 0xF033,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[3],	&rtcManualBuffer[3]},	// Name = "rtcManualBuffer_3"
-	{ 0xF034,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[4],	&rtcManualBuffer[4]},	// Name = "rtcManualBuffer_4"
-	{ 0xF035,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[5],	&rtcManualBuffer[5]},	// Name = "rtcManualBuffer_5"
-	{ 0xF036,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[6],	&rtcManualBuffer[6]},	// Name = "rtcManualBuffer_6"
-	{ 0xF037,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[7],	&rtcManualBuffer[7]},	// Name = "rtcManualBuffer_7"
-	{ 0xF038,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[8],	&rtcManualBuffer[8]},	// Name = "rtcManualBuffer_8"
-	{ 0xF039,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[9],	&rtcManualBuffer[9]},	// Name = "rtcManualBuffer_9"
-	{ 0xF03A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[10],	&rtcManualBuffer[10]},	// Name = "rtcManualBuffer_10"
-	{ 0xF03B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[11],	&rtcManualBuffer[11]},	// Name = "rtcManualBuffer_11"
-	{ 0xF03C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[12],	&rtcManualBuffer[12]},	// Name = "rtcManualBuffer_12"
-	{ 0xF03D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[13],	&rtcManualBuffer[13]},	// Name = "rtcManualBuffer_13"
-	{ 0xF03E,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[14],	&rtcManualBuffer[14]},	// Name = "rtcManualBuffer_14"
-	{ 0xF03F,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[15],	&rtcManualBuffer[15]},	// Name = "rtcManualBuffer_15"
+	{ 0xF030,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[0],	&rtcManualBuffer[0]},	// Name = "rtcManualBuffer_0"
+	{ 0xF031,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[1],	&rtcManualBuffer[1]},	// Name = "rtcManualBuffer_1"
+	{ 0xF032,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[2],	&rtcManualBuffer[2]},	// Name = "rtcManualBuffer_2"
+	{ 0xF033,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[3],	&rtcManualBuffer[3]},	// Name = "rtcManualBuffer_3"
+	{ 0xF034,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[4],	&rtcManualBuffer[4]},	// Name = "rtcManualBuffer_4"
+	{ 0xF035,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[5],	&rtcManualBuffer[5]},	// Name = "rtcManualBuffer_5"
+	{ 0xF036,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[6],	&rtcManualBuffer[6]},	// Name = "rtcManualBuffer_6"
+	{ 0xF037,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[7],	&rtcManualBuffer[7]},	// Name = "rtcManualBuffer_7"
+	{ 0xF038,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[8],	&rtcManualBuffer[8]},	// Name = "rtcManualBuffer_8"
+	{ 0xF039,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[9],	&rtcManualBuffer[9]},	// Name = "rtcManualBuffer_9"
+	{ 0xF03A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[10],	&rtcManualBuffer[10]},	// Name = "rtcManualBuffer_10"
+	{ 0xF03B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[11],	&rtcManualBuffer[11]},	// Name = "rtcManualBuffer_11"
+	{ 0xF03C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[12],	&rtcManualBuffer[12]},	// Name = "rtcManualBuffer_12"
+	{ 0xF03D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[13],	&rtcManualBuffer[13]},	// Name = "rtcManualBuffer_13"
+	{ 0xF03E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[14],	&rtcManualBuffer[14]},	// Name = "rtcManualBuffer_14"
+	{ 0xF03F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&rtcManualBuffer[15],	&rtcManualBuffer[15]},	// Name = "rtcManualBuffer_15"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW
-	{ 0xF040,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[0],	&mI2CCM_Rtc_RV3028_RxBuf[0]},	// Name = "rtcRv3028RxBuffer_0"
-	{ 0xF041,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[1],	&mI2CCM_Rtc_RV3028_RxBuf[1]},	// Name = "rtcRv3028RxBuffer_1"
-	{ 0xF042,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[2],	&mI2CCM_Rtc_RV3028_RxBuf[2]},	// Name = "rtcRv3028RxBuffer_2"
-	{ 0xF043,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[3],	&mI2CCM_Rtc_RV3028_RxBuf[3]},	// Name = "rtcRv3028RxBuffer_3"
-	{ 0xF044,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[4],	&mI2CCM_Rtc_RV3028_RxBuf[4]},	// Name = "rtcRv3028RxBuffer_4"
-	{ 0xF045,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[5],	&mI2CCM_Rtc_RV3028_RxBuf[5]},	// Name = "rtcRv3028RxBuffer_5"
-	{ 0xF046,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[6],	&mI2CCM_Rtc_RV3028_RxBuf[6]},	// Name = "rtcRv3028RxBuffer_6"
+	{ 0xF040,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[0],	&mI2CCM_Rtc_RV3028_RxBuf[0]},	// Name = "rtcRv3028RxBuffer_0"
+	{ 0xF041,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[1],	&mI2CCM_Rtc_RV3028_RxBuf[1]},	// Name = "rtcRv3028RxBuffer_1"
+	{ 0xF042,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[2],	&mI2CCM_Rtc_RV3028_RxBuf[2]},	// Name = "rtcRv3028RxBuffer_2"
+	{ 0xF043,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[3],	&mI2CCM_Rtc_RV3028_RxBuf[3]},	// Name = "rtcRv3028RxBuffer_3"
+	{ 0xF044,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[4],	&mI2CCM_Rtc_RV3028_RxBuf[4]},	// Name = "rtcRv3028RxBuffer_4"
+	{ 0xF045,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[5],	&mI2CCM_Rtc_RV3028_RxBuf[5]},	// Name = "rtcRv3028RxBuffer_5"
+	{ 0xF046,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mI2CCM_Rtc_RV3028_RxBuf[6],	&mI2CCM_Rtc_RV3028_RxBuf[6]},	// Name = "rtcRv3028RxBuffer_6"
 #endif // RV3028_RTC_ENABLE_MANUAL_RW
 
 //	{ 0xF100,   {{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_5}},   TVarUIntGetFctSetFct},  resetMemoriesState,     requestResetMemories},   // Name = "reset memories" code 3854
