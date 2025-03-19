@@ -4,6 +4,9 @@
  *  Created on: Mar 4, 2025
  *      Author: m.faget
  */
+
+#pragma once
+
 #include <vector>
 #include <stdint.h>				// Pour les types "int*_t" & "uint*_t"
 #include "main.h"
