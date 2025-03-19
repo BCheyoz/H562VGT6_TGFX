@@ -389,13 +389,14 @@ uint16_t UartCom_Register_InitParam(tUartComInitParams* pNewInitParam, void* pTh
 	UartCom_FillMemory((void*)pComManager, 0, sizeof(tUartComManager)); // Nettoyer notre propre Structure avant de la Configurer
 	if(0 != pNewInitParam->pFnInit) { pNewInitParam->pFnInit(); }		// Appele la Fonction d'Init
 
-	// Vérification de Disponibilité :
-#ifndef UART_COM_DISABLE_CHECK_READY_AFTER_INIT
-	if(IS_UART_INSTANCE(pNewInitParam->hHandle))	// Uniquement si UART ou USART :
+	// Vérification de Disponibilité du Périphérique matériel :
+#ifndef UART_COM_NO_CHK_READY_AFTER_INIT	// cf. "UartComConf.h"
+	UART_MAKE_VAR_AND_CAST_VALUE(uint32_t*, pInstance, pNewInitParam->hHandle);	// First UINT32 is always a pointer to the Instance (UART, USART, USB_D, USB_H)
+	if(IS_UART_INSTANCE(PVOID_INT(*pInstance)))//(uint32_t*)(pNewInitParam->hHandle))))	// Uniquement si UART ou USART :
 	{
 		if(0 == (HAL_UART_GetState(pNewInitParam->hHandle) & HAL_UART_STATE_READY)) return 0; // Failure : le Device n'est pas Ready !
 	}
-#endif // UART_COM_DISABLE_CHECK_READY_AFTER_INIT
+#endif // UART_COM_NO_CHK_READY_AFTER_INIT
 
 	// Tout est OK pour Activer la liaison :
 	pComManager->pInitParams = (tUartComInitParams*)pNewInitParam;	// Sauvegarde le lien vers les Infos d'Init
@@ -657,8 +658,8 @@ void Gestion_UartCom(void)
 //	        			mRxTxBI.hHandle = pInitParam->hHandle;
 	        			if(0 != pInitParam->defTxReplySize) // Si besoin d'un Buffer pour Répondre :
 	        			{
-	        				pFI = UartCom_InitNewTxFrame(mRxTxBI.hHandle, pInitParam->defTxReplySize);
-	        				mRxTxBI.hHandle = (0 != pFI) ? pInitParam->hHandle : 0;
+	        				pFI = UartCom_InitNewTxFrame(pInitParam->hHandle, pInitParam->defTxReplySize);
+	        				mRxTxBI.hHandle = (0 != pFI) ? pFI->hHandle : 0;
 	        			} else { // Pas besoin de répondre :
 	        				pFI = 0;
 	        				mRxTxBI.hHandle = pInitParam->hHandle;
@@ -1440,6 +1441,7 @@ HAL_StatusTypeDef UartCom_ReInitUartWithCustomParams(UartReInitItem* pReInitItem
 		return HAL_UART_Init(huart); // Init as standard classic UART
 	}
 #else // !UART_COM_SUPPORT_REINIT :
+	UNUSED(pReInitItem);
 	return HAL_ERROR;
 #endif // UART_COM_SUPPORT_REINIT
 }
@@ -2045,6 +2047,8 @@ uint16_t getThisHandleRxBufSize(void *hHandle)
 
 /****************************************************************************/
 
+#ifdef UART_COM_HANDLE_TX_STD_CALLBACK
+
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *hUart)	// A appeler par tous les Handlers Externes lorsque l'envoi est Terminé (nécessaire si support TxRxPin) !
 {
 	tUartComManager* pComManager = UartCom_GetManagerFromHandle(hUart);
@@ -2073,6 +2077,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *hUart)	// A appeler par tous le
 	if(UINT32_MAX > pComManager->nbTxFramesSentCB) { pComManager->nbTxFramesSentCB++; }
 #endif // UART_COM_SUPPORT_STATS
 }
+
+#endif // UART_COM_HANDLE_TX_STD_CALLBACK
 
 /****************************************************************************/
 

@@ -221,12 +221,11 @@ uint16_t GetEmbracoInverterPowerLimitationRead(void);
 
 #define EMBRACO_INVERTER_RX_FN_HANDLER  	EmbracoInverterRxHandler
 
-#define EMBRACO_INVERTER_EOF_RX 		25		// 28ms pour sabEndOfRxFrame (base = IT @ 1ms)
-#define EMBRACO_INVERTER_EOB_RX 		70		// 56ms pour sabEndOfRxFrame lorsqu'on n'a reçu qu'un Bloc de la Trame (base = IT @ 1ms)
-//#define EMBRACO_INVERTER_REPLY_TO	 	(1000)	// 1s pour sabTimeOut4Reply (base = IT @ 1ms)
-#define EMBRACO_INVERTER_REPLY_TO	 	0		// Pas besoin de répondre, puisqu'on est Maître
-#define EMBRACO_INVERTER_NO_TX_INIT 	(300)	// 300ms pour sabReady4Tx (base = IT @ 1ms)
-#define EMBRACO_INVERTER_NO_TX_FRAME	140		// 140ms pour sabReady4Tx (base = IT @ 1ms)
+#define EMBRACO_INVERTER_EOF_RX 		25		// 25ms (≥ 25 ms) pour sabEndOfRxFrame (base = IT @ 1ms)
+#define EMBRACO_INVERTER_EOB_RX 		70		// 70ms (≥ 67 ms) pour 5 Bytes @ 600 bauds sur sabEndOfRxFrame, si reçu qu'1 Bloc de Trame (base = IT @ 1ms)
+#define EMBRACO_INVERTER_REPLY_TO	 	0		// Pas besoin de répondre, puisqu'on est Master
+#define EMBRACO_INVERTER_NO_TX_INIT 	35  	// 35ms (entre 25 et 67ms) pour sabReady4Tx (base = IT @ 1ms)	-> EOF_RX < NO_TX_INIT  < EOB_RX
+#define EMBRACO_INVERTER_NO_TX_FRAME	30		// 30ms (entre 25 et 67ms, car Master) pour sabReady4Tx (base = IT @ 1ms)	-> EOF_RX < NO_TX_FRAME < EOB_RX
 #define EMBRACO_INVERTER_NO_TX_BYTE 	0		// 0ms pour sabMayTxNextByte (base = IT @ 1ms)
 #define EMBRACO_INVERTER_NO_RX_TO		(60 *10) // 60s pour sabReSetRxBufPtr (base = IT @ 100ms)
 
@@ -238,9 +237,8 @@ int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
 
 #define EMBRACO_INVERTER_TX_REGULAR_FN  	EmbracoInverterRequestFactory
 
-#define EMBRACO_INVERTER_TX_FIRST_DELAY 	(2) 	// After 300ms @ MST (Base 100ms)
-#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	(3) 	// 1 FrameTx / 500ms (Base 100ms)
-//#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	50//(3) 	// 1 FrameTx / 500ms (Base 100ms)
+#define EMBRACO_INVERTER_TX_FIRST_DELAY 	2 	// After 200ms @ MST (Base 100ms) -> IMPORTANT : TX_FIRST_DELAY  >= INT(1 +(NO_TX_INIT / 100))
+#define EMBRACO_INVERTER_TX_NORMAL_DELAY 	3 	// 1 FrameTx / 300ms (Base 100ms) -> IMPORTANT : TX_NORMAL_DELAY >= INT(1 +(NO_TX_FRAME /100))
 #define EMBRACO_INVERTER_TX_DEF_FRAME_SIZE	EMBRACO_INVERTER_BUF_DEF_TX_SIZE
 
 uint16_t EMBRACO_INVERTER_TX_REGULAR_FN(tComFrameParams* pFI, void* pVoidParam);
