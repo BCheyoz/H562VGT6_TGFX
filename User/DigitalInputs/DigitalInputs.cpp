@@ -53,7 +53,7 @@ void DigitalInputs::GestionDigitalInputs()
 			if(input->_nbPinOn >= DI_SEUIL_ON) newState = 1;	// Passage en position WORKING
 		}
 		input->_newStateEvent = (input->_curState != newState);
-		input->setcurState(newState);
+		input->_curState = newState;
 
 		if(input->_newStateEvent > 0)
 		{
