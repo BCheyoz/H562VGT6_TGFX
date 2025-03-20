@@ -45,7 +45,7 @@ static uint8_t gis_timer_100ms = 0;
 static uint16_t bypassDuration = 30 * 60;   // 30min par default
 
 #if NB_PRESSURE_SENSOR_USED > 0
-static gis_UIntValue Pressure[NB_PRESSURE_SENSOR_USED];
+static gis_IntValue Pressure[NB_PRESSURE_SENSOR_USED];
 #define I2C_NB_PRESS_DEVICE 4
 
 static gis_device i2cDevicePressure[I2C_NB_PRESS_DEVICE] = {
@@ -211,7 +211,7 @@ void GestionInputSensor()
 
 #if NB_PRESSURE_SENSOR_USED > 0
 	for(uint8_t idx = 0; idx < NB_PRESSURE_SENSOR_USED; idx++){
-		updatePressureValueUint(&(Pressure[idx]), i2cDevicePressure, I2C_NB_PRESS_DEVICE);
+		updatePressureValueInt(&(Pressure[idx]), i2cDevicePressure, I2C_NB_PRESS_DEVICE);
 	}
 #endif
 
@@ -251,7 +251,7 @@ void setBypassDuration(uint16_t duration){
 }
 
 #if NB_PRESSURE_SENSOR_USED > 0
-GET_SET_ARRAY_DEFINITION_UINT16(Pressure, NB_PRESSURE_SENSOR_USED)
+GET_SET_ARRAY_DEFINITION_INT16(Pressure, NB_PRESSURE_SENSOR_USED)
 #endif
 
 #if NB_COV_SENSOR_USED > 0

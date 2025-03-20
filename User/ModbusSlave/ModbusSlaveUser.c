@@ -191,17 +191,17 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	// Gestion bypass
 	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},
-	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getPressure0,				byPassPressure0},
+	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getPressure0,				byPassPressure0},
 	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},
-	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn0,					byPassCtn0},
+	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn0,					byPassCtn0},
 	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},
-	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn1,					byPassCtn1},
+	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn1,					byPassCtn1},
 	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},
-	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn2,					byPassCtn2},
+	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn2,					byPassCtn2},
 	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},
-	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn3,					byPassCtn3},
+	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn3,					byPassCtn3},
 	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},
-	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn4,					byPassCtn4},
+	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn4,					byPassCtn4},
 	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},
 
 	/*
