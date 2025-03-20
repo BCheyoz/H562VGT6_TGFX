@@ -15,7 +15,6 @@ uint16_t fanVoltage_mV();
 uint16_t fanFeedbackSpeed();
 uint16_t fanLastFeedbackSpeed();
 uint16_t fanLastDeltaTime();
-uint8_t fanVoltage_V_x10();
 
 void setAppointEnable(uint8_t enable);
 uint8_t isAppointEnable();
