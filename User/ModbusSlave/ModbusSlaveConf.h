@@ -304,7 +304,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 // ModbusSlave de Taille par défaut :
 #define MODBUS_SLAVE_BUF_DEF_RX_SIZE	1270	// Taille du Buffer par défaut pour la Réception ModbusSlave (min = 266 bytes)
-#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	270		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes, max 65535)
+#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	1270	// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes, max 65535)
 
 // ModbusSlave de Taille 2 :
 #define MODBUS_SLAVE_BUF_SIZE_2_RX  	50		// Taille n°2 du Buffer pour la Réception
