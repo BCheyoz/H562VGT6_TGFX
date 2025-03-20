@@ -56,28 +56,38 @@ FwMng * FwMng::getInstance(){
 /******************************************************************************/
 // Pour compatibilité avec les libs en C
 extern "C" {
-static FwMng *fwp = FwMng::getInstance();
+/* Interdiction de crée une instance d'objet en variable global ou static.
+ * Car le compilateur tente de crée l'objet avant l'init des HAL !!
+ * static FwMng *fwp = FwMng::getInstance(); -> interdit en global
+ */
+
 void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
 
 
 e_softState firmwareState(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->getState();
 }
 void requestToSwitchToFactoryState(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
 	fwp->requestToSwitchToFactoryState(value);
 }
 
 void requestProductReset(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
 	fwp->requestProductReset(value);
 }
 void requestResetMemories(uint16_t code){
+	FwMng *fwp = FwMng::getInstance();
 	fwp->requestResetMemories(code);
 }
 uint16_t resetMemoriesState(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->resetMemoriesState();
 }
 
 void requestToInitRegulation(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
 	fwp->requestToInitRegulation(value);
 }
 
@@ -101,9 +111,11 @@ void requestSAVreset(uint8_t code){
 
 #ifdef USE_ALIVE_LED
 void requestBlinkMode(uint16_t newBlinkMode){
+	FwMng *fwp = FwMng::getInstance();
 	fwp->requestBlinkMode(newBlinkMode);
 }
 uint16_t blinkMode(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->blinkMode();
 }
 #endif
@@ -111,9 +123,11 @@ uint16_t blinkMode(){
 /********************************************************************************************/
 // User function
 uint8_t isAnodeFlags(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->isAnodeFlags();
 }
 uint8_t isAnodeState(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->isAnodeState();
 }
 

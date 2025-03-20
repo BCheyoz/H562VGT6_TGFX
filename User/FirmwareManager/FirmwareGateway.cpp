@@ -38,8 +38,12 @@ std::map<e_device, std::list<e_softState>> writeLimitStateAcces = {
 };
 
 /******************************************************************************/
-// Initialisation des variables static
-static FwMng *fwp = FwMng::getInstance();
+// Initialisation des variables
+
+/* Interdiction de crée une instance d'objet en variable global ou static.
+ * Car le compilateur tente de crée l'objet avant l'init des HAL !!
+ * static FwMng *fwp = FwMng::getInstance(); -> interdit en global
+ */
 
 /*** private prototype functions *******************************/
 
@@ -50,6 +54,7 @@ static FwMng *fwp = FwMng::getInstance();
 
 
 void requestFanVoltage_mV(uint16_t newVoltage){
+	FwMng *fwp = FwMng::getInstance();
 	for(e_softState s : writeLimitStateAcces.at(E_FAN)){
 		//  fonction autorisée uniquement dans les modes définie dans la map writeLimitStateAcces
 		if(fwp->getState() == s){/*setFanExhaustVoltage_mV(newVoltage);*/}
@@ -63,6 +68,7 @@ uint16_t fanLastDeltaTime() { return 0; }
 uint8_t fanVoltage_V_x10() { return 0; }
 
 void setAppointEnable(uint8_t enable){
+	FwMng *fwp = FwMng::getInstance();
 	for(e_softState s : writeLimitStateAcces.at(E_RESISTIF_HEAT)){
 		//  fonction autorisée uniquement dans les modes définie dans la map writeLimitStateAcces
 		if(fwp->getState() == s){fwp->setAppointEnable(enable);}
@@ -70,6 +76,7 @@ void setAppointEnable(uint8_t enable){
 }
 
 uint8_t isAppointEnable(){
+	FwMng *fwp = FwMng::getInstance();
 	return fwp->isAppointEnable();
 }
 
