@@ -16,8 +16,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
-// Template_Src = "%STM32CubeMX_PATH%\db\templates\tpl_main_c.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
@@ -48,7 +46,6 @@
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
-#include "AppointElec.hpp"
 
 /* USER CODE END Includes */
 
@@ -145,20 +142,13 @@ int main(void)
   InitBaseDeTemps();
   InitComputeInfos();
   I2cComMaster_Init_System();
-  FwMng *FwManager = FwMng::getInstance();
   InitAnalogInputs();
-
-#ifdef USE_DIGITAL_INPUTS
-  DigitalInputs *Di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin,DI_NO_WORKING_STATE_IS_1,E_SINGLE_INPUT);
-  RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE,Di_Anode, HandleDI_Event);
-#endif //USE_DIGITAL_INPUTS
-
   InitInputSensor();
   InitFanPwmIC();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
-  AppointElec* appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
+  FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
 
   /* USER CODE END 2 */
 
@@ -178,7 +168,7 @@ int main(void)
 #endif //USE_DIGITAL_INPUTS
 
     /* USER CODE END WHILE */
-  MX_TouchGFX_Process();
+	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
 	FwManager->run();
   }

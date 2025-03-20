@@ -140,7 +140,7 @@ uint8_t  ComputeInfosStepId; // parmi eComputeFwStepId
 #pragma GCC push_options
 #pragma GCC optimize ("O0")	// Nécessaire pour que la variable ne soit pas supprimée
 
-const uint8_t __attribute__((unused)) __attribute__((section(".ProductKey"))) ProductKey[4] = "HIIA"; // Identification Produit : 'HIIA' = Himalaya 2 App ; 'HIIB' = Himalaya 2 BootLoader
+const uint8_t __attribute__((unused)) __attribute__((section(".ProductKey"))) ProductKey[4] = "TF4A"; // Identification Produit : 'TF4A' = TFlow 4 App ; 'TF4B' = TFlow 4 BootLoader
 //const uint32_t __attribute__((unused)) __attribute__((section(".ProductKey"))) ProductKey = 0x41494948; // Equivalent DWORD32
 
 uint32_t __attribute__((used)) GetVersionSoft(void)

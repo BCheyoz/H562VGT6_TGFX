@@ -23,6 +23,7 @@ class LedBlinker {
 public :
 
 	LedBlinker(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES newBlinkMode = E_LED_OFF);
+	~LedBlinker();
 
 	static void Handle_RT_100ms();	// A appeler dans une BaseDeTemps @ 100ms
 

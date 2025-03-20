@@ -22,14 +22,15 @@ extern "C" {
 #define RECORD_TIMER				NB_HOUR_EACH_DATETIME_SAVE * NB_1s_IN_1h
 
 
-uint32_t sapProduct;
-uint64_t snProduct;
-uint16_t testDate;
-uint32_t sapBoard;
-uint64_t snBoard;
-uint16_t productId;
+uint32_t SapProduct;
+uint64_t SnProduct;
+uint16_t TestDate;
+uint32_t SapBoard;
+uint32_t SnBoard;
+uint16_t ProductId;
 uint8_t commissionningDone;
-uint8_t softTargetId;
+E_TARGET_ID ZoneTargetId;
+E_PRODUCT_VERSION ProductVersionId;
 
 
 static uint32_t DateTimeCounter_sec;
@@ -57,7 +58,7 @@ inline void HandleWorkingTimeRT_1s(void)
 	}
 }
 
-void ParamInit(void){
+void ParamProductInit(void){
 	//init du flag d'erreur de lecture des parametres
 	DateTimeCounter_sec = 0;
 	WorkingFanCounter_sec = 0;
@@ -74,7 +75,7 @@ uint8_t isCodeBoardCompliant()
 {
     uint16_t tabSize = sizeof(sapBoardCodeDatabase) / sizeof(uint32_t);
     for(int i = 0; i < tabSize; ++i){
-        if(sapBoardCodeDatabase[i] == sapBoard){
+        if(sapBoardCodeDatabase[i] == SapBoard){
             return TRUE;
         }
     }
@@ -86,7 +87,7 @@ uint8_t isCodeIdCompliant()
 {
 	 uint16_t tabSize = sizeof(idCodeDatabase) / sizeof(uint16_t);
 	 for(int i = 0; i < tabSize; ++i){
-		 if(idCodeDatabase[i] == productId){
+		 if(idCodeDatabase[i] == ProductId){
 		 	return TRUE;
 		 }
 	 }
@@ -94,15 +95,13 @@ uint8_t isCodeIdCompliant()
 	return FALSE;
 }
 
-uint8_t isSapProductSAV()
+uint8_t isSAVProduct()
 {
-	if((sapProduct >= 11100000) && (sapProduct <= 11199999))
+	if((SapProduct >= 11100000) && (SapProduct <= 11199999))
 		return TRUE;
 	else
 		return FALSE;
 }
-
-
 
 uint32_t getCurrentDateTimeCounter(){
 	return DateTimeCounter_sec;
@@ -118,15 +117,18 @@ uint8_t isCommissionningDone()
 }
 
 void setCommissionningState(uint8_t state){
+	// TODO
 }
 
 void resetParamProduct(){
+	// TODO
 }
 
 void resetCodeProduct(){
+	// TODO
 }
 
-
+// TODO
 #define GET_SET_DEFINITION(a, d)	d Get##a(void)\
 		{\
 		return 0;\
@@ -140,9 +142,10 @@ GET_SET_DEFINITION(SapProduct, 		uint32_t)
 GET_SET_DEFINITION(SnProduct, 		uint64_t)
 GET_SET_DEFINITION(TestDate, 		uint16_t)
 GET_SET_DEFINITION(SapBoard, 		uint32_t)
-GET_SET_DEFINITION(SnBoard, 		uint64_t)
+GET_SET_DEFINITION(SnBoard, 		uint32_t)
 GET_SET_DEFINITION(ProductId, 		uint16_t)
-GET_SET_DEFINITION(SoftTargetId, 	uint8_t)
+GET_SET_DEFINITION(ZoneTargetId, 	uint8_t)
+GET_SET_DEFINITION(ProductVersionId,uint8_t)
 
 #ifdef __cplusplus
 }
