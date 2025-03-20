@@ -98,7 +98,7 @@ static gis_device i2cDeviceTemp[I2C_NB_HR_TEMP_DEVICE] = {
 static gis_IntValue Ctn[NB_CTN_TT4_10KC3_USE];
 #define ADC_NB_CTN_DEVICE 5
 
-static gis_device i2cDeviceCtn[ADC_NB_CTN_DEVICE] = {
+static gis_device aiDeviceCtn[ADC_NB_CTN_DEVICE] = {
 		{&tAi_CTN[0], SENSOR_CTN_TT4_10KC3, 0},
 		{&tAi_CTN[1], SENSOR_CTN_TT4_10KC3, 0},
 		{&tAi_CTN[2], SENSOR_CTN_TT4_10KC3, 0},
@@ -112,11 +112,12 @@ static gis_device i2cDeviceCtn[ADC_NB_CTN_DEVICE] = {
 static uint8_t isI2cDeviceLoaded(void* pDevice, uint8_t CustomDevId);
 uint8_t updateI2cDeviceId(gis_BaseValue *pData, gis_device *pDevice, uint8_t nbDevice);
 
-void updateTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
-void updatePressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
-void updateHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
-void updateCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
-void updateCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cPressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateAnalogInTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
 
 #define GET_SET_ARRAY_DEFINITION_UINT16(a, b)	uint16_t get##a(uint8_t idx){ \
 												if(idx > b-1) return UINT16_MAX; \
@@ -211,32 +212,32 @@ void GestionInputSensor()
 
 #if NB_PRESSURE_SENSOR_USED > 0
 	for(uint8_t idx = 0; idx < NB_PRESSURE_SENSOR_USED; idx++){
-		updatePressureValueInt(&(Pressure[idx]), i2cDevicePressure, I2C_NB_PRESS_DEVICE);
+		updateI2cPressureValueInt(&(Pressure[idx]), i2cDevicePressure, I2C_NB_PRESS_DEVICE);
 	}
 #endif
 
 #if NB_COV_SENSOR_USED > 0
 	for(uint8_t idx = 0; idx < NB_COV_SENSOR_USED; idx++){
-		updateCOVValueUint(&(Cov[idx]), i2cDeviceCov, I2C_NB_COV_DEVICE);
+		updateI2cCOVValueUint(&(Cov[idx]), i2cDeviceCov, I2C_NB_COV_DEVICE);
 	}
 #endif
 
 #if NB_CO2_SENSOR_USED > 0
 	for(uint8_t idx = 0; idx < NB_CO2_SENSOR_USED; idx++){
-		updateCO2ValueUint(&(Co2[idx]), i2cDeviceCo2, I2C_NB_CO2_DEVICE);
+		updateI2cCO2ValueUint(&(Co2[idx]), i2cDeviceCo2, I2C_NB_CO2_DEVICE);
 	}
 #endif
 
 #if NB_HR_TEMP_SENSOR_USED > 0
 	for(uint8_t idx = 0; idx < NB_HR_TEMP_SENSOR_USED; idx++){
-		updateHrValueUint(&(Hr[idx]), i2cDeviceHr, I2C_NB_HR_TEMP_DEVICE);
-		updateTempValueInt(&(Temp[idx]), i2cDeviceTemp, I2C_NB_HR_TEMP_DEVICE);
+		updateI2cHrValueUint(&(Hr[idx]), i2cDeviceHr, I2C_NB_HR_TEMP_DEVICE);
+		updateI2cTempValueInt(&(Temp[idx]), i2cDeviceTemp, I2C_NB_HR_TEMP_DEVICE);
 	}
 #endif
 
 #if NB_CTN_TT4_10KC3_USE > 0
 	for(uint8_t idx = 0; idx < NB_CTN_TT4_10KC3_USE; idx++){
-		updateTempValueInt(&(Ctn[idx]), i2cDeviceCtn, ADC_NB_CTN_DEVICE);
+		updateAnalogInTempValueInt(&(Ctn[idx]), aiDeviceCtn, ADC_NB_CTN_DEVICE);
 	}
 #endif
 
@@ -379,7 +380,7 @@ uint8_t updateI2cDeviceId(gis_BaseValue *pData, gis_device *pDevice, uint8_t nbD
 	return deviceIdx;
 }
 
-void updateTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
@@ -426,13 +427,8 @@ void updateTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevi
 		pData->value = (int16_t(pSHT4x->Temperature * 10);
 		break;
 #endif
-#if NB_CTN_TT4_10KC3_USE
-	case SENSOR_CTN_TT4_10KC3:
-		tAI_IntValue *pTT4_10KC3 = (tAI_IntValue*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)pTT4_10KC3->value;
-		break;
-#endif
 	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
 		// ne rien faire
 		break;
 	default:
@@ -441,7 +437,7 @@ void updateTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevi
 	}
 }
 
-void updatePressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cPressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
@@ -477,6 +473,7 @@ void updatePressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nb
 		break;
 #endif
 	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
 		// ne rien faire
 		break;
 	default:
@@ -485,7 +482,7 @@ void updatePressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nb
 	}
 }
 
-void updateHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
@@ -509,6 +506,7 @@ void updateHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevi
 		break;
 #endif
 	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
 		// ne rien faire
 		break;
 	default:
@@ -517,7 +515,7 @@ void updateHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevi
 	}
 }
 
-void updateCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
@@ -541,6 +539,7 @@ void updateCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDev
 		break;
 #endif
 	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
 		// ne rien faire
 		break;
 	default:
@@ -549,7 +548,7 @@ void updateCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDev
 	}
 }
 
-void updateCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
@@ -579,6 +578,7 @@ void updateCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDev
 		break;
 #endif
 	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
 		// ne rien faire
 		break;
 	default:
@@ -587,6 +587,54 @@ void updateCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDev
 	}
 }
 
+void updateAnalogInTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+	uint8_t deviceIdx = 0;
+	if(pData->base.id == SENSOR_BENCHTEST){
+		pData->base.byPasseTimer--;
+	}
+
+	if(pData->base.byPasseTimer == 0 && pData->base.id == SENSOR_BENCHTEST){
+		/* permet de lancer la recherche de capteur s'il etait en NO_SENSOR
+		 * sinon reprend le capteur déjà selectioné */
+		pData->base.id = pData->base.saveId;
+	}
+
+	while(pData->base.id == NO_SENSOR && deviceIdx < nbDevice){
+		// affect au 1er Device qui n'a pas été selectionné
+
+		if (pDevice[deviceIdx].isTake == 1) {
+			deviceIdx++;
+			continue;
+		}
+
+		pDevice[deviceIdx].isTake = 1; // signal que ce device est géré
+		pData->base.deviceIdx = deviceIdx; // conserve l'adresse
+		pData->base.saveId = pDevice[deviceIdx].id; // conserve l'ID capteur en cas de bypass
+		pData->base.id = pDevice[deviceIdx].id;
+	}
+
+	if(pData->base.id > SENSOR_INIT_PENDING){ // les enums au dessus
+		deviceIdx = pData->base.deviceIdx;
+	}
+
+	// Récupération de la valeur à la bonne source :
+	switch(pData->base.id)
+	{
+#if NB_CTN_TT4_10KC3_USE
+	case SENSOR_CTN_TT4_10KC3:
+		tAI_IntValue *pTT4_10KC3 = (tAI_IntValue*)pDevice[deviceIdx].pDevice;
+		pData->value = (int16_t)pTT4_10KC3->value;
+		break;
+#endif
+	case SENSOR_BENCHTEST:
+		UNUSED(deviceIdx);
+		// ne rien faire
+		break;
+	default:
+		pData->value = (int16_t)INT16_MIN;
+		break;
+	}
+}
 // Add above this line others private locale functions
 
 #ifdef __cplusplus
