@@ -68,7 +68,7 @@ uint32_t GetVersionSoft32(void);
 /******************************************************************************/
 // ProductInfos : Name = "TFlow4 Product" // "TFL4 Carte Mere App Product"
 // BusConfig : Type = "rtu", Baudrate = "115200", Data = "8", Parity = "none", Stop = "1"
-// EquipmentCfg : Name = "TFL4_Mere_App", Slave = "2"
+// EquipmentCfg : Name = "TFL4_Mere_App_A001", Slave = "2"
 // XmlConfig : varPrefix = "modbus_TFlow4_App_", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
 
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
@@ -87,8 +87,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	{ 0x0C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetVersionSoft16,		0},	// Version du Firmware sur 16bits (SHOW_HEX", DefVal = "B150")
 // Remarque_Jp le 20/03/2025 : tu as défini "ZoneTargetId" comme "uint8_t" dans la Macro mais en UInt ci-dessous ...
-	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetZoneTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = "0:Europe/1:Chine")
-
+	{ 0x0D,		{{{	ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetVar},		GetZoneTargetId,		0},	// Target du Soft (Name = "TargetId", Enum = \
+	"0:France/1:Belgique/2:Espagne/3:Italie/4:Allemagne/5:Danemark/6:Norvege/7:Suede/8:Europe/9:Canada/10:China")
 #if defined(VERSION_INFOS_VERSION_INFOS_H_) && defined(VI_SUPPORT_FW_CRC)	// EXPORT = 1
 	{ 0x0E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},		&FwComputedCRC32,		0},	// CRC du Soft (Name = "CRC_Soft", SHOW_HEX)
 #endif // VERSION_INFOS_VERSION_INFOS_H_ && VI_SUPPORT_FW_CRC
@@ -97,13 +97,13 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 //	{ 0x11,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},		&Fab_MdbUserSlaveId,	SetModbusUserSlaveAdr},	// Nouvelle Adresse ModBus Client (Name = "ID Modbus User", DefVal = "2")
 //	{ 0x12,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		0,						0},	// fonctionnalitées, type de fonctions disponibles
 	{ 0x14,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetFct},		0,						SaveParamsOnOrder},	// Ordre Sauvegarde param (Name = "SaveParams", Enum = "0:Idle/22577:Product Params/31028:Factory Params")
-	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetProductVersionId,	0},			// Name = "Model Size", Enum = "0:Inconnu/8:Individual 105/17:Individual 180/18:Collectif 105/19:Collectif 180/65535:Indéterminé"
+	{ 0x15,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetVar},		GetProductVersionId,	0},			// Name = "Model Size", Enum = "0:Inconnu/8:Individual 105/9:Individual 180/16:Collectif 105/17:Collectif 180/65535:Indéterminé"
 // $16 -> $1F = non affectés (au 24/07/2020).
 
 
 	// Réglages Usine :
 	{ 0x20,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,							requestToSwitchToFactoryState},	// Factory license : l'écriture de 147 provoque un passage en FACTORY_STATE (Enum = "0:NoChange/147:FACTORY_STATE")
-	{ 0x21,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		firmwareState,				0},	// Etat logiciel : Enum = "0:Boot/1:Board ready/2:Board SAV ready/3:Product ready/4:Product complete/5:Factory state"
+	{ 0x21,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},		firmwareState,				0},	// Etat logiciel : Enum = "0:Boot/1:Board ready/2:Board SAV ready/3:Product ready/4:Product complete/5:Bench state/6:Factory state"
 	{ 0x22,		{{{	ACCESS_MIN_LEVEL_MAX,ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetFct},		0,							requestProductReset},	// Product reset: écrire 242 en FactoryState efface en mémoire les codes produit. Au prochain démarrage, reinit + retour en BOARD_READY (Enum = "0:NoChange/242:Reset Product")
 	{ 0x23,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		GetProductId,				WriteProductId},	// product ID. Ecriture possible uniquement en mode factory state ou board SAV ready
 	{ 0x24,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		0,							requestToInitRegulation},
@@ -185,29 +185,29 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	 */
 
 	// Gestion Banc de test
-	{ 0x1200,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		blinkMode,					requestBlinkMode},
+	{ 0x1200,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		blinkMode,					requestBlinkMode},	// Name = "BlinkMode", Enum = "0:Led Off/1:Led Fixe/2:Slow Blink/3:Fast Blink/4:Very Fast Blink/5:Heart Beat Blink"
 // Remarque_Jp le 20/03/2025 : tu as défini "isAppointEnable" comme "uint8_t" dans la fonction mais en UInt ci-dessous ...
-	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAppointEnable,			setAppointEnable},
+	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAppointEnable,			setAppointEnable},	// Name = "AppointEnable", Enum = "0:Appoint Elec Off/1:Appoint Elec On"
 	{ 0x1202,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeState,				0},
 // Remarque_Jp le 20/03/2025 : tu as défini "isAnodeFlags" comme "uint8_t" dans la fonction mais en UInt ci-dessous ...
 	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAnodeFlags,				0},
 
 	// Gestion bypass
-	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},
+	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},	// Unit = "s"
 	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getPressure0,				byPassPressure0},
-	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},
+	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},					// Enum = "0:No Sensor/1:Bench Test/2:Init Pending/7:HSC/8:SDP6/9:SDP8/10:LMI/11:ABP2", "3:EE894/4:EE895/5:SCD3x/6:SCD4x/12:CCS811/13:SGP4014:ENS16015:SHT3x/16:SHT4x/17:HTU31/18:CTN_TT4_10KC3"
 // Remarque_Jp le 20/03/2025 : tu as défini "getCtn#" comme "int16_t" dans la fonction mais en UInt ci-dessous ... idem pour les Ctn suivantes du tableau
 	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn0,					byPassCtn0},
 // Remarque_Jp le 20/03/2025 : tu as défini "getIDCtn#" comme "uint8_t" dans la fonction mais en UInt ci-dessous ... idem pour les IDCtn suivantes du tableau
-	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},
+	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
 	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn1,					byPassCtn1},
-	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},
+	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
 	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn2,					byPassCtn2},
-	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},
+	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
 	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn3,					byPassCtn3},
-	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},
+	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
 	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn4,					byPassCtn4},
-	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},
+	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
 
 	/*
     // Push Button :
@@ -383,29 +383,29 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xA003,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresSDP8,	0},
 	{ 0xA004,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2cDeviceErrorsCtmPresLMI,	0},
 
-	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},
-	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},
+	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},		// Unit = "Pa"
+	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},	// Unit = "°C"
 	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
 	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
 	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
 
-	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},
-	{ 0xA00B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Temperature,	&mPresABP2.Temperature},
+	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},	// Unit = "Pa"
+	{ 0xA00B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Temperature,	&mPresABP2.Temperature},// Unit = "°C"
 	{ 0xA00C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetVarSetVar},	&mPresABP2.status,	&mPresABP2.status},
 	{ 0xA00D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresABP2.newFlags,	&mPresABP2.newFlags},
 
-	{ 0xA00E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Pressure,	&mPresSDP8.Pressure},
-	{ 0xA00F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Temperature,	&mPresSDP8.Temperature},
+	{ 0xA00E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Pressure,	&mPresSDP8.Pressure},	// Unit = "Pa"
+	{ 0xA00F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresSDP8.Temperature,	&mPresSDP8.Temperature},// Unit = "°C"
 	{ 0xA010,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresSDP8.newFlags,	&mPresSDP8.newFlags},
 
-	{ 0xA011,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Pressure,	&mPresLMI.Pressure},
-	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},
+	{ 0xA011,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Pressure,	&mPresLMI.Pressure},		// Unit = "Pa"
+	{ 0xA012,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresLMI.Temperature,	&mPresLMI.Temperature},	// Unit = "°C"
 	{ 0xA013,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresLMI.newFlags,	&mPresLMI.newFlags},
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
 	// ADC Debug
-// Remarque_Jp le 20/03/2025 : "tAI_IntValue.value" est défini comme "int16_t" dans la Structure mais en UInt ci-dessous ... idem pour les "value" suivantes du tableau
 	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
+// Remarque_Jp le 20/03/2025 : "tAI_IntValue.value" est défini comme "int16_t" dans la Structure mais en UInt ci-dessus ... idem pour les "value" suivantes du tableau
 	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
 	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
 	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
@@ -416,7 +416,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
 	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
 
-	// Infos & Commandes EmbracoInverter : déplacer après ADC !
+	// Infos & Commandes EmbracoInverter :
 #ifdef EMBRACOINVERTER_EMBRACOINVERTER_H_	// EXPORT = 1
 	{ 0xE000,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUCharGetFctSetFct},	GetEmbracoManagerFlags, 		0},			// SHOW_HEX
 	{ 0xE001,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_3}},	TVarUCharGetFctSetFct},	GetEmbracoInverterNbNoReplies,	SetEmbracoInverterNbNoReplies},
@@ -492,7 +492,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xFF07,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},	&CurUpgradeAdress,		0},							// SHOW_HEX
 	{ 0xFF09,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetVarSetVar},	&CurUpgradeTimeOut, 	0},							// Temps restant pour envoyer la suite d'une MàJ (Unit = "s", Coef = "10")
 	{ 0xFF0A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetFct},	&CurUpgradeSrcId,		UnLockFlashProgramSrc},		// Enum = "0:None/2:Modbus/15:System"/1:iBusInt/3:iBusExt" (Cf. Id Source @ UartComDevices.h::L97)
-  #ifdef FIRMWARE_IS_BOOTLOADER
+  #ifdef FIRMWARE_IS_BOOTLOADER	// EXPORT = 0
 	{ 0xFF0B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getUpdateStatus,	 	0},							//
 	{ 0xFF0C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getUpdateError, 	 	0},							//
   #endif // FIRMWARE_IS_BOOTLOADER
@@ -504,7 +504,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0xFF0F,	{{{ ACCESS_MIN_LEVEL_0, ACCESS_MIN_LEVEL_MAX}},	TVarUIntGetFctSetFct},	getThisModbusTxBufSize,	0}, 						// Name = "ModbusTxBufSize", Unit = "bytes"
 
 	// Infos & Commandes spéciales UserApp :
-	{ 0xFF20,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},	(void*)&ProductKey,		0}, 						// Name = "ProductKey", SHOW_HEX, Enum = "1095321928:HimalayaMB" (<=> 0x41494948 = HIIA)
+	{ 0xFF20,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetVarSetVar},	(void*)&ProductKey,		0}, 						// Name = "ProductKey", SHOW_HEX, Enum = "1093944916:TFlow 4 App/1110722132:TFlow 4 BootLoader" (<=> 0x41344654 = TF4A, 0x42344654 = TF4B)
 	{ 0xFF22,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	GetVersionSoft,			0},							// Version du Firmware Applicatif (SHOW_HEX, Name = "VersionSoft32")
 	{ 0xFF24,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_MAX}},	TVarULongGetFctSetFct},	getUserApp_MaxFwSize,	0}, 						// Max allowed size for the embedded Application (SHOW_HEX, Name = "MaxUserAppSize")
 #ifdef FIRMWARE_IS_BOOTLOADER	// EXPORT = 0
