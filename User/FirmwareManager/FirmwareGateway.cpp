@@ -81,7 +81,7 @@ uint8_t isAppointEnable(){
 }
 
 #if NB_PRESSURE_SENSOR_USED > 0
-GET_SET_ARRAY_DEFINITION(Pressure, 0, uint16_t)
+GET_SET_ARRAY_DEFINITION(Pressure, 0, int16_t)
 #endif
 
 #if NB_COV_SENSOR_USED > 0
