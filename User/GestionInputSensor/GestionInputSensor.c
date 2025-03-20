@@ -248,6 +248,50 @@ uint16_t getBypassDuration(){
 }
 void setBypassDuration(uint16_t duration){
 	bypassDuration = duration;
+
+// MAJ de la duré du Bypasse sur ce déjà actif
+#if NB_PRESSURE_SENSOR_USED > 0
+	for(uint8_t i = 0; i < NB_PRESSURE_SENSOR_USED; i++){
+		if(Pressure[i].base.id == SENSOR_BENCHTEST){
+			Pressure[i].base.byPasseTimer = bypassDuration;
+		}
+	}
+#endif
+
+#if NB_COV_SENSOR_USED > 0
+	for(uint8_t i = 0; i < NB_COV_SENSOR_USED; i++){
+		if(Cov[i].base.id == SENSOR_BENCHTEST){
+			Cov[i].base.byPasseTimer = bypassDuration;
+		}
+	}
+#endif
+
+#if NB_CO2_SENSOR_USED > 0
+	for(uint8_t i = 0; i < NB_CO2_SENSOR_USED; i++){
+		if(Co2[i].base.id == SENSOR_BENCHTEST){
+			Co2[i].base.byPasseTimer = bypassDuration;
+		}
+	}
+#endif
+
+#if NB_HR_TEMP_SENSOR_USED > 0
+	for(uint8_t i = 0; i < NB_HR_TEMP_SENSOR_USED; i++){
+		if(Hr[i].base.id == SENSOR_BENCHTEST){
+			Hr[i].base.byPasseTimer = bypassDuration;
+		}
+		if(Temp[i].base.id == SENSOR_BENCHTEST){
+			Temp[i].base.byPasseTimer = bypassDuration;
+		}
+	}
+#endif
+
+#if NB_CTN_TT4_10KC3_USE > 0
+	for(uint8_t i = 0; i < NB_CTN_TT4_10KC3_USE; i++){
+		if(Ctn[i].base.id == SENSOR_BENCHTEST){
+			Ctn[i].base.byPasseTimer = bypassDuration;
+		}
+	}
+#endif
 }
 
 #if NB_PRESSURE_SENSOR_USED > 0
