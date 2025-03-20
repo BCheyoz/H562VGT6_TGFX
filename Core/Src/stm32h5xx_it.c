@@ -17,7 +17,6 @@
   */
 /* USER CODE END Header */
 
-// Template_Src = "%STM32CubeMX_PATH%\db\templates\stm32xx_it_c.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32h5xx_it.h"

@@ -8,7 +8,6 @@
 /*       and in the root directory of this software.                      */
 /*                                                                        */
 /**************************************************************************/
-// Template_Src = "%USERPROFILE%\STM32Cube\Repository\STM32Cube_FW_H5_V1.3.0\Middlewares\ST\filex\common\inc\fx_user_sample.h"
 
 /**************************************************************************/
 /**************************************************************************/

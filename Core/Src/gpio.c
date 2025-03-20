@@ -18,7 +18,6 @@
   */
 /* USER CODE END Header */
 
-// Template_Src = "%STM32CubeMX_PATH%\db\templates\gpio_c.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
 

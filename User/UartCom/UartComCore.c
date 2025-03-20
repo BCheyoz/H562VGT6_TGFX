@@ -4,7 +4,7 @@
  *  Created on: Dec 15, 2020
  *  Original Author: j.proux
  *
- *  Updated on: 21 Feb. 2025
+ *  Updated on: 20 Mars 2025
  *  Updated by: j.proux
  *
  *  Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
@@ -655,7 +655,6 @@ void Gestion_UartCom(void)
 	        		pFnRxHandler = pInitParam->pFnRxHandler; // Récupère le Pointeur de Fonction pour le Décodage
 	        		if(0 != pFnRxHandler)
 	        		{
-//	        			mRxTxBI.hHandle = pInitParam->hHandle;
 	        			if(0 != pInitParam->defTxReplySize) // Si besoin d'un Buffer pour Répondre :
 	        			{
 	        				pFI = UartCom_InitNewTxFrame(pInitParam->hHandle, pInitParam->defTxReplySize);
@@ -667,41 +666,20 @@ void Gestion_UartCom(void)
 
 	        			if(0 != mRxTxBI.hHandle)
 	        			{
-
-//	        			}
-
-//	        			if(0 != pFI)
-//	        			{
-//							mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
-//							mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
-//	        			} else {
-//	        				mRxTxBI.TxBuf.pBufBase = 0;
-//	        				mRxTxBI.TxBuf.maxBytes = 0;
-//	        			}
-
-
-//						pFI = UartCom_InitNewTxFrame(mRxTxBI.hHandle, pInitParam->defTxReplySize);
-//						if(0 != pFI)
-//						{
 							mRxTxBI.RxBuf.pBufBase = pComManager->curRxBufInfo.pBufBase;
 							mRxTxBI.RxBuf.nbBytes = nbRxBytes;
-
-//							mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
-//							mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
 							mRxTxBI.TxBuf.nbBytes = 0;
 
-	        			if(0 != pFI)
-	        			{
-							mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
-							mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
-	        			} else {
-	        				mRxTxBI.TxBuf.pBufBase = 0;
-	        				mRxTxBI.TxBuf.maxBytes = 0;
-	        			}
+							if(0 != pFI)
+							{
+								mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
+								mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
+							} else {
+								mRxTxBI.TxBuf.pBufBase = 0;
+								mRxTxBI.TxBuf.maxBytes = 0;
+							}
 
-							//mRxTxBI.pVoidParam = pCurInitParam->pVoidParam;
 							mayReleaseTx = 1; // Par défaut, il faudra libérer tout de suite le TxFrameBuffer
-
 							ret = pFnRxHandler(&mRxTxBI, pInitParam->pVoidParam);	// Appel du Handler du Protocole associé
 							if(pComManager->sabTimeOut4Reply > 0) // s'il est encore temps de transmettre une Réponse immédiate
 							{
@@ -1233,29 +1211,21 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Han
 	tUartComInitParams* pInitParam = pComManager->pInitParams;
 	if(0 == pInitParam)	return;	// Infos d'Init non disponibles => Impossible de déterminer la Config associée !
 
-		if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
+	if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
+	{
+		if(Size > 0) { pComManager->mayDiscardRx = 1; } // Réception Overflow => Discard Frame !
+	} else {	// Tant qu'on est pas sur un DMA circulaire :
+
+		if(HAL_UART_RXEVENT_HT != hUart->RxEventType) // HAL_UART_RXEVENT_IDLE or HAL_UART_RXEVENT_TC or else :
 		{
-			if(Size > 0) { pComManager->mayDiscardRx = 1; } // Réception Overflow => Discard Frame !
-		} else {	// Tant qu'on est pas sur un DMA circulaire :
-
-			if(HAL_UART_RXEVENT_HT != hUart->RxEventType) // HAL_UART_RXEVENT_IDLE or HAL_UART_RXEVENT_TC or else :
-			{
-				pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxFrame;	// Recharge le Sablier de Fin de Trame
-				pComManager->curRxBufInfo.nbBytes += Size; // en Idle OU TC => Ajoute la taille supplémentaire !
-			} else { // HAL_UART_RXEVENT_HT :
+			pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxFrame;	// Recharge le Sablier de Fin de Trame
+			pComManager->curRxBufInfo.nbBytes += Size; // en Idle OU TC => Ajoute la taille supplémentaire !
+		} else { // HAL_UART_RXEVENT_HT :
 #ifdef UART_COM_START_SAB_EOF_AT_HT	// cf. "UartComConf.h"
-				pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
+			pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
 #endif // UART_COM_START_SAB_EOF_AT_HT
-			}
-
-//			if(HAL_UART_RXEVENT_HT == hUart->RxEventType)	// Half Transfer event => Wait (long) for last part of Bloc :
-//			{
-//				pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
-//			} else { // HAL_UART_RXEVENT_IDLE or HAL_UART_RXEVENT_TC or else :
-//				pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxFrame;	// Recharge le Sablier de Fin de Trame
-//				pComManager->curRxBufInfo.nbBytes += Size; // en Idle OU TC => Ajoute la taille supplémentaire !
-//			}
 		}
+	}
 
 	if(HAL_UART_RXEVENT_TC == hUart->RxEventType)	// Transfer Complete event => all Requested bytes are received :
 	{
@@ -1582,11 +1552,6 @@ void UartCom_ReSetRx(tUartComManager* pComManager, uint16_t reInitRxBuf)
     }
 
     // Protège le Buffer de Réception d'un éventuel débordement de Bloc :
-//	if((pComManager->curRxBufInfo.nbBytes + pInitParam->maxRxPacketSize) > pComManager->curRxBufInfo.maxBytes)
-//	{
-//		pComManager->curRxBufInfo.nbBytes = pComManager->curRxBufInfo.maxBytes - pInitParam->maxRxPacketSize;
-//		pComManager->mayDiscardRx = 1; // Trop long => Discard Frame
-//	}
     uint16_t maxRxSize = pInitParam->maxRxPacketSize;
     if((pComManager->curRxBufInfo.nbBytes + maxRxSize) > pComManager->curRxBufInfo.maxBytes)
 	{
@@ -1614,7 +1579,6 @@ void UartCom_ReSetRx(tUartComManager* pComManager, uint16_t reInitRxBuf)
     		if(UINT32_MAX > pComManager->nbReStartRx) { pComManager->nbReStartRx++; }
 #endif // UART_COM_SUPPORT_STATS
 
-//    		if(HAL_OK == pIoFn(pInitParam->hHandle, pComManager->pNextRxByte, pInitParam->maxRxPacketSize)) // Si la demande de Rx a été acceptée :
     		if(HAL_OK == pIoFn(pInitParam->hHandle, pComManager->pNextRxByte, maxRxSize)) // Si la demande de Rx a été acceptée :
     		{
     			if(0 != reInitRxBuf) { pComManager->mayDiscardRx = 0; }

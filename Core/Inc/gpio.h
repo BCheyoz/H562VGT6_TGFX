@@ -26,7 +26,6 @@
 extern "C" {
 #endif
 
-// Template_Src = "%STM32CubeMX_PATH%\db\templates\gpio_h.ftl"
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 

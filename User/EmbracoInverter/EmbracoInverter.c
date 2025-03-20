@@ -11,7 +11,6 @@
 
 #include "EmbracoInverter.h"	// Pour accès à nos propres déclarations publiques
 
-
 /******************************************************************************/
 // Variables de Gestion de l'Inverter Embraco :
 
@@ -354,11 +353,11 @@ void RazEmbracoInverterStatusFlags(uint8_t flags2Raz)
 }
 
 //#define MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(f)	unsigned IsEmbracoInverterStatusFlag##f##(void) { return EmbracoInverterManager[0].StatusRead.##f##; }
-//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(StartFailure)	// bit 0 <-> 01h : Start Failure
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(StartFailure)		// bit 0 <-> 01h : Start Failure
 //MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(OverLoadProtect)	// bit 1 <-> 02h : Overload protection, If the Data High byte is 00h, compressor is still running.
-//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(UnderSpeed)	// bit 2 <-> 04h : Under speed (1550 rpm or lower)
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(UnderSpeed)		// bit 2 <-> 04h : Under speed (1550 rpm or lower)
 //MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(WrongRotorPos)	// bit 3 <-> 08h : Wrong rotor position
-//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(ShortCircuit)	// bit 4 <-> 10h : Short circuit
+//MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(ShortCircuit)		// bit 4 <-> 10h : Short circuit
 //MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(OverTemperature)	// bit 5 <-> 20h : Over temperature failure : when the inverter turns off due to over temperature.
 //MAKE_IS_EMBRACO_INVERTER_STATUS_FLAG_FN(ConsOutOfSpec)	// bit 7 <-> 80h : Set speed data out of specification (cf. Notes 2 & 4)
 
