@@ -147,7 +147,9 @@ FwMng::FwMng()
 	savReset = FALSE;
 #endif
 
-	state = E_BOARD_READY_STATE;
+	//TODO: pour les 1ere version on ofrce a être en E_FACTORY_STATE à basculer en E_BOARD_READY_STATE une fois que la partie parametrage est fait
+	//state = E_BOARD_READY_STATE;
+	state = E_FACTORY_STATE;
 	timer_100ms = 0;
 	ctrlCmdReset = TRUE;
 	powerOnTimer = 0;

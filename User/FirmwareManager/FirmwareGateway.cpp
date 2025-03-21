@@ -11,6 +11,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "FirmwareGateway.h"
 #include "utils.h"
+#include "FanPwmIcUser.h"
 #include <list>
 #include <map>
 
@@ -57,15 +58,16 @@ void requestFanVoltage_mV(uint16_t newVoltage){
 	FwMng *fwp = FwMng::getInstance();
 	for(e_softState s : writeLimitStateAcces.at(E_FAN)){
 		//  fonction autorisée uniquement dans les modes définie dans la map writeLimitStateAcces
-		if(fwp->getState() == s){/*setFanExhaustVoltage_mV(newVoltage);*/}
+		if(fwp->getState() == s){
+			setFanExhaustVoltage_mV(newVoltage);
+		}
 	}
 }
 
-uint16_t fanVoltage_mV() { return 0; }
-uint16_t fanFeedbackSpeed() { return 0; }
-uint16_t fanLastFeedbackSpeed() { return 0; }
-uint16_t fanLastDeltaTime() { return 0; }
-uint8_t fanVoltage_V_x10() { return 0; }
+uint16_t fanVoltage_mV() { return getFanExhaustVoltage_mV(); }
+uint16_t fanFeedbackSpeed() { return getFanExhaustFeedbackSpeed(); }
+uint16_t fanLastFeedbackSpeed() { return getFanExhaustLastFeedbackSpeed(); }
+uint16_t fanLastDeltaTime() { return getFanExhaustLastDeltaTime(); }
 
 void setAppointEnable(uint8_t enable){
 	FwMng *fwp = FwMng::getInstance();
@@ -81,7 +83,7 @@ uint8_t isAppointEnable(){
 }
 
 #if NB_PRESSURE_SENSOR_USED > 0
-GET_SET_ARRAY_DEFINITION(Pressure, 0, uint16_t)
+GET_SET_ARRAY_DEFINITION(Pressure, 0, int16_t)
 #endif
 
 #if NB_COV_SENSOR_USED > 0

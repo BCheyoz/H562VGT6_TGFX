@@ -79,7 +79,7 @@ uint16_t getBypassDuration(); // durée du court circuit en seconde
 void setBypassDuration(uint16_t duration);
 
 #if NB_PRESSURE_SENSOR_USED > 0
-GET_SET_PROTOTYPE_SENSOR(Pressure, uint16_t)
+GET_SET_PROTOTYPE_SENSOR(Pressure, int16_t)
 #endif
 
 #if NB_COV_SENSOR_USED > 0

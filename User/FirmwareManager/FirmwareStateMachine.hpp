@@ -12,7 +12,7 @@
 // User Include
 #include "AppointElec.hpp"
 #include "DigitalInputs.hpp"
-
+#include "FanPwmIcUser.h"
 /* Attention class Singleton (instance unique) */
 
 class FwMng {

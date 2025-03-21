@@ -186,28 +186,24 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	// Gestion Banc de test
 	{ 0x1200,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		blinkMode,					requestBlinkMode},	// Name = "BlinkMode", Enum = "0:Led Off/1:Led Fixe/2:Slow Blink/3:Fast Blink/4:Very Fast Blink/5:Heart Beat Blink"
-// Remarque_Jp le 20/03/2025 : tu as défini "isAppointEnable" comme "uint8_t" dans la fonction mais en UInt ci-dessous ...
-	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAppointEnable,			setAppointEnable},	// Name = "AppointEnable", Enum = "0:Appoint Elec Off/1:Appoint Elec On"
+	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAppointEnable,			setAppointEnable},	// Name = "AppointEnable", Enum = "0:Appoint Elec Off/1:Appoint Elec On"
 	{ 0x1202,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeState,				0},
-// Remarque_Jp le 20/03/2025 : tu as défini "isAnodeFlags" comme "uint8_t" dans la fonction mais en UInt ci-dessous ...
-	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		isAnodeFlags,				0},
+	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeFlags,				0},
 
 	// Gestion bypass
-	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},	// Unit = "s"
-	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getPressure0,				byPassPressure0},
-	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},					// Enum = "0:No Sensor/1:Bench Test/2:Init Pending/7:HSC/8:SDP6/9:SDP8/10:LMI/11:ABP2", "3:EE894/4:EE895/5:SCD3x/6:SCD4x/12:CCS811/13:SGP4014:ENS16015:SHT3x/16:SHT4x/17:HTU31/18:CTN_TT4_10KC3"
-// Remarque_Jp le 20/03/2025 : tu as défini "getCtn#" comme "int16_t" dans la fonction mais en UInt ci-dessous ... idem pour les Ctn suivantes du tableau
-	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn0,					byPassCtn0},
-// Remarque_Jp le 20/03/2025 : tu as défini "getIDCtn#" comme "uint8_t" dans la fonction mais en UInt ci-dessous ... idem pour les IDCtn suivantes du tableau
-	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
-	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn1,					byPassCtn1},
-	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
-	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn2,					byPassCtn2},
-	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
-	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn3,					byPassCtn3},
-	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
-	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getCtn4,					byPassCtn4},
-	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},				// Enum = "0:No Sensor/1:Bench Test/2:Init Pending"
+	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},
+	{ 0x1211,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getPressure0,				byPassPressure0},
+	{ 0x1212,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDPressure0,				0},
+	{ 0x1213,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn0,					byPassCtn0},
+	{ 0x1214,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn0,					0},
+	{ 0x1215,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn1,					byPassCtn1},
+	{ 0x1216,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn1,					0},
+	{ 0x1217,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn2,					byPassCtn2},
+	{ 0x1218,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn2,					0},
+	{ 0x1219,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn3,					byPassCtn3},
+	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},
+	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn4,					byPassCtn4},
+	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},
 
 	/*
     // Push Button :
