@@ -295,17 +295,11 @@ uint16_t getI2cSystemErrorsCtFromExtPtr(void* pExtStruct)
 /******************************************************************************/
 
 #ifdef I2CCM_ENABLE_I2C_DEBUG
-uint16_t getI2cSystemCo2EE895ErrorsCt(void)
-{
-	return getI2cSystemErrorsCtFromExtPtr(&mCo2EE895);
-}
-#endif // I2CCM_ENABLE_I2C_DEBUG
+#define GET_I2C_DEVICE_ERROR_DEF(a) uint16_t getI2cDeviceErrorsCt##a(){return getI2cSystemErrorsCtFromExtPtr(&a);}
 
-/******************************************************************************/
+GET_I2C_DEVICE_ERROR_DEF(mPresHSC)
+GET_I2C_DEVICE_ERROR_DEF(mPresABP2)
+GET_I2C_DEVICE_ERROR_DEF(mPresSDP8)
+GET_I2C_DEVICE_ERROR_DEF(mPresLMI)
 
-#ifdef I2CCM_ENABLE_I2C_DEBUG
-uint16_t getI2cSystemCo2SCD3xErrorsCt(void)
-{
-	return getI2cSystemErrorsCtFromExtPtr(&mCo2SCD3);
-}
 #endif // I2CCM_ENABLE_I2C_DEBUG

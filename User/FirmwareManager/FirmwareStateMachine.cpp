@@ -54,9 +54,84 @@ FwMng * FwMng::getInstance(){
 }
 
 /******************************************************************************/
-// Pour compatibilité avec la lib BaseDeTemps en C
-extern "C" void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
+// Pour compatibilité avec les libs en C
+extern "C" {
+/* Interdiction de crée une instance d'objet en variable global ou static.
+ * Car le compilateur tente de crée l'objet avant l'init des HAL !!
+ * static FwMng *fwp = FwMng::getInstance(); -> interdit en global
+ */
 
+void handleFirmwareManager_RT_100ms(){FwMng::it_100ms();}
+
+
+e_softState firmwareState(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->getState();
+}
+void requestToSwitchToFactoryState(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestToSwitchToFactoryState(value);
+}
+
+void requestProductReset(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestProductReset(value);
+}
+void requestResetMemories(uint16_t code){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestResetMemories(code);
+}
+uint16_t resetMemoriesState(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->resetMemoriesState();
+}
+
+void requestToInitRegulation(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestToInitRegulation(value);
+}
+
+#ifdef USE_COMMISIONNING_STATE
+void resetCommissionningState(uint8_t code){
+	fwp->resetCommissionningState(code);
+}
+void requestEndOfCommissionning(uint8_t code){
+	fwp->requestEndOfCommissionning(code);
+}
+void requestConfigReset(uint8_t code){
+	fwp->requestConfigReset(code);
+}
+#endif
+
+#ifdef USE_SAV_STATE
+void requestSAVreset(uint8_t code){
+	fwp->requestSAVreset(code);
+}
+#endif
+
+#ifdef USE_ALIVE_LED
+void requestBlinkMode(uint16_t newBlinkMode){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestBlinkMode(newBlinkMode);
+}
+uint16_t blinkMode(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->blinkMode();
+}
+#endif
+
+/********************************************************************************************/
+// User function
+uint8_t isAnodeFlags(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->isAnodeFlags();
+}
+uint8_t isAnodeState(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->isAnodeState();
+}
+
+}
 /*******************************************************************************************************/
 
 FwMng::FwMng()
@@ -83,6 +158,12 @@ FwMng::FwMng()
 	ledAlive = new LedBlinker(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin, E_LED_SLOW_BLINK);
 #endif
 
+/********************************************************************************************/
+// User Init
+	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
+
+	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
+	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
 }
 
 void FwMng::run(void)

@@ -34,7 +34,11 @@ LedBlinker::LedBlinker(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, E_LED_BLINK_MODES
 	_GPIOPin = GPIO_Pin;
 	_mode = newBlinkMode;
 
-	s_allLeds.push_front(this);
+	s_allLeds.push_back(this);
+}
+
+LedBlinker::~LedBlinker(){
+	s_allLeds.remove(this);
 }
 
 /******************************************************************************/

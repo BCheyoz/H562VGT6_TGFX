@@ -18,6 +18,16 @@ E_CHINA,
 E_NB_TARGET_ID
 }E_TARGET_ID;
 
+typedef enum {
+E_UNKNOW_VERSION = 0,
+E_INDIVIDUAL_105L = 8,
+E_INDIVIDUAL_180L,
+E_COLLECTIVE_105L = 16,
+E_COLLECTIVE_180L,
+E_NB_PRODUCT_VERSION
+}E_PRODUCT_VERSION;
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -43,9 +53,10 @@ GET_SET_DECLARATION(SapProduct,	uint32_t)
 GET_SET_DECLARATION(SnProduct,	uint64_t)
 GET_SET_DECLARATION(TestDate,	uint16_t)
 GET_SET_DECLARATION(SapBoard, 	uint32_t)
-GET_SET_DECLARATION(SnBoard,	uint64_t)
+GET_SET_DECLARATION(SnBoard,	uint32_t)
 GET_SET_DECLARATION(ProductId,	uint16_t)
-GET_SET_DECLARATION(SoftTargetId,uint8_t)
+GET_SET_DECLARATION(ZoneTargetId,uint8_t)
+GET_SET_DECLARATION(ProductVersionId,uint8_t)
 
 #ifdef __cplusplus
 }

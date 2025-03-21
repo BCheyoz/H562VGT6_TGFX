@@ -20,6 +20,7 @@
 #endif
 
 /* USER CODE BEGIN Includes */
+#include "I2cComMasterConf.h"
 
 // Includes des Capteurs de Pression :
 #include "I2cDevPressureSDP8.h" 		// Pour accès au Capteur de Pression SDP8
@@ -95,8 +96,13 @@ void I2cSystem_HandleRtcManualMultiExecute_10ms(void);
 
 #ifdef I2CCM_ENABLE_I2C_DEBUG	// cf. "I2cComMasterConf.h"
 uint16_t getI2cSystemNbRestart(void);
-uint16_t getI2cSystemCo2EE895ErrorsCt(void);
-uint16_t getI2cSystemCo2SCD3xErrorsCt(void);
+
+#define GET_I2C_DEVICE_ERROR_PROTOTYPE(a) uint16_t getI2cDeviceErrorsCt##a();
+
+GET_I2C_DEVICE_ERROR_PROTOTYPE(mPresHSC)
+GET_I2C_DEVICE_ERROR_PROTOTYPE(mPresABP2)
+GET_I2C_DEVICE_ERROR_PROTOTYPE(mPresSDP8)
+GET_I2C_DEVICE_ERROR_PROTOTYPE(mPresLMI)
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
 #ifdef __cplusplus

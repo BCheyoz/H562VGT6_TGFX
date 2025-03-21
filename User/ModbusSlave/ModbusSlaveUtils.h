@@ -174,7 +174,8 @@ typedef union {
 #define MODBUS_SLAVE_MIN_RX_SIZE	(MODBUS_SLAVE_HEADER_SIZE +1 +MODBUS_SLAVE_FOOTER_SIZE)	// Taille Minimale d'une Requête Modbus
 #define MODBUS_SLAVE_MIN_TX_SIZE	(MODBUS_SLAVE_HEADER_SIZE +1 +MODBUS_SLAVE_FOOTER_SIZE)	// Taille Minimale d'une Réponse ModbusSlave
 
-#define MODBUS_SLAVE_MAX_RX_BLOC_SZ	1		// Taille Maximale à recevoir en une seule fois : Bytes 1 par 1 sur UART
+//#define MODBUS_SLAVE_MAX_RX_BLOC_SZ	1		// Taille Maximale à recevoir en une seule fois : Bytes 1 par 1 sur UART
+#define MODBUS_SLAVE_MAX_RX_BLOC_SZ 	1300	// Taille Maximale à recevoir en une seule fois : Bytes 1 par 1 sur UART
 
 /******************************************************************************/
 // Prototypes des Fonctions Internes Modbus accessibles depuis une Table ModbusSlave externe :

@@ -4,6 +4,9 @@
  *  Created on: Mar 4, 2025
  *      Author: m.faget
  */
+
+#pragma once
+
 #include <vector>
 #include <stdint.h>				// Pour les types "int*_t" & "uint*_t"
 #include "main.h"
@@ -22,12 +25,12 @@ public:
 
 	// accesseurs et mutateurs
 	// set
-	void setcurState(unsigned state);
 	void setFnHandler(pDI_FnHandler pFn,uint8_t index );
 	void setdiType(uint8_t diType);
 	void setInputId(uint8_t inputId);
 	// get
-	unsigned getcurState(void);
+	uint8_t getcurState(void);
+	inline uint16_t getFlags(void) {return _Flags;}
 	uint8_t getdiType(void);
 	uint8_t getInputId(void);
 

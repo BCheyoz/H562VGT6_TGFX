@@ -4,7 +4,7 @@
  *  Created on: Dec 15, 2020
  *  Original Author: j.proux
  *
- *  Updated on: 21 Feb. 2025
+ *  Updated on: 20 Mars 2025
  *  Updated by: j.proux
  *
  *  Remarque_Jp le 19/04/2024 : Ce Fichier ayant été converti en UTF-8 pour GitLab,
@@ -121,10 +121,10 @@ typedef struct _tUartComManager
 	uint8_t*	pNextRxByte;	// Pointeur sur l'emplacement du prochain Byte à recevoir
 	uint32_t*	pLastRxFrame;	// Pointeur sur une variable externe remise à Zéro à chaque Réception de Trame et auto-Incrémentée (base = IT @ 100ms)
 
-	uint16_t sabEndOfRxFrame;	// Délai spécifique avant Fin de Trame (dépend notamment du Protocole, base = IT @ 1ms)
+	uint16_t sabEndOfRxFrame;	// Délai restant avant Fin de Trame (dépend notamment du Protocole, base = IT @ 1ms)
 	uint16_t sabTimeOut4Reply;	// Délai maximal autorisé pour transmettre une Réponse immédiatement (base = IT @ 1ms)
 
-	uint16_t sabReSetRxBufPtr;	// Délai maximal autorisé sans Réception avant Relance Interruption (base = IT @ 100ms)
+	uint16_t sabReSetRxBufPtr;	// Délai maximal restant sans Réception avant Relance Réception (base = IT @ 100ms)
 	uint16_t sabReady4Tx;		// Délai restant avant autorisation d'Emettre à nouveau (base = IT @ 1ms)
 
 	// Variables pour la Gestion des Envois espacés dans le temps :
@@ -217,6 +217,9 @@ typedef struct _tUartComManager
 tUartComManager mUartComManager[NB_OF_COM_INIT_PARAMS] = {0};
 UART_COM_MAKE_CONST_END_OF_TABLE(tUartComManager, EndOfUartFrame, mUartComManager);
 
+uint8_t UartComOverflowByte;
+#define UART_COM_OVERFLOW_BYTE	&UartComOverflowByte
+
 /******************************************************************************/
 
 static tUartComManager* UartCom_GetManagerFromHandle(void* hHandle);
@@ -243,7 +246,7 @@ static eUartComErrorContext UartComGetUartErrorContext(UART_HandleTypeDef *hUart
 
 /******************************************************************************/
 
-const tUartComClassFn UartCom_TxDMA_RxIT = { // Pour le Modbus sur Uart et chaque fois que possible
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIT = { // Pour le Modbus sur Uart et chaque fois que possible
 		"Uart_TxDMA_RxIT",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UART_Receive_IT,
@@ -253,9 +256,30 @@ const tUartComClassFn UartCom_TxDMA_RxIT = { // Pour le Modbus sur Uart et chaqu
 		(pUartCom_CtrlFn)HAL_UART_DeInit,
 };
 
-const tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Test Rx en DMA :
-// Remarque_Jp le 26/02/2025 : Avec cette Classe, il faudra pê configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception ?
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleIT = { // Pour Tx via DMA & Rx via IT, jusqu'à IDLE :
+// Remarque_Jp le 13/03/2025 : Avec cette Classe, il est recommandé de configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception
+		"Uart_TxDMA_RxIdleIT",
+		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
+		(pUartCom_IoFn)HAL_UARTEx_ReceiveToIdle_IT,
+		(pUartCom_CntxtFn)UartComGetUartErrorContext,
+		(pUartCom_CtrlFn)HAL_UART_AbortTransmit_IT,
+		(pUartCom_CtrlFn)HAL_UART_AbortReceive_IT,
+		(pUartCom_CtrlFn)HAL_UART_DeInit,
+};
+
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Tx via DMA & Rx via DMA :
 		"Uart_TxDMA_RxDMA",
+		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
+		(pUartCom_IoFn)HAL_UART_Receive_DMA,
+		(pUartCom_CntxtFn)UartComGetUartErrorContext,
+		(pUartCom_CtrlFn)HAL_UART_AbortTransmit_IT,
+		(pUartCom_CtrlFn)HAL_UART_AbortReceive_IT,
+		(pUartCom_CtrlFn)HAL_UART_DeInit,
+};
+
+const __attribute__((unused)) tUartComClassFn UartCom_TxDMA_RxIdleDMA = { // Pour Tx via DMA & Rx via DMA, jusqu'à IDLE :
+		// Remarque_Jp le 13/03/2025 : Avec cette Classe, il est recommandé de configurer le *_MAX_RX_BLOC_SZ à la taille du Buffer de Réception
+		"Uart_TxDMA_RxIdleDMA",
 		(pUartCom_IoFn)HAL_UART_Transmit_DMA,
 		(pUartCom_IoFn)HAL_UARTEx_ReceiveToIdle_DMA,
 		(pUartCom_CntxtFn)UartComGetUartErrorContext,
@@ -264,7 +288,7 @@ const tUartComClassFn UartCom_TxDMA_RxDMA = { // Pour Test Rx en DMA :
 		(pUartCom_CtrlFn)HAL_UART_DeInit,
 };
 
-const tUartComClassFn UartCom_TxIT_RxIT = { // Pour l'iBus sur Uart esentiellement
+const __attribute__((unused)) tUartComClassFn UartCom_TxIT_RxIT = { // Pour l'iBus sur Uart esentiellement
 		"Uart_TxIT_RxIT",
 		(pUartCom_IoFn)HAL_UART_Transmit_IT,
 		(pUartCom_IoFn)HAL_UART_Receive_IT,
@@ -283,7 +307,7 @@ const UART_AdvFeatureInitTypeDef UART_AdvInitTxInvRxInv = { UART_ADVFEATURE_TXIN
 
 const UartReInitUserParams UartReInit9600N1   = { eUartReInitBaud9600,	 eUartReInitParityNone, eUartReInitStopOne };
 const UartReInitUserParams UartReInit115200N1 = { eUartReInitBaud115200, eUartReInitParityNone, eUartReInitStopOne };	// 115200, Parity_None, 1_Stop
-const UartReInitUserParams UartReInitDefaults = { eUartReInitBaud2Def,	 eUartReInitParity2Def, eUartReInitStop2Def };
+const UartReInitUserParams UartReInitDefaults = { eUartReInitBaud2Def,	 eUartReInitParity2Def, eUartReInitStop2Def };	// redirects to (eUartReInitBaudDefault, eUartReInitParityDefault, eUartReInitStopDefault)
 
 #endif // UART_COM_SUPPORT_REINIT
 
@@ -314,6 +338,7 @@ void UartCom_Devices_Init(void) // A appeler dans la partie Init Hardware
 	}
 
 	// Regarder si on peut ignorer les éventuels InitParams restants :
+#ifndef UART_COM_IGNORE_EXCEDENT_INIT_PARAMS
 	while(pComInitParams < (tUartComInitParams*)AFTER_COM_INIT_PARAM)
 	{
 		if(0 != pComInitParams->flag.loadMst) // On devait charger celui-là aussi !
@@ -323,6 +348,7 @@ void UartCom_Devices_Init(void) // A appeler dans la partie Init Hardware
 		}
 		pComInitParams++; // On peut tout de même ignorer celui-ci
 	}
+#endif // UART_COM_IGNORE_EXCEDENT_INIT_PARAMS
 }
 
 /******************************************************************************/
@@ -361,8 +387,16 @@ uint16_t UartCom_Register_InitParam(tUartComInitParams* pNewInitParam, void* pTh
 
 	// Tout est OK pour Initier la liaison :
 	UartCom_FillMemory((void*)pComManager, 0, sizeof(tUartComManager)); // Nettoyer notre propre Structure avant de la Configurer
-	if(pNewInitParam->pFnInit != 0) { pNewInitParam->pFnInit(); }	// Appele la Fonction d'Init
-// Ne pas activer s'il n'y a pas que des UART à connecter, par ex si USB !	if(0 == (HAL_UART_GetState(pNewInitParam->hHandle) & HAL_UART_STATE_READY)) return 0; // Failure : le Device n'est pas Ready !
+	if(0 != pNewInitParam->pFnInit) { pNewInitParam->pFnInit(); }		// Appele la Fonction d'Init
+
+	// Vérification de Disponibilité du Périphérique matériel :
+#ifndef UART_COM_NO_CHK_READY_AFTER_INIT	// cf. "UartComConf.h"
+	UART_MAKE_VAR_AND_CAST_VALUE(uint32_t*, pInstance, pNewInitParam->hHandle);	// First UINT32 is always a pointer to the Instance (UART, USART, USB_D, USB_H)
+	if(IS_UART_INSTANCE(PVOID_INT(*pInstance)))//(uint32_t*)(pNewInitParam->hHandle))))	// Uniquement si UART ou USART :
+	{
+		if(0 == (HAL_UART_GetState(pNewInitParam->hHandle) & HAL_UART_STATE_READY)) return 0; // Failure : le Device n'est pas Ready !
+	}
+#endif // UART_COM_NO_CHK_READY_AFTER_INIT
 
 	// Tout est OK pour Activer la liaison :
 	pComManager->pInitParams = (tUartComInitParams*)pNewInitParam;	// Sauvegarde le lien vers les Infos d'Init
@@ -390,7 +424,7 @@ uint16_t UartCom_UnRegister_Handle(void* hThisHandle) // ATTENTION : Ne jamais a
 		if(pInitParam->hHandle != hThisHandle) continue;
 		// On vient de trouver notre élément :
 
-		// Déconnecter les RegularTx sur cet Uart :
+		// Déconnecter les éventuels RegularTx sur cet Uart :
 #if defined(UART_COM_MAX_REG_TX) && (UART_COM_MAX_REG_TX > 0)	// cf. "UartComConf.h"
 		for(tUartComRegularTx* pRegTx = shrdRegTx; pRegTx < EndOfShrdRegTx; pRegTx++)
 		{
@@ -575,6 +609,7 @@ void Gestion_UartCom(void)
 	{
 		pInitParam = pComManager->pInitParams;
 		if(0 == pInitParam) continue;
+		if(0 == pInitParam->hHandle) continue;
 
 		// Tout d'abord : (Notifier puis) Libérer d'un Envoi Terminé (équivalent ReleaseCurFrameInfo) :
 		if( (0 == pComManager->curTxBufInfo.nbBytes) && (0 != pComManager->curTxBufInfo.pBufBase) )
@@ -599,6 +634,7 @@ void Gestion_UartCom(void)
 		// Traiter la Synchro Réception :
 		if(0 == pComManager->sabEndOfRxFrame) // Si TimeOut EndOfFrame => Passer au Traitement :
 		{
+
 	        // Gestion prioritaire du Buffer invalide ou Inactivité sur l'UART :
 			mayReSetRx = ( (0 != pComManager->mayDiscardRx) || (0 == pComManager->sabReSetRxBufPtr) ) ? 1 : 0;
 			reSetRxOptions = UART_COM_RESET_RX_INIT_BUF; // par défaut : RéInit au moins le Buffer
@@ -606,7 +642,7 @@ void Gestion_UartCom(void)
 			nbRxBytes = pComManager->curRxBufInfo.nbBytes; // Attention : un Byte a pu tomber depuis que sabEndOfRxFrame a été testé à 0 !
 	        if( (0 == mayReSetRx) && (nbRxBytes > 0) && (0 == pComManager->sabEndOfRxFrame) ) // S'il y a eu des Bytes reçus et toujours Valide :
 	        {
-	        	mayReSetRx = 1; // Il faudra aussi ré-Initialiser complètement la Réception après le Traitement !
+				mayReSetRx = 1; // Il faudra aussi ré-Initialiser complètement la Réception après le Traitement !
 
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 	        	if(UINT32_MAX > pComManager->nbFramesRx) { pComManager->nbFramesRx++; }
@@ -619,20 +655,31 @@ void Gestion_UartCom(void)
 	        		pFnRxHandler = pInitParam->pFnRxHandler; // Récupère le Pointeur de Fonction pour le Décodage
 	        		if(0 != pFnRxHandler)
 	        		{
-	        			mRxTxBI.hHandle = pInitParam->hHandle;
-						pFI = UartCom_InitNewTxFrame(mRxTxBI.hHandle, pInitParam->defTxReplySize);
-						if(0 != pFI)
-						{
+	        			if(0 != pInitParam->defTxReplySize) // Si besoin d'un Buffer pour Répondre :
+	        			{
+	        				pFI = UartCom_InitNewTxFrame(pInitParam->hHandle, pInitParam->defTxReplySize);
+	        				mRxTxBI.hHandle = (0 != pFI) ? pFI->hHandle : 0;
+	        			} else { // Pas besoin de répondre :
+	        				pFI = 0;
+	        				mRxTxBI.hHandle = pInitParam->hHandle;
+	        			}
+
+	        			if(0 != mRxTxBI.hHandle)
+	        			{
 							mRxTxBI.RxBuf.pBufBase = pComManager->curRxBufInfo.pBufBase;
 							mRxTxBI.RxBuf.nbBytes = nbRxBytes;
-
-							mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
-							mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
 							mRxTxBI.TxBuf.nbBytes = 0;
 
-							//mRxTxBI.pVoidParam = pCurInitParam->pVoidParam;
-							mayReleaseTx = 1; // Par défaut, il faudra libérer tout de suite le TxFrameBuffer
+							if(0 != pFI)
+							{
+								mRxTxBI.TxBuf.pBufBase = pFI->pBufBase;
+								mRxTxBI.TxBuf.maxBytes = pFI->nbBytes;
+							} else {
+								mRxTxBI.TxBuf.pBufBase = 0;
+								mRxTxBI.TxBuf.maxBytes = 0;
+							}
 
+							mayReleaseTx = 1; // Par défaut, il faudra libérer tout de suite le TxFrameBuffer
 							ret = pFnRxHandler(&mRxTxBI, pInitParam->pVoidParam);	// Appel du Handler du Protocole associé
 							if(pComManager->sabTimeOut4Reply > 0) // s'il est encore temps de transmettre une Réponse immédiate
 							{
@@ -643,12 +690,15 @@ void Gestion_UartCom(void)
 									pComManager->curTxBufInfo.nbBytes = mRxTxBI.TxBuf.nbBytes;
 									pComManager->curTxBufInfo.pBufBase = mRxTxBI.TxBuf.pBufBase;
 									pComManager->pCurFrameInfo = pFI;
-									pComManager->wait4Sync = pInitParam->flag.replySync; // Option Spéciale Synchro pour répondre
 
+#if defined(UART_COM_ENABLE_IBUS) && !defined(UART_COM_DISABLE_SYNC_TX)	// cf. "UartComConf.h"
+									pComManager->wait4Sync = pInitParam->flag.replySync; // Option Spéciale Synchro pour répondre
 									if(0 != pComManager->wait4Sync) // S'il faut attendre une Synchro ultérieure :
 									{
 										mayReleaseTx = 0; // Ne pas libérer tout de suite !
-									} else {
+									} else
+#endif // UART_COM_ENABLE_IBUS && !UART_COM_DISABLE_SYNC_TX
+									{
 										uint16_t canPostNow = UartCom_GetMaxAllowedTxBlocSize(pInitParam, pComManager->curTxBufInfo.nbBytes, UART_COM_FLAG_DISCARD_TX_SYNC); // 1 = Discard SyncTx normal
 										if(0 != UartCom_DoTransmit(pComManager, canPostNow))
 										{
@@ -913,9 +963,9 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 			{
 				if( (0 == pComManager->sabReady4Tx) || (0 != pComManager->canTxNow) )	// Si le Bus est libre pour une Emission Tx
 				{
-#ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
+#if defined(UART_COM_ENABLE_IBUS) && !defined(UART_COM_DISABLE_SYNC_TX)	// cf. "UartComConf.h"
 					if( (0 == pComManager->wait4Sync) || (*(uint8_t*)(pComManager->curTxBufInfo.pBufBase) == pComManager->iBusSync) ) // Si la Synchro Tx est acceptée
-#endif // UART_COM_ENABLE_IBUS
+#endif // UART_COM_ENABLE_IBUS && !UART_COM_DISABLE_SYNC_TX
 					{
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 						if(2 == pComManager->curTxBufInfo.nbBytes) { pComManager->nbTxAck2++; }
@@ -925,7 +975,9 @@ void UartCom_Handle_IT_1ms(void) // Appeler dans l'Interruption @ 1ms
 						if(0 != UartCom_DoTransmit(pComManager, canPostNow))
 						{
 							pComManager->canTxNow = 1;	// Enable bypass sabReady4Tx (nécessaire si echo attendu)
+#if defined(UART_COM_ENABLE_IBUS) && !defined(UART_COM_DISABLE_SYNC_TX)	// cf. "UartComConf.h"
 							pComManager->wait4Sync = 0;	// Enable bypass iBusSync (nécessaire si Synchro iBus)
+#endif // UART_COM_ENABLE_IBUS && !UART_COM_DISABLE_SYNC_TX
 
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 							if(UINT32_MAX > pComManager->nbTxBytesSentIT) { pComManager->nbTxBytesSentIT++; }
@@ -1021,6 +1073,8 @@ uint16_t UartCom_SetRegTx_CurEndDelay(void* hHandle, pUartCom_TxRegular pFn, voi
 
 /******************************************************************************/
 
+#ifdef UART_COM_HANDLE_RX_STD_CALLBACK	// cf. "UartComConf.h"
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *hUart) // Handler partagé par tous les UARTs & USARTs (uniquement)
 {
 	// Prépare la Gestion :
@@ -1035,11 +1089,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *hUart) // Handler partagé par 
 	tUartComInitParams* pInitParam = pComManager->pInitParams;
 	if(0 == pInitParam)	return;	// Infos d'Init non disponibles => Impossible de déterminer la Config associée !
 
-	uint8_t chkEchoFail = 0; // Par défaut : pas d'erreur sur l'echo
-
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 	if(UINT32_MAX > pComManager->nbBytesRx) { pComManager->nbBytesRx++; }
 #endif // UART_COM_SUPPORT_STATS
+
+#ifndef UART_COM_DISABLE_CHECK_ECHO	// cf. "UartComConf.h"
+	uint8_t chkEchoFail = 0; // Par défaut : pas d'erreur sur l'echo
 
 	if( (0 != pInitParam->flag.chkEcho) && (0 != pComManager->pChkTxEcho) ) // Si on est bien configurés pour Vérifier l'echo :
 	{
@@ -1097,18 +1152,93 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *hUart) // Handler partagé par 
 			}
 		}
 		// dans tous les cas : Relancer la Réception au même endroit
-	} else { // On est dans un cas de Réception normale :
-		pComManager->curRxBufInfo.nbBytes++; // Accepte le Byte reçu
+	} else
+#else // !UART_COM_DISABLE_CHECK_ECHO :
+  #ifdef UART_COM_ENABLE_IBUS	// cf. "UartComConf.h"
+	#warning "UART_COM_ENABLE_IBUS && UART_COM_DISABLE_CHECK_ECHO !"
+  #endif // UART_COM_ENABLE_IBUS
+#endif // UART_COM_DISABLE_CHECK_ECHO
+	{ // On est dans un cas de Réception normale :
+		if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
+		{
+			pComManager->mayDiscardRx = 1; // Réception Overflow => Discard Frame !
+		} else {
+			pComManager->curRxBufInfo.nbBytes += hUart->RxXferSize; // Accepte le(s) Byte(s) reçu(s)
+		}
 	}
 
+#ifndef UART_COM_DISABLE_CHECK_ECHO	// cf. "UartComConf.h"
 	if(0 == chkEchoFail) // Si pas d'echo ou pas d'erreur d'echo :
+#endif // UART_COM_DISABLE_CHECK_ECHO
 	{
 		UartCom_ReSetRx(pComManager, 0); // Relancer la Réception SANS RéInitialiser le Buffer
 	}
     pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxFrame; 	// Recharge le Sablier de Fin de Trame
     pComManager->sabTimeOut4Reply = pInitParam->sabTimeOut4Reply;	// Recharge le Délai pour Répondre
-    if(0 == pComManager->pChkTxEcho) pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame; // Recharge le Sablier pour Nouvelle Trame
+
+#ifndef UART_COM_DISABLE_CHECK_ECHO	// cf. "UartComConf.h"
+    if(0 == pComManager->pChkTxEcho)
+#endif // UART_COM_DISABLE_CHECK_ECHO
+    {
+    	pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame; // Recharge le Sablier pour Nouvelle Trame
+    }
 }
+
+#else // ! UART_COM_HANDLE_RX_STD_CALLBACK
+  #ifndef UART_COM_HANDLE_RX_EVENT_CALLBACK 	// cf. "UartComConf.h"
+	#error "Aucun Rx CallBack activé : ni 'UART_COM_HANDLE_RX_COMPLETE_CLBCK', ni 'UART_COM_HANDLE_RX_EVENT_CALLBACK' !"
+  #endif // UART_COM_HANDLE_RX_EVENT_CALLBACK
+#endif // UART_COM_HANDLE_RX_STD_CALLBACK
+
+/******************************************************************************/
+
+#ifdef UART_COM_HANDLE_RX_EVENT_CALLBACK	// cf. "UartComConf.h"
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *hUart, uint16_t Size) // Handler partagé par tous les UARTs & USARTs (uniquement)
+{
+	// Inspired from https://deepbluembedded.com/stm32-usart-uart-tutorial/
+	// and https://github.com/MaJerle/stm32-usart-uart-dma-rx-tx
+
+	// Prépare la Gestion :
+	tUartComManager* pComManager = UartCom_GetManagerFromHandle(hUart);
+	if(0 == pComManager)	// Handle pas dans la Liste => Impossible de déterminer le Manager associé :
+	{
+#ifdef NEXT_HAL_UARTEx_RxEventCallback	// cf. "UartComConf.h"
+		NEXT_HAL_UARTEx_RxEventCallback(hUart, Size);	// ATTENTION : Fonction Non Testée !
+#endif // NEXT_HAL_UARTEx_RxEventCallback
+		return;
+	}
+	tUartComInitParams* pInitParam = pComManager->pInitParams;
+	if(0 == pInitParam)	return;	// Infos d'Init non disponibles => Impossible de déterminer la Config associée !
+
+	if(UART_COM_OVERFLOW_BYTE == pComManager->pNextRxByte) // Si on pointe déjà sur l'OverflowByte :
+	{
+		if(Size > 0) { pComManager->mayDiscardRx = 1; } // Réception Overflow => Discard Frame !
+	} else {	// Tant qu'on est pas sur un DMA circulaire :
+
+		if(HAL_UART_RXEVENT_HT != hUart->RxEventType) // HAL_UART_RXEVENT_IDLE or HAL_UART_RXEVENT_TC or else :
+		{
+			pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxFrame;	// Recharge le Sablier de Fin de Trame
+			pComManager->curRxBufInfo.nbBytes += Size; // en Idle OU TC => Ajoute la taille supplémentaire !
+		} else { // HAL_UART_RXEVENT_HT :
+#ifdef UART_COM_START_SAB_EOF_AT_HT	// cf. "UartComConf.h"
+			pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
+#endif // UART_COM_START_SAB_EOF_AT_HT
+		}
+	}
+
+	if(HAL_UART_RXEVENT_TC == hUart->RxEventType)	// Transfer Complete event => all Requested bytes are received :
+	{
+		UartCom_ReSetRx(pComManager, 0); // Relancer la Réception SANS RéInitialiser le Buffer => Pointe sur OverFlowByte !
+	} else {	// HAL_UART_RXEVENT_IDLE, HAL_UART_RXEVENT_HT or else :
+		pComManager->sabReSetRxBufPtr = pInitParam->sabReSetRxBufPtr; // Recharge le Sablier de reconfiguration de la Réception
+	}
+
+    pComManager->sabTimeOut4Reply = pInitParam->sabTimeOut4Reply;	// Recharge le Délai pour Répondre
+    pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame;		// Recharge le Sablier pour Nouvelle Trame
+}
+
+#endif // UART_COM_HANDLE_RX_EVENT_CALLBACK
 
 /******************************************************************************/
 
@@ -1276,11 +1406,12 @@ HAL_StatusTypeDef UartCom_ReInitUartWithCustomParams(UartReInitItem* pReInitItem
 	// Finalise Init :
 	if(0 != pCoreVars->ReInitFlags.InitRS485Ex) // Init as RS485 Extended :
 	{
-		return HAL_RS485Ex_Init(huart, UART_DE_POLARITY_HIGH, 0, 0);
+		return HAL_RS485Ex_Init(huart, pCoreVars->ReInitFlags.DePolarity ? UART_DE_POLARITY_LOW : UART_DE_POLARITY_HIGH, 0, 0);
 	} else {
 		return HAL_UART_Init(huart); // Init as standard classic UART
 	}
 #else // !UART_COM_SUPPORT_REINIT :
+	UNUSED(pReInitItem);
 	return HAL_ERROR;
 #endif // UART_COM_SUPPORT_REINIT
 }
@@ -1301,6 +1432,9 @@ void UartCom_Discard_Handle(void* hHandle)
 
 void UartCom_Handle_ReceivedBloc(void* hHandle, uint8_t* pRx, uint16_t Len)	// A appeler dans tous les Handlers de réception Externes, par exemple USB :
 {
+
+#ifdef UART_COM_HANDLE_RX_EXTERNAL_BLOCS
+
 	// Prépare la Gestion :
 	tUartComManager* pComManager = UartCom_GetManagerFromHandle(hHandle);
 	if(0 == pComManager)	return;	// Handle pas dans la Liste => Impossible de déterminer le Manager associé !
@@ -1341,7 +1475,12 @@ void UartCom_Handle_ReceivedBloc(void* hHandle, uint8_t* pRx, uint16_t Len)	// A
 		pComManager->sabEndOfRxFrame = pInitParam->sabEndOfRxBloc;	// Recharge le Sablier TimeOut Fin de Bloc de Trame
 	}
     pComManager->sabTimeOut4Reply = pInitParam->sabTimeOut4Reply;	// Recharge le Délai pour Répondre
-    pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame;		// Recharge le Sablier pour Nouvelle Trame
+    pComManager->sabReady4Tx = pInitParam->sabReady4TxFrame;		// Recharge le Sablier d'indisponibilité pour Envoi Tx
+
+#else // ! UART_COM_HANDLE_RX_EXTERNAL_BLOCS :
+    UNUSED(hHandle); UNUSED(pRx); UNUSED(Len);
+#endif // UART_COM_HANDLE_RX_EXTERNAL_BLOCS
+
 }
 
 /******************************************************************************/
@@ -1413,16 +1552,22 @@ void UartCom_ReSetRx(tUartComManager* pComManager, uint16_t reInitRxBuf)
     }
 
     // Protège le Buffer de Réception d'un éventuel débordement de Bloc :
-	if((pComManager->curRxBufInfo.nbBytes + pInitParam->maxRxPacketSize) > pComManager->curRxBufInfo.maxBytes)
+    uint16_t maxRxSize = pInitParam->maxRxPacketSize;
+    if((pComManager->curRxBufInfo.nbBytes + maxRxSize) > pComManager->curRxBufInfo.maxBytes)
 	{
-		pComManager->curRxBufInfo.nbBytes = pComManager->curRxBufInfo.maxBytes - pInitParam->maxRxPacketSize;
-		pComManager->mayDiscardRx = 1; // Trop long => Discard Frame
+    	maxRxSize = pComManager->curRxBufInfo.maxBytes - pComManager->curRxBufInfo.nbBytes;
 	}
 
 	// Relancer la Réception :
     if(0 != pInitParam->hHandle)
     {
-    	pComManager->pNextRxByte = pComManager->curRxBufInfo.pBufBase + pComManager->curRxBufInfo.nbBytes;
+    	if(maxRxSize > 0)
+    	{
+    		pComManager->pNextRxByte = pComManager->curRxBufInfo.pBufBase + pComManager->curRxBufInfo.nbBytes;
+    	} else {
+    		pComManager->pNextRxByte = UART_COM_OVERFLOW_BYTE;	// Pointe sur le Byte d'Overflow
+    		maxRxSize = 1;
+    	}
     	pUartCom_IoFn pIoFn = 0;
     	if(0 != pClassFn) { pIoFn = pClassFn->pFnStartReceive; }
 #ifdef UART_COM_USR_FN_START_RECEIVE
@@ -1434,7 +1579,7 @@ void UartCom_ReSetRx(tUartComManager* pComManager, uint16_t reInitRxBuf)
     		if(UINT32_MAX > pComManager->nbReStartRx) { pComManager->nbReStartRx++; }
 #endif // UART_COM_SUPPORT_STATS
 
-    		if(HAL_OK == pIoFn(pInitParam->hHandle, pComManager->pNextRxByte, pInitParam->maxRxPacketSize)) // Si la demande de Rx a été acceptée :
+    		if(HAL_OK == pIoFn(pInitParam->hHandle, pComManager->pNextRxByte, maxRxSize)) // Si la demande de Rx a été acceptée :
     		{
     			if(0 != reInitRxBuf) { pComManager->mayDiscardRx = 0; }
     			return;
@@ -1787,7 +1932,9 @@ uint16_t UartCom_PostFrame(tComFrameParams* pFI)
 			pComManager->curTxBufInfo.nbBytes = pFI->nbBytes;
 			pComManager->curTxBufInfo.pBufBase = pFI->pBufBase;
 			pComManager->pCurFrameInfo = pFI;
+#if defined(UART_COM_ENABLE_IBUS) && !defined(UART_COM_DISABLE_SYNC_TX)	// cf. "UartComConf.h"
 			pComManager->wait4Sync = pInitParam->flag.maySyncTx;
+#endif // UART_COM_ENABLE_IBUS && !UART_COM_DISABLE_SYNC_TX
 			pComManager->canTxNow = 0;
 #ifdef UART_COM_SUPPORT_STATS	// cf. "UartComConf.h"
 			if(UINT32_MAX > pComManager->nbMayPostFrameNow) { pComManager->nbMayPostFrameNow++; }
@@ -1864,6 +2011,8 @@ uint16_t getThisHandleRxBufSize(void *hHandle)
 
 /****************************************************************************/
 
+#ifdef UART_COM_HANDLE_TX_STD_CALLBACK
+
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *hUart)	// A appeler par tous les Handlers Externes lorsque l'envoi est Terminé (nécessaire si support TxRxPin) !
 {
 	tUartComManager* pComManager = UartCom_GetManagerFromHandle(hUart);
@@ -1892,6 +2041,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *hUart)	// A appeler par tous le
 	if(UINT32_MAX > pComManager->nbTxFramesSentCB) { pComManager->nbTxFramesSentCB++; }
 #endif // UART_COM_SUPPORT_STATS
 }
+
+#endif // UART_COM_HANDLE_TX_STD_CALLBACK
 
 /****************************************************************************/
 

@@ -73,56 +73,30 @@ void GestionInputSensor();
 // Add above this line others public functions
 
 /*** public Getters *******************************/
-#define GET_SET_ARRAY_PROTOTYPE(a, b, c)	c get##a##b(void); uint8_t getID##a##b(void); void byPass##a##b(c val);
+#define GET_SET_PROTOTYPE_SENSOR(a, c)	c get##a(uint8_t idx); uint8_t getID##a(uint8_t idx); void byPass##a(uint8_t idx, c val);
 
 uint16_t getBypassDuration(); // durée du court circuit en seconde
 void setBypassDuration(uint16_t duration);
 
 #if NB_PRESSURE_SENSOR_USED > 0
-uint16_t getPressure(uint8_t idx);
-uint8_t getPressureId(uint8_t idx);
-
-// interface modbus
-GET_SET_ARRAY_PROTOTYPE(Pressure, 0, uint16_t)
+GET_SET_PROTOTYPE_SENSOR(Pressure, uint16_t)
 #endif
 
 #if NB_COV_SENSOR_USED > 0
-uint16_t getCov(uint8_t idx);
-uint8_t getCovId(uint8_t idx);
-
-// interface modbus
-GET_SET_ARRAY_PROTOTYPE(Cov, 0, uint16_t)
+GET_SET_PROTOTYPE_SENSOR(Cov, uint16_t)
 #endif
 
 #if NB_CO2_SENSOR_USED > 0
-uint16_t getCo2(uint8_t idx);
-uint8_t getCo2Id(uint8_t idx);
-
-// interface modbus
-GET_SET_ARRAY_PROTOTYPE(Co2, 0, uint16_t)
+GET_SET_PROTOTYPE_SENSOR(Co2, uint16_t)
 #endif
 
 #if NB_HR_TEMP_SENSOR_USED > 0
-uint16_t getHr(uint8_t idx);
-uint8_t getHrId(uint8_t idx);
-int16_t getTemp(uint8_t idx);
-uint8_t getTempId(uint8_t idx);
-
-// interface modbus
-GET_SET_ARRAY_PROTOTYPE(Hr, 0, uint16_t)
-GET_SET_ARRAY_PROTOTYPE(Temp, 0, int16_t)
+GET_SET_PROTOTYPE_SENSOR(Hr, uint16_t)
+GET_SET_PROTOTYPE_SENSOR(Temp, int16_t)
 #endif
 
 #if NB_CTN_TT4_10KC3_USE > 0
-int16_t getCtn(uint8_t idx);
-uint8_t getCtnId(uint8_t idx);
-
-// interface modbus
-GET_SET_ARRAY_PROTOTYPE(Ctn, 0, int16_t)
-GET_SET_ARRAY_PROTOTYPE(Ctn, 1, int16_t)
-GET_SET_ARRAY_PROTOTYPE(Ctn, 2, int16_t)
-GET_SET_ARRAY_PROTOTYPE(Ctn, 3, int16_t)
-GET_SET_ARRAY_PROTOTYPE(Ctn, 4, int16_t)
+GET_SET_PROTOTYPE_SENSOR(Ctn, int16_t)
 #endif
 // Add above this line others public Getters
 

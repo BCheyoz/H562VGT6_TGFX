@@ -4,7 +4,7 @@
  *  Created on: 28 nov. 2023
  *  Original Author: j.proux
  *
- *  Updated on: 31 Janv. 2024
+ *  Updated on: 14 Mars 2025
  *  Updated by: j.proux
  *
  */
@@ -54,7 +54,32 @@
 	#error "FLASH_DEVICE_SIZE could not be greater than Internal Flash Size !"
 #else // FLASH_DEVICE_SIZE <= FLASH_MAX_SIZE :
 	// OK, nothing to do here :-) .
-#endif //
+#endif // FLASH_MAX_SIZE & FLASH_DEVICE_SIZE
+
+// Tentative de détermination automatique RamBase & RamSize :
+#ifdef SRAM_BASE
+	#define RAM_BASE_ADR	SRAM_BASE
+#elif defined(SRAM1_BASE)
+	#define RAM_BASE_ADR	SRAM1_BASE		// SRAM1_BASE @ 0x20000000UL sur STM32H562xx
+#endif // SRAM_BASE, SRAM1_BASE
+
+#if defined(SRAM5_SIZE) && defined(SRAM4_SIZE) && defined(SRAM3_SIZE) && defined(SRAM2_SIZE) && defined(SRAM1_SIZE)
+	#define RAM_MAX_SIZE	(SRAM5_SIZE + SRAM4_SIZE + SRAM3_SIZE + SRAM2_SIZE + SRAM1_SIZE)
+#elif defined(SRAM4_SIZE) && defined(SRAM3_SIZE) && defined(SRAM2_SIZE) && defined(SRAM1_SIZE)
+	#define RAM_MAX_SIZE	(SRAM4_SIZE + SRAM3_SIZE + SRAM2_SIZE + SRAM1_SIZE)
+#elif defined(SRAM3_SIZE) && defined(SRAM2_SIZE) && defined(SRAM1_SIZE)
+	#define RAM_MAX_SIZE	(SRAM3_SIZE + SRAM2_SIZE + SRAM1_SIZE)
+#elif defined(SRAM2_SIZE) && defined(SRAM1_SIZE)
+	#define RAM_MAX_SIZE	(SRAM2_SIZE + SRAM1_SIZE)
+#elif defined(SRAM1_SIZE)
+	#define RAM_MAX_SIZE	(SRAM1_SIZE)
+#else
+	// Impossible to estimate !
+#endif // SRAM1_SIZE, SRAM2_SIZE, SRAM3_SIZE, SRAM4_SIZE, SRAM5_SIZE
+
+#ifndef RAM_MAX_SIZE // cf. ci-dessus !
+	#warning "RAM_MAX_SIZE could not be detected !"
+#endif // RAM_MAX_SIZE
 
 #ifndef VECTORS_BLOC_SIZE	// Configuration manuelle VECTORS_BLOC_SIZE requise :
 //	#define VECTORS_BLOC_SIZE	( 67 *sizeof(uint32_t))	//  67 Vecteurs de type .word (= UINT32) sur STM32F103RBTx (Cortex M3,  cf. "g_pfnVectors" in "startup_stm32f103rbtx.s")
@@ -73,9 +98,11 @@
 #endif // APP_WITH_BOOT
 
 #define FIRMWARE_BASE_ADR	(BOOTLOADER_BASE_ADR + BOOTLOADER_MAX_SIZE) // FlashBase + BL
-#define FIRMWARE_MAX_SIZE	(FLASH_DEVICE_SIZE - BOOTLOADER_MAX_SIZE) // SizeMax = 512K - BL
+#define FIRMWARE_MAX_SIZE	(FLASH_DEVICE_SIZE - BOOTLOADER_MAX_SIZE)	// SizeMax = FlashSize - BL
 #define FIRMWARE_LAST_ADR	(FIRMWARE_BASE_ADR + FIRMWARE_MAX_SIZE -1)
 
 #define RAM_ADR_MSK_512K	0xFFF80000UL	// Masque pour accepter 512K de RAM
+#define RAM_ADR_MSK_640K	0xFFF60000UL	// Masque pour accepter 640K de RAM
+#define RAM_ADR_MSK_AUTO	(1 + (~RAM_MAX_SIZE)) // Masque Auto à partir de RamMaxSize
 
 #endif /* VERSIONINFOS_FLASHINFOS_H_ */

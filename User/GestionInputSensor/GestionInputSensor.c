@@ -114,12 +114,29 @@ void updateHrValueUint(gis_UIntValue *pData, gis_i2cDevice *pDevice, uint8_t nbD
 void updateCOVValueUint(gis_UIntValue *pData, gis_i2cDevice *pDevice, uint8_t nbDevice);
 void updateCO2ValueUint(gis_UIntValue *pData, gis_i2cDevice *pDevice, uint8_t nbDevice);
 
+#define GET_SET_ARRAY_DEFINITION_UINT16(a, b)	uint16_t get##a(uint8_t idx){ \
+												if(idx > b) return UINT16_MAX; \
+												return a[idx].value; \
+											} \
+											uint8_t getID##a(uint8_t idx){ \
+												if(idx > b) return NO_SENSOR; \
+												return a[idx].id; \
+											} \
+											void byPass##a(uint8_t idx, uint16_t val){ \
+												a[idx].id = SENSOR_BENCHTEST; a[idx].value = val; a[idx].byPasseTimer = bypassDuration; \
+											}
 
-#define GET_SET_ARRAY_DEFINITION(a, b, c)		c get##a##b(void){return a[b].value;} \
-												uint8_t getID##a##b(void){return a[b].id;} \
-												void byPass##a##b(c val){ a[b].id = SENSOR_BENCHTEST; a[b].value = val; a[b].byPasseTimer = bypassDuration;}
-
-
+#define GET_SET_ARRAY_DEFINITION_INT16(a, b)	int16_t get##a(uint8_t idx){ \
+												if(idx > b) return INT16_MIN; \
+												return a[idx].value; \
+											} \
+											uint8_t getID##a(uint8_t idx){ \
+												if(idx > b) return NO_SENSOR; \
+												return a[idx].id; \
+											} \
+											void byPass##a(uint8_t idx, int16_t val){ \
+												a[idx].id = SENSOR_BENCHTEST; a[idx].value = val; a[idx].byPasseTimer = bypassDuration; \
+											}
 // Add above this line others private prototype functions
 
 /*** public functions *******************************/
@@ -213,80 +230,33 @@ void GestionInputSensor()
 
 }
 
-#if NB_PRESSURE_SENSOR_USED > 0
-uint16_t getPressure(uint8_t idx){
-	if(idx > NB_PRESSURE_SENSOR_USED) return UINT16_MAX;
-	return Pressure[idx].value;
+
+uint16_t getBypassDuration(){
+	return bypassDuration;
 }
-uint8_t getPressureId(uint8_t idx){
-	if(idx > NB_PRESSURE_SENSOR_USED) return NO_SENSOR;
-	return Pressure[idx].id;
+void setBypassDuration(uint16_t duration){
+	bypassDuration = duration;
 }
 
-GET_SET_ARRAY_DEFINITION(Pressure, 0, uint16_t)
+#if NB_PRESSURE_SENSOR_USED > 0
+GET_SET_ARRAY_DEFINITION_UINT16(Pressure, NB_PRESSURE_SENSOR_USED)
 #endif
 
 #if NB_COV_SENSOR_USED > 0
-uint16_t getCov(uint8_t idx){
-	if(idx > NB_COV_SENSOR_USED) return UINT16_MAX;
-	return Cov[idx].value;
-}
-uint8_t getCovId(uint8_t idx){
-	if(idx > NB_COV_SENSOR_USED) return NO_SENSOR;
-	return Cov[idx].id;
-}
-
-GET_SET_ARRAY_DEFINITION(Cov, 0, uint16_t)
+GET_SET_ARRAY_DEFINITION_UINT16(Cov, NB_COV_SENSOR_USED)
 #endif
 
 #if NB_CO2_SENSOR_USED > 0
-uint16_t getCo2(uint8_t idx){
-	if(idx > NB_CO2_SENSOR_USED) return UINT16_MAX;
-	return Co2[idx].value;
-}
-uint8_t getCo2Id(uint8_t idx){
-	if(idx > NB_CO2_SENSOR_USED) return NO_SENSOR;
-	return Co2[idx].id;
-}
-GET_SET_ARRAY_DEFINITION(Co2, 0, uint16_t)
+GET_SET_ARRAY_DEFINITION_UINT16(Co2, NB_CO2_SENSOR_USED)
 #endif
 
 #if NB_HR_TEMP_SENSOR_USED > 0
-uint16_t getHr(uint8_t idx){
-	if(idx > NB_HR_TEMP_SENSOR_USED) return UINT16_MAX;
-	return Hr[idx].value;
-}
-uint8_t getHrId(uint8_t idx){
-	if(idx > NB_HR_TEMP_SENSOR_USED) return NO_SENSOR;
-	return Hr[idx].id;
-}
-int16_t getTemp(uint8_t idx){
-	if(idx > NB_HR_TEMP_SENSOR_USED) return INT16_MIN;
-	return Temp[idx].value;
-}
-uint8_t getTempId(uint8_t idx){
-	if(idx > NB_HR_TEMP_SENSOR_USED) return NO_SENSOR;
-	return Temp[idx].id;
-}
-GET_SET_ARRAY_DEFINITION(Hr, 0, uint16_t)
-GET_SET_ARRAY_DEFINITION(Temp, 0, int16_t)
+GET_SET_ARRAY_DEFINITION_UINT16(Hr, NB_HR_TEMP_SENSOR_USED)
+GET_SET_ARRAY_DEFINITION_INT16(Temp, NB_HR_TEMP_SENSOR_USED)
 #endif
 
 #if NB_CTN_TT4_10KC3_USE > 0
-int16_t getCtn(uint8_t idx){
-	if(idx > NB_CTN_TT4_10KC3_USE) return UINT16_MAX;
-	return Ctn[idx].value;
-}
-uint8_t getCtnId(uint8_t idx){
-	if(idx > NB_CTN_TT4_10KC3_USE) return NO_SENSOR;
-	return Ctn[idx].id;
-}
-
-GET_SET_ARRAY_DEFINITION(Ctn, 0, int16_t)
-GET_SET_ARRAY_DEFINITION(Ctn, 1, int16_t)
-GET_SET_ARRAY_DEFINITION(Ctn, 2, int16_t)
-GET_SET_ARRAY_DEFINITION(Ctn, 3, int16_t)
-GET_SET_ARRAY_DEFINITION(Ctn, 4, int16_t)
+GET_SET_ARRAY_DEFINITION_INT16(Ctn, NB_CTN_TT4_10KC3_USE)
 #endif
 
 // Add above this line others public functions
