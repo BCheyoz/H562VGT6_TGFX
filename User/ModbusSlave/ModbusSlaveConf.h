@@ -304,7 +304,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 // ModbusSlave de Taille par défaut :
 #define MODBUS_SLAVE_BUF_DEF_RX_SIZE	1270	// Taille du Buffer par défaut pour la Réception ModbusSlave (min = 266 bytes)
-#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	270		// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes)
+#define MODBUS_SLAVE_BUF_DEF_TX_SIZE	1270	// Taille du Buffer par défaut pour un Envoi ModbusSlave (min = 266 bytes, max 65535)
 
 // ModbusSlave de Taille 2 :
 #define MODBUS_SLAVE_BUF_SIZE_2_RX  	50		// Taille n°2 du Buffer pour la Réception
@@ -449,12 +449,11 @@ MODBUS_SLAVE_MAKE_XTERN_CONST_BASE_OF_TABLE(uint16_t, MODBUS_SLAVE_BASE_OF_PSWD)
 /******************************************************************************/
 // Pour "UartComUser.c" (ne pas modifier ces réglages) :
 
-#define MODBUS_SLAVE_EOF_RX 		5		// 5ms pour sabEndOfRxFrame (base = IT @ 1ms)
-#define MODBUS_SLAVE_EOB_RX 		10		// 10ms pour sabEndOfRxFrame lorsqu'on n'a reçu qu'un Bloc de la Trame (base = IT @ 1ms)
-#define MODBUS_SLAVE_REPLY_TO	 	(1000)	// 1s pour sabTimeOut4Reply (base = IT @ 1ms)
-//#define MODBUS_SLAVE_NO_TX_INIT 	(10 *1000) // 10s pour sabReady4Tx (base = IT @ 1ms)
-#define MODBUS_SLAVE_NO_TX_INIT 	(1 *1000) // 1s pour sabReady4Tx (base = IT @ 1ms)
-#define MODBUS_SLAVE_NO_TX_FRAME	50		// 50ms pour sabReady4Tx (base = IT @ 1ms)
+#define MODBUS_SLAVE_EOF_RX 		5		// 5ms (≥ 2 ms) pour sabEndOfRxFrame (base = IT @ 1ms)
+#define MODBUS_SLAVE_EOB_RX 		60		// 60ms (≥ 56 ms) pour 1270 Bytes @ 115200 sur sabEndOfRxFrame, si reçu qu'1 Bloc de Trame (base = IT @ 1ms)
+#define MODBUS_SLAVE_REPLY_TO	 	1000	// 1s pour sabTimeOut4Reply, car Slave (base = IT @ 1ms)
+#define MODBUS_SLAVE_NO_TX_INIT 	10		// 10ms (entre 2 et 56 ms) pour sabReady4Tx (base = IT @ 1ms)	-> EOF_RX < NO_TX_INIT < EOB_RX
+#define MODBUS_SLAVE_NO_TX_FRAME	3		// 3ms (< EOF_RX, car Slave) pour sabReady4Tx (base = IT @ 1ms)	-> NO_TX_FRAME < EOB_RX (en Slave)
 #define MODBUS_SLAVE_NO_TX_BYTE 	0		// 0ms pour sabMayTxNextByte (base = IT @ 1ms)
 #define MODBUS_SLAVE_NO_RX_TO		(60 *10) // 60s pour sabReSetRxBufPtr (base = IT @ 100ms)
 

@@ -39,7 +39,7 @@ extern "C" {
 #define FAN1_DATA_POS			0				// Position 0 dans mFanData (PWM & IC)
 
 #define FAN1_PWM_HANDLE 		&htim4
-#define FAN1_PWM_CHANNEL_ID 	TIM_CHANNEL_3	// TIM4_CH3 APB1
+#define FAN1_PWM_CHANNEL_ID 	TIM_CHANNEL_3	// TIM4_CH3 sur APB1
 #define FAN1_PWM_DATAS  		&mFanData[FAN1_DATA_POS].PwmDatas
 //#define FAN1_PWM_DATAS  		&mFanCmdOnlyData[FAN1_DATA_POS]	// suffisant en cas de PWM sans FeedBack
 #define FAN1_PWM_K_FACTOR		1				// Correspondance User 1mv => PWM = 1

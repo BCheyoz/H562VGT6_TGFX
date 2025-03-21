@@ -411,10 +411,20 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 //#define UART_COM_ENABLE_IBUS    			// Pour activer la liaison avec la Librairie "iBus"
 #define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
-//#define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
+#define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
+
+#define UART_COM_DISABLE_CHECK_ECHO			// Pour désactiver la gestion de l'écho *Rx = *Tx
+#define UART_COM_IGNORE_EXCEDENT_INIT_PARAMS// Pour désactiver la Vérification des Inits excédentaires/mauvaise Config au RunTime
+#define UART_COM_NO_CHK_READY_AFTER_INIT	// Pour désactiver la Vérification des Uarts "Ready" après l'Init
+
+//#define UART_COM_HANDLE_RX_STD_CALLBACK 	// Pour activer le CallBack Rx classique "HAL_UART_RxCpltCallback" (via HAL_UART_Receive_IT)
+#define UART_COM_HANDLE_RX_EVENT_CALLBACK	// Pour activer le CallBack Rx en DMA ou ReceiveToIdle => "HAL_UARTEx_RxEventCallback"
+//#define UART_COM_HANDLE_RX_EXTERNAL_BLOCS	// Pour activer la Réception de Blocs depuis d'autres Périphériques (par ex : USB_D ou USB_H)
+//#define UART_COM_HANDLE_TX_STD_CALLBACK 	// Pour activer le CallBack Tx classique "HAL_UART_TxCpltCallback" (nécessaire si TX_RX_PIN)
 
 //#define UART_COM_SUPPORT_TX_RX_PIN  		// Pour activer la prise en charge d'une Pin de TxRx
-//#define UART_COM_SUPPORT_STATS  			// Pour Activer les compteurs de Stats dans UartCom
+//#define UART_COM_SUPPORT_STATS  			// Pour activer les compteurs de Stats dans UartCom
+//#define UART_COM_START_SAB_EOF_AT_HT		// Pour activer le lancement du sabEndOfRxFrame au "Half Transfer" event
 
 #define UART_COM_MAX_REG_TX 		1		// nb Max de RegularTx à Gérer (1 par Trame iBus Auto ou Callback )
 
@@ -425,6 +435,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 //#define NEXT_HAL_UART_RxCpltCallback		USER_HAL_UART_RxCpltCallback2	// Remplacer par un nom User RxCpltCallback approprié
 //#define NEXT_HAL_UART_TxCpltCallback		USER_HAL_UART_TxCpltCallback2	// Remplacer par un nom User TxCpltCallback approprié
 //#define NEXT_HAL_UART_ErrorCallback 		USER_HAL_UART_ErrorCallback2	// Remplacer par un nom User ErrorCallback  approprié
+//#define NEXT_HAL_UARTEx_RxEventCallback 	USER_HAL_UARTEx_RxEventCallback	// Remplacer par un nom User RxEventCallback approprié
 
 /********************************************************************************************/
 
@@ -476,7 +487,7 @@ UART_COM_MAKE_XTERN_CONST_BASE_AND_END_OF_TABLE(tUartComInitParams, UC_BaseInitP
 /********************************************************************************************/
 
 // Paramètres pour Réinit Uart avec de nouveaux BaudRate/Parity/Stops :
-#define UART_COM_SUPPORT_REINIT
+//#define UART_COM_SUPPORT_REINIT 		// Pour activer le support de ReInit/Changement de Paramètres UART
 #define UART_COM_SAB_APPLY_AT_MST	50	// Délai Apply = 5s, par pas de 100ms
 #define UART_COM_SAB_APPLY_REINIT	50	// Délai Apply = 5s, par pas de 100ms
 #define UART_COM_SAB_VALID_REINIT	900 // Délai pour Valider le changement = 90s, par pas de 100ms

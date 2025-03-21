@@ -30,6 +30,7 @@ extern "C" {
 #include "main.h"
 #include "ux_host_msc.h"
 #include "ux_host_cdc_acm.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -41,7 +42,7 @@ extern "C" {
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-#define UX_HOST_APP_MEM_POOL_SIZE  1024
+#define UX_HOST_APP_MEM_POOL_SIZE       1024
 #define USBX_HOST_MEMORY_STACK_SIZE     1024
 
 /* USER CODE BEGIN EC */

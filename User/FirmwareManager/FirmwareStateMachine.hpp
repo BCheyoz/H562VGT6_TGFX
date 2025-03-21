@@ -92,7 +92,7 @@ private :
 
 
 /********************************************************************************************/
-// User varaible
+// User variable
 	AppointElec *appointElec;
 	DigitalInputs *di_Anode;
 };

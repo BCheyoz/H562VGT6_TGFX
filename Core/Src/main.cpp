@@ -67,6 +67,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,7 +116,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_GPDMA1_Init();
-  MX_ADC1_Init();
+//  MX_ADC1_Init(); 		// Désactivé_Jp le 28/02/2025 -> laisser "InitAnalogInputs" faire le nécessaire !
   MX_OCTOSPI1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
@@ -148,6 +149,7 @@ int main(void)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -161,7 +163,10 @@ int main(void)
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
+#ifdef USE_DIGITAL_INPUTS
 	GestionDigitalInputs();
+#endif //USE_DIGITAL_INPUTS
+
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
@@ -274,18 +279,24 @@ static void MX_NVIC_Init(void)
   /* GPDMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
-  /* TIM1_CC_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
-  /* UART5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(UART5_IRQn);
   /* GPDMA1_Channel2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
+  /* GPDMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel3_IRQn);
+  /* GPDMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel4_IRQn);
+  /* UART5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART5_IRQn);
   /* USART3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* TIM1_CC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

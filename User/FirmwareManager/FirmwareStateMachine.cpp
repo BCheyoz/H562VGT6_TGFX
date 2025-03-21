@@ -164,8 +164,8 @@ FwMng::FwMng()
 // User Init
 	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 
-	di_Anode = new DigitalInputs(Anode_GPIO_Port, Anode_Pin,DI_NO_WORKING_STATE_IS_1,E_SINGLE_INPUT);
-	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE,di_Anode, HandleDI_Event);
+	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
+	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
 }
 
 void FwMng::run(void)
