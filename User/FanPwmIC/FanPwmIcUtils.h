@@ -4,8 +4,8 @@
  *  Created on: 16 févr. 2022
  *  Original Author: j.proux
  *
- *  Updated on: 07 Mars 2022
- *  Updated by: j.proux
+ *  Updated on: 26 Mars 2025
+ *  Updated by: m.faget
  *
  *  Pour intégrer facilement cette Librairie "FanPwmIC" dans un nouveau Projet :
  *   -> Suivre les indications dans "FanPwmIcConf.h"
@@ -40,6 +40,7 @@ typedef struct _tFanIcInitParams {
 	HAL_TIM_ActiveChannel IcChannelFlag; // Flag for the InputCapture channel identification
 	uint32_t TimeOut_10ms;		// TimeOut absence de signal (base @ 10ms)
 	float	kFeedBack;			// Coefficient de Conversion vers l'unité de sortie attendue
+	float 	kFreq;				// Coefficient de Conversion vers la fréquence
 	struct _tFanIcSrcDatas* pSrcDatas;
 	struct _tFanIcData* pIcDatas;
 } tFanIcInitParams;
@@ -113,6 +114,10 @@ typedef struct _tFanIcSrcDatas {
 	uint32_t lastDeltaTime;		// Pour mettre à dispo la dernière durée entre 2 impulsions
 #endif // FPIC_GET_LAST_DELTA_TIME
 
+#ifdef FPIC_GET_LAST_FREQUENCY
+	float lastFrequency;		// Pour mettre à dispo la dernière fréquence du signal entrant
+#endif // FPIC_GET_LAST_FREQUENCY
+
 #ifdef FPIC_GET_LAST_FEED_BACK
 	float lastFeedBackValue;	// Pour mettre à dispo la dernière valeur Feedback calculée
 #endif // FPIC_GET_LAST_FEED_BACK
@@ -152,6 +157,7 @@ uint16_t FanPwmIC_getFanVoltage_mV(tFanPwmData* pPwmData);
 uint16_t FanPwmIC_getFanSpeed(tFanIcData* pIcData);
 uint16_t FanPwmIC_getLastFanSpeed(tFanIcData* pIcData);
 uint16_t FanPwmIC_getLastDeltaTime(tFanIcData* pIcData);
+uint32_t FanPwmIC_getLastFrequency(tFanIcData* pIcData);
 
 // Fonctions d'inversion de PWM & InputCaptures :
 void FanPwmIC_SwapPwmIc(tFanPwmData* pPwmData1, tFanIcData* pIcData1, tFanPwmData* pPwmData2, tFanIcData* pIcData2, uint8_t swapAction);
@@ -182,7 +188,7 @@ void FanPwmIc_CopyMemory(uint8_t* pDest, const uint8_t* pSrc, uint16_t BytesCt);
 
 #define FPIC_MAKE_CHANNEL_FLAG(id)							(1 << (id >> 2))
 #define FPIC_MAKE_K_FEED_BACK(clk,psc,ppt,k)				((float)( ((float)(k)) * ( ((float)(clk))/((float)( ((uint32_t)(ppt)) * ((uint32_t)(psc)+1) )) ) ))
-
+#define FPIC_MAKE_K_FREQ(clk,psc,ppt)						FPIC_MAKE_K_FEED_BACK(clk,psc,ppt,1)
 #define FPIC_MAKE_VAR_AND_SET_VALUE(t,n,v)					t n = (t)v
 #define FPIC_MAKE_CONST_END_OF_TABLE(t,n,b)					const t* n = ((void*)b) + (sizeof(b))
 #define FPIC_MAKE_CONST_BASE_AND_END_PTR_OF_TABLE(t,b,e,a)	const t* b = a; const t* e = ((void*)a) + (sizeof(a))

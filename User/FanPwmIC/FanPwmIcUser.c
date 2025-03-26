@@ -4,8 +4,8 @@
  *  Created on: 16 févr. 2022
  *  Original Author: j.proux
  *
- *  Updated on: 07 Mars 2022
- *  Updated by: j.proux
+ *  Updated on: 26 Mars 2025
+ *  Updated by: m.faget
  *
  *  Version 1.0
  */
@@ -58,7 +58,7 @@ extern "C" {
 #define FAN1_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 #define FAN1_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 #define FAN1_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN1_IC_FAPB, FAN1_IC_PSC, FAN1_IC_PPT, FAN1_IC_K_UNIT)
-
+#define FAN1_IC_K_FREQ			FPIC_MAKE_K_FREQ(FAN1_IC_FAPB, FAN1_IC_PSC, FAN1_IC_PPT)// pour avoir la fréquence du signal d'entrée
 /******************************************************************************/
 // Définitions pour la Gestion du Ventilateur n°2 (TIM9_CH2 avec FeedBack sur TIM12_CH2) :
 
@@ -83,6 +83,7 @@ extern "C" {
 //#define FAN2_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 //#define FAN2_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 //#define FAN2_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN2_IC_FAPB, FAN2_IC_PSC, FAN2_IC_PPT, FAN2_IC_K_UNIT)
+//#define FAN2_IC_K_FREQ		FPIC_MAKE_K_FREQ(FAN2_IC_FAPB, FAN2_IC_PSC, FAN2_IC_PPT)// pour avoir la fréquence du signal d'entrée
 
 /******************************************************************************/
 // Définitions pour la Gestion du Ventilateur n°3 (TIM8_CH6 sans FeedBack) :
@@ -104,6 +105,7 @@ extern "C" {
 
 //#define FAN3_IC_TIME_OUT		FPIC_MAKE_TIME_OUT_ms(100)	// TimeOut = 100ms
 //#define FAN3_IC_K_FEED_BACK 	0				// no Feedback !
+//#define FAN3_IC_K_FREQ		0 				// no Freq !
 
 /******************************************************************************/
 // Définitions pour la Gestion du Ventilateur n°4 (Pas de PWM mais FeedBack sur TIM5_CH1) :
@@ -129,25 +131,25 @@ extern "C" {
 //#define FAN4_IC_PPT 			1	// Nb of "Pulse Per Turn" (PPT) from the fan feedback, generally only 1
 //#define FAN4_IC_K_UNIT  		60	// Coefficient de FeedBack, pour convertir l'unité Hz -> RPM
 //#define FAN4_IC_K_FEED_BACK 	FPIC_MAKE_K_FEED_BACK(FAN4_IC_FAPB, FAN4_IC_PSC, FAN4_IC_PPT, FAN4_IC_K_UNIT)
-
+//#define FAN4_IC_K_FREQ		FPIC_MAKE_K_FREQ(FAN4_IC_FAPB, FAN4_IC_PSC, FAN4_IC_PPT)// pour avoir la fréquence du signal d'entrée
 /******************************************************************************/
 
 tFanPwmIcInitParams mFanInitParam[] = {
 
 #if defined(FAN1_PWM_HANDLE) && defined(FAN1_IC_HANDLE)
-	{ { FAN1_PWM_HANDLE, FAN1_PWM_CHANNEL_ID, FAN1_PWM_MAX_VALUE, FAN1_PWM_DATAS }, { FAN1_IC_HANDLE, FAN1_IC_CHANNEL_ID, FAN1_IC_CHANNEL_FLAG, FAN1_IC_TIME_OUT, FAN1_IC_K_FEED_BACK, FAN1_IC_SRC_DATAS, FAN1_IC_GET_DATAS } },
+	{ { FAN1_PWM_HANDLE, FAN1_PWM_CHANNEL_ID, FAN1_PWM_MAX_VALUE, FAN1_PWM_DATAS }, { FAN1_IC_HANDLE, FAN1_IC_CHANNEL_ID, FAN1_IC_CHANNEL_FLAG, FAN1_IC_TIME_OUT, FAN1_IC_K_FEED_BACK, FAN1_IC_K_FREQ, FAN1_IC_SRC_DATAS, FAN1_IC_GET_DATAS } },
 #endif // FAN1_PWM_HANDLE & FAN1_IC_HANDLE
 
 #if defined(FAN2_PWM_HANDLE) && defined(FAN2_IC_HANDLE)
-	{ { FAN2_PWM_HANDLE, FAN2_PWM_CHANNEL_ID, FAN2_PWM_MAX_VALUE, FAN2_PWM_DATAS }, { FAN2_IC_HANDLE, FAN2_IC_CHANNEL_ID, FAN2_IC_CHANNEL_FLAG, FAN2_IC_TIME_OUT, FAN2_IC_K_FEED_BACK, FAN2_IC_SRC_DATAS, FAN2_IC_GET_DATAS } },
+	{ { FAN2_PWM_HANDLE, FAN2_PWM_CHANNEL_ID, FAN2_PWM_MAX_VALUE, FAN2_PWM_DATAS }, { FAN2_IC_HANDLE, FAN2_IC_CHANNEL_ID, FAN2_IC_CHANNEL_FLAG, FAN2_IC_TIME_OUT, FAN2_IC_K_FEED_BACK, FAN2_IC_K_FREQ, FAN2_IC_SRC_DATAS, FAN2_IC_GET_DATAS } },
 #endif // FAN2_PWM_HANDLE & FAN2_IC_HANDLE
 
 #if defined(FAN3_PWM_HANDLE) && defined(FAN3_IC_HANDLE)
-	{ { FAN3_PWM_HANDLE, FAN3_PWM_CHANNEL_ID, FAN3_PWM_MAX_VALUE, FAN3_PWM_DATAS }, { FAN3_IC_HANDLE, FAN3_IC_CHANNEL_ID, FAN3_IC_CHANNEL_FLAG, FAN3_IC_TIME_OUT, FAN3_IC_K_FEED_BACK, FAN3_IC_SRC_DATAS, FAN3_IC_GET_DATAS } },
+	{ { FAN3_PWM_HANDLE, FAN3_PWM_CHANNEL_ID, FAN3_PWM_MAX_VALUE, FAN3_PWM_DATAS }, { FAN3_IC_HANDLE, FAN3_IC_CHANNEL_ID, FAN3_IC_CHANNEL_FLAG, FAN3_IC_TIME_OUT, FAN3_IC_K_FEED_BACK, FAN3_IC_K_FREQ, FAN3_IC_SRC_DATAS, FAN3_IC_GET_DATAS } },
 #endif // FAN3_PWM_HANDLE & FAN3_IC_HANDLE
 
 #if defined(FAN4_PWM_HANDLE) && defined(FAN4_IC_HANDLE)
-	{ { FAN4_PWM_HANDLE, FAN4_PWM_CHANNEL_ID, FAN4_PWM_MAX_VALUE, FAN4_PWM_DATAS }, { FAN4_IC_HANDLE, FAN4_IC_CHANNEL_ID, FAN4_IC_CHANNEL_FLAG, FAN4_IC_TIME_OUT, FAN4_IC_K_FEED_BACK, FAN4_IC_SRC_DATAS, FAN4_IC_GET_DATAS } },
+	{ { FAN4_PWM_HANDLE, FAN4_PWM_CHANNEL_ID, FAN4_PWM_MAX_VALUE, FAN4_PWM_DATAS }, { FAN4_IC_HANDLE, FAN4_IC_CHANNEL_ID, FAN4_IC_CHANNEL_FLAG, FAN4_IC_TIME_OUT, FAN4_IC_K_FEED_BACK, FAN4_IC_K_FREQ, FAN4_IC_SRC_DATAS, FAN4_IC_GET_DATAS } },
 #endif // FAN4_PWM_HANDLE & FAN4_IC_HANDLE
 
 };
@@ -219,6 +221,17 @@ uint16_t getFanExhaustLastDeltaTime(void)
 
 }
 
+uint32_t getFanExhaustLastFrequency(void)
+{
+
+#if defined(FAN1_IC_GET_DATAS) && defined(FPIC_GET_LAST_FREQUENCY)
+	return FanPwmIC_getLastFrequency(FAN1_IC_GET_DATAS);
+#else // !FAN1_IC_GET_DATAS || !FPIC_GET_LAST_FREQUENCY
+	return 0;
+#endif // FAN1_IC_GET_DATAS
+
+}
+
 /******************************************************************************/
 
 void setFanSupplyVoltage_mV(uint16_t newVoltage)
@@ -273,6 +286,17 @@ uint16_t getFanSupplyLastDeltaTime(void)
 #else // !FAN2_IC_GET_DATAS || !FPIC_GET_LAST_DELTA_TIME
 	return 0;
 #endif // FAN2_IC_GET_DATAS & FPIC_GET_LAST_DELTA_TIME
+
+}
+
+uint32_t getFanSupplyLastFrequency(void)
+{
+
+#if defined(FAN2_IC_GET_DATAS) && defined(FPIC_GET_LAST_FREQUENCY)
+	return FanPwmIC_getLastFrequency(FAN2_IC_GET_DATAS);
+#else // !FAN2_IC_GET_DATAS || !FPIC_GET_LAST_FREQUENCY
+	return 0;
+#endif // FAN2_IC_GET_DATAS & FPIC_GET_LAST_FREQUENCY
 
 }
 
