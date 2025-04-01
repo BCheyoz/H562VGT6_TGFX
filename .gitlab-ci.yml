@@ -84,7 +84,7 @@ ConvertModbus-job:
   stage: Deploy
   image: qt_ubuntu:5.15
   variables:
-    MODBUS_FILE: "ModbusSlaveUser.c"
+    MODBUS_FILE: "User/ModbusSlave/ModbusSlaveUser.c"
     OUTPUT_FILE: "tfl4_cm_modbus_${CI_COMMIT_REF_NAME}"
   tags: 
     - Docker
