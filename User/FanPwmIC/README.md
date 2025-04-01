@@ -330,6 +330,9 @@ Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" ->
     -> se reporter à "utils.h" pour intégrer plus facilement votre Librairie "Utils".
 
 **remarques :**  
+	
+	0-10V Pwm carte à 0-10.1V en th -> à abaisser à 10V max
+	donc FAN1_PWM_K_FACTOR = 0.990099
 
     Ventilateur CEBI P14011 :  
 		commande ventilateur :  
