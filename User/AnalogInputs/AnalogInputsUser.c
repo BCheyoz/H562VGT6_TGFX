@@ -36,8 +36,8 @@ extern "C" {
 #define ADC1_ACCU_RAW_BUF_NAME	AdcAccuRawBuf1
 #define ADC1_MOY_FN_HANDLERS	Adc1FnNewFloatValueHandlers
 #define ADC1_NB_OF_CHANNELS 	6			// tfl4_cartemere_app = VrefInt, ADC1_IN1 (Ai_T1), ADC1_IN0 (Ai_T2), ADC1_IN18 (Ai_T3), ADC1_IN15 (Ai_T4), ADC1_IN14 (Ai_T5)
-#define ADC1_SAMPLES_PER_CH 	1			// 5 échantillons de chaque pour faire une première moyenne instantanée
-#define ADC1_MOY_NB_VALUES		1			// La valeur de sortie sera moyennée sur les 20 dernières valeurs instantanées disponibles
+#define ADC1_SAMPLES_PER_CH 	5			// 5 échantillons de chaque pour faire une première moyenne instantanée
+#define ADC1_MOY_NB_VALUES		20			// La valeur de sortie sera moyennée sur les 20 dernières valeurs instantanées disponibles
 #define ADC1_CONV_DELAY 		10			// Temps accordé pour la Conv : Base @ 10ms => 10 = 100ms
 #define ADC1_ERROR_DELAY		10			// Tempo après une Erreur ADC : Base @ 10ms => 10 = 100ms
 #define ADC1_REF_INT_CHANNEL	0			// Index du Rank qui est associé au "Channel Vrefint" ?

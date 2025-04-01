@@ -573,6 +573,30 @@ __attribute__((weak)) uint16_t getI2CCM_HSC_MaxPresBrut4Moy(I2CCM_DevInitParams*
 }
 #endif // HSC_MOY_P_FROM_P_CALC
 
+/************************** provisoire **************************************************/
+
+void setI2C_PresHSC_BrdgOfstOpId(uint16_t offset_command)
+{
+	mI2CCM_Pres_HSC_IntData[0].BrdgOfstOpId = offset_command;
+}
+
+uint16_t getI2C_PresHSC_BrdgOfstOpId(void)
+{
+	return mI2CCM_Pres_HSC_IntData[0].BrdgOfstOpId;
+}
+
+void setI2C_PresHSC_BridgeOffset(uint16_t offset_value)
+{
+	mI2CCM_Pres_HSC_IntData[0].BridgeOffset = offset_value;
+}
+
+uint16_t getI2C_PresHSC_BridgeOffset(void)
+{
+	return mI2CCM_Pres_HSC_IntData[0].BridgeOffset;
+}
+
+/************************** fin zone provisoire **************************************************/
+
 #ifdef __cplusplus
 }
 #endif

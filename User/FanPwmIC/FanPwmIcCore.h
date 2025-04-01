@@ -4,8 +4,8 @@
  *  Created on: 17 févr. 2022
  *  Original Author: j.proux
  *
- *  Updated on: 04 Mars 2022
- *  Updated by: j.proux
+ *  Updated on: 26 Mars 2025
+ *  Updated by: m.faget
  *
  *  Version 1.0
  *

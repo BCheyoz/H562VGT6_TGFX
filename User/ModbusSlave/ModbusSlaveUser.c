@@ -173,10 +173,12 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x162,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanFeedbackSpeed,			0},	// Vitesse Extraction (Unit = "RPM")
 	{ 0x163,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanLastFeedbackSpeed,		0},	// Temporaire non moyennée Extraction (Unit = "RPM")
 	{ 0x164,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanLastDeltaTime,			0},	// Temporaire deltaTime Extraction
+	{ 0x165,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarULongGetFctSetVar},		fanLastFrequency,			0},	// Temporaire frequence Extraction, (Unit = "Hz", Coef = "10", Name = "FreqFanIC")
 
 //	{ 0x16A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyFeedbackSpeed,			0},	// Vitesse Extraction (Unit = "RPM")
 //	{ 0x16B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastFeedbackSpeed,		0},	// Temporaire non moyennée Extraction (Unit = "RPM")
 //	{ 0x16C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastDeltaTime,			0},	// Temporaire deltaTime Extraction
+//	{ 0x16D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		getFanSupplyLastFreq,				0},	// Temporaire frequence Extraction, (Unit = "Hz", Coef = "10", Name = "FreqFanSupplyIC")
 
 	/*
 	// Codes Erreur :
@@ -381,8 +383,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},		// Unit = "Pa"
 	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},	// Unit = "°C"
-	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
-	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
+	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2C_PresHSC_BridgeOffset,	setI2C_PresHSC_BridgeOffset},
+	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2C_PresHSC_BrdgOfstOpId,	setI2C_PresHSC_BrdgOfstOpId},
 	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
 
 	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},	// Unit = "Pa"
