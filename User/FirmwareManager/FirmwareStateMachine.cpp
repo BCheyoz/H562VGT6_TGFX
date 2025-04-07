@@ -30,6 +30,7 @@
 #define POWER_ON_WAIT               50     // 2 sec avec un pas de temps de 100ms
 #define ERASE_MEM_KEY               3854
 
+#define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
 
 /*******************************************************************************************************/
 // fonction redéfinie dans FirmwareGateway en "privé"
@@ -166,6 +167,27 @@ FwMng::FwMng()
 
 	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
 	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
+
+	ctrlCmd = new TFLOW4_Ctrl;
+	ctrlCmd->initialize();
+	ctrlCmdCounter = 0;
+
+	/*
+	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
+	cc_input.HMI.TECH.Ss_ctry; // te_ctry enum France = 33, Germany = 49, Spain = 34, Marocco = 212, WesternSahara = 213
+	cc_input.HMI.TECH.Ss_tech_mode; // te_tech_mode enum tech_FullElec = 0, tech_Hybrid = 1, tech_HeatPump = 2
+	cc_input.HMI.TECH.Ns_anti_lgn_day; // ta_time_day uint8 NB de jour d'activation
+	cc_input.HMI.TECH.Ss_heat_pump_test_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.TECH.Ss_tank_size; // te_tank_size enum L105 = 105, L180 = 180
+	cc_input.HMI.TECH.Ss_sys_ver; // te_sys_ver enum Collective = 0, Individual
+	cc_input.HMI.TECH.Cs_vent_pres_min; // ta_air_pres uint16 Pa x10
+	cc_input.HMI.TECH.Cs_vent_pres_sys; // ta_air_pres uint16 Pa x10
+	cc_input.HMI.TECH.St_tor_mode[2]; // te_tor_mode enum tor_NotConnected = 0, tor_SmartGrid, tor_OffPeakHour, tor_VentSysStop
+
+	cc_input.HMI.USER.Ns_hldy_nb; // ta_time_day uint8 Nb de jour de vacance
+	cc_input.HMI.USER.Ns_pers_nb; // ta_pers_nb uint8 Nb de personne dans le foyer
+	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	*/
 }
 
 void FwMng::run(void)
@@ -250,11 +272,11 @@ void FwMng::run(void)
 #endif
 		if(regReset == TRUE){
 			regReset = FALSE;
-			//mainRegulationInit();
+			ctrlCmd->initialize();
 		}
 		else {
 			if(powerOnTimer >= POWER_ON_WAIT){
-				//mainRegulation();
+				CtrlCmdTask();
 			}
 		}
 		break;
@@ -365,3 +387,16 @@ void FwMng::requestBlinkMode(uint16_t newBlinkMode){
 	}
 }
 #endif
+
+void FwMng::CtrlCmdTask(){
+	if(ctrlCmdCounter < CTRL_CMD_TIMER){
+		ctrlCmdCounter++;
+		return;
+	}
+
+	ctrlCmdCounter = 0;
+
+	// Execute un pas de calcul *******************************************
+	ctrlCmd->step();
+}
+

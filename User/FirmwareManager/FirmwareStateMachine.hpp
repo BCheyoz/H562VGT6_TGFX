@@ -13,6 +13,7 @@
 #include "AppointElec.hpp"
 #include "DigitalInputs.hpp"
 #include "FanPwmIcUser.h"
+#include "TFLOW4_Ctrl.h"
 /* Attention class Singleton (instance unique) */
 
 class FwMng {
@@ -93,8 +94,17 @@ private :
 
 /********************************************************************************************/
 // User variable
+
+	//Permet d'executer la regulation au bon cadencement et d'alimenter les structures d'entrée/sortie
+	void CtrlCmdTask();
+
 	AppointElec *appointElec;
 	DigitalInputs *di_Anode;
+
+	TFLOW4_Ctrl *ctrlCmd;
+	tb_Control_In cc_input; // structure d'entrée
+	tb_Control_Out cc_out;  // structure de sortie
+	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
 };
 
 
