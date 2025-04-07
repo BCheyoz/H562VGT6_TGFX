@@ -400,6 +400,39 @@ void FwMng::CtrlCmdTask(){
 
 	ctrlCmdCounter = 0;
 
+	// maj des données d'entrées ******************************************
+/* TODO
+	cc_input.HMI.USER.Ss_user_mode; // te_user_mode : enum Auto = 10; Eco = 20; Boost = 30; Holidays = 40
+	cc_input.HMI.USER.Ss_heat_wtr_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso ECS
+	cc_input.HMI.USER.Ss_vent_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso FAN
+	cc_input.HMI.USER.Ss_tot_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso Global
+	cc_input.HMI.USER.Ss_sg_mode_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_oph_mode_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_hldy_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_bst_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+*/
+	cc_input.HW.Cs_tank_down_temp_raw = getCtn(0) / 10.; // ta_temps : int16 °C x10  // valeur retourné en °C *100
+	cc_input.HW.Cs_tank_up_temp_raw = getCtn(1) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_pump_xhst_temp_raw = getCtn(2) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_pump_evap_temp_raw = getCtn(3) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_vent_temp_raw = getCtn(4) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_vent_pres_raw = getPressure(0); // ta_air_pres : uint16 Pa x10
+	cc_input.HW.Cs_vent_rot_spd_raw = fanFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
+	cc_input.HW.Cs_heat_pump_pwr = GetEmbracoInverterPowerRead(); // ta_pwr : uint32 Watt x10
+
+	// TODO
+	//cc_input.HW.St_tor_stt_raw[2]; // te_on_off : enum off = 0; on = 1; force = 2
+
+	// TODO
+	/*
+	cc_input.ERR.Bs_hw_fan_err; // bool
+	cc_input.ERR.Bs_hw_pres_err; // bool
+	cc_input.ERR.Bs_hw_anod_err; // bool
+	*/
+
+	TFLOW4_Ctrl::ExtU_TFLOW4_Ctrl_T input = {cc_input};
+	ctrlCmd->setExternalInputs(&input);
+
 	// Execute un pas de calcul *******************************************
 	ctrlCmd->step();
 
