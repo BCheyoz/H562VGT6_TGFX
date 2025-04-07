@@ -12,6 +12,7 @@
 #include "ParamProductInfo.h"
 #include "utils.h"
 #include "main.h"
+#include "GestionInputSensor.h"
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -35,6 +36,9 @@
 /*******************************************************************************************************/
 // fonction redéfinie dans FirmwareGateway en "privé"
 __attribute__((weak)) void setFanExhaustVoltage_mV(uint16_t cmd){}
+__attribute__((weak)) uint16_t fanFeedbackSpeed(void){ return 0; }
+__attribute__((weak)) void SetEmbracoInverterSpeedConsRPM(uint16_t cmd){}
+__attribute__((weak)) uint16_t GetEmbracoInverterPowerRead(void){ return 0; }
 
 /******************************************************************************/
 // Initialisation des variables static partagé entre toutes les instances de l'objet
@@ -398,5 +402,18 @@ void FwMng::CtrlCmdTask(){
 
 	// Execute un pas de calcul *******************************************
 	ctrlCmd->step();
+
+	// maj de la commande *************************************************
+	cc_out = ctrlCmd->getExternalOutputs().Control_Out;
+
+	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp * 100); // Cs_vent_vltg_sp sortie en Volt x10
+	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
+
+	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
+		appointElec->SetMode(E_APPOINT_ELEC_ON);
+	}
+	else {
+		appointElec->SetMode(E_APPOINT_ELEC_OFF);
+	}
 }
 
