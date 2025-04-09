@@ -4,8 +4,8 @@
  *  Created on: 8 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 18 Feb. 2025
- *  Updated by: m.faget
+ *  Updated on: 09 Apr. 2025
+ *  Updated by: j.proux
  *
  *  Version 1.0
  *
@@ -15,7 +15,6 @@
 #define ANALOGINPUTS_ANALOGINPUTSUTILS_H_
 
 #include <stdint.h>				// Pour les types "int*_t" & "uint*_t"
-//#include "AnalogInputsUser.h"	// Pour accès aux réglages USER bas niveau USER
 #include "main.h"				// Pour accès aux bons includes des HAL
 #include "utils.h"				// Pour accès aux éléments utiles génériques
 

@@ -4,15 +4,15 @@
  *  Created on: 8 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 18 Feb. 2025
- *  Updated by: m.faget
+ *  Updated on: 09 Apr. 2025
+ *  Updated by: j.proux
  *
  *  History Usage :
  *-> 08/09/2021 : Added by Jp	to RMD_Firmware (STM32G0B1CETx : productprojects/ventilation/tertiaire/rmd/rmd_firmware)
  *-> 23/12/2021 : Added by AM	to HII_Manta_App (STM32G070CBTx : productprojects/ventilation/individuel/himalaya2/manta/h2_manta_app)
  *-> 07/01/2022 : Added by Jp	to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
  *-> 30/11/2023 : Added by AB	to MV_By_Aldes (STM32G030K8Tx : innoprojects/mv_by_aldes)
- *-> 18/02/2025 : Added by Mf	to Tfl4 (STM32H562VGT6 : be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
+ *-> 18/02/2025 : Added by Mf	to TFL4_CarteMere_App (STM32H562VGT6 : be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app)
  *
  *  Version 1.0
  *
@@ -39,6 +39,11 @@ extern "C" {
 
 #define AI_MAX_PT_CONV				4095	// Valeur Maximale de la Conversion ADC : 12 bits -> 4095
 #define AI_INTERNAL_VREF			1.21f	// Tension Interne de Référence "Vrefint"
+
+#if defined(VREFINT_CAL_ADDR) && defined(VREFINT_CAL_VREF)		// From "stm32g0xx_ll_adc.h"
+	#define AI_INTERNAL_VREF_CAL	(float)((((float)VREFINT_CAL_VREF / 1000.f) * ((float)*VREFINT_CAL_ADDR)) / (float)AI_MAX_PT_CONV)	// Tension Interne de Référence mesurée pour chaque µC par ST pendant la phase de test et stockée en mémoire
+	#define AI_REF_INT_PT_CONV_CAL	((AI_INTERNAL_VREF_CAL / AI_VALIM_TYPIC) * (float)AI_MAX_PT_CONV)
+#endif // VREFINT_CAL_ADDR ; VREFINT_CAL_VREF
 
 #define AI_VALIM_TYPIC				3.3f // 3.3v Typique
 #define AI_VALIM_MIN				1.8f // 1.8v Minimum

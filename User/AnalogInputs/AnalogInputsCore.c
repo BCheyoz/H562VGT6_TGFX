@@ -4,8 +4,8 @@
  *  Created on: 7 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 18 Feb. 2025
- *  Updated by: m.faget
+ *  Updated on: 09 Apr. 2025
+ *  Updated by: j.proux
  *
  *  Version 1.0
  *
@@ -128,12 +128,21 @@ uint16_t AnalogInputs_Register_InitParam(tAdcInitParams* pNewInitParam, void* pT
 	if(0 != pNewInitParam->pFnInit) { pNewInitParam->pFnInit(); }	// Appele la Fonction d'Init si elle est définie
 
 #ifdef AI_REQUEST_CALIB_AT_MST
-    HAL_ADCEx_Calibration_Start(pNewInitParam->hHandle, ADC_SINGLE_ENDED);	// Calibrate The ADC On Power-Up For Better Accuracy
+  #if defined(ADC_SINGLE_ENDED) && defined(ADC_DIFFERENTIAL_ENDED)	// S'il y a le choix entre les 2 Modes :
+    HAL_ADCEx_Calibration_Start(pNewInitParam->hHandle, ADC_SINGLE_ENDED);	// Calibrate the ADC on Power-Up for Better Accuracy
+  #else // Mode de Calibration standard defaults as ADC_SINGLE_ENDED :
+    HAL_ADCEx_Calibration_Start(pNewInitParam->hHandle);					// Calibrate the ADC on Power-Up for Better Accuracy
+  #endif // ADC_SINGLE_ENDED
 #endif // AI_REQUEST_CALIB_AT_MST
 
 	pManager->pInitParams = pNewInitParam;	// Sauvegarde le lien vers les Infos d'Init pour s'y référer ultérieurement
 	pManager->curStep = ADC_STEP_WAIT_SYNC;
 	pManager->isLoaded = 1;
+
+#ifdef AI_REF_INT_PT_CONV_CAL
+	pNewInitParam->refPtConv = (uint16_t)(AI_REF_INT_PT_CONV_CAL + 0.49f);
+#endif // AI_REF_INT_PT_CONV_CAL
+
 	return 1;
 }
 
