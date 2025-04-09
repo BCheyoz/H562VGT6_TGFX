@@ -34,6 +34,19 @@ void MX_ADC1_Init(void)
 
   /* USER CODE BEGIN ADC1_Init 0 */
 
+#if 0	// Recherches sur l'ADC STM32H562VGTx :
+
+	// from https://www.stm32duino.com/viewtopic.php?t=1546
+    __HAL_RCC_VREF_CLK_ENABLE();
+    HAL_SYSCFG_VREFBUF_HighImpedanceConfig(SYSCFG_VREFBUF_HIGH_IMPEDANCE_DISABLE);
+    HAL_SYSCFG_EnableVREFBUF();
+
+    // Que penser de ça ? https://community.st.com/t5/stm32-mcus-products/vref-not-working-as-expected/td-p/435771
+    // Piste du VREFINT_CAL : https://community.st.com/t5/stm32-mcus-boards-and-hardware/problem-with-adc-vrefint-monitoring/m-p/224694/highlight/true#M7724
+    // https://community.st.com/t5/stm32-mcus/how-to-configure-vrefbuf-on-my-stm32/ta-p/49594
+
+#endif
+
   /* USER CODE END ADC1_Init 0 */
 
   ADC_ChannelConfTypeDef sConfig = {0};
