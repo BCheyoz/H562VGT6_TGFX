@@ -4,15 +4,15 @@
  *  Created on: 8 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 27 Feb. 2025
- *  Updated by: b.chhay
+ *  Updated on: 09 Apr. 2025
+ *  Updated by: j.proux
  *
  *  Version : 1.0
  *
  */
 
-#include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
 #include "adc.h"				// Pour accès aux Variables & Fonctions d'Init ADC
+#include "AnalogInputsUser.h"	// Pour accès à nos propres déclarations publiques
 #include "AnalogInputsConf.h"	// Pour accès à la Configuration User souhaitée
 
 #ifdef __cplusplus
@@ -40,7 +40,7 @@ extern "C" {
 #define ADC1_MOY_NB_VALUES		20			// La valeur de sortie sera moyennée sur les 20 dernières valeurs instantanées disponibles
 #define ADC1_CONV_DELAY 		10			// Temps accordé pour la Conv : Base @ 10ms => 10 = 100ms
 #define ADC1_ERROR_DELAY		10			// Tempo après une Erreur ADC : Base @ 10ms => 10 = 100ms
-#define ADC1_REF_INT_CHANNEL	0			// Index du Rank qui est associé au "Channel Vrefint" ?
+#define ADC1_REF_INT_CHANNEL	0			// Index du Rank qui est associé au "Channel Vrefint"
 #define ADC1_REF_INT_PT_CONV	(AI_INTERNAL_VREF / AI_VALIM_TYPIC * (float)AI_MAX_PT_CONV)
 
 /******************************************************************************/
@@ -82,7 +82,7 @@ uint32_t nbConvDone = 0;
 // Prototypes des Fonctions de Conversion pour obtenir le Résulat Final :
 
 void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue);
-void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue);
+void AnalogInput_HandleNewFloat_0_10V(void* pVar, float newValue);
 void AnalogInput_HandleNewFloat_CTN(void* pVar, float newValue);
 void AnalogInput_HandleEndOfConv(void* pVar);
 
@@ -91,17 +91,22 @@ void AnalogInput_HandleEndOfConv(void* pVar);
 
 tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
 	{ AnalogInput_HandleNewFloat_RefInt,	&tAiRefAlim },	// Valeur n°1 = vRefInt
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[0] },	// Valeur n°2 = ADC1_IN1 = tAi_CTN1
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[1] },	// Valeur n°3 = ADC1_IN0 = tAi_CTN2
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[2] },	// Valeur n°4 = ADC1_IN18 = tAi_CTN3
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[3] },	// Valeur n°5 = ADC1_IN15 = tAi_CTN4
-	{ AnalogInput_HandleNewFloat_CTN, 	&tAi_CTN[4] },	// Valeur n°6 = ADC1_IN14 = tAi_CTN5
+	{ AnalogInput_HandleNewFloat_CTN,		&tAi_CTN[0] },	// Valeur n°2 = ADC1_IN1 = tAi_CTN1
+	{ AnalogInput_HandleNewFloat_CTN,		&tAi_CTN[1] },	// Valeur n°3 = ADC1_IN0 = tAi_CTN2
+	{ AnalogInput_HandleNewFloat_CTN,		&tAi_CTN[2] },	// Valeur n°4 = ADC1_IN18 = tAi_CTN3
+	{ AnalogInput_HandleNewFloat_CTN,		&tAi_CTN[3] },	// Valeur n°5 = ADC1_IN15 = tAi_CTN4
+	{ AnalogInput_HandleNewFloat_CTN,		&tAi_CTN[4] },	// Valeur n°6 = ADC1_IN14 = tAi_CTN5
 };
 
 /******************************************************************************/
 // Tableau des Paramètres d'Initialisation de la Librairie "AnalogInputs" (1 ligne par ADC) :
 
-tAdcInitParams mAdcInitParam[] = {
+#ifndef AI_REF_INT_PT_CONV_CAL
+  const tAdcInitParams
+#else
+  tAdcInitParams
+#endif // AI_REF_INT_PT_CONV_CAL
+mAdcInitParam[] = {
 	{ ADC1_HANDLE, ADC1_INIT_FN, ADC1_DMA_BUF_NAME, &ADC1_ACCU_RAW_BUF_NAME, ADC1_MOY_FN_HANDLERS, AnalogInput_HandleEndOfConv, ADC1_RAW_BUF_NAME,
 		ADC1_NB_OF_CHANNELS, ADC1_SAMPLES_PER_CH, ADC1_MOY_NB_VALUES, ADC1_CONV_DELAY, ADC1_ERROR_DELAY, ADC1_REF_INT_CHANNEL, ADC1_REF_INT_PT_CONV },
 //	{ ADC2_HANDLE, ADC2_INIT_FN, ADC2_DMA_BUF_NAME, &ADC2_ACCU_RAW_BUF_NAME, ADC2_MOY_FN_HANDLERS, AnalogInput_HandleEndOfConv, ADC2_RAW_BUF_NAME,
@@ -116,11 +121,15 @@ void AnalogInput_HandleNewFloat_RefInt(void* pVar, float newValue)
 {	// Recalcule une projection de l'Alim en fonction de la Référence obtenue :
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
+#ifdef AI_INTERNAL_VREF_CAL
+	if(0 != newValue) pData->value = (AI_INTERNAL_VREF_CAL * (float)AI_MAX_PT_CONV / newValue);
+#else
 	if(0 != newValue) pData->value = (AI_INTERNAL_VREF * (float)AI_MAX_PT_CONV / newValue);
+#endif //AI_INTERNAL_VREF_CAL
 	else pData->value = 0; // Invraissemblable, mais il faut quand même prendre en compte
 }
 
-void AnalogInput_HandleNewFloat_Tx(void* pVar, float newValue)
+void AnalogInput_HandleNewFloat_0_10V(void* pVar, float newValue)
 {
 	tAI_FloatValue* pData = pVar;
 	pData->nbPtADC = (uint16_t) newValue; // Mémorise les Points Convertisseur ADC
