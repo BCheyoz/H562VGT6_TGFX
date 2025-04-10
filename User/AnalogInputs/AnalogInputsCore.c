@@ -72,10 +72,19 @@ AI_MAKE_CONST_END_OF_TABLE(tAI_AdcManager, EndOfAI_AdcManager, mAI_AdcManager);
 
 static tAI_AdcManager* AnalogInputs_GetManagerFromHandle(void* hHandle);
 
+#ifdef AI_SUPPORT_ADJUST_TO_CAL
+	static void AI_MPU_Config_EnableAccessToVrefIntCal(void);
+#endif // AI_SUPPORT_ADJUST_TO_CAL
+
 /******************************************************************************/
 
 inline void InitAnalogInputs(void)
 {
+
+#ifdef AI_SUPPORT_ADJUST_TO_CAL
+	AI_MPU_Config_EnableAccessToVrefIntCal();
+#endif // AI_SUPPORT_ADJUST_TO_CAL
+
 	tAI_AdcManager* pManager = mAI_AdcManager;
 	tAdcInitParams* pInitParams = (tAdcInitParams*)AI_FIRST_INIT_PARAM;
 	for( ; (pInitParams < (tAdcInitParams*)AI_AFTER_INIT_PARAM)
@@ -139,9 +148,10 @@ uint16_t AnalogInputs_Register_InitParam(tAdcInitParams* pNewInitParam, void* pT
 	pManager->curStep = ADC_STEP_WAIT_SYNC;
 	pManager->isLoaded = 1;
 
-#ifdef AI_REF_INT_PT_CONV_CAL
-	pNewInitParam->refPtConv = (uint16_t)(AI_REF_INT_PT_CONV_CAL + 0.49f);
-#endif // AI_REF_INT_PT_CONV_CAL
+#if defined(AI_SUPPORT_ADJUST_TO_CAL) && defined(AI_INTERNAL_VREF_CAL) && defined(AI_REF_INT_PT_CONV_CAL)
+//float InternalVrefCalValue = AI_INTERNAL_VREF_CAL; // vu @ 1.21120882 sur "PCBA_TF4_4" pour 1.21v Typique d'après la doc
+	pNewInitParam->refPtConv = ROUND_TO_UINT_CAST(uint16_t, AI_REF_INT_PT_CONV_CAL); // En cas de HardFault ici sur STM32H5* : Vérifier que "AI_MPU_Config_EnableAccessToVrefIntCal();" est bien appelé en début de "InitAnalogInputs()" !
+#endif // AI_SUPPORT_ADJUST_TO_CAL && AI_INTERNAL_VREF_CAL && AI_REF_INT_PT_CONV_CAL
 
 	return 1;
 }
@@ -258,7 +268,7 @@ void Gestion_AnalogInputs(void)
 //						ptConvCh = ((uint16_t*)pInitParam->pDmaBuffer)[i + j*pInitParam->nbOfChannels];
 //						ofstBaseSeq = j*pInitParam->nbOfChannels;	// Offset de la (j)ème séquence de conversion
 						pSeqBase = &((uint16_t*)pInitParam->pDmaBuffer)[j*pInitParam->nbOfChannels];	// Pointeur sur Base de la (j)ème séquence de conversion
-						ptConvCh  = pSeqBase[i];//((uint16_t*)pInitParam->pDmaBuffer)[ofstBaseSeq + i];
+						ptConvCh = pSeqBase[i];//((uint16_t*)pInitParam->pDmaBuffer)[ofstBaseSeq + i];
 
 #ifdef AI_SUPPORT_ADJUST_TO_REF
 						if( (i != pInitParam->refRankID) && (pInitParam->refRankID < pInitParam->nbOfChannels) && (pInitParam->refPtConv > 0) )
@@ -267,7 +277,7 @@ void Gestion_AnalogInputs(void)
 							float kAdjust = (float)ptConvRef/(float)pInitParam->refPtConv;
 							if(IS_IN_RANGE(kAdjust, AI_VALIM_TYPIC/AI_VALIM_MAX, AI_VALIM_TYPIC/AI_VALIM_MIN)) // cf. "ADC supply requirements" in "stm32f7xx_hal_adc.c"
 							{
-								ptConvCh = (uint16_t)(((float)ptConvCh)/kAdjust + 0.5f);
+								ptConvCh = ROUND_TO_UINT_CAST(uint16_t, ((float)ptConvCh)/kAdjust);
 							}
 						}
 #endif // AI_SUPPORT_ADJUST_TO_REF
@@ -287,15 +297,19 @@ void Gestion_AnalogInputs(void)
 #endif // AI_DISCARD_MIN_MAX_VALUE
 					if(j > 0) sum/=(float)j; // Moyenne rapide directement en Flotant
 					else sum = 0.0f; // Si problème : on met un 0 à la place
-					if(0 != pInitParam->pRawBuffer) pInitParam->pRawBuffer[i] = (uint16_t)(sum + 0.5f); // Conversion forcée en UInt16
+//					if(0 != pInitParam->pRawBuffer) pInitParam->pRawBuffer[i] = (uint16_t)(sum + 0.5f); // Conversion forcée en UInt16
 
 					// Détermination de l'emplacement pour la nouvelle RawValue :
 					pRawValue = &pRawBase[(i * pInitParam->nbValues4Moy) + (*pId & INT16_MAX)]; // Le bit de signe (b15 = Flag 0x8000) sert à indiquer qu'on a rebouclé sur notre Buffer
 
 					// Méthode FastSum :
-					pAccu[i] -= *pRawValue;					// Etape 1 : retire de la Somme la valeur actuelle
-					*pRawValue = (uint16_t)(sum + 0.5f);	// Etape 2 : Insertion forcée de la nouvelle valeur en UInt16
-					pAccu[i] += *pRawValue;					// Etape 3 : Ajoute la Nouvelle Valeur à l'Accu
+					pAccu[i] -= *pRawValue;							// Etape 1 : retire de la Somme la valeur actuelle
+					*pRawValue = ROUND_TO_UINT_CAST(uint16_t, sum); // Etape 2 : Insertion forcée de la nouvelle valeur en UInt16
+					pAccu[i] += *pRawValue;							// Etape 3 : Ajoute la Nouvelle Valeur à l'Accu
+
+					// Capture de la valeur RAW UInt16 :
+					if(0 != pInitParam->pRawBuffer) pInitParam->pRawBuffer[i] = *pRawValue;
+
 				}
 				(*pId)++;	// Incrémente l'index de stockage pour la prochaine RawValue
 
@@ -351,10 +365,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 		int idOfDev = (pManager - mAI_AdcManager)/sizeof(tAI_AdcManager);
 		if(IS_IN_RANGE(idOfDev, 0, AI_NB_MAX_OF_INIT_PARAMS -1))
 		{
-//			if(pManager->curStep < ADC_STEP_NB_STEPS)
-//			{
-//				mAiStats[idOfDev].nbCpltByStep[pManager->curStep]++;	// Pour le moment, on se contente de compter l'évènement !
-//			}
 			mAiStats[idOfDev].convEndTicks = HAL_GetTick();
 		}
 
@@ -394,6 +404,47 @@ static tAI_AdcManager* AnalogInputs_GetManagerFromHandle(void* hHandle)
 	}
 	return 0; // NotFound !
 }
+
+/******************************************************************************/
+
+#ifdef AI_SUPPORT_ADJUST_TO_CAL
+
+// from https://community.st.com/t5/stm32-mcus/how-to-avoid-a-hardfault-when-icache-is-enabled-on-the-stm32h5/ta-p/630085
+
+#define  WRITE_THROUGH          0x0U  /* Normal memory, write-through. */
+#define  NOT_CACHEABLE          0x4U  /* Normal memory, non-cacheable. */
+#define  WRITE_BACK             0x4U  /* Normal memory, write-back.    */
+
+static inline void AI_MPU_Config_EnableAccessToVrefIntCal(void)	// Adapted from MPU_Config()
+{
+  MPU_Attributes_InitTypeDef   attr;
+  MPU_Region_InitTypeDef       region;
+
+  /* Disable MPU before perloading and config update */
+  HAL_MPU_Disable();
+
+  /* Define cacheable memory via MPU */
+  attr.Number             = MPU_ATTRIBUTES_NUMBER0;
+  attr.Attributes         = INNER_OUTER(NOT_CACHEABLE);
+  HAL_MPU_ConfigMemoryAttributes(&attr);
+
+  /* BaseAddress-LimitAddress configuration */
+  region.Enable           = MPU_REGION_ENABLE;
+  region.Number           = MPU_REGION_NUMBER0;
+  region.AttributesIndex  = MPU_ATTRIBUTES_NUMBER0;
+// Remarque_Jp le 09/04/2025 : Limite le déblocage à "ReadOnly", et uniquement sur le WORD "VREFINT_CAL_ADDR" qui intéresse la Librairie "AnalogImputs" :
+  region.BaseAddress      = ((uint32_t)VREFINT_CAL_ADDR +0);//0x08FFF800;
+  region.LimitAddress     = ((uint32_t)VREFINT_CAL_ADDR +1);//0x08FFFFFF;
+  region.AccessPermission = MPU_REGION_ALL_RO; //MPU_REGION_ALL_RW;
+  region.DisableExec      = MPU_INSTRUCTION_ACCESS_DISABLE;
+  region.IsShareable      = MPU_ACCESS_NOT_SHAREABLE;
+  HAL_MPU_ConfigRegion(&region);
+
+  /* Enable the MPU */
+  HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+}
+
+#endif // AI_SUPPORT_ADJUST_TO_CAL
 
 /******************************************************************************/
 

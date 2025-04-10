@@ -102,9 +102,9 @@ tAiFnNewFloatValueHandler ADC1_MOY_FN_HANDLERS[ADC1_NB_OF_CHANNELS] = {
 // Tableau des Paramètres d'Initialisation de la Librairie "AnalogInputs" (1 ligne par ADC) :
 
 #ifndef AI_REF_INT_PT_CONV_CAL
-const tAdcInitParams
+  const tAdcInitParams
 #else
-tAdcInitParams
+  tAdcInitParams
 #endif // AI_REF_INT_PT_CONV_CAL
 mAdcInitParam[] = {
 	{ ADC1_HANDLE, ADC1_INIT_FN, ADC1_DMA_BUF_NAME, &ADC1_ACCU_RAW_BUF_NAME, ADC1_MOY_FN_HANDLERS, AnalogInput_HandleEndOfConv, ADC1_RAW_BUF_NAME,

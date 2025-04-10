@@ -33,14 +33,15 @@ extern "C" {
 
 #define AI_DISCARD_MIN_MAX_VALUE	// Pour demander à ignorer les valeurs Min & Max des échantillons ADC_DMA
 #define AI_REQUEST_CALIB_AT_MST 	// Pour demander une Calibration de l'ADC à l'Init
-#define AI_SUPPORT_ADJUST_TO_REF	// Pour demander un ajustement des échantillons à une Référence fixe connue
+//#define AI_SUPPORT_ADJUST_TO_REF	// Pour demander un ajustement des échantillons à une Référence fixe connue (=> configurer "AI_INTERNAL_VREF" ci-dessous)
+//#define AI_SUPPORT_ADJUST_TO_CAL	// Pour préciser d'ajuster les échantillons à la Référence calibrée "VREFINT_CAL_ADDR" & "VREFINT_CAL_VREF"
 
 #define AI_ENABLE_SUPPORT_STATS		// Pour demander à collecter des Statistiques spécifiques par ADC
 
 #define AI_MAX_PT_CONV				4095	// Valeur Maximale de la Conversion ADC : 12 bits -> 4095
-#define AI_INTERNAL_VREF			1.21f	// Tension Interne de Référence "Vrefint"
+#define AI_INTERNAL_VREF			1.21f	// Tension Interne de Référence "VrefInt"
 
-#if defined(VREFINT_CAL_ADDR) && defined(VREFINT_CAL_VREF)		// From "stm32g0xx_ll_adc.h"
+#if defined(AI_SUPPORT_ADJUST_TO_CAL) && defined(VREFINT_CAL_ADDR) && defined(VREFINT_CAL_VREF)		// From "stm32g0xx_ll_adc.h"
 	#define AI_INTERNAL_VREF_CAL	(float)((((float)VREFINT_CAL_VREF / 1000.f) * ((float)*VREFINT_CAL_ADDR)) / (float)AI_MAX_PT_CONV)	// Tension Interne de Référence mesurée pour chaque µC par ST pendant la phase de test et stockée en mémoire
 	#define AI_REF_INT_PT_CONV_CAL	((AI_INTERNAL_VREF_CAL / AI_VALIM_TYPIC) * (float)AI_MAX_PT_CONV)
 #endif // VREFINT_CAL_ADDR ; VREFINT_CAL_VREF

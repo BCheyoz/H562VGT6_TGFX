@@ -402,17 +402,18 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
 	// ADC Debug
-	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
-// Remarque_Jp le 20/03/2025 : "tAI_IntValue.value" est défini comme "int16_t" dans la Structure mais en UInt ci-dessus ... idem pour les "value" suivantes du tableau
+	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[0].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
-	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
+	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[1].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
-	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].value,		0},
+	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[2].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA025,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].nbPtADC,	0},
-	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].value,		0},
+	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[3].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA027,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].nbPtADC,	0},
-	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
+	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[4].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
+	{ 0xA02A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX1000GetVarSetVar},	&tAiRefAlim.value,	0},	// Unit = "V", Coef = "1000"
+	{ 0xA02B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAiRefAlim.nbPtADC,	0},
 
 	// Infos & Commandes EmbracoInverter :
 #ifdef EMBRACOINVERTER_EMBRACOINVERTER_H_	// EXPORT = 1
