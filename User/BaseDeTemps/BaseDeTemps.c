@@ -22,6 +22,7 @@
 #include "AnalogInputsCore.h"
 #include "FanPwmIcCore.h"
 #include "GestionInputSensor.h"
+#include "FirmwareCInterface.h"
 /* USER CODE END Includes */
 
 
@@ -137,6 +138,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			Handle_Led_RT_100ms();
 			Handle_Infos_RT_100ms();
 			Handle_InputSensor_RT_100ms();
+			handleFirmwareManager_RT_100ms();
 #ifdef USE_DIGITAL_INPUTS
 			Handle_DigitalInputs_RT_100ms();
 #endif // USE_DIGITAL_INPUTS
