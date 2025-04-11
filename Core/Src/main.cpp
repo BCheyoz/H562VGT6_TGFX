@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -21,6 +21,7 @@
 #include "adc.h"
 #include "crc.h"
 #include "app_filex.h"
+#include "gpdma.h"
 #include "i2c.h"
 #include "icache.h"
 #include "memorymap.h"
@@ -28,7 +29,6 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
 #include "usb.h"
 #include "app_usbx_host.h"
 #include "gpio.h"
@@ -36,6 +36,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "BaseDeTemps.h"
+#include "VersionInfos.h"
+#include "FirmwareStateMachine.hpp"
+#include "AnalogInputsCore.h"
+#include "FanPwmIcCore.h"
+#include "DigitalInputs.hpp"
+#include "I2cComMasterSystem.h"
+#include "GestionInputSensor.h"
+#include "UartComCore.h"
 
 /* USER CODE END Includes */
 
@@ -63,6 +73,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -104,14 +115,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
+  MX_GPDMA1_Init();
+//  MX_ADC1_Init(); 		// Désactivé_Jp le 28/02/2025 -> laisser "InitAnalogInputs" faire le nécessaire !
   MX_OCTOSPI1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();
-  MX_UART4_Init();
-  MX_UART5_Init();
-  MX_USART3_UART_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -125,7 +134,21 @@ int main(void)
   MX_FileX_Init();
   MX_USBX_Host_Init();
   MX_TouchGFX_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+
+  InitBaseDeTemps();
+  InitComputeInfos();
+  I2cComMaster_Init_System();
+  InitAnalogInputs();
+  InitInputSensor();
+  InitFanPwmIC();
+  UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
+  UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
+
+  FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
 
   /* USER CODE END 2 */
 
@@ -133,10 +156,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+	GestionBaseDeTemps();
+	ComputeMyInfos();
+	Gestion_AnalogInputs();
+	Gestion_FanPwmIC();
+	GestionI2cSystem();
+	GestionInputSensor();
+	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
+	GestionDigitalInputs();
 
-  MX_TouchGFX_Process();
+    /* USER CODE END WHILE */
+	MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
+	FwManager->run();
   }
   /* USER CODE END 3 */
 }
@@ -165,13 +197,13 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 62;
+  RCC_OscInitStruct.PLL.PLLN = 60;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
-  RCC_OscInitStruct.PLL.PLLFRACN = 4096;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -209,7 +241,8 @@ void PeriphCommonClock_Config(void)
   /** Initializes the peripherals clock
   */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_USART3
-                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5;
+                              |RCC_PERIPHCLK_UART4|RCC_PERIPHCLK_UART5
+                              |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_I2C3;
   PeriphClkInitStruct.PLL3.PLL3Source = RCC_PLL3_SOURCE_HSE;
   PeriphClkInitStruct.PLL3.PLL3M = 1;
   PeriphClkInitStruct.PLL3.PLL3N = 16;
@@ -219,15 +252,49 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3_VCIRANGE_1;
   PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3_VCORANGE_WIDE;
   PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
-  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVQ;
+  PeriphClkInitStruct.PLL3.PLL3ClockOut = RCC_PLL3_DIVR|RCC_PLL3_DIVQ;
   PeriphClkInitStruct.Usart3ClockSelection = RCC_USART3CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart4ClockSelection = RCC_UART4CLKSOURCE_PLL3Q;
   PeriphClkInitStruct.Uart5ClockSelection = RCC_UART5CLKSOURCE_PLL3Q;
+  PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PLL3R;
+  PeriphClkInitStruct.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PLL3R;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_PLL3Q;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* GPDMA1_Channel0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
+  /* GPDMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
+  /* GPDMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel2_IRQn);
+  /* GPDMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel3_IRQn);
+  /* GPDMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(GPDMA1_Channel4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(GPDMA1_Channel4_IRQn);
+  /* UART5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART5_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* TIM1_CC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

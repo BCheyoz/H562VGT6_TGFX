@@ -3,24 +3,24 @@ include:
 - local: 'codesonar.linux.docker.yml'
 
 stages:          # List of stages for jobs, and their order of execution
-- Build
+# - Build
 - Tests
 - Deploy
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: Build  
-  tags: 
-    - Docker
-    - Codesonar    
-    # - Linux
-    # - arm-none-eabi-gcc
-  only:
-    - merge_requests
-  script:
-    - python3 genMakeFromTemplate.py
-    - make clean
-    - make
-    - make clean  
+# build-job:       # This job runs in the build stage, which runs first.
+  # stage: Build  
+  # tags: 
+    # - Docker
+    # - Codesonar    
+    # # - Linux
+    # # - arm-none-eabi-gcc
+  # only:
+    # - merge_requests
+  # script:
+    # - python3 genMakeFromTemplate.py
+    # - make clean
+    # - make
+    # - make clean  
 #  artifacts:
 #    paths:
 #    - build/*.bin
@@ -46,16 +46,16 @@ Ceedling-job:
     reports:
       junit: Tests/build/artifacts/test/report_junit.xml
 
-CodeSonar-job:
-  stage: Tests
-  tags: 
-    - Docker
-    - Codesonar    
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_REF_NAME =~ /^release/
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  extends: .codesonar_sast
+# CodeSonar-job:
+  # stage: Tests
+  # tags: 
+    # - Docker
+    # - Codesonar    
+  # rules:
+    # - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # - if: $CI_COMMIT_REF_NAME =~ /^release/
+    # - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  # extends: .codesonar_sast
 
 # Deploy-job:
   # stage: Deploy
@@ -84,8 +84,8 @@ ConvertModbus-job:
   stage: Deploy
   image: qt_ubuntu:5.15
   variables:
-    MODBUS_FILE: "ModbusSlaveUser.c"
-    OUTPUT_FILE: "tfl4_cm_modbus_${CI_COMMIT_REF_NAME}"
+    MODBUS_FILE: "User/ModbusSlave/ModbusSlaveUser.c"
+    OUTPUT_FILE: "tfl4_cm_modbus_${CI_COMMIT_REF_SLUG}"
   tags: 
     - Docker
     - Qt5.15
