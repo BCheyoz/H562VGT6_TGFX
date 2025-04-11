@@ -27,6 +27,10 @@
 #define NB_COV_SENSOR_USED 0
 #define NB_CO2_SENSOR_USED 0
 #define NB_HR_TEMP_SENSOR_USED 0
+
+#define I2C_PRESSURE_PRECISON 10   // retourne la valeur en x10
+#define I2C_HR_PRECISON 10   // retourne la valeur en x10
+#define I2C_TEMP_PRECISON 10   // retourne la valeur en x10
 #endif
 
 #ifdef USE_ADC_SENSOR
