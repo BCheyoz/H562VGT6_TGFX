@@ -486,7 +486,7 @@ void updateI2cPressureValueInt(gis_UIntValue *pData, gis_device *pDevice, uint8_
 		return;
 	}
 
-	pData->value = (uint16_t) (value * I2C_PRESSURE_PRECISON);
+	pData->value = (uint16_t) fabsf(value * I2C_PRESSURE_PRECISON);
 }
 
 void updateI2cHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
