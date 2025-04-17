@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.2
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:26 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:41 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -40,10 +40,8 @@ void PID_backCalc::reset(float rtp_InitVal)
 }
 
 // Output and update for referenced model: 'PID_backCalc'
-void PID_backCalc::step(const float *rtu_setPoint, const float *rtu_measure,
-  const float *rtu_cmd_max, const float *rtu_cmd_min, const bool *rtu_rst, float
-  *rty_cmd, float *rty_ovrFlwVal, float rtp_InitVal, float rtp_Kawu, float
-  rtp_Kd, float rtp_Ki, float rtp_Kp, float rtp_SampleTime, float rtp_Tau_f)
+void PID_backCalc::step(const float *rtu_setPoint, const float *rtu_measure, const float *rtu_cmd_max, const float *rtu_cmd_min, const bool *rtu_rst, float
+  *rty_cmd, float *rty_ovrFlwVal, float rtp_InitVal, float rtp_Kawu, float rtp_Kd, float rtp_Ki, float rtp_Kp, float rtp_SampleTime, float rtp_Tau_f)
 {
   // local block i/o variables
   float rtb_Differential_cmd;
@@ -54,19 +52,15 @@ void PID_backCalc::step(const float *rtu_setPoint, const float *rtu_measure,
   float rtb_error;
   rtb_error = *rtu_setPoint - *rtu_measure;
   rtb_Differential_error = rtp_Kd * rtb_error;
-  DerivatorMDLOBJ2.step(&rtb_Differential_error, &rtb_Differential_cmd,
-                        rtp_SampleTime);
-  DerivativeFilterMDLOBJ1.step(&rtb_Differential_cmd, &rtb_Differential_cmd_filt,
-    1.0F, rtp_Tau_f, rtp_SampleTime);
+  DerivatorMDLOBJ2.step(&rtb_Differential_error, &rtb_Differential_cmd, rtp_SampleTime);
+  DerivativeFilterMDLOBJ1.step(&rtb_Differential_cmd, &rtb_Differential_cmd_filt, 1.0F, rtp_Tau_f, rtp_SampleTime);
   rtb_Differential_error = rtp_Ki * rtb_error;
   rtb_antiWindUpVal = rtp_Kawu * PID_backCalc_DW.ovrFlw_DSTATE;
   rtb_Differential_error -= rtb_antiWindUpVal;
-  IntegratorMDLOBJ3.step(&rtb_Differential_error, rtu_rst, &rtb_Integral_cmd,
-    rtp_SampleTime, rtp_InitVal);
+  IntegratorMDLOBJ3.step(&rtb_Differential_error, rtu_rst, &rtb_Integral_cmd, rtp_SampleTime, rtp_InitVal);
   rtb_error *= rtp_Kp;
   rtb_error = (rtb_Differential_cmd_filt + rtb_error) + rtb_Integral_cmd;
-  cmdLimitsMDLOBJ4.step(rtu_cmd_max, rtu_cmd_min, &rtb_error, rty_cmd,
-                        rty_ovrFlwVal);
+  cmdLimitsMDLOBJ4.step(rtu_cmd_max, rtu_cmd_min, &rtb_error, rty_cmd, rty_ovrFlwVal);
   PID_backCalc_DW.ovrFlw_DSTATE = *rty_ovrFlwVal;
 }
 

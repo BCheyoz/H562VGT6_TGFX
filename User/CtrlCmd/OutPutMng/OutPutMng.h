@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'OutPutMng'.
 //
-// Model version                  : 1.21
+// Model version                  : 1.22
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:23:53 2025
+// C/C++ source code generated on : Thu Apr 17 12:14:54 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -41,8 +41,7 @@ class OutPutMng final
   OutPutMng& operator= (OutPutMng &&) = delete;
 
   // model step function
-  void step(const tb_OutPutMng_In *rtu_OutPutMng_In, tb_Control_Out
-            *rty_Control_Out);
+  void step(const tb_OutPutMng_In *rtu_OutPutMng_In, tb_Control_Out *rty_Control_Out);
 
   // Constructor
   OutPutMng();

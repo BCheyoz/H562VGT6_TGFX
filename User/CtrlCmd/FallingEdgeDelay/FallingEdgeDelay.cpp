@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:31 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:52 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -33,8 +33,7 @@ void FallingEdgeDelay::reset(void)
 }
 
 // Output and update for referenced model: 'FallingEdgeDelay'
-void FallingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float
-  rtp_Delay, float rtp_TimeStep)
+void FallingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float rtp_Delay, float rtp_TimeStep)
 {
   // local block i/o variables
   float rtb_timerValue;
@@ -49,8 +48,7 @@ void FallingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float
   EdgeOffMDLOBJ2.step(rtu_In, &rtb_edgeOff);
   rtb_timerReset = (rtb_edgeOff || FallingEdgeDelay_DW.isTimeOut_DSTATE);
   rtb_timerHold = 0U;
-  DelayTimerMDLOBJ1.step(&rtb_timerLaunch, &rtb_timerReset, &rtb_timerHold,
-    &rtb_timerValue, &rtb_timerState, rtp_TimeStep);
+  DelayTimerMDLOBJ1.step(&rtb_timerLaunch, &rtb_timerReset, &rtb_timerHold, &rtb_timerValue, &rtb_timerState, rtp_TimeStep);
   if (rtb_timerState) {
     *rty_Out = FallingEdgeDelay_DW.previousVal_DSTATE;
   } else {

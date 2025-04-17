@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:06 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:23 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -50,8 +50,7 @@ class Hysteresis final
   void reset(float rtp_offVal);
 
   // model step function
-  void step(const float *rtu_In, float *rty_Out, float rtp_offVal, float
-            rtp_onVal, float rtp_swOffVal, float rtp_swOnVal);
+  void step(const float *rtu_In, float *rty_Out, float rtp_offVal, float rtp_onVal, float rtp_swOffVal, float rtp_swOnVal);
 
   // Constructor
   Hysteresis();

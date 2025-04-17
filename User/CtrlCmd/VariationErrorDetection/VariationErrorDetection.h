@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.28
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:11:11 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:22 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -28,7 +28,7 @@ class VariationErrorDetection final
 {
   // public data and function members
  public:
-  // Block signals and states (default storage) for model 'VariationErrorDetection' 
+  // Block signals and states (default storage) for model 'VariationErrorDetection'
   struct DW_VariationErrorDetection_T {
     float prevSignalMesRaw_DSTATE;     // '<Root>/prevSignalMesRaw'
   };
@@ -49,9 +49,8 @@ class VariationErrorDetection final
   void reset();
 
   // model step function
-  void step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect,
-            float rtp_Cs_dfct_rst_dlay_time, float rtp_Cs_dfct_set_dlay_time,
-            float rtp_Cs_dflt_val, float rtp_Cs_smpl_time, float rtp_Cs_var_max);
+  void step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect, float rtp_Cs_dfct_rst_dlay_time, float rtp_Cs_dfct_set_dlay_time, float
+            rtp_Cs_dflt_val, float rtp_Cs_smpl_time, float rtp_Cs_var_max);
 
   // Constructor
   VariationErrorDetection();

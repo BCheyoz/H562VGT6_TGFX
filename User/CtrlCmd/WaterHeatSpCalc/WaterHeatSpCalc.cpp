@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatSpCalc'.
 //
-// Model version                  : 1.74
+// Model version                  : 1.75
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:12 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:28 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -97,85 +97,161 @@ WaterHeatSpCalc::P_WaterHeatSpCalc_T WaterHeatSpCalc::WaterHeatSpCalc_rtP{
   { 2U, 3U, 4U, 5U, 6U }
 };
 
+// Output and update for atomic system: '<Root>/ConsModeChauf'
+void WaterHeatSpCalc::WaterHeatSpCalc_ConsModeChauf() const
+{
+  switch (*WaterHeatSpCalc_rtu_Ss_op_mode) {
+   case te_op_mode::Auto:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
+    break;
+
+   case te_op_mode::FullElec:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
+    break;
+
+   case te_op_mode::Eco:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
+    break;
+
+   case te_op_mode::Boost:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
+    break;
+
+   case te_op_mode::Hybrid:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
+    break;
+
+   case te_op_mode::AntiLegionella:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
+    break;
+
+   case te_op_mode::Holidays:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
+    break;
+
+   default:
+    *WaterHeatSpCal_rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
+    break;
+  }
+}
+
+// System initialize for atomic system: '<Root>/consigne_V40'
+void WaterHeatSpCalc::WaterHeatSpCa_consigne_V40_Init()
+{
+  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE = WaterHeatSpCalc_rtP.Cs_Boost_v40_sp_InitialConditio;
+}
+
+// System reset for atomic system: '<Root>/consigne_V40'
+void WaterHeatSpCalc::WaterHeatSpC_consigne_V40_Reset()
+{
+  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE = WaterHeatSpCalc_rtP.Cs_Boost_v40_sp_InitialConditio;
+}
+
+// Output and update for atomic system: '<Root>/consigne_V40'
+void WaterHeatSpCalc::WaterHeatSpCalc_consigne_V40()
+{
+  switch (*WaterHeatSpCalc_rtu_Ss_op_mode) {
+   case te_op_mode::Auto:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = static_cast<ta_wtr_vol>(WaterHeatSpCalc_rtP.ConsAuto_tableData[plook_u32u8_binckan(*WaterHeatSpCalc_rtu_Ns_pers_nb,
+      WaterHeatSpCalc_rtP.ConsAuto_bp01Data, 4U)] + WaterHeatSpCalc_rtP.Cs_bain_auto_elec_C_Value);
+    break;
+
+   case te_op_mode::FullElec:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = static_cast<ta_wtr_vol>(WaterHeatSpCalc_rtP.ConsAuto_tableData[plook_u32u8_binckan(*WaterHeatSpCalc_rtu_Ns_pers_nb,
+      WaterHeatSpCalc_rtP.ConsAuto_bp01Data, 4U)] + WaterHeatSpCalc_rtP.Cs_bain_auto_elec_C_Value);
+    break;
+
+   case te_op_mode::Eco:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = static_cast<ta_wtr_vol>(WaterHeatSpCalc_rtP.ConsEco_tableData[plook_u32u8_binckan(*WaterHeatSpCalc_rtu_Ns_pers_nb,
+      WaterHeatSpCalc_rtP.ConsEco_bp01Data, 4U)] + WaterHeatSpCalc_rtP.Cs_bain_eco_C_Value);
+    break;
+
+   case te_op_mode::Boost:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE;
+    break;
+
+   case te_op_mode::Hybrid:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
+    break;
+
+   case te_op_mode::AntiLegionella:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
+    break;
+
+   case te_op_mode::Holidays:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
+    break;
+
+   default:
+    *WaterHeatSpCalc_rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
+    break;
+  }
+
+  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE = *WaterHeatSpCalc_rty_Cs_v40_sp;
+}
+
+// Output and update for atomic system: '<Root>/consigne_temp'
+void WaterHeatSpCalc::WaterHeatSpCalc_consigne_temp() const
+{
+  switch (*WaterHeatSpCalc_rtu_Ss_op_mode) {
+   case te_op_mode::Auto:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
+    break;
+
+   case te_op_mode::FullElec:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
+    break;
+
+   case te_op_mode::Eco:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
+    break;
+
+   case te_op_mode::Boost:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
+    break;
+
+   case te_op_mode::Hybrid:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_hyb_C_Value;
+    break;
+
+   case te_op_mode::AntiLegionella:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_AL_C_Value;
+    break;
+
+   case te_op_mode::Holidays:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_hol_C_Value;
+    break;
+
+   default:
+    *WaterHeatSpCalc_rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_test_pac_C_Value;
+    break;
+  }
+}
+
 // System initialize for referenced model: 'WaterHeatSpCalc'
 void WaterHeatSpCalc::init(void)
 {
-  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE =
-    WaterHeatSpCalc_rtP.Cs_Boost_v40_sp_InitialConditio;
+  WaterHeatSpCa_consigne_V40_Init();
 }
 
 // System reset for referenced model: 'WaterHeatSpCalc'
 void WaterHeatSpCalc::reset(void)
 {
-  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE =
-    WaterHeatSpCalc_rtP.Cs_Boost_v40_sp_InitialConditio;
+  WaterHeatSpC_consigne_V40_Reset();
 }
 
 // Output and update for referenced model: 'WaterHeatSpCalc'
-void WaterHeatSpCalc::step(const te_op_mode *rtu_Ss_op_mode, const ta_pers_nb
-  *rtu_Ns_pers_nb, te_heat_mode *rty_Ss_heat_mode, ta_wtr_vol *rty_Cs_v40_sp,
+void WaterHeatSpCalc::step(const te_op_mode *rtu_Ss_op_mode, const ta_pers_nb *rtu_Ns_pers_nb, te_heat_mode *rty_Ss_heat_mode, ta_wtr_vol *rty_Cs_v40_sp,
   ta_temp *rty_Cs_temp_sp)
 {
-  switch (*rtu_Ss_op_mode) {
-   case te_op_mode::Auto:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
-    *rty_Cs_v40_sp = static_cast<ta_wtr_vol>
-      (WaterHeatSpCalc_rtP.ConsAuto_tableData[plook_u32u8_binckan
-       (*rtu_Ns_pers_nb, WaterHeatSpCalc_rtP.ConsAuto_bp01Data, 4U)] +
-       WaterHeatSpCalc_rtP.Cs_bain_auto_elec_C_Value);
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
-    break;
-
-   case te_op_mode::FullElec:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
-    *rty_Cs_v40_sp = static_cast<ta_wtr_vol>
-      (WaterHeatSpCalc_rtP.ConsAuto_tableData[plook_u32u8_binckan
-       (*rtu_Ns_pers_nb, WaterHeatSpCalc_rtP.ConsAuto_bp01Data, 4U)] +
-       WaterHeatSpCalc_rtP.Cs_bain_auto_elec_C_Value);
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
-    break;
-
-   case te_op_mode::Eco:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
-    *rty_Cs_v40_sp = static_cast<ta_wtr_vol>
-      (WaterHeatSpCalc_rtP.ConsEco_tableData[plook_u32u8_binckan(*rtu_Ns_pers_nb,
-        WaterHeatSpCalc_rtP.ConsEco_bp01Data, 4U)] +
-       WaterHeatSpCalc_rtP.Cs_bain_eco_C_Value);
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
-    break;
-
-   case te_op_mode::Boost:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.v40_ctrl_Value;
-    *rty_Cs_v40_sp = WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE;
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.NullConstant_Value;
-    break;
-
-   case te_op_mode::Hybrid:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
-    *rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_hyb_C_Value;
-    break;
-
-   case te_op_mode::AntiLegionella:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
-    *rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_AL_C_Value;
-    break;
-
-   case te_op_mode::Holidays:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
-    *rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_hol_C_Value;
-    break;
-
-   default:
-    *rty_Ss_heat_mode = WaterHeatSpCalc_rtP.temp_ctrl_Value;
-    *rty_Cs_v40_sp = WaterHeatSpCalc_rtP.v40NullSpConstant_Value;
-    *rty_Cs_temp_sp = WaterHeatSpCalc_rtP.Cs_cons_test_pac_C_Value;
-    break;
-  }
-
-  WaterHeatSpCalc_DW.Cs_Boost_v40_sp_DSTATE = *rty_Cs_v40_sp;
+  WaterHeatSpCalc_rtu_Ss_op_mode = rtu_Ss_op_mode;
+  WaterHeatSpCalc_rtu_Ns_pers_nb = rtu_Ns_pers_nb;
+  WaterHeatSpCal_rty_Ss_heat_mode = rty_Ss_heat_mode;
+  WaterHeatSpCalc_rty_Cs_v40_sp = rty_Cs_v40_sp;
+  WaterHeatSpCalc_rty_Cs_temp_sp = rty_Cs_temp_sp;
+  WaterHeatSpCalc_ConsModeChauf();
+  WaterHeatSpCalc_consigne_V40();
+  WaterHeatSpCalc_consigne_temp();
 }
 
 // Constructor

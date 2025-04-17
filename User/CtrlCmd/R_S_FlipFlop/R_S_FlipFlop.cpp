@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:09:26 2025
+// C/C++ source code generated on : Thu Apr 17 10:50:27 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -25,8 +25,7 @@ void R_S_FlipFlop::reset(void)
 }
 
 // Output and update for referenced model: 'R_S_FlipFlop'
-void R_S_FlipFlop::step(const bool *rtu_set, const bool *rtu_reset, bool
-  *rty_stt)
+void R_S_FlipFlop::step(const bool *rtu_set, const bool *rtu_reset, bool *rty_stt)
 {
   bool rtb_no_S;
   rtb_no_S = ((!*rtu_set) && (!R_S_FlipFlop_DW.prevVal_DSTATE));

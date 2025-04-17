@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.136
+// Model version                  : 1.143
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:26 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:17 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -26,7 +26,7 @@
 enum class te_vent_op_mode
   : int32_t {
   Inoperative = 0,
-  SafetyOff,
+  Stopped,
   ConstantFlow,
   Normal                               // Default value
 };
@@ -82,7 +82,7 @@ struct tb_VentCtrl_Out
   ta_air_pres Cs_vent_pres_sp;
   ta_flow Cs_vent_flow_sp;
   ta_vltg Cs_vent_vltg_sp;
-  ta_air_pres Cs_pres_rise_curv_sp;
+  ta_air_pres Cs_pres_mes_filt;
 };
 
 #endif

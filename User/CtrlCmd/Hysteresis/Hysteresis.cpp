@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:06 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:23 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -32,8 +32,7 @@ void Hysteresis::reset(float rtp_offVal)
 }
 
 // Output and update for referenced model: 'Hysteresis'
-void Hysteresis::step(const float *rtu_In, float *rty_Out, float rtp_offVal,
-                      float rtp_onVal, float rtp_swOffVal, float rtp_swOnVal)
+void Hysteresis::step(const float *rtu_In, float *rty_Out, float rtp_offVal, float rtp_onVal, float rtp_swOffVal, float rtp_swOnVal)
 {
   float rtb_noLowVal;
   bool rtb_isDirect;

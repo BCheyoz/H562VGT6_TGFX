@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysConfigCalib'.
 //
-// Model version                  : 1.22
+// Model version                  : 1.23
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:00 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:00 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -62,21 +62,18 @@ SysConfigCalib::P_SysConfigCalib_T SysConfigCalib::SysConfigCalib_rtP{
 };
 
 // Output and update for referenced model: 'SysConfigCalib'
-void SysConfigCalib::step(const tb_Control_In *rtu_Control_In,
-  tb_SysConfigCalib_Out *rty_SysConfigCalib_Out) const
+void SysConfigCalib::step(const te_tank_size *rtu_Control_In_HMI_TECH_Ss_tank, tb_SysConfigCalib_Out *rty_SysConfigCalib_Out) const
 {
   ta_wtr_vol rtb_Ct_tank_vol_idx_1;
   ta_wtr_vol rtb_Ct_tank_vol_idx_2;
   ta_wtr_vol rtb_Ct_tank_vol_idx_3;
-  if (rtu_Control_In->HMI.TECH.Ss_tank_size == te_tank_size::L180) {
-    rty_SysConfigCalib_Out->Cs_tank_vol_up =
-      SysConfigCalib_rtP.Cs_180L_tank_vol_up_C_Value;
+  if (*rtu_Control_In_HMI_TECH_Ss_tank == te_tank_size::L180) {
+    rty_SysConfigCalib_Out->Cs_tank_vol_up = SysConfigCalib_rtP.Cs_180L_tank_vol_up_C_Value;
     rtb_Ct_tank_vol_idx_1 = SysConfigCalib_rtP.Cs_180L_tank_vol_btwn_C_Value;
     rtb_Ct_tank_vol_idx_2 = SysConfigCalib_rtP.Cs_180L_tank_vol_down_C_Value;
     rtb_Ct_tank_vol_idx_3 = SysConfigCalib_rtP.Cs_180L_tank_vol_tot_C_Value;
   } else {
-    rty_SysConfigCalib_Out->Cs_tank_vol_up =
-      SysConfigCalib_rtP.Cs_105L_tank_vol_up_C_Value;
+    rty_SysConfigCalib_Out->Cs_tank_vol_up = SysConfigCalib_rtP.Cs_105L_tank_vol_up_C_Value;
     rtb_Ct_tank_vol_idx_1 = SysConfigCalib_rtP.Cs_105L_tank_vol_btwn_C_Value;
     rtb_Ct_tank_vol_idx_2 = SysConfigCalib_rtP.Cs_105L_tank_vol_down_C_Value;
     rtb_Ct_tank_vol_idx_3 = SysConfigCalib_rtP.Cs_105L_tank_vol_tot_C_Value;

@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.73
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:25:04 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -36,8 +36,7 @@ void WaterHeatCtrl::reset(void)
 }
 
 // Output and update for referenced model: 'WaterHeatCtrl'
-void WaterHeatCtrl::step(const tb_WaterHeatCtrl_In *rtu_WaterHeatCtrl_In,
-  tb_WaterHeatCtrl_Out *rty_WaterHeatCtrl_Out)
+void WaterHeatCtrl::step(const tb_WaterHeatCtrl_In *rtu_WaterHeatCtrl_In, tb_WaterHeatCtrl_Out *rty_WaterHeatCtrl_Out)
 {
   // local block i/o variables
   te_heat_mode rtb_Ss_heat_mode;
@@ -45,43 +44,32 @@ void WaterHeatCtrl::step(const tb_WaterHeatCtrl_In *rtu_WaterHeatCtrl_In,
   ta_rot_spd rtb_Cs_heat_pump_rot_spd_sp;
   ta_temp rtb_Cs_temp_sp;
   ta_wtr_vol rtb_Cs_v40_sp_Switch;
-  WaterHeatSpCalcMDLOBJ2.step(&rtu_WaterHeatCtrl_In->Ss_op_mode,
-    &rtu_WaterHeatCtrl_In->Ns_pers_nb, &rtb_Ss_heat_mode, &rtb_Cs_v40_sp,
-    &rtb_Cs_temp_sp);
+  WaterHeatSpCalcMDLOBJ2.step(&rtu_WaterHeatCtrl_In->Ss_op_mode, &rtu_WaterHeatCtrl_In->Ns_pers_nb, &rtb_Ss_heat_mode, &rtb_Cs_v40_sp, &rtb_Cs_temp_sp);
   if (rtu_WaterHeatCtrl_In->Bs_v40_sp_simu_ena) {
     rtb_Cs_v40_sp_Switch = rtu_WaterHeatCtrl_In->Cs_v40_sp_simu;
   } else {
     rtb_Cs_v40_sp_Switch = rtb_Cs_v40_sp;
   }
 
-  WaterHeatControllerMDLOBJ1.step(&rtu_WaterHeatCtrl_In->Cs_v40_min,
-    &rtu_WaterHeatCtrl_In->Cs_tank_down_temp,
-    &rtu_WaterHeatCtrl_In->Cs_tank_up_temp, &rtb_Cs_v40_sp_Switch,
-    &rtu_WaterHeatCtrl_In->Cs_pump_evap_temp,
-    &rtu_WaterHeatCtrl_In->Cs_pump_xhst_temp, &rtb_Cs_heat_pump_rot_spd_sp,
+  WaterHeatControllerMDLOBJ1.step(&rtu_WaterHeatCtrl_In->Cs_v40_min, &rtu_WaterHeatCtrl_In->Cs_tank_down_temp, &rtu_WaterHeatCtrl_In->Cs_tank_up_temp,
+    &rtb_Cs_v40_sp_Switch, &rtu_WaterHeatCtrl_In->Cs_pump_evap_temp, &rtu_WaterHeatCtrl_In->Cs_pump_xhst_temp, &rtb_Cs_heat_pump_rot_spd_sp,
     &rty_WaterHeatCtrl_Out->Cs_v40_rat);
   if (rtu_WaterHeatCtrl_In->Bs_elec_bstr_htr_sp_simu_ena) {
-    rty_WaterHeatCtrl_Out->Ss_elec_bstr_htr_sp =
-      rtu_WaterHeatCtrl_In->Ss_elec_bstr_htr_sp_simu;
+    rty_WaterHeatCtrl_Out->Ss_elec_bstr_htr_sp = rtu_WaterHeatCtrl_In->Ss_elec_bstr_htr_sp_simu;
   } else {
-    rty_WaterHeatCtrl_Out->Ss_elec_bstr_htr_sp =
-      WaterHeatCtrl_DW.WaterHeatController_o2;
+    rty_WaterHeatCtrl_Out->Ss_elec_bstr_htr_sp = WaterHeatCtrl_DW.WaterHeatController_o2;
   }
 
   if (rtu_WaterHeatCtrl_In->Bs_heat_pump_freq_sp_simu_ena) {
-    rty_WaterHeatCtrl_Out->Cs_heat_pump_rot_spd_sp =
-      rtu_WaterHeatCtrl_In->Cs_heat_pump_rot_spd_sp_simu;
+    rty_WaterHeatCtrl_Out->Cs_heat_pump_rot_spd_sp = rtu_WaterHeatCtrl_In->Cs_heat_pump_rot_spd_sp_simu;
   } else {
     rty_WaterHeatCtrl_Out->Cs_heat_pump_rot_spd_sp = rtb_Cs_heat_pump_rot_spd_sp;
   }
 
-  rty_WaterHeatCtrl_Out->Ss_heat_pump_stt = static_cast<te_heat_stt>
-    (WaterHeatCtrl_DW.WaterHeatController_o4);
-  rty_WaterHeatCtrl_Out->Ss_elec_htr_bstr_stt = static_cast<te_heat_stt>
-    (WaterHeatCtrl_DW.WaterHeatController_o5);
+  rty_WaterHeatCtrl_Out->Ss_heat_pump_stt = static_cast<te_heat_stt>(WaterHeatCtrl_DW.WaterHeatController_o4);
+  rty_WaterHeatCtrl_Out->Ss_elec_htr_bstr_stt = static_cast<te_heat_stt>(WaterHeatCtrl_DW.WaterHeatController_o5);
   if (rtu_WaterHeatCtrl_In->Bs_heat_mode_simu_ena) {
-    rty_WaterHeatCtrl_Out->Ss_heat_mode =
-      rtu_WaterHeatCtrl_In->Ss_heat_mode_simu;
+    rty_WaterHeatCtrl_Out->Ss_heat_mode = rtu_WaterHeatCtrl_In->Ss_heat_mode_simu;
   } else {
     rty_WaterHeatCtrl_Out->Ss_heat_mode = rtb_Ss_heat_mode;
   }

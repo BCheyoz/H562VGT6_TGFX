@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatSpCalc'.
 //
-// Model version                  : 1.74
+// Model version                  : 1.75
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:12 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:28 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -68,13 +68,11 @@ class WaterHeatSpCalc final
     ta_wtr_vol Cs_bain_auto_elec_C_Value;// Expression: Cs_bain_auto_elec_C
                                             //  Referenced by: '<S2>/Cs_bain_auto_elec_C'
 
-    uint16_t Cs_Boost_v40_sp_InitialConditio;
-                          // Computed Parameter: Cs_Boost_v40_sp_InitialConditio
-                             //  Referenced by: '<S2>/Cs_Boost_v40_sp'
+    uint16_t Cs_Boost_v40_sp_InitialConditio;// Computed Parameter: Cs_Boost_v40_sp_InitialConditio
+                                                //  Referenced by: '<S2>/Cs_Boost_v40_sp'
 
-    ta_wtr_vol v40NullSpConstant_Value;
-                                  // Computed Parameter: v40NullSpConstant_Value
-                                     //  Referenced by: '<S2>/v40NullSpConstant'
+    ta_wtr_vol v40NullSpConstant_Value;// Computed Parameter: v40NullSpConstant_Value
+                                          //  Referenced by: '<S2>/v40NullSpConstant'
 
     ta_pers_nb ConsEco_bp01Data[5];    // Expression: Ct_nb_pres_C
                                           //  Referenced by: '<S2>/ConsEco'
@@ -87,6 +85,10 @@ class WaterHeatSpCalc final
   // Initial conditions function
   void init();
 
+  // model step function
+  void step(const te_op_mode *rtu_Ss_op_mode, const ta_pers_nb *rtu_Ns_pers_nb, te_heat_mode *rty_Ss_heat_mode, ta_wtr_vol *rty_Cs_v40_sp, ta_temp
+            *rty_Cs_temp_sp);
+
   // Copy Constructor
   WaterHeatSpCalc(WaterHeatSpCalc const&) = delete;
 
@@ -98,11 +100,6 @@ class WaterHeatSpCalc final
 
   // Move Assignment Operator
   WaterHeatSpCalc& operator= (WaterHeatSpCalc &&) = delete;
-
-  // model step function
-  void step(const te_op_mode *rtu_Ss_op_mode, const ta_pers_nb *rtu_Ns_pers_nb,
-            te_heat_mode *rty_Ss_heat_mode, ta_wtr_vol *rty_Cs_v40_sp, ta_temp
-            *rty_Cs_temp_sp);
 
   // Reset function
   void reset();
@@ -120,6 +117,24 @@ class WaterHeatSpCalc final
 
   // Tunable parameters
   static P_WaterHeatSpCalc_T WaterHeatSpCalc_rtP;
+
+  // Declare private class scope variables for system: "model 'WaterHeatSpCalc'"
+  const te_op_mode *WaterHeatSpCalc_rtu_Ss_op_mode;// '<Root>/Ss_op_mode'
+  const ta_pers_nb *WaterHeatSpCalc_rtu_Ns_pers_nb;// '<Root>/Ns_pers_nb'
+  te_heat_mode *WaterHeatSpCal_rty_Ss_heat_mode;// '<Root>/Ss_heat_mode'
+  ta_wtr_vol *WaterHeatSpCalc_rty_Cs_v40_sp;// '<Root>/Cs_v40_sp'
+  ta_temp *WaterHeatSpCalc_rty_Cs_temp_sp;// '<Root>/Cs_temp_sp'
+
+  // private member function(s) for subsystem '<Root>/ConsModeChauf'
+  void WaterHeatSpCalc_ConsModeChauf() const;
+
+  // private member function(s) for subsystem '<Root>/consigne_V40'
+  void WaterHeatSpCa_consigne_V40_Init();
+  void WaterHeatSpC_consigne_V40_Reset();
+  void WaterHeatSpCalc_consigne_V40();
+
+  // private member function(s) for subsystem '<Root>/consigne_temp'
+  void WaterHeatSpCalc_consigne_temp() const;
 };
 
 extern WaterHeatSpCalc::P_WaterHeatSpCalc_T WaterHeatSpCalc_rtP;

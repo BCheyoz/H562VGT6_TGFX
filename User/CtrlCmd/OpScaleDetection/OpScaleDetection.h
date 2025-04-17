@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.32
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:59 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:11 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -49,9 +49,8 @@ class OpScaleDetection final
   void reset();
 
   // model step function
-  void step(const float *rtu_signalRaw, float *rty_Signal, bool *rty_isDefect,
-            float rtp_Cs_dflt_val, float rtp_Cs_rst_time, float rtp_Cs_set_time,
-            float rtp_Cs_smpl_time, float rtp_Cs_val_max, float rtp_Cs_val_min);
+  void step(const float *rtu_signalRaw, float *rty_Signal, bool *rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_time, float rtp_Cs_set_time, float
+            rtp_Cs_smpl_time, float rtp_Cs_val_max, float rtp_Cs_val_min);
 
   // Constructor
   OpScaleDetection();

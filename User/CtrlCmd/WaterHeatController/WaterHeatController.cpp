@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatController'.
 //
-// Model version                  : 1.569
+// Model version                  : 1.570
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:47 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -46,8 +46,7 @@ const uint8_t WaterHeatController_IN_Tank_low{ 4U };
 
 const bool WaterHeatController_BGND{ false };// bool ground
 
-WaterHeatController::P_WaterHeatController_T WaterHeatController::
-  WaterHeatController_rtP{
+WaterHeatController::P_WaterHeatController_T WaterHeatController::WaterHeatController_rtP{
   // Mask Parameter: firstOrderTF2_K
   //  Referenced by: '<S23>/firstOrderTF'
 
@@ -582,30 +581,20 @@ WaterHeatController::P_WaterHeatController_T WaterHeatController::
 // System initialize for referenced model: 'WaterHeatController'
 void WaterHeatController::init(void)
 {
-  WaterHeatController_DW.exhstTempProt_DSTATE =
-    WaterHeatController_rtP.exhstTempProt_InitialCondition;
-  WaterHeatController_DW.antiShort_DSTATE =
-    WaterHeatController_rtP.antiShort_InitialCondition;
-  WaterHeatController_DW.UnitDelay1_DSTATE =
-    WaterHeatController_rtP.UnitDelay1_InitialCondition;
-  WaterHeatController_DW.UnitDelay_DSTATE =
-    WaterHeatController_rtP.UnitDelay_InitialCondition;
-  WaterHeatController_DW.UnitDelay_DSTATE_a =
-    WaterHeatController_rtP.UnitDelay_InitialCondition_m;
-  WaterHeatController_DW.prevTimerVal_DSTATE =
-    WaterHeatController_rtP.prevTimerVal_InitialCondition;
-  WaterHeatController_DW.UnitDelay1_DSTATE_e =
-    WaterHeatController_rtP.UnitDelay1_InitialCondition_n;
+  WaterHeatController_DW.exhstTempProt_DSTATE = WaterHeatController_rtP.exhstTempProt_InitialCondition;
+  WaterHeatController_DW.antiShort_DSTATE = WaterHeatController_rtP.antiShort_InitialCondition;
+  WaterHeatController_DW.UnitDelay1_DSTATE = WaterHeatController_rtP.UnitDelay1_InitialCondition;
+  WaterHeatController_DW.UnitDelay_DSTATE = WaterHeatController_rtP.UnitDelay_InitialCondition;
+  WaterHeatController_DW.UnitDelay_DSTATE_a = WaterHeatController_rtP.UnitDelay_InitialCondition_m;
+  WaterHeatController_DW.prevTimerVal_DSTATE = WaterHeatController_rtP.prevTimerVal_InitialCondition;
+  WaterHeatController_DW.UnitDelay1_DSTATE_e = WaterHeatController_rtP.UnitDelay1_InitialCondition_n;
   TevapRegulatorMDLOBJ1.init(WaterHeatController_rtP.TevapRegulator_InitVal);
-  WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd =
-    WaterHeatController_rtP.Cs_ctrl_tref_max_spd_cmd_Y0;
+  WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd = WaterHeatController_rtP.Cs_ctrl_tref_max_spd_cmd_Y0;
   TdownminRegMDLOBJ2.init(WaterHeatController_rtP.TdownminReg_InitVal);
   TevapRegulatorMDLOBJ18.init(WaterHeatController_rtP.TevapRegulator_InitVal_l);
-  WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd =
-    WaterHeatController_rtP.Cs_ctrl_temp_evap_spd_cmd_Y0;
+  WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd = WaterHeatController_rtP.Cs_ctrl_temp_evap_spd_cmd_Y0;
   DerivatorMDLOBJ11.init(WaterHeatController_rtP.Derivator_initVal);
-  WaterHeatController_DW.Derivator_h =
-    WaterHeatController_rtP.Cs_tank_down_temp_der_Y0;
+  WaterHeatController_DW.Derivator_h = WaterHeatController_rtP.Cs_tank_down_temp_der_Y0;
   firstOrderTFMDLOBJ17.init(WaterHeatController_rtP.firstOrderTF2_initVal);
   firstOrderTFMDLOBJ16.init(WaterHeatController_rtP.firstOrderTF1_initVal);
   firstOrderTFMDLOBJ13.init(WaterHeatController_rtP.pumpFreqFilt_initVal);
@@ -616,20 +605,13 @@ void WaterHeatController::init(void)
 // System reset for referenced model: 'WaterHeatController'
 void WaterHeatController::reset(void)
 {
-  WaterHeatController_DW.exhstTempProt_DSTATE =
-    WaterHeatController_rtP.exhstTempProt_InitialCondition;
-  WaterHeatController_DW.antiShort_DSTATE =
-    WaterHeatController_rtP.antiShort_InitialCondition;
-  WaterHeatController_DW.UnitDelay1_DSTATE =
-    WaterHeatController_rtP.UnitDelay1_InitialCondition;
-  WaterHeatController_DW.UnitDelay_DSTATE =
-    WaterHeatController_rtP.UnitDelay_InitialCondition;
-  WaterHeatController_DW.UnitDelay_DSTATE_a =
-    WaterHeatController_rtP.UnitDelay_InitialCondition_m;
-  WaterHeatController_DW.prevTimerVal_DSTATE =
-    WaterHeatController_rtP.prevTimerVal_InitialCondition;
-  WaterHeatController_DW.UnitDelay1_DSTATE_e =
-    WaterHeatController_rtP.UnitDelay1_InitialCondition_n;
+  WaterHeatController_DW.exhstTempProt_DSTATE = WaterHeatController_rtP.exhstTempProt_InitialCondition;
+  WaterHeatController_DW.antiShort_DSTATE = WaterHeatController_rtP.antiShort_InitialCondition;
+  WaterHeatController_DW.UnitDelay1_DSTATE = WaterHeatController_rtP.UnitDelay1_InitialCondition;
+  WaterHeatController_DW.UnitDelay_DSTATE = WaterHeatController_rtP.UnitDelay_InitialCondition;
+  WaterHeatController_DW.UnitDelay_DSTATE_a = WaterHeatController_rtP.UnitDelay_InitialCondition_m;
+  WaterHeatController_DW.prevTimerVal_DSTATE = WaterHeatController_rtP.prevTimerVal_InitialCondition;
+  WaterHeatController_DW.UnitDelay1_DSTATE_e = WaterHeatController_rtP.UnitDelay1_InitialCondition_n;
   evapTempProtDelayMDLOBJ7.reset();
   evapTempProtDisable_MDLOBJ8.reset();
   R_S_FlipFlopMDLOBJ6.reset();
@@ -645,17 +627,13 @@ void WaterHeatController::reset(void)
   firstOrderTFMDLOBJ14.reset(WaterHeatController_rtP.pumpFreqFilt1_initVal);
   PumpOFFdetectMDLOBJ5.reset();
   AntiShortCycleMDLOBJ3.reset();
-  HysteresisMDLOBJ4.reset
-    (WaterHeatController_rtP.HysteresisProtectTankDefrost_of);
+  HysteresisMDLOBJ4.reset(WaterHeatController_rtP.HysteresisProtectTankDefrost_of);
   TimerMDLOBJ9.reset();
 }
 
 // Output and update for referenced model: 'WaterHeatController'
-void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
-  *rtu_Cs_tank_down_temp, const ta_temp *rtu_Cs_tank_up_temp, const ta_wtr_vol
-  *rtu_Cs_v40_sp, const ta_temp *rtu_Cs_pump_evap_temp, const ta_temp
-  *rtu_Cs_pump_xhst_temp, ta_rot_spd *rty_Cs_heat_pump_rot_spd_sp, uint8_t
-  *rty_Cs_v40_rat)
+void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp *rtu_Cs_tank_down_temp, const ta_temp *rtu_Cs_tank_up_temp, const ta_wtr_vol
+  *rtu_Cs_v40_sp, const ta_temp *rtu_Cs_pump_evap_temp, const ta_temp *rtu_Cs_pump_xhst_temp, ta_rot_spd *rty_Cs_heat_pump_rot_spd_sp, uint8_t *rty_Cs_v40_rat)
 {
   // local block i/o variables
   float rtb_output;
@@ -738,88 +716,59 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
   bool rtb_isV40Treshold;
   te_pump_mode tmp_0;
   te_tank_lvl rtb_TankLevel;
-  rtb_Tref_max = look1_is16lu32n16Ds32_binlcs(*rtu_Cs_pump_evap_temp,
-    WaterHeatController_rtP.Tref_max_bp01Data,
-    WaterHeatController_rtP.Tref_max_tableData, 6U);
+  rtb_Tref_max = look1_is16lu32n16Ds32_binlcs(*rtu_Cs_pump_evap_temp, WaterHeatController_rtP.Tref_max_bp01Data, WaterHeatController_rtP.Tref_max_tableData, 6U);
   if (!WaterHeatController_DW.exhstTempProt_DSTATE) {
-    rtb_setPointTrefMax = static_cast<int16_t>(rtb_Tref_max -
-      WaterHeatController_rtP.Constant2_Value_c);
+    rtb_setPointTrefMax = static_cast<int16_t>(rtb_Tref_max - WaterHeatController_rtP.Constant2_Value_c);
     rtb_mesTpumpXhst = *rtu_Cs_pump_xhst_temp;
     rtb_maxDerat_f = WaterHeatController_rtP.maxDerat_Value;
     rtb_minDerat_b = WaterHeatController_rtP.minDerat_Value;
-    TevapRegulatorMDLOBJ1.step(&rtb_setPointTrefMax, &rtb_mesTpumpXhst,
-      &rtb_maxDerat_f, &rtb_minDerat_b, (const_cast<bool*>
-      (&WaterHeatController_BGND)), &rtb_final_cmd_pm, &rtb_ovrFlwVal_l,
-      WaterHeatController_rtP.TevapRegulator_InitVal,
-      WaterHeatController_rtP.TevapRegulator_Kawu,
-      WaterHeatController_rtP.TevapRegulator_Kd,
-      WaterHeatController_rtP.TevapRegulator_Ki,
-      WaterHeatController_rtP.TevapRegulator_Kp, rtP_WaterHeatCtrl_tick_C,
+    TevapRegulatorMDLOBJ1.step(&rtb_setPointTrefMax, &rtb_mesTpumpXhst, &rtb_maxDerat_f, &rtb_minDerat_b, (const_cast<bool*>(&WaterHeatController_BGND)),
+      &rtb_final_cmd_pm, &rtb_ovrFlwVal_l, WaterHeatController_rtP.TevapRegulator_InitVal, WaterHeatController_rtP.TevapRegulator_Kawu,
+      WaterHeatController_rtP.TevapRegulator_Kd, WaterHeatController_rtP.TevapRegulator_Ki, WaterHeatController_rtP.TevapRegulator_Kp, rtP_WaterHeatCtrl_tick_C,
       WaterHeatController_rtP.TevapRegulator_Tau_f);
-    WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd = (static_cast<float>
-      (WaterHeatController_rtP.max_Value) - rtb_final_cmd_pm) / static_cast<
-      float>(WaterHeatController_rtP.max_Value);
+    WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd = (static_cast<float>(WaterHeatController_rtP.max_Value) - rtb_final_cmd_pm) / static_cast<float>
+      (WaterHeatController_rtP.max_Value);
   }
 
   if (WaterHeatController_rtP.Constant3_Value_g) {
-    rtb_setPointTankDownTemp =
-      WaterHeatController_rtP.Temp_10C_SetPointPID_Value;
+    rtb_setPointTankDownTemp = WaterHeatController_rtP.Temp_10C_SetPointPID_Value;
     rtb_mesTdownTank = *rtu_Cs_tank_down_temp;
     rtb_SpdMinPID = WaterHeatController_rtP.SpdMinPIDTdownTank_Value;
     rtb_SpdMaxPID = WaterHeatController_rtP.SpdMaxPIDTdownTank_Value;
-    TdownminRegMDLOBJ2.step(&rtb_setPointTankDownTemp, &rtb_mesTdownTank,
-      &rtb_SpdMaxPID, &rtb_SpdMinPID, (const_cast<bool*>
-      (&WaterHeatController_BGND)), &rtb_final_cmd_p, &rtb_ovrFlwVal_m,
-      WaterHeatController_rtP.TdownminReg_InitVal,
-      WaterHeatController_rtP.TdownminReg_Kawu,
-      WaterHeatController_rtP.TdownminReg_Kd,
-      WaterHeatController_rtP.TdownminReg_Ki,
-      WaterHeatController_rtP.TdownminReg_Kp, rtP_WaterHeatCtrl_tick_C,
+    TdownminRegMDLOBJ2.step(&rtb_setPointTankDownTemp, &rtb_mesTdownTank, &rtb_SpdMaxPID, &rtb_SpdMinPID, (const_cast<bool*>(&WaterHeatController_BGND)),
+      &rtb_final_cmd_p, &rtb_ovrFlwVal_m, WaterHeatController_rtP.TdownminReg_InitVal, WaterHeatController_rtP.TdownminReg_Kawu,
+      WaterHeatController_rtP.TdownminReg_Kd, WaterHeatController_rtP.TdownminReg_Ki, WaterHeatController_rtP.TdownminReg_Kp, rtP_WaterHeatCtrl_tick_C,
       WaterHeatController_rtP.TdownminReg_Tau_f);
   }
 
   rtb_ProtectPump = (*rtu_Cs_pump_xhst_temp >= rtb_Tref_max);
-  rtb_RelationalOperator = (*rtu_Cs_pump_evap_temp <
-    WaterHeatController_rtP.Constant4_Value);
+  rtb_RelationalOperator = (*rtu_Cs_pump_evap_temp < WaterHeatController_rtP.Constant4_Value);
   rtb_DataTypeConversion3_i = rtb_RelationalOperator;
-  evapTempProtDelayMDLOBJ7.step(&rtb_DataTypeConversion3_i, &rtb_Out_a,
-    WaterHeatController_rtP.evapTempProtDelay_Delay,
+  evapTempProtDelayMDLOBJ7.step(&rtb_DataTypeConversion3_i, &rtb_Out_a, WaterHeatController_rtP.evapTempProtDelay_Delay,
     WaterHeatController_rtP.evapTempProtDelay_TimeStep);
   rtb_DataTypeConversion5_k = (rtb_Out_a != 0);
-  rtb_RelationalOperator3 = (*rtu_Cs_pump_evap_temp >=
-    WaterHeatController_rtP.Constant6_Value_h);
-  rtb_DataTypeConversion4 = ((WaterHeatController_DW.UnitDelay1_DSTATE >=
-    WaterHeatController_rtP.Constant5_Value) && rtb_RelationalOperator3);
-  evapTempProtDisable_MDLOBJ8.step(&rtb_DataTypeConversion4, &rtb_Out_c,
-    WaterHeatController_rtP.evapTempProtDisable_Delay_Delay,
+  rtb_RelationalOperator3 = (*rtu_Cs_pump_evap_temp >= WaterHeatController_rtP.Constant6_Value_h);
+  rtb_DataTypeConversion4 = ((WaterHeatController_DW.UnitDelay1_DSTATE >= WaterHeatController_rtP.Constant5_Value) && rtb_RelationalOperator3);
+  evapTempProtDisable_MDLOBJ8.step(&rtb_DataTypeConversion4, &rtb_Out_c, WaterHeatController_rtP.evapTempProtDisable_Delay_Delay,
     WaterHeatController_rtP.evapTempProtDisable_Delay_TimeS);
   rtb_DataTypeConversion6 = (rtb_Out_c != 0);
-  R_S_FlipFlopMDLOBJ6.step(&rtb_DataTypeConversion5_k, &rtb_DataTypeConversion6,
-    &rtb_stt);
+  R_S_FlipFlopMDLOBJ6.step(&rtb_DataTypeConversion5_k, &rtb_DataTypeConversion6, &rtb_stt);
   if (rtb_stt) {
     rtb_setPointTevap = WaterHeatController_rtP.Temp_2C_SetPointPID_Value;
     rtb_mesTevap = *rtu_Cs_pump_evap_temp;
     rtb_maxDerat = WaterHeatController_rtP.maxDerat_Value_f;
     rtb_minDerat = WaterHeatController_rtP.minDerat_Value_h;
-    TevapRegulatorMDLOBJ18.step(&rtb_setPointTevap, &rtb_mesTevap, &rtb_maxDerat,
-      &rtb_minDerat, (const_cast<bool*>(&WaterHeatController_BGND)),
-      &rtb_final_cmd, &rtb_ovrFlwVal,
-      WaterHeatController_rtP.TevapRegulator_InitVal_l,
-      WaterHeatController_rtP.TevapRegulator_Kawu_e,
-      WaterHeatController_rtP.TevapRegulator_Kd_l,
-      WaterHeatController_rtP.TevapRegulator_Ki_c,
-      WaterHeatController_rtP.TevapRegulator_Kp_h, rtP_WaterHeatCtrl_tick_C,
-      WaterHeatController_rtP.TevapRegulator_Tau_f_j);
-    WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd = (static_cast<float>
-      (WaterHeatController_rtP.max_Value_i) - rtb_final_cmd) / static_cast<float>
+    TevapRegulatorMDLOBJ18.step(&rtb_setPointTevap, &rtb_mesTevap, &rtb_maxDerat, &rtb_minDerat, (const_cast<bool*>(&WaterHeatController_BGND)), &rtb_final_cmd,
+      &rtb_ovrFlwVal, WaterHeatController_rtP.TevapRegulator_InitVal_l, WaterHeatController_rtP.TevapRegulator_Kawu_e,
+      WaterHeatController_rtP.TevapRegulator_Kd_l, WaterHeatController_rtP.TevapRegulator_Ki_c, WaterHeatController_rtP.TevapRegulator_Kp_h,
+      rtP_WaterHeatCtrl_tick_C, WaterHeatController_rtP.TevapRegulator_Tau_f_j);
+    WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd = (static_cast<float>(WaterHeatController_rtP.max_Value_i) - rtb_final_cmd) / static_cast<float>
       (WaterHeatController_rtP.max_Value_i);
   }
 
-  rtb_Bs_tank_empty = (*rtu_Cs_tank_up_temp <
-                       WaterHeatController_rtP.Constant4_Value_p);
+  rtb_Bs_tank_empty = (*rtu_Cs_tank_up_temp < WaterHeatController_rtP.Constant4_Value_p);
   if (WaterHeatController_DW.temporalCounter_i1 < 120) {
-    WaterHeatController_DW.temporalCounter_i1 = static_cast<uint8_t>
-      (WaterHeatController_DW.temporalCounter_i1 + 1);
+    WaterHeatController_DW.temporalCounter_i1 = static_cast<uint8_t>(WaterHeatController_DW.temporalCounter_i1 + 1);
   }
 
   if (WaterHeatController_DW.is_active_c3_WaterHeatControlle == 0) {
@@ -827,39 +776,27 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
     WaterHeatController_DW.temporalCounter_i1 = 0U;
   } else if (WaterHeatController_DW.temporalCounter_i1 == 120) {
     rtb_DataTypeConversion = *rtu_Cs_tank_down_temp;
-    DerivatorMDLOBJ11.step(&rtb_DataTypeConversion,
-      &WaterHeatController_DW.Derivator_h,
-      WaterHeatController_rtP.Derivator_sampleTime);
+    DerivatorMDLOBJ11.step(&rtb_DataTypeConversion, &WaterHeatController_DW.Derivator_h, WaterHeatController_rtP.Derivator_sampleTime);
   }
 
   if (WaterHeatController_DW.temporalCounter_i1 == 120) {
     WaterHeatController_DW.temporalCounter_i1 = 0U;
   }
 
-  rtb_Bs_tank_empty_f = (rtb_Bs_tank_empty ||
-    (WaterHeatController_DW.Derivator_h <=
-     WaterHeatController_rtP.Constant_Value));
-  if (WaterHeatController_rtP.Constant7_Value >
-      WaterHeatController_rtP.isV40Treshold_Threshold) {
-    rtb_isV40Treshold = (*rtu_Cs_v40_min <
-                         WaterHeatController_rtP.Constant1_Value_c);
+  rtb_Bs_tank_empty_f = (rtb_Bs_tank_empty || (WaterHeatController_DW.Derivator_h <= WaterHeatController_rtP.Constant_Value));
+  if (WaterHeatController_rtP.Constant7_Value > WaterHeatController_rtP.isV40Treshold_Threshold) {
+    rtb_isV40Treshold = (*rtu_Cs_v40_min < WaterHeatController_rtP.Constant1_Value_c);
   } else {
-    rtb_isV40Treshold = (*rtu_Cs_tank_down_temp <
-                         WaterHeatController_rtP.Constant3_Value);
+    rtb_isV40Treshold = (*rtu_Cs_tank_down_temp < WaterHeatController_rtP.Constant3_Value);
   }
 
-  rtb_RelationalOperator4 = (*rtu_Cs_tank_up_temp <
-    WaterHeatController_rtP.Constant5_Value_n);
+  rtb_RelationalOperator4 = (*rtu_Cs_tank_up_temp < WaterHeatController_rtP.Constant5_Value_n);
   rtb_Bs_tank_low = (rtb_isV40Treshold || rtb_RelationalOperator4);
-  rtb_RelationalOperator5 = (*rtu_Cs_tank_up_temp >=
-    WaterHeatController_rtP.Constant2_Value_i);
-  rtb_RelationalOperator2_j = (*rtu_Cs_tank_down_temp >=
-    WaterHeatController_rtP.Constant2_Value_i);
+  rtb_RelationalOperator5 = (*rtu_Cs_tank_up_temp >= WaterHeatController_rtP.Constant2_Value_i);
+  rtb_RelationalOperator2_j = (*rtu_Cs_tank_down_temp >= WaterHeatController_rtP.Constant2_Value_i);
   rtb_Bs_tank_full = (rtb_RelationalOperator5 && rtb_RelationalOperator2_j);
-  rtb_Bs_soft_draw = (WaterHeatController_DW.Derivator_h <=
-                      WaterHeatController_rtP.Constant2_Value);
-  rtb_DataTypeConversion_c = (WaterHeatController_DW.UnitDelay_DSTATE ==
-    WaterHeatController_rtP.Constant1_Value);
+  rtb_Bs_soft_draw = (WaterHeatController_DW.Derivator_h <= WaterHeatController_rtP.Constant2_Value);
+  rtb_DataTypeConversion_c = (WaterHeatController_DW.UnitDelay_DSTATE == WaterHeatController_rtP.Constant1_Value);
   ModelMDLOBJ10.step(&rtb_DataTypeConversion_c, &rtb_Out_cb);
   R_S_FlipFlopMDLOBJ12.step(&rtb_Bs_soft_draw, &rtb_Out_cb, &rtb_stt_l);
   if (rtb_stt_l) {
@@ -872,20 +809,17 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
   rtb_RelationalOperator1 = (*rtu_Cs_tank_down_temp >= rtb_Switch_d);
   if (WaterHeatController_DW.is_active_c2_WaterHeatControlle == 0) {
     WaterHeatController_DW.is_active_c2_WaterHeatControlle = 1U;
-    WaterHeatController_DW.is_c2_WaterHeatController =
-      WaterHeatControll_IN_Tank_empty;
+    WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControll_IN_Tank_empty;
     rtb_TankLevel = te_tank_lvl::Empty;
   } else {
     switch (WaterHeatController_DW.is_c2_WaterHeatController) {
      case WaterHeatControlle_IN_Tank_Full:
       rtb_TankLevel = te_tank_lvl::Ready;
       if (rtb_Bs_tank_low) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatController_IN_Tank_low;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatController_IN_Tank_low;
         rtb_TankLevel = te_tank_lvl::Cold;
       } else if (rtb_Bs_tank_empty_f) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControll_IN_Tank_empty;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControll_IN_Tank_empty;
         rtb_TankLevel = te_tank_lvl::Empty;
       }
       break;
@@ -893,8 +827,7 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
      case WaterHeatControll_IN_Tank_empty:
       rtb_TankLevel = te_tank_lvl::Empty;
       if (rtb_Bs_tank_full) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControlle_IN_Tank_Full;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControlle_IN_Tank_Full;
         rtb_TankLevel = te_tank_lvl::Ready;
       }
       break;
@@ -902,16 +835,13 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
      case WaterHeatControlle_IN_Tank_high:
       rtb_TankLevel = te_tank_lvl::Hot;
       if (rtb_Bs_tank_full) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControlle_IN_Tank_Full;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControlle_IN_Tank_Full;
         rtb_TankLevel = te_tank_lvl::Ready;
       } else if (rtb_Bs_tank_empty_f) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControll_IN_Tank_empty;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControll_IN_Tank_empty;
         rtb_TankLevel = te_tank_lvl::Empty;
       } else if (rtb_Bs_tank_low) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatController_IN_Tank_low;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatController_IN_Tank_low;
         rtb_TankLevel = te_tank_lvl::Cold;
       }
       break;
@@ -920,12 +850,10 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
       // case IN_Tank_low:
       rtb_TankLevel = te_tank_lvl::Cold;
       if (rtb_RelationalOperator6 && rtb_RelationalOperator1) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControlle_IN_Tank_high;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControlle_IN_Tank_high;
         rtb_TankLevel = te_tank_lvl::Hot;
       } else if (rtb_Bs_tank_empty_f) {
-        WaterHeatController_DW.is_c2_WaterHeatController =
-          WaterHeatControll_IN_Tank_empty;
+        WaterHeatController_DW.is_c2_WaterHeatController = WaterHeatControll_IN_Tank_empty;
         rtb_TankLevel = te_tank_lvl::Empty;
       }
       break;
@@ -934,21 +862,13 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
 
   rtb_DataTypeConversion3 = WaterHeatController_rtP.Constant_Value_p;
   rtb_DataTypeConversion5 = WaterHeatController_rtP.Constant1_Value_f;
-  bpIdx = plook_u32s16_bincka(*rtu_Cs_tank_down_temp,
-    WaterHeatController_rtP.CartoSetPointTankCold_bp01Data, 7U);
-  rtb_DataTypeConversion1 =
-    WaterHeatController_rtP.CartoSetPointTankCold_tableData[bpIdx];
-  firstOrderTFMDLOBJ17.step(&rtb_DataTypeConversion1, &rtb_output,
-    WaterHeatController_rtP.firstOrderTF2_K,
-    WaterHeatController_rtP.firstOrderTF2_Tau,
+  bpIdx = plook_u32s16_bincka(*rtu_Cs_tank_down_temp, WaterHeatController_rtP.CartoSetPointTankCold_bp01Data, 7U);
+  rtb_DataTypeConversion1 = WaterHeatController_rtP.CartoSetPointTankCold_tableData[bpIdx];
+  firstOrderTFMDLOBJ17.step(&rtb_DataTypeConversion1, &rtb_output, WaterHeatController_rtP.firstOrderTF2_K, WaterHeatController_rtP.firstOrderTF2_Tau,
     WaterHeatController_rtP.firstOrderTF2_sampleTime);
-  bpIdx = plook_u32s16_bincka(*rtu_Cs_tank_down_temp,
-    WaterHeatController_rtP.CartoSetPointTankCold_low_bp01D, 7U);
-  rtb_DataTypeConversion2 =
-    WaterHeatController_rtP.CartoSetPointTankCold_low_table[bpIdx];
-  firstOrderTFMDLOBJ16.step(&rtb_DataTypeConversion2, &rtb_output_k,
-    WaterHeatController_rtP.firstOrderTF1_K,
-    WaterHeatController_rtP.firstOrderTF1_Tau,
+  bpIdx = plook_u32s16_bincka(*rtu_Cs_tank_down_temp, WaterHeatController_rtP.CartoSetPointTankCold_low_bp01D, 7U);
+  rtb_DataTypeConversion2 = WaterHeatController_rtP.CartoSetPointTankCold_low_table[bpIdx];
+  firstOrderTFMDLOBJ16.step(&rtb_DataTypeConversion2, &rtb_output_k, WaterHeatController_rtP.firstOrderTF1_K, WaterHeatController_rtP.firstOrderTF1_Tau,
     WaterHeatController_rtP.firstOrderTF1_sampleTime);
   if (rtb_stt_l) {
     rtb_Switch4 = rtb_output;
@@ -956,8 +876,7 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
     rtb_Switch4 = rtb_output_k;
   }
 
-  SaturationMDLOBJ15.step(&rtb_DataTypeConversion3, &rtb_DataTypeConversion5,
-    &rtb_Switch4, &rtb_Saturation_o1, &rtb_Saturation_o2);
+  SaturationMDLOBJ15.step(&rtb_DataTypeConversion3, &rtb_DataTypeConversion5, &rtb_Switch4, &rtb_Saturation_o1, &rtb_Saturation_o2);
   switch (rtb_TankLevel) {
    case te_tank_lvl::Cold:
     rtb_Cs_tank_lvl_spd_pump_sp = static_cast<ta_rot_spd>(rtb_Saturation_o1);
@@ -976,24 +895,16 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
     break;
   }
 
-  rtb_Product = WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd * static_cast<
-    float>(rtb_Cs_tank_lvl_spd_pump_sp);
-  firstOrderTFMDLOBJ13.step(&rtb_Product, &rtb_output_a,
-    WaterHeatController_rtP.pumpFreqFilt_K,
-    WaterHeatController_rtP.pumpFreqFilt_Tau,
+  rtb_Product = WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd * static_cast<float>(rtb_Cs_tank_lvl_spd_pump_sp);
+  firstOrderTFMDLOBJ13.step(&rtb_Product, &rtb_output_a, WaterHeatController_rtP.pumpFreqFilt_K, WaterHeatController_rtP.pumpFreqFilt_Tau,
     WaterHeatController_rtP.pumpFreqFilt_sampleTime);
-  rtb_Product1 = WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd * static_cast<
-    float>(rtb_Cs_tank_lvl_spd_pump_sp);
-  firstOrderTFMDLOBJ14.step(&rtb_Product1, &rtb_output_e,
-    WaterHeatController_rtP.pumpFreqFilt1_K,
-    WaterHeatController_rtP.pumpFreqFilt1_Tau,
+  rtb_Product1 = WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd * static_cast<float>(rtb_Cs_tank_lvl_spd_pump_sp);
+  firstOrderTFMDLOBJ14.step(&rtb_Product1, &rtb_output_e, WaterHeatController_rtP.pumpFreqFilt1_K, WaterHeatController_rtP.pumpFreqFilt1_Tau,
     WaterHeatController_rtP.pumpFreqFilt1_sampleTime);
   if (WaterHeatController_DW.antiShort_DSTATE) {
     *rty_Cs_heat_pump_rot_spd_sp = WaterHeatController_rtP.SpdOFF_Value;
   } else {
-    if ((WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd <=
-         WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd) &&
-        WaterHeatController_DW.exhstTempProt_DSTATE) {
+    if ((WaterHeatController_DW.Cs_ctrl_tref_max_spd_cmd <= WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd) && WaterHeatController_DW.exhstTempProt_DSTATE) {
       tmp_0 = WaterHeatController_rtP.TrefReg_Value;
     } else if (rtb_stt) {
       tmp_0 = WaterHeatController_rtP.TevapReg_Value;
@@ -1004,11 +915,9 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
     switch (tmp_0) {
      case te_pump_mode::Tref:
       if (rtb_output_a > WaterHeatController_rtP.Saturation_UpperSat) {
-        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>
-          (WaterHeatController_rtP.Saturation_UpperSat);
+        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(WaterHeatController_rtP.Saturation_UpperSat);
       } else if (rtb_output_a < WaterHeatController_rtP.Saturation_LowerSat) {
-        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>
-          (WaterHeatController_rtP.Saturation_LowerSat);
+        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(WaterHeatController_rtP.Saturation_LowerSat);
       } else {
         *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(rtb_output_a);
       }
@@ -1016,11 +925,9 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
 
      case te_pump_mode::Tevap:
       if (rtb_output_e > WaterHeatController_rtP.Saturation1_UpperSat) {
-        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>
-          (WaterHeatController_rtP.Saturation1_UpperSat);
+        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(WaterHeatController_rtP.Saturation1_UpperSat);
       } else if (rtb_output_e < WaterHeatController_rtP.Saturation1_LowerSat) {
-        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>
-          (WaterHeatController_rtP.Saturation1_LowerSat);
+        *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(WaterHeatController_rtP.Saturation1_LowerSat);
       } else {
         *rty_Cs_heat_pump_rot_spd_sp = static_cast<ta_rot_spd>(rtb_output_e);
       }
@@ -1032,27 +939,21 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
     }
   }
 
-  rtb_RelationalOperator1_i = (*rty_Cs_heat_pump_rot_spd_sp ==
-    WaterHeatController_rtP.SpdOFF_Value_e);
+  rtb_RelationalOperator1_i = (*rty_Cs_heat_pump_rot_spd_sp == WaterHeatController_rtP.SpdOFF_Value_e);
   rtb_DataTypeConversion_o = rtb_RelationalOperator1_i;
   PumpOFFdetectMDLOBJ5.step(&rtb_DataTypeConversion_o, &rtb_Out_c1);
   if (rtb_Out_c1) {
-    rtb_isAntiShortCycleDelay = look1_is16lu32n16tu16_binlcse
-      (*rtu_Cs_tank_down_temp,
-       WaterHeatController_rtP.TimeToPumpStartup_bp01Data,
-       WaterHeatController_rtP.TimeToPumpStartup_tableData, 5U);
+    rtb_isAntiShortCycleDelay = look1_is16lu32n16tu16_binlcse(*rtu_Cs_tank_down_temp, WaterHeatController_rtP.TimeToPumpStartup_bp01Data,
+      WaterHeatController_rtP.TimeToPumpStartup_tableData, 5U);
   } else {
     rtb_isAntiShortCycleDelay = WaterHeatController_DW.UnitDelay_DSTATE_a;
   }
 
   rtb_delay = rtb_isAntiShortCycleDelay;
-  AntiShortCycleMDLOBJ3.step(&rtb_DataTypeConversion_o, &rtb_delay, &rtb_Out_h,
-    rtP_WaterHeatCtrl_tick_C);
+  AntiShortCycleMDLOBJ3.step(&rtb_DataTypeConversion_o, &rtb_delay, &rtb_Out_h, rtP_WaterHeatCtrl_tick_C);
   rtb_TdwnToSingle = *rtu_Cs_tank_down_temp;
-  HysteresisMDLOBJ4.step(&rtb_TdwnToSingle, &rtb_Out,
-    WaterHeatController_rtP.HysteresisProtectTankDefrost_of,
-    WaterHeatController_rtP.HysteresisProtectTankDefrost_on,
-    WaterHeatController_rtP.HysteresisProtectTankDefrost_sw,
+  HysteresisMDLOBJ4.step(&rtb_TdwnToSingle, &rtb_Out, WaterHeatController_rtP.HysteresisProtectTankDefrost_of,
+    WaterHeatController_rtP.HysteresisProtectTankDefrost_on, WaterHeatController_rtP.HysteresisProtectTankDefrost_sw,
     WaterHeatController_rtP.HysteresisProtectTankDefrost__g);
   rtb_Equal = (*rtu_Cs_v40_sp != WaterHeatController_rtP.Zero_Value);
   if (rtb_Equal) {
@@ -1062,8 +963,7 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
 
       // Divide by zero handler
     } else {
-      rtb_Divide_0 = static_cast<uint16_t>(*rtu_Cs_v40_min /
-        static_cast<uint32_t>(tmp));
+      rtb_Divide_0 = static_cast<uint16_t>(*rtu_Cs_v40_min / static_cast<uint32_t>(tmp));
     }
 
     *rty_Cs_v40_rat = static_cast<uint8_t>(rtb_Divide_0);
@@ -1081,19 +981,14 @@ void WaterHeatController::step(const ta_wtr_vol *rtu_Cs_v40_min, const ta_temp
   rtb_isNoDiff = (rtb_diff == WaterHeatController_rtP.Constant3_Value_a);
   rtb_DataTypeConversion1_c = rtb_isNoDiff;
   rtb_DataTypeConversion2_m = WaterHeatController_DW.prevTimerVal_DSTATE;
-  TimerMDLOBJ9.step(&rtb_DataTypeConversion1_c, &rtb_DataTypeConversion2_m,
-                    &WaterHeatController_rtP.Constant4_Value_e, &rtb_Timer_o1,
-                    &rtb_TimerState, rtP_WaterHeatCtrl_tick_C);
-  WaterHeatController_DW.exhstTempProt_DSTATE = (rtb_ProtectPump &&
-    (!rtb_RelationalOperator1_i));
-  WaterHeatController_DW.antiShort_DSTATE = ((rtb_Out_h == 0) &&
-    rtb_RelationalOperator1_i);
-  WaterHeatController_DW.UnitDelay1_DSTATE =
-    WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd;
+  TimerMDLOBJ9.step(&rtb_DataTypeConversion1_c, &rtb_DataTypeConversion2_m, &WaterHeatController_rtP.Constant4_Value_e, &rtb_Timer_o1, &rtb_TimerState,
+                    rtP_WaterHeatCtrl_tick_C);
+  WaterHeatController_DW.exhstTempProt_DSTATE = (rtb_ProtectPump && (!rtb_RelationalOperator1_i));
+  WaterHeatController_DW.antiShort_DSTATE = ((rtb_Out_h == 0) && rtb_RelationalOperator1_i);
+  WaterHeatController_DW.UnitDelay1_DSTATE = WaterHeatController_DW.Cs_ctrl_temp_evap_spd_cmd;
   WaterHeatController_DW.UnitDelay_DSTATE = *rty_Cs_heat_pump_rot_spd_sp;
   WaterHeatController_DW.UnitDelay_DSTATE_a = rtb_isAntiShortCycleDelay;
-  WaterHeatController_DW.prevTimerVal_DSTATE = ((!rtb_isNoDiff) ||
-    (rtP_WaterHeatCtrl_tick_C <= rtb_Timer_o1));
+  WaterHeatController_DW.prevTimerVal_DSTATE = ((!rtb_isNoDiff) || (rtP_WaterHeatCtrl_tick_C <= rtb_Timer_o1));
   WaterHeatController_DW.UnitDelay1_DSTATE_e = rtb_derivUpDate1;
 }
 

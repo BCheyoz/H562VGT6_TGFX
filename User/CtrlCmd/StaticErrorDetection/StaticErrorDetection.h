@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'StaticErrorDetection'.
 //
-// Model version                  : 1.48
+// Model version                  : 1.50
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:11:05 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:17 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -29,7 +29,7 @@ class StaticErrorDetection final
 {
   // public data and function members
  public:
-  // Block signals and states (default storage) for model 'StaticErrorDetection' 
+  // Block signals and states (default storage) for model 'StaticErrorDetection'
   struct DW_StaticErrorDetection_T {
     float prevSignalRaw_DSTATE;        // '<Root>/prevSignalRaw'
     uint8_t UnitDelay3_DSTATE;         // '<Root>/Unit Delay3'
@@ -52,9 +52,8 @@ class StaticErrorDetection final
   void reset();
 
   // model step function
-  void step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect,
-            float rtp_Cs_dflt_val, float rtp_Cs_rst_dlay_time, float
-            rtp_Cs_rst_tol, float rtp_Cs_set_dlay_time, float rtp_Cs_smpl_time);
+  void step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_dlay_time, float rtp_Cs_rst_tol, float
+            rtp_Cs_set_dlay_time, float rtp_Cs_smpl_time);
 
   // Constructor
   StaticErrorDetection();
@@ -73,8 +72,8 @@ class StaticErrorDetection final
   // model instance variable for '<Root>/EdgeDelaySet'
   RisingEdgeDelay EdgeDelaySetMDLOBJ2;
 
-  // model instance variable for '<Root>/NumberNotEqual'
-  Timer NumberNotEqualMDLOBJ3;
+  // model instance variable for '<Root>/StaticErrorDetection'
+  Timer StaticErrorDetectionMDLOBJ3;
 
   // model instance variable for '<Root>/StaticErrorRS'
   R_S_FlipFlop StaticErrorRSMDLOBJ4;

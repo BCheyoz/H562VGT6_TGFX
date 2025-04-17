@@ -1,11 +1,11 @@
 //
-// File: WaterHeatSpCalc_private.h
+// File: SysMng_private.h
 //
-// Code generated for Simulink model 'WaterHeatSpCalc'.
+// Code generated for Simulink model 'SysMng'.
 //
-// Model version                  : 1.75
+// Model version                  : 1.149
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:51:28 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:32 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -16,12 +16,12 @@
 //    4. Execution efficiency
 // Validation result: Not run
 //
-#ifndef WaterHeatSpCalc_private_h_
-#define WaterHeatSpCalc_private_h_
+#ifndef SysMng_private_h_
+#define SysMng_private_h_
 #include <stdbool.h>
 #include <stdint.h>
-#include "WaterHeatSpCalc_types.h"
-#endif                                 // WaterHeatSpCalc_private_h_
+#include "SysMng_types.h"
+#endif                                 // SysMng_private_h_
 
 //
 // File trailer for generated code.

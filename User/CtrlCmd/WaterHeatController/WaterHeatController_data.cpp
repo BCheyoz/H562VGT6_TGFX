@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatController'.
 //
-// Model version                  : 1.569
+// Model version                  : 1.570
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:47 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -19,8 +19,7 @@
 #include "WaterHeatController.h"
 
 // Invariant block signals (default storage)
-const WaterHeatController::ConstB_WaterHeatController_h_T
-  WaterHeatController_ConstB{
+const WaterHeatController::ConstB_WaterHeatController_h_T WaterHeatController_ConstB{
   te_on_off::off,
   te_on_off::off,
   te_on_off::off

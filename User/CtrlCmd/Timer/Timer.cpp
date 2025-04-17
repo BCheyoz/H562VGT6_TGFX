@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:20 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:35 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -35,9 +35,7 @@ void Timer::reset(void)
 }
 
 // Output and update for referenced model: 'Timer'
-void Timer::step(const uint8_t *rtu_On, const uint8_t *rtu_Reset, const uint8_t *
-                 rtu_Hold, float *rty_TimerValue, bool *rty_state, float
-                 rtp_TimeStep)
+void Timer::step(const uint8_t *rtu_On, const uint8_t *rtu_Reset, const uint8_t *rtu_Hold, float *rty_TimerValue, bool *rty_state, float rtp_TimeStep)
 {
   // local block i/o variables
   bool rtb_HoldOn;

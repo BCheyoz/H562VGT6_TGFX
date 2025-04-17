@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.73
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:25:04 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -58,8 +58,7 @@ class WaterHeatCtrl final
   WaterHeatCtrl& operator= (WaterHeatCtrl &&) = delete;
 
   // model step function
-  void step(const tb_WaterHeatCtrl_In *rtu_WaterHeatCtrl_In,
-            tb_WaterHeatCtrl_Out *rty_WaterHeatCtrl_Out);
+  void step(const tb_WaterHeatCtrl_In *rtu_WaterHeatCtrl_In, tb_WaterHeatCtrl_Out *rty_WaterHeatCtrl_Out);
 
   // Reset function
   void reset();

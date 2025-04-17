@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysConfigCalib'.
 //
-// Model version                  : 1.22
+// Model version                  : 1.23
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:24:00 2025
+// C/C++ source code generated on : Thu Apr 17 12:15:00 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -18,18 +18,7 @@
 //
 #ifndef SysConfigCalib_types_h_
 #define SysConfigCalib_types_h_
-#include <stdbool.h>
 #include <stdint.h>
-#ifndef DEFINED_TYPEDEF_FOR_tb_hmi_expert_
-#define DEFINED_TYPEDEF_FOR_tb_hmi_expert_
-
-struct tb_hmi_expert
-{
-  bool Bs_err_dtct_shnt_ena;
-};
-
-#endif
-
 #ifndef DEFINED_TYPEDEF_FOR_ta_time_day_
 #define DEFINED_TYPEDEF_FOR_ta_time_day_
 
@@ -49,10 +38,10 @@ using ta_pers_nb = uint8_t;
 
 enum class te_user_mode
   : int32_t {
-  user_Auto = 10,                      // Default value
-  user_Eco = 20,
-  user_Boost = 30,
-  user_Holidays = 40
+  Auto = 10,                           // Default value
+  Eco = 20,
+  Boost = 30,
+  Holidays = 40
 };
 
 #endif
@@ -65,26 +54,6 @@ enum class te_on_off
   off = 0,                             // Default value
   on,
   forced
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_hmi_user_
-#define DEFINED_TYPEDEF_FOR_tb_hmi_user_
-
-struct tb_hmi_user
-{
-  ta_time_day Ns_hldy_nb;
-  ta_pers_nb Ns_pers_nb;
-  te_user_mode Ss_user_mode;
-  te_on_off Ss_anti_lgn_ena;
-  te_on_off Ss_heat_wtr_cnsp_rst;
-  te_on_off Ss_vent_cnsp_rst;
-  te_on_off Ss_tot_cnsp_rst;
-  te_on_off Ss_sg_mode_ena;
-  te_on_off Ss_oph_mode_ena;
-  te_on_off Ss_hldy_rqst;
-  te_on_off Ss_bst_rqst;
 };
 
 #endif
@@ -108,9 +77,9 @@ enum class te_ctry
 
 enum class te_tech_mode
   : int32_t {
-  tech_FullElec = 0,                   // Default value
-  tech_Hybrid,
-  tech_HeatPump
+  FullElec = 0,
+  Hybrid,
+  HeatPump                             // Default value
 };
 
 #endif
@@ -149,40 +118,10 @@ using ta_air_pres = uint16_t;
 
 enum class te_tor_mode
   : int32_t {
-  tor_NotConnected = 0,                // Default value
-  tor_SmartGrid,
-  tor_OffPeakHour,
-  tor_VentSysStop
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_hmi_tech_
-#define DEFINED_TYPEDEF_FOR_tb_hmi_tech_
-
-struct tb_hmi_tech
-{
-  te_ctry Ss_ctry;
-  te_tech_mode Ss_tech_mode;
-  ta_time_day Ns_anti_lgn_day;
-  te_on_off Ss_heat_pump_test_rqst;
-  te_tank_size Ss_tank_size;
-  te_sys_ver Ss_sys_ver;
-  ta_air_pres Cs_vent_pres_min;
-  ta_air_pres Cs_vent_pres_sys;
-  te_tor_mode St_tor_mode[2];
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_hmi_
-#define DEFINED_TYPEDEF_FOR_tb_hmi_
-
-struct tb_hmi
-{
-  tb_hmi_expert EXPERT;
-  tb_hmi_user USER;
-  tb_hmi_tech TECH;
+  NotConnected = 0,                    // Default value
+  SmartGrid,
+  OffPeakHour,
+  VentSysStop
 };
 
 #endif
@@ -205,36 +144,6 @@ using ta_rot_spd = uint16_t;
 #define DEFINED_TYPEDEF_FOR_ta_pwr_
 
 using ta_pwr = uint32_t;
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_hw_
-#define DEFINED_TYPEDEF_FOR_tb_hw_
-
-struct tb_hw
-{
-  ta_temp Cs_tank_down_temp_raw;
-  ta_temp Cs_tank_up_temp_raw;
-  ta_temp Cs_pump_xhst_temp_raw;
-  ta_temp Cs_pump_evap_temp_raw;
-  ta_temp Cs_vent_temp_raw;
-  ta_air_pres Cs_vent_pres_raw;
-  ta_rot_spd Cs_vent_rot_spd_raw;
-  te_on_off St_tor_stt_raw[2];
-  ta_pwr Cs_heat_pump_pwr;
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_err_
-#define DEFINED_TYPEDEF_FOR_tb_err_
-
-struct tb_err
-{
-  bool Bs_hw_fan_err;
-  bool Bs_hw_pres_err;
-  bool Bs_hw_anod_err;
-};
 
 #endif
 
@@ -274,96 +183,6 @@ using ta_vltg = uint16_t;
 #define DEFINED_TYPEDEF_FOR_ta_rfrg_pres_
 
 using ta_rfrg_pres = uint16_t;
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_simu_var_
-#define DEFINED_TYPEDEF_FOR_tb_simu_var_
-
-struct tb_simu_var
-{
-  te_heat_mode Ss_heat_mode_simu;
-  ta_wtr_vol Cs_v40_sp_simu;
-  ta_temp Cs_temp_sp_simu;
-  ta_rot_spd Cs_heat_pump_rot_spd_sp_simu;
-  te_on_off Ss_elec_bstr_htr_sp_simu;
-  ta_air_pres Cs_vent_pres_sp_simu;
-  ta_flow Cs_vent_flow_sp_simu;
-  ta_vltg Cs_vent_vltg_sp_simu;
-  ta_temp Cs_tank_down_temp_simu;
-  ta_temp Cs_tank_up_temp_simu;
-  ta_temp Cs_pump_xhst_temp_simu;
-  ta_temp Cs_pump_evap_temp_simu;
-  ta_temp Cs_vent_temp_simu;
-  ta_air_pres Cs_vent_pres_simu;
-  bool Bs_tank_down_temp_err_simu;
-  bool Bs_tank_up_temp_err_simu;
-  bool Bs_pump_xhst_temp_err_simu;
-  bool Bs_pump_evap_temp_err_simu;
-  bool Bs_vent_temp_err_simu;
-  bool Bs_vent_pres_err_simu;
-  ta_rfrg_pres Cs_pump_xhst_pres_simu;
-  ta_rfrg_pres Cs_pump_evap_pres_simu;
-  ta_wtr_vol Cs_v40_min_simu;
-  ta_rot_spd Cs_vent_rot_spd_simu;
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_simu_ena_
-#define DEFINED_TYPEDEF_FOR_tb_simu_ena_
-
-struct tb_simu_ena
-{
-  bool Bs_heat_mode_simu_ena;
-  bool Bs_v40_sp_simu_ena;
-  bool Bs_temp_sp_simu_ena;
-  bool Bs_heat_pump_freq_sp_simu_ena;
-  bool Bs_elec_bstr_htr_sp_simu_ena;
-  bool Bs_vent_pres_sp_simu_ena;
-  bool Bs_vent_flow_sp_simu_ena;
-  bool Bs_vent_vltg_sp_simu_ena;
-  bool Bs_tank_down_temp_simu_ena;
-  bool Bs_tank_up_temp_simu_ena;
-  bool Bs_pump_xhst_temp_simu_ena;
-  bool Bs_pump_evap_temp_simu_ena;
-  bool Bs_vent_temp_simu_ena;
-  bool Bs_vent_pres_simu_ena;
-  bool Bs_tank_down_temp_err_simu_ena;
-  bool Bs_tank_up_temp_err_simu_ena;
-  bool Bs_pump_xhst_temp_err_simu_ena;
-  bool Bs_pump_evap_temp_err_simu_ena;
-  bool Bs_vent_temp_err_simu_ena;
-  bool Bs_vent_pres_err_simu_ena;
-  bool Bs_pump_xhst_pres_simu_ena;
-  bool Bs_pump_evap_pres_simu_ena;
-  bool Bs_v40_min_simu_ena;
-  bool Bs_vent_rot_spd_simu_ena;
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_simu_
-#define DEFINED_TYPEDEF_FOR_tb_simu_
-
-struct tb_simu
-{
-  tb_simu_var VAR;
-  tb_simu_ena ENA;
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_tb_Control_In_
-#define DEFINED_TYPEDEF_FOR_tb_Control_In_
-
-struct tb_Control_In
-{
-  tb_hmi HMI;
-  tb_hw HW;
-  tb_err ERR;
-  tb_simu SIMU;
-};
 
 #endif
 

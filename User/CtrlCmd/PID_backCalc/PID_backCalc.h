@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.2
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:26 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:41 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -54,11 +54,8 @@ class PID_backCalc final
   void reset(float rtp_InitVal);
 
   // model step function
-  void step(const float *rtu_setPoint, const float *rtu_measure, const float
-            *rtu_cmd_max, const float *rtu_cmd_min, const bool *rtu_rst, float
-            *rty_cmd, float *rty_ovrFlwVal, float rtp_InitVal, float rtp_Kawu,
-            float rtp_Kd, float rtp_Ki, float rtp_Kp, float rtp_SampleTime,
-            float rtp_Tau_f);
+  void step(const float *rtu_setPoint, const float *rtu_measure, const float *rtu_cmd_max, const float *rtu_cmd_min, const bool *rtu_rst, float *rty_cmd, float *
+            rty_ovrFlwVal, float rtp_InitVal, float rtp_Kawu, float rtp_Kd, float rtp_Ki, float rtp_Kp, float rtp_SampleTime, float rtp_Tau_f);
 
   // Constructor
   PID_backCalc();

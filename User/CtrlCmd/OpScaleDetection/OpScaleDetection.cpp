@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.32
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:59 2025
+// C/C++ source code generated on : Thu Apr 17 10:52:11 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -31,10 +31,8 @@ void OpScaleDetection::reset(void)
 }
 
 // Output and update for referenced model: 'OpScaleDetection'
-void OpScaleDetection::step(const float *rtu_signalRaw, float *rty_Signal, bool *
-  rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_time, float
-  rtp_Cs_set_time, float rtp_Cs_smpl_time, float rtp_Cs_val_max, float
-  rtp_Cs_val_min)
+void OpScaleDetection::step(const float *rtu_signalRaw, float *rty_Signal, bool *rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_time, float
+  rtp_Cs_set_time, float rtp_Cs_smpl_time, float rtp_Cs_val_max, float rtp_Cs_val_min)
 {
   // local block i/o variables
   uint8_t rtb_setUint8;
@@ -48,12 +46,10 @@ void OpScaleDetection::step(const float *rtu_signalRaw, float *rty_Signal, bool 
   rtb_isTooLow = (*rtu_signalRaw < rtp_Cs_val_min);
   rtb_isTooHigh = (rtb_isTooHigh || rtb_isTooLow);
   rtb_insErrUint8 = rtb_isTooHigh;
-  risingEdgeSetMDLOBJ3.step(&rtb_insErrUint8, &rtb_setUint8, rtp_Cs_set_time,
-    rtp_Cs_smpl_time);
+  risingEdgeSetMDLOBJ3.step(&rtb_insErrUint8, &rtb_setUint8, rtp_Cs_set_time, rtp_Cs_smpl_time);
   rtb_isTooLow = (rtb_setUint8 != 0);
   rtb_insErrUint8 = static_cast<uint8_t>(!rtb_isTooHigh);
-  risingEdgeResetMDLOBJ2.step(&rtb_insErrUint8, &rtb_rstUint8, rtp_Cs_rst_time,
-    rtp_Cs_smpl_time);
+  risingEdgeResetMDLOBJ2.step(&rtb_insErrUint8, &rtb_rstUint8, rtp_Cs_rst_time, rtp_Cs_smpl_time);
   rtb_rst = (rtb_rstUint8 != 0);
   isDefectRSMDLOBJ1.step(&rtb_isTooLow, &rtb_rst, rty_isDefect);
   if (*rty_isDefect) {

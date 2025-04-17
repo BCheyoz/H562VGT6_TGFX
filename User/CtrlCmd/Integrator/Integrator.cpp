@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.1
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:09:56 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:13 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -31,8 +31,7 @@ void Integrator::reset(float rtp_initVal)
 }
 
 // Output and update for referenced model: 'Integrator'
-void Integrator::step(const float *rtu_In, const bool *rtu_rst, float *rty_out,
-                      float rtp_Ts, float rtp_initVal)
+void Integrator::step(const float *rtu_In, const bool *rtu_rst, float *rty_out, float rtp_Ts, float rtp_initVal)
 {
   if (*rtu_rst) {
     *rty_out = rtp_initVal;

@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr  3 17:10:01 2025
+// C/C++ source code generated on : Thu Apr 17 10:51:18 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -39,8 +39,7 @@ class cntrlSaturation final
   cntrlSaturation& operator= (cntrlSaturation &&) = delete;
 
   // model step function
-  void step(const float *rtu_maxVal, const float *rtu_minVal, const float
-            *rtu_val, float *rty_satVal, float *rty_ovrFlw);
+  void step(const float *rtu_maxVal, const float *rtu_minVal, const float *rtu_val, float *rty_satVal, float *rty_ovrFlw);
 
   // Constructor
   cntrlSaturation();

@@ -56,6 +56,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
@@ -150,6 +151,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
@@ -229,6 +231,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
@@ -347,6 +350,7 @@
 									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
 									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
@@ -364,6 +368,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
@@ -394,7 +399,6 @@
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -456,6 +460,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
@@ -535,6 +540,7 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
