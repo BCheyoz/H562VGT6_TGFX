@@ -210,6 +210,9 @@ void FwMng::run(void)
 	switch(state)
 	{
 	case E_BOARD_READY_STATE:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_SLOW_BLINK);
+#endif
 		// on reste en Board Ready tant qu'il n'y a pas de code carte
 		if(isCodeBoardCompliant()){
 
@@ -234,6 +237,9 @@ void FwMng::run(void)
 
 #ifdef USE_COMMISIONNING_STATE
 	case E_PRODUCT_READY_STATE:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_SLOW_BLINK);
+#endif
 		if(commissionningParamDone == TRUE){
 			// on enregistre une fois quand la mise en service est terminé
 			commissionningParamDone = FALSE;
@@ -248,6 +254,9 @@ void FwMng::run(void)
 #endif
 
 	case E_PRODUCT_COMPLETE_STATE:
+#ifdef USE_ALIVE_LED
+	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
+#endif
 #ifdef USE_COMMISIONNING_STATE
         if(resetConfig == TRUE){
 			resetConfig = FALSE;
@@ -316,6 +325,9 @@ void FwMng::run(void)
 
 	case E_BOOT_STATE: // Boot reserver au bootloader
 	default:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_FAST_BLINK);
+#endif
 		// robustness case. We shall never get here
 		state = E_BOARD_READY_STATE;
 	}
