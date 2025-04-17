@@ -173,10 +173,12 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x162,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanFeedbackSpeed,			0},	// Vitesse Extraction (Unit = "RPM")
 	{ 0x163,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanLastFeedbackSpeed,		0},	// Temporaire non moyennée Extraction (Unit = "RPM")
 	{ 0x164,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarUIntGetFctSetVar},		fanLastDeltaTime,			0},	// Temporaire deltaTime Extraction
+	{ 0x165,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_3}},	TVarULongGetFctSetVar},		fanLastFrequency,			0},	// Temporaire frequence Extraction, (Unit = "Hz", Coef = "10", Name = "FreqFanIC")
 
 //	{ 0x16A,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyFeedbackSpeed,			0},	// Vitesse Extraction (Unit = "RPM")
 //	{ 0x16B,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastFeedbackSpeed,		0},	// Temporaire non moyennée Extraction (Unit = "RPM")
 //	{ 0x16C,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetFctSetVar},		getFanSupplyLastDeltaTime,			0},	// Temporaire deltaTime Extraction
+//	{ 0x16D,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetFctSetVar},		getFanSupplyLastFreq,				0},	// Temporaire frequence Extraction, (Unit = "Hz", Coef = "10", Name = "FreqFanSupplyIC")
 
 	/*
 	// Codes Erreur :
@@ -381,8 +383,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 
 	{ 0xA005,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Pressure,	&mPresHSC.Pressure},		// Unit = "Pa"
 	{ 0xA006,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresHSC.Temperature,	&mPresHSC.Temperature},	// Unit = "°C"
-	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BridgeOffset,	&mPresHSC.BridgeOffset},
-	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.BrdgOfstOpId,	&mPresHSC.BrdgOfstOpId},
+	{ 0xA007,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2C_PresHSC_BridgeOffset,	setI2C_PresHSC_BridgeOffset},
+	{ 0xA008,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getI2C_PresHSC_BrdgOfstOpId,	setI2C_PresHSC_BrdgOfstOpId},
 	{ 0xA009,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&mPresHSC.newFlags,	&mPresHSC.newFlags},
 
 	{ 0xA00A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX10GetVarSetVar},	&mPresABP2.Pressure,	&mPresABP2.Pressure},	// Unit = "Pa"
@@ -400,17 +402,18 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 #endif // I2CCM_ENABLE_I2C_DEBUG
 
 	// ADC Debug
-	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].value,		0},
-// Remarque_Jp le 20/03/2025 : "tAI_IntValue.value" est défini comme "int16_t" dans la Structure mais en UInt ci-dessus ... idem pour les "value" suivantes du tableau
+	{ 0xA020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[0].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[0].nbPtADC,	0},
-	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].value,		0},
+	{ 0xA022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[1].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[1].nbPtADC,	0},
-	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].value,		0},
+	{ 0xA024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[2].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA025,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[2].nbPtADC,	0},
-	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].value,		0},
+	{ 0xA026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[3].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA027,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[3].nbPtADC,	0},
-	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].value,		0},
+	{ 0xA028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetVarSetVar},	&tAi_CTN[4].value,		0},	// Unit = "°C", Coef = "100"
 	{ 0xA029,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAi_CTN[4].nbPtADC,	0},
+	{ 0xA02A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX1000GetVarSetVar},	&tAiRefAlim.value,	0},	// Unit = "V", Coef = "1000"
+	{ 0xA02B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetVarSetVar},	&tAiRefAlim.nbPtADC,	0},
 
 	// Infos & Commandes EmbracoInverter :
 #ifdef EMBRACOINVERTER_EMBRACOINVERTER_H_	// EXPORT = 1

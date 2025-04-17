@@ -50,7 +50,9 @@ typedef enum
 
 // Temporisations :
 #define ABP2_TEMPO_BEFORE_FIRST_ACTION	100		// 100ms avant 1° Lecture
-#define ABP2_TEMPO_REPLY_TIMEOUT		100		// 100ms d'attente max pour répondre
+#define ABP2_TEMPO_SENDING_TIMEOUT		10		// 10ms d'attente max pour l envoi
+#define ABP2_TEMPO_WAITING_FOR_DATA		5		// 5ms d'attente pour la dispo des données
+#define ABP2_TEMPO_REPLY_TIMEOUT		10		// 10ms d'attente max pour répondre
 #define ABP2_TEMPO_RETRY_ACTION			1000	// 1s avant Retry
 #define ABP2_TEMPO_BEFORE_NEXT_ACTION	1 *1000	// 1s avant de redemander une nouvelle Lecture
 
@@ -76,8 +78,8 @@ typedef enum
 #define ABP2_PRESSURE_MIN  -1 * ABP2_INHO2_2_PA
 #define ABP2_PRES_COEF  	(ABP2_PRESSURE_MAX - ABP2_PRESSURE_MIN) / (ABP2_OUTPUT_MAX - ABP2_OUTPUT_MIN)
 
-#define ABP2_TEMP_MAX  110.f // 110°C
-#define ABP2_TEMP_MIN  -40.f // -40°C
+#define ABP2_TEMP_MAX  150.f // 150°C
+#define ABP2_TEMP_MIN  -50.f // -50°C
 #define ABP2_TEMP_COEF (ABP2_TEMP_MAX - ABP2_TEMP_MIN) / 16777215 // 16777215 = (2 puissance 24) - 1
 
 /******************************************************************************/
@@ -138,10 +140,10 @@ int16_t i2cCM_PressureABP2_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pIni
 		switch(DeviceType)
 		{
 		case I2CCM_LOAD_DEFAULT_DEVICE:	// Première Recommandation par défaut :
-			DeviceType = I2cDevPresType_ABP2_38; // ABP2 Type 38
+			DeviceType = I2cDevPresType_ABP2_28; // ABP2 Type 28
 			break;
 		case I2CCM_LOAD_DEFAULT_DEVICE2:	// Seconde Recommandation par défaut :
-			DeviceType = I2cDevPresType_ABP2_28; // ABP2 Type 28
+			DeviceType = I2cDevPresType_ABP2_38; // ABP2 Type 38
 			break;
 		case I2CCM_LOAD_DEFAULT_DEVICE3:	// Seconde Recommandation par défaut :
 			DeviceType = I2cDevPresType_ABP2_48; // ABP2 Type 48
@@ -226,7 +228,7 @@ static int16_t i2cSensorABP2_Init(int16_t DeviceType, I2CCM_Device* pDevice, I2C
 		pExtData->Temperature	= ABP2_UNKNOWN_TEMPERATURE_DEG_C;
 
 		// initialise la commande par defaut de lecture
-		mI2CCM_Pressure_ABP2_TxBuf[0] = ABP2_READ_CMD;
+		pDevice->pTxBuf[0] = ABP2_READ_CMD;
 	}
 	//---------------------------------------------------
 	else DeviceType = 0;	// DeviceType not implemented !
@@ -242,16 +244,22 @@ static uint16_t i2cSensorABP2_NextActionFrame(I2CCM_Device *pDevice)
 	{
 	case I2CCM_ACTION_INIT:   // Initialisations à effectuer :
 		// Comme il n'y a aucune Init à faire, passer directement à la lecture de la Pression :
-		pDevice->ActionId = I2CCM_QUERY_VALUES; // Prochaine Action = Lire le Capteur
+		pDevice->ActionId = I2CCM_APPLY_VALUES; // Prochaine Action = envoi de la requete
 		pDevice->DelayInMs = ABP2_TEMPO_BEFORE_FIRST_ACTION; // 100ms de Tempo
 		return I2C_END_BLOC; // rendre la main pour la suite ...
 		break;
 	//---------------------
-	case I2CCM_QUERY_VALUES:  // Comment Récupérer les Valeurs ?
+	case I2CCM_APPLY_VALUES:  // Cas de la requete d ecriture
+		pDevice->pTxBuf[0] = ABP2_READ_CMD;
 		pDevice->nbBytes2Send = ABP2_MAX_TX_SIZE;
+		pDevice->DelayInMs   = ABP2_TEMPO_SENDING_TIMEOUT;// 10ms de TimeOut
+		return I2C_TRANSMIT | I2C_HANDLE_TX; // Demande Envoi + CallBack de l envoi
+		break;
+	//---------------------
+	case I2CCM_QUERY_VALUES:  // Cas de la requete de lecture
 		pDevice->nbBytes2Read = ABP2_NEW_RX_SIZE;
 		pDevice->DelayInMs   = ABP2_TEMPO_REPLY_TIMEOUT; // 100ms de TimeOut pour répondre
-		return I2C_TRANSMIT | I2C_RECEIVE | I2C_HANDLE_RX; // Demande Envoi + Lecture + CallBack de Réception
+		return I2C_RECEIVE | I2C_HANDLE_RX; // Demande lecture + CallBack de Réception
 		break;
 	//---------------------
 	default:    // Not Handled correctly :
@@ -268,6 +276,10 @@ static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 {
 	if(0 == pDevice)    return I2C_END_BLOC;
 
+	if(I2CCM_APPLY_VALUES == pDevice->ActionId){
+		pDevice->ActionId = I2CCM_QUERY_VALUES;
+		return I2C_END_BLOC;
+	}
 	if(I2CCM_QUERY_VALUES == pDevice->ActionId)
 	{
 		I2CCM_Pres_ABP2_IntData* pIntData = (I2CCM_Pres_ABP2_IntData*)pDevice->pIntData; // Pointer sur les Datas Internes
@@ -283,7 +295,8 @@ static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 				I2CCM_MAKE_INC_CT_WITH_MAX_VALUE(pIntData->ErrorsCt, UINT16_MAX)
 				I2CCM_MAKE_INC_CT_WITH_MAX_VALUE(pDevice->ErrorsCt,  UINT16_MAX)
 			}
-			else if(pExtData->status.isBusy == 0) { // sensor ready
+			else if(pExtData->status.isBusy == 0)
+			{ // sensor ready
 				// OK, pas d'ereur de réception :
 				I2CCM_MAKE_DEC_CT_WITH_MAX_VALUE(pIntData->ErrorsCt,	I2CCM_MAX_ERROR_CT_ON_PERIF_OK)
 				I2CCM_MAKE_DEC_CT_WITH_MAX_VALUE(pDevice->ErrorsCt,		I2CCM_MAX_ERROR_CT_ON_PERIF_OK)
@@ -298,7 +311,7 @@ static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 				uint16_t tword = pBuf[4];
 				pIntData->TempRaw = JOIN_16_16_BE(tword, JOIN_8_8_BE(pBuf[5], pBuf[6]));
 				pIntData->TempConverted = (pIntData->TempRaw * ABP2_TEMP_COEF) + ABP2_TEMP_MIN;
-#endif
+#endif //ABP2_READ_TEMPERATURE
 
 				// Calcul de la Moyenne glissante
 #if defined(ABP2_MOY_PRES) && (ABP2_MOY_PRES > 1)
@@ -333,12 +346,18 @@ static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 				pExtData->Temperature = pIntData->TempConverted;
 #endif // ABP2_MOY_TEMP
 
+				// pour lancer les prochaines mesures
+				pDevice->ActionId = I2CCM_APPLY_VALUES;
 				// Délai de prochaine action :
 				pDevice->DelayInMs  = ABP2_TEMPO_BEFORE_NEXT_ACTION; // 1s avant prochaine action
 
 				// Signaler à la tâche qu'il y a 1 nouvelle Data à récupérer :
 				pExtData->newFlags |= I2cCmPressureAbp2NewValue; // Signale la nouvelle Data
 				return I2C_NEW_VALUE | I2C_END_BLOC; // Signaler puis rendre la main
+			}
+			else{// if device busy
+				pDevice->DelayInMs = ABP2_TEMPO_WAITING_FOR_DATA;
+				return I2C_END_BLOC;
 			}
 		} else { // Error :
 			I2CCM_MAKE_INC_CT_WITH_MAX_VALUE(pIntData->ErrorsCt, UINT16_MAX)
@@ -349,7 +368,7 @@ static uint16_t i2cSensorABP2_ActionComplete(I2CCM_Device *pDevice)
 			pDevice->ActionId = I2CCM_ACTION_INIT; // Demander à Ré-Initialiser
 			return I2C_ABORT_DEV; // +Recommander d'Abandonner l'usage de ce Device
 		}
-		pDevice->ActionId = I2CCM_QUERY_VALUES;
+		pDevice->ActionId = I2CCM_APPLY_VALUES;
 		pDevice->DelayInMs = ABP2_TEMPO_RETRY_ACTION; // Tempo avant Retry : 1s
 		return I2C_END_BLOC | I2C_CHK_DEV_ERR; // Rendre la main + Demander à Vérifier si erreur sur le Device ...
 	}

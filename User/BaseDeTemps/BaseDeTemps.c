@@ -102,9 +102,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 	/* USER CODE BEGIN RT_10ms */
 		Handle_AnalogInputs_RT_10ms();
 		Handle_FanPwmIC_RT_10ms();
-#ifdef USE_DIGITAL_INPUTS
 		Handle_DigitalInputs_RT_10ms();
-#endif // USE_DIGITAL_INPUTS
 
 // Ajout_Jp for MultiExecution and Capture I2c avec PulseView @ 500K :
 #ifdef RV3028_RTC_ENABLE_MANUAL_RW // from "I2cDevRtc_RV3028.h"
@@ -139,9 +137,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			Handle_Infos_RT_100ms();
 			Handle_InputSensor_RT_100ms();
 			handleFirmwareManager_RT_100ms();
-#ifdef USE_DIGITAL_INPUTS
 			Handle_DigitalInputs_RT_100ms();
-#endif // USE_DIGITAL_INPUTS
 
 		/* USER CODE END RT_100ms */
 
