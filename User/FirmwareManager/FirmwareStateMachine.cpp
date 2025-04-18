@@ -308,6 +308,8 @@ FwMng::FwMng()
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
 
+	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
 	cc_input.HMI.TECH.Ss_ctry; // te_ctry enum France = 33, Germany = 49, Spain = 34, Marocco = 212, WesternSahara = 213
