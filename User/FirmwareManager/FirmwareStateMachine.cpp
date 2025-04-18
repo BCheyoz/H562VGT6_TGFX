@@ -215,6 +215,28 @@ GET_SET_CC_DEFINITION(Bs_pump_evap_pres_simu_ena, CC_SimuEna, uint16_t, bool)
 GET_SET_CC_DEFINITION(Bs_v40_min_simu_ena, CC_SimuEna, uint16_t, bool)
 GET_SET_CC_DEFINITION(Bs_vent_rot_spd_simu_ena, CC_SimuEna, uint16_t, bool)
 
+GET_SET_CC_DEFINITION(Cs_v40_lvl, CC_output, uint16_t, uint8_t)
+GET_SET_CC_DEFINITION(Ss_op_mode, CC_output, uint16_t, te_op_mode)
+GET_SET_CC_DEFINITION(Ss_sg_stt, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_oph_stt, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_tank_down_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_tank_up_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_evap_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Ss_elec_bstr_htr_sp, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_heat_pump_rot_spd_sp, CC_output, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Cs_vent_rot_spd, CC_output, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Cs_vent_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_heat_wtr_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_tot_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_v40_sp, CC_output, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_temp_sp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_pres_sp, CC_output, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_flow_sp, CC_output, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(Cs_vent_vltg_sp, CC_output, uint16_t, ta_vltg)
+GET_SET_CC_DEFINITION(Cs_vent_pres, CC_output, uint16_t, ta_air_pres)
+
 GET_SET_CC_DEFINITION(pressSpfilt_K, CC_VentCtrlParam, float, float)
 GET_SET_CC_DEFINITION(firstOpressSpFilt_K, CC_VentCtrlParam, float, float)
 GET_SET_CC_DEFINITION(presMesfilt_K, CC_VentCtrlParam, float, float)
@@ -285,6 +307,8 @@ FwMng::FwMng()
 	ctrlCmd = new TFLOW4_Ctrl;
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
+
+	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
 
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
@@ -561,7 +585,7 @@ void FwMng::CtrlCmdTask(){
 	// maj de la commande *************************************************
 	cc_out = ctrlCmd->getExternalOutputs().Control_Out;
 
-	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp * 100); // Cs_vent_vltg_sp sortie en Volt x10
+	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
 	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
 
 	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
