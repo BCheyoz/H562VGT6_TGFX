@@ -136,6 +136,116 @@ uint8_t isAnodeState(){
 	return fwp->isAnodeState();
 }
 
+uint8_t getControlTick(){
+	return rtP_Control_tick_C;
+}
+
+uint8_t getWaterHeatCtrlTick(){
+	return rtP_WaterHeatCtrl_tick_C;
+}
+
+uint8_t getInputMngTick(){
+	return rtP_input_mng_tick;
+}
+
+void setControlTick(uint8_t v){
+	rtP_Control_tick_C = v;
+}
+
+void setWaterHeatCtrlTick(uint8_t v){
+	rtP_WaterHeatCtrl_tick_C = v;
+}
+
+void setInputMngTick(uint8_t v){
+	rtP_input_mng_tick = v;
+}
+
+
+
+#define GET_SET_CC_DEFINITION(a, b, c, d)		c get##a(void){return (c)FwMng::getInstance()->get##b()->a;} \
+												void set##a(c val){FwMng::getInstance()->get##b()->a = (d)val;}
+
+GET_SET_CC_DEFINITION(Ss_heat_mode_simu, CC_SimuVar, uint16_t, te_heat_mode)
+GET_SET_CC_DEFINITION(Cs_v40_sp_simu, CC_SimuVar, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_temp_sp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_heat_pump_rot_spd_sp_simu, CC_SimuVar, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Ss_elec_bstr_htr_sp_simu, CC_SimuVar, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_vent_pres_sp_simu, CC_SimuVar, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_flow_sp_simu, CC_SimuVar, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(Cs_vent_vltg_sp_simu, CC_SimuVar, uint16_t, ta_vltg)
+GET_SET_CC_DEFINITION(Cs_tank_down_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_tank_up_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_evap_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_pres_simu, CC_SimuVar, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_pres_simu, CC_SimuVar, uint16_t, ta_rfrg_pres)
+GET_SET_CC_DEFINITION(Cs_pump_evap_pres_simu, CC_SimuVar, uint16_t, ta_rfrg_pres)
+GET_SET_CC_DEFINITION(Cs_v40_min_simu, CC_SimuVar, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_vent_rot_spd_simu, CC_SimuVar, uint16_t, ta_rot_spd)
+
+GET_SET_CC_DEFINITION(Bs_heat_mode_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_v40_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_temp_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_heat_pump_freq_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_elec_bstr_htr_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_flow_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_vltg_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_v40_min_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_rot_spd_simu_ena, CC_SimuEna, uint16_t, bool)
+
+GET_SET_CC_DEFINITION(pressSpfilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(press_max_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(press_min_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(flow_max_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(flow_min_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(PressureRegulator_InitVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kawu, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kd, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Ki, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kp, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_SampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Tau_f, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(Cs_flow_fan_sp_C_Value, CC_VentCtrlParam, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(NullFlowConstant_Value, CC_VentCtrlParam, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uint16_t)
+
 }
 /*******************************************************************************************************/
 

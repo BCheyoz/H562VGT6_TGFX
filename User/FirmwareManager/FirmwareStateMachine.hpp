@@ -62,6 +62,12 @@ public :
 	inline uint8_t isAnodeFlags(){return (uint8_t)di_Anode->getFlags();}
 	inline uint8_t isAnodeState(){return (uint8_t)di_Anode->getcurState();}
 
+	inline tb_simu_ena* getCC_SimuEna(){return &cc_input.SIMU.ENA;}
+	inline tb_simu_var* getCC_SimuVar(){return &cc_input.SIMU.VAR;}
+	inline tb_Control_Out* getCC_output(){return &cc_out;}
+	inline VentCtrl::P_VentCtrl_T* getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
+
+
 private :
 /********************************************************************************************/
 // Core variable
