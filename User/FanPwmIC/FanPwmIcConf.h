@@ -4,7 +4,7 @@
  *  Created on: 15 févr. 2022
  *  Original Author: j.proux
  *
- *  Updated on: 10 Fev. 2025
+ *  Updated on: 26 Mars 2025
  *  Updated by: m.faget
  *
  *  Version 1.0
@@ -33,6 +33,7 @@ extern "C" {
 
 // Configuration des Options :
 #define FPIC_GET_LAST_DELTA_TIME		// Pour demander à récupérer le dernier deltaTime calculé
+#define FPIC_GET_LAST_FREQUENCY			// Pour demander à récupérer la dernière fréquence du signal entrant
 #define FPIC_GET_LAST_FEED_BACK 		// Pour demander à récupérer le dernier résultat de calcul Feedback
 //#define FPIC_FEED_BACK_IS_FLOAT 		// Pour demander une précision accrue sur le calcul du Feedback
 

@@ -163,9 +163,7 @@ int main(void)
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
-#ifdef USE_DIGITAL_INPUTS
 	GestionDigitalInputs();
-#endif //USE_DIGITAL_INPUTS
 
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();

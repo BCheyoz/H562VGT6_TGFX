@@ -39,6 +39,10 @@ packages/
 *.prefs
 *.launch
 
+#Ignore files generate by Matlab 
+*.mat
+**/html/
+
 # Ceedling's outputs:
 Tests/build/*
 

@@ -12,6 +12,7 @@
 #include "FirmwareGateway.h"
 #include "utils.h"
 #include "FanPwmIcUser.h"
+#include "EmbracoInverter.h"
 #include <list>
 #include <map>
 
@@ -68,6 +69,7 @@ uint16_t fanVoltage_mV() { return getFanExhaustVoltage_mV(); }
 uint16_t fanFeedbackSpeed() { return getFanExhaustFeedbackSpeed(); }
 uint16_t fanLastFeedbackSpeed() { return getFanExhaustLastFeedbackSpeed(); }
 uint16_t fanLastDeltaTime() { return getFanExhaustLastDeltaTime(); }
+uint32_t fanLastFrequency() { return getFanExhaustLastFrequency(); }
 
 void setAppointEnable(uint8_t enable){
 	FwMng *fwp = FwMng::getInstance();

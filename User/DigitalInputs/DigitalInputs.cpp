@@ -23,11 +23,10 @@ DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,GPIO_PinStat
 	_nb100ms = 0;
 	_ditype = type;// for single or multiple input
 	_inputId = inputId;// for rotocomutateur
-
+	_Flags = {0};
 	_workState = (WorkState == GPIO_PIN_SET);// NO/NF
 	_GPIOPort = GPIOx;
 	_GPIOPin = GPIO_Pin;
-	_Flags = {0};
 #ifndef DISABLE_DIGITAL_INPUTS_EVENTS_HANDLERS
 	pDI_FnHandler pFn = nullptr;
 	for(int i = 0; i < DI_MAX_FN_HANDLERS; i++)
