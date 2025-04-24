@@ -42,6 +42,7 @@ uint8_t FwMng::timer_100ms = 0;
 FwMng *FwMng::d = nullptr;
 tb_Control_In FwMng::cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
 tb_Control_Out FwMng::cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
+TFLOW4_Ctrl::DW_TFLOW4_Ctrl_T FwMng::cc_DW;
 
 FwMng * FwMng::getInstance(){
 	FwMng *obj;
@@ -580,6 +581,7 @@ void FwMng::CtrlCmdTask(){
 
 	// maj de la commande *************************************************
 	cc_out = ctrlCmd->getExternalOutputs().Control_Out;
+	cc_DW = ctrlCmd->getDWork();
 
 	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
 	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
