@@ -107,8 +107,8 @@ private :
 	DigitalInputs *di_Anode;
 
 	TFLOW4_Ctrl *ctrlCmd;
-	tb_Control_In cc_input; // structure d'entrée
-	tb_Control_Out cc_out;  // structure de sortie
+	static tb_Control_In cc_input; // structure d'entrée déclaré en static pour acces via cubeMonitor
+	static tb_Control_Out cc_out;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
 };
 

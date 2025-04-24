@@ -40,6 +40,8 @@
 // Initialisation des variables static partagé entre toutes les instances de l'objet
 uint8_t FwMng::timer_100ms = 0;
 FwMng *FwMng::d = nullptr;
+tb_Control_In FwMng::cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+tb_Control_Out FwMng::cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
 
 FwMng * FwMng::getInstance(){
 	FwMng *obj;
@@ -303,8 +305,6 @@ FwMng::FwMng()
 	ctrlCmd = new TFLOW4_Ctrl;
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
-
-	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
 
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
