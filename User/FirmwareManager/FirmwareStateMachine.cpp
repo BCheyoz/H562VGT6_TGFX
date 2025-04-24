@@ -12,6 +12,9 @@
 #include "ParamProductInfo.h"
 #include "utils.h"
 #include "main.h"
+#include "GestionInputSensor.h"
+#include "FanPwmIcUser.h"
+#include "EmbracoInverter.h"
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -30,15 +33,16 @@
 #define POWER_ON_WAIT               50     // 2 sec avec un pas de temps de 100ms
 #define ERASE_MEM_KEY               3854
 
+#define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
 
-/*******************************************************************************************************/
-// fonction redéfinie dans FirmwareGateway en "privé"
-__attribute__((weak)) void setFanExhaustVoltage_mV(uint16_t cmd){}
 
 /******************************************************************************/
 // Initialisation des variables static partagé entre toutes les instances de l'objet
 uint8_t FwMng::timer_100ms = 0;
 FwMng *FwMng::d = nullptr;
+tb_Control_In FwMng::cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+tb_Control_Out FwMng::cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
+TFLOW4_Ctrl::DW_TFLOW4_Ctrl_T FwMng::cc_DW;
 
 FwMng * FwMng::getInstance(){
 	FwMng *obj;
@@ -131,6 +135,138 @@ uint8_t isAnodeState(){
 	return fwp->isAnodeState();
 }
 
+uint8_t getControlTick(){
+	return rtP_Control_tick_C;
+}
+
+uint8_t getWaterHeatCtrlTick(){
+	return rtP_WaterHeatCtrl_tick_C;
+}
+
+uint8_t getInputMngTick(){
+	return rtP_input_mng_tick;
+}
+
+void setControlTick(uint8_t v){
+	rtP_Control_tick_C = v;
+}
+
+void setWaterHeatCtrlTick(uint8_t v){
+	rtP_WaterHeatCtrl_tick_C = v;
+}
+
+void setInputMngTick(uint8_t v){
+	rtP_input_mng_tick = v;
+}
+
+
+
+#define GET_SET_CC_DEFINITION(a, b, c, d)		c get##a(void){return (c)FwMng::getInstance()->get##b()->a;} \
+												void set##a(c val){FwMng::getInstance()->get##b()->a = (d)val;}
+
+GET_SET_CC_DEFINITION(Ss_heat_mode_simu, CC_SimuVar, uint16_t, te_heat_mode)
+GET_SET_CC_DEFINITION(Cs_v40_sp_simu, CC_SimuVar, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_temp_sp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_heat_pump_rot_spd_sp_simu, CC_SimuVar, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Ss_elec_bstr_htr_sp_simu, CC_SimuVar, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_vent_pres_sp_simu, CC_SimuVar, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_flow_sp_simu, CC_SimuVar, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(Cs_vent_vltg_sp_simu, CC_SimuVar, uint16_t, ta_vltg)
+GET_SET_CC_DEFINITION(Cs_tank_down_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_tank_up_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_evap_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_temp_simu, CC_SimuVar, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_pres_simu, CC_SimuVar, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_err_simu, CC_SimuVar, uint16_t, bool)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_pres_simu, CC_SimuVar, uint16_t, ta_rfrg_pres)
+GET_SET_CC_DEFINITION(Cs_pump_evap_pres_simu, CC_SimuVar, uint16_t, ta_rfrg_pres)
+GET_SET_CC_DEFINITION(Cs_v40_min_simu, CC_SimuVar, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_vent_rot_spd_simu, CC_SimuVar, uint16_t, ta_rot_spd)
+
+GET_SET_CC_DEFINITION(Bs_heat_mode_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_v40_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_temp_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_heat_pump_freq_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_elec_bstr_htr_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_flow_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_vltg_sp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_down_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_tank_up_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_temp_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_pres_err_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_xhst_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_evap_pres_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_v40_min_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_vent_rot_spd_simu_ena, CC_SimuEna, uint16_t, bool)
+
+GET_SET_CC_DEFINITION(Cs_v40_lvl, CC_output, uint16_t, uint8_t)
+GET_SET_CC_DEFINITION(Ss_op_mode, CC_output, uint16_t, te_op_mode)
+GET_SET_CC_DEFINITION(Ss_sg_stt, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_oph_stt, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_tank_down_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_tank_up_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_evap_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_temp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Ss_elec_bstr_htr_sp, CC_output, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_heat_pump_rot_spd_sp, CC_output, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Cs_vent_rot_spd, CC_output, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Cs_vent_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_heat_wtr_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_tot_cnsp, CC_output, uint16_t, ta_pwr)
+GET_SET_CC_DEFINITION(Cs_v40_sp, CC_output, uint16_t, ta_wtr_vol)
+GET_SET_CC_DEFINITION(Cs_temp_sp, CC_output, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_pres_sp, CC_output, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_flow_sp, CC_output, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(Cs_vent_vltg_sp, CC_output, uint16_t, ta_vltg)
+GET_SET_CC_DEFINITION(Cs_vent_pres, CC_output, uint16_t, ta_air_pres)
+
+GET_SET_CC_DEFINITION(pressSpfilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_K, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_Tau, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_initVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(pressSpfilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(firstOpressSpFilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presMesfilt_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(presFilter_sampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(press_max_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(press_min_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(flow_max_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(flow_min_Value, CC_VentCtrlParam, float, double)
+GET_SET_CC_DEFINITION(PressureRegulator_InitVal, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kawu, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kd, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Ki, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Kp, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_SampleTime, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(PressureRegulator_Tau_f, CC_VentCtrlParam, float, float)
+GET_SET_CC_DEFINITION(Cs_flow_fan_sp_C_Value, CC_VentCtrlParam, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(NullFlowConstant_Value, CC_VentCtrlParam, uint16_t, ta_flow)
+GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uint16_t)
+
 }
 /*******************************************************************************************************/
 
@@ -147,9 +283,9 @@ FwMng::FwMng()
 	savReset = FALSE;
 #endif
 
-	//TODO: pour les 1ere version on ofrce a être en E_FACTORY_STATE à basculer en E_BOARD_READY_STATE une fois que la partie parametrage est fait
+	//TODO: pour les 1ere versions on force a être en E_PRODUCT_COMPLETE_STATE à basculer en E_BOARD_READY_STATE une fois que la partie parametrage est fait
 	//state = E_BOARD_READY_STATE;
-	state = E_FACTORY_STATE;
+	state = E_PRODUCT_COMPLETE_STATE;
 	timer_100ms = 0;
 	ctrlCmdReset = TRUE;
 	powerOnTimer = 0;
@@ -166,6 +302,27 @@ FwMng::FwMng()
 
 	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
 	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
+
+	ctrlCmd = new TFLOW4_Ctrl;
+	ctrlCmd->initialize();
+	ctrlCmdCounter = 0;
+
+	/*
+	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
+	cc_input.HMI.TECH.Ss_ctry; // te_ctry enum France = 33, Germany = 49, Spain = 34, Marocco = 212, WesternSahara = 213
+	cc_input.HMI.TECH.Ss_tech_mode; // te_tech_mode enum tech_FullElec = 0, tech_Hybrid = 1, tech_HeatPump = 2
+	cc_input.HMI.TECH.Ns_anti_lgn_day; // ta_time_day uint8 NB de jour d'activation
+	cc_input.HMI.TECH.Ss_heat_pump_test_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.TECH.Ss_tank_size; // te_tank_size enum L105 = 105, L180 = 180
+	cc_input.HMI.TECH.Ss_sys_ver; // te_sys_ver enum Collective = 0, Individual
+	cc_input.HMI.TECH.Cs_vent_pres_min; // ta_air_pres uint16 Pa x10
+	cc_input.HMI.TECH.Cs_vent_pres_sys; // ta_air_pres uint16 Pa x10
+	cc_input.HMI.TECH.St_tor_mode[2]; // te_tor_mode enum tor_NotConnected = 0, tor_SmartGrid, tor_OffPeakHour, tor_VentSysStop
+
+	cc_input.HMI.USER.Ns_hldy_nb; // ta_time_day uint8 Nb de jour de vacance
+	cc_input.HMI.USER.Ns_pers_nb; // ta_pers_nb uint8 Nb de personne dans le foyer
+	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	*/
 }
 
 void FwMng::run(void)
@@ -184,6 +341,9 @@ void FwMng::run(void)
 	switch(state)
 	{
 	case E_BOARD_READY_STATE:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_SLOW_BLINK);
+#endif
 		// on reste en Board Ready tant qu'il n'y a pas de code carte
 		if(isCodeBoardCompliant()){
 
@@ -208,6 +368,9 @@ void FwMng::run(void)
 
 #ifdef USE_COMMISIONNING_STATE
 	case E_PRODUCT_READY_STATE:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_SLOW_BLINK);
+#endif
 		if(commissionningParamDone == TRUE){
 			// on enregistre une fois quand la mise en service est terminé
 			commissionningParamDone = FALSE;
@@ -222,6 +385,9 @@ void FwMng::run(void)
 #endif
 
 	case E_PRODUCT_COMPLETE_STATE:
+#ifdef USE_ALIVE_LED
+	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
+#endif
 #ifdef USE_COMMISIONNING_STATE
         if(resetConfig == TRUE){
 			resetConfig = FALSE;
@@ -250,11 +416,11 @@ void FwMng::run(void)
 #endif
 		if(regReset == TRUE){
 			regReset = FALSE;
-			//mainRegulationInit();
+			ctrlCmd->initialize();
 		}
 		else {
 			if(powerOnTimer >= POWER_ON_WAIT){
-				//mainRegulation();
+				CtrlCmdTask();
 			}
 		}
 		break;
@@ -290,6 +456,9 @@ void FwMng::run(void)
 
 	case E_BOOT_STATE: // Boot reserver au bootloader
 	default:
+#ifdef USE_ALIVE_LED
+		ledAlive->SetBlinkMode(E_LED_FAST_BLINK);
+#endif
 		// robustness case. We shall never get here
 		state = E_BOARD_READY_STATE;
 	}
@@ -365,3 +534,63 @@ void FwMng::requestBlinkMode(uint16_t newBlinkMode){
 	}
 }
 #endif
+
+void FwMng::CtrlCmdTask(){
+	if(ctrlCmdCounter < CTRL_CMD_TIMER){
+		ctrlCmdCounter++;
+		return;
+	}
+
+	ctrlCmdCounter = 0;
+
+	// maj des données d'entrées ******************************************
+/* TODO
+	cc_input.HMI.USER.Ss_user_mode; // te_user_mode : enum Auto = 10; Eco = 20; Boost = 30; Holidays = 40
+	cc_input.HMI.USER.Ss_heat_wtr_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso ECS
+	cc_input.HMI.USER.Ss_vent_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso FAN
+	cc_input.HMI.USER.Ss_tot_cnsp_rst; // te_on_off : enum off = 0; on = 1; force = 2 reset conso Global
+	cc_input.HMI.USER.Ss_sg_mode_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_oph_mode_ena; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_hldy_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+	cc_input.HMI.USER.Ss_bst_rqst; // te_on_off : enum off = 0; on = 1; force = 2
+*/
+	cc_input.HW.Cs_tank_down_temp_raw = getCtn(0) / 10.; // ta_temps : int16 °C x10  // valeur retourné en °C *100
+	cc_input.HW.Cs_tank_up_temp_raw = getCtn(1) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_pump_xhst_temp_raw = getCtn(2) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_pump_evap_temp_raw = getCtn(3) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_vent_temp_raw = getCtn(4) / 10.; // ta_temps : int16 °C x10
+	cc_input.HW.Cs_vent_pres_raw = getPressure(0); // ta_air_pres : uint16 Pa x10
+	cc_input.HW.Cs_vent_rot_spd_raw = getFanExhaustFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
+	cc_input.HW.Cs_heat_pump_pwr = GetEmbracoInverterPowerRead(); // ta_pwr : uint32 Watt x10
+
+	// TODO
+	//cc_input.HW.St_tor_stt_raw[2]; // te_on_off : enum off = 0; on = 1; force = 2
+
+	// TODO
+	/*
+	cc_input.ERR.Bs_hw_fan_err; // bool
+	cc_input.ERR.Bs_hw_pres_err; // bool
+	cc_input.ERR.Bs_hw_anod_err; // bool
+	*/
+
+	TFLOW4_Ctrl::ExtU_TFLOW4_Ctrl_T input = {cc_input};
+	ctrlCmd->setExternalInputs(&input);
+
+	// Execute un pas de calcul *******************************************
+	ctrlCmd->step();
+
+	// maj de la commande *************************************************
+	cc_out = ctrlCmd->getExternalOutputs().Control_Out;
+	cc_DW = ctrlCmd->getDWork();
+
+	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
+	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
+
+	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
+		appointElec->SetMode(E_APPOINT_ELEC_ON);
+	}
+	else {
+		appointElec->SetMode(E_APPOINT_ELEC_OFF);
+	}
+}
+

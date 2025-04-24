@@ -4,8 +4,8 @@
  *  Created on: 8 sept. 2021
  *  Original Author: j.proux
  *
- *  Updated on: 18 Feb. 2025
- *  Updated by: m.faget
+ *  Updated on: 09 Apr. 2025
+ *  Updated by: j.proux
  *
  *  Version 1.0
  *
@@ -25,6 +25,7 @@ extern "C" {
 #define NB_CTN_TT4_10KC3_USE 5
 
 /********************************************************************************************/
+
 typedef struct {
 	uint16_t nbPtADC;
 	float value;
@@ -34,6 +35,7 @@ typedef struct {
 	uint16_t nbPtADC;
 	int16_t value;
 } tAI_IntValue;
+
 /******************************************************************************/
 extern tAI_FloatValue tAiRefAlim;
 extern tAI_IntValue tAi_CTN[NB_CTN_TT4_10KC3_USE];

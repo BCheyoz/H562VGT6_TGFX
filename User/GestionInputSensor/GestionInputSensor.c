@@ -45,7 +45,7 @@ static uint8_t gis_timer_100ms = 0;
 static uint16_t bypassDuration = 30 * 60;   // 30min par default
 
 #if NB_PRESSURE_SENSOR_USED > 0
-static gis_IntValue Pressure[NB_PRESSURE_SENSOR_USED];
+static gis_UIntValue Pressure[NB_PRESSURE_SENSOR_USED];
 #define I2C_NB_PRESS_DEVICE 4
 
 static gis_device i2cDevicePressure[I2C_NB_PRESS_DEVICE] = {
@@ -113,7 +113,7 @@ static uint8_t isI2cDeviceLoaded(void* pDevice, uint8_t CustomDevId);
 uint8_t updateI2cDeviceId(gis_BaseValue *pData, gis_device *pDevice, uint8_t nbDevice);
 
 void updateI2cTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
-void updateI2cPressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice);
+void updateI2cPressureValueInt(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
 void updateI2cHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
 void updateI2cCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
 void updateI2cCO2ValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice);
@@ -382,137 +382,147 @@ uint8_t updateI2cDeviceId(gis_BaseValue *pData, gis_device *pDevice, uint8_t nbD
 
 void updateI2cTempValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
+	float value;
+
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
 	{
 #if I2CCM_NB_MAX_DEV_PRESS_HSC
 	case SENSOR_HSC:
 		I2CCM_Pres_HSC_ExtData *pHSC = (I2CCM_Pres_HSC_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pHSC->Temperature * 10);
+		value = pHSC->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_SDP6
 	case SENSOR_SDP6:
 		I2CCM_Pres_SDP6_ExtData *pSDP6 = (I2CCM_Pres_SDP6_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pSDP6->Temperature * 10);
+		value = pSDP6->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_SDP8
 	case SENSOR_SDP8:
 		I2CCM_Pres_SDP8_ExtData *pSDP8 = (I2CCM_Pres_SDP8_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pSDP8->Temperature * 10);
+		value = pSDP8->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_LMI
 	case SENSOR_LMI:
 		I2CCM_Pres_LMI_ExtData *pLMI = (I2CCM_Pres_LMI_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pLMI->Temperature * 10);
+		value = pLMI->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_ABP2
 	case SENSOR_ABP2:
 		I2CCM_Pres_ABP2_ExtData *pABP2 = (I2CCM_Pres_ABP2_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pABP2->Temperature * 10);
+		value = pABP2->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_HR_SHT3x
 	case SENSOR_SHT3x:
 		I2CCM_Hr_SHT3x_ExtData *pSHT3x = (I2CCM_Hr_SHT3x_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pSHT3x->Temperature * 10);
+		value = pSHT3x->Temperature;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_HR_SHT4x
 	case SENSOR_SHT4x:
 		I2CCM_Hr_SHT4x_ExtData *pSHT4x = (I2CCM_Hr_SHT4x_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t(pSHT4x->Temperature * 10);
+		value = pSHT4x->Temperature;
 		break;
 #endif
 	case SENSOR_BENCHTEST:
 		UNUSED(deviceIdx);
 		// ne rien faire
-		break;
+		return;
 	default:
 		pData->value = (int16_t)INT16_MIN;
-		break;
+		return;
 	}
+
+	pData->value = (int16_t)(value * I2C_TEMP_PRECISON);
 }
 
-void updateI2cPressureValueInt(gis_IntValue *pData, gis_device *pDevice, uint8_t nbDevice){
+void updateI2cPressureValueInt(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
+	float value;
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
 	{
 #if I2CCM_NB_MAX_DEV_PRESS_HSC
 	case SENSOR_HSC:
 		I2CCM_Pres_HSC_ExtData *pHSC = (I2CCM_Pres_HSC_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pHSC->Pressure * 10);
+		value = pHSC->Pressure;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_SDP6
 	case SENSOR_SDP6:
 		I2CCM_Pres_SDP6_ExtData *pSDP6 = (I2CCM_Pres_SDP6_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pSDP6->Pressure * 10);
+		value = pSDP6->Pressure;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_SDP8
 	case SENSOR_SDP8:
 		I2CCM_Pres_SDP8_ExtData *pSDP8 = (I2CCM_Pres_SDP8_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pSDP8->Pressure * 10);
+		value = pSDP8->Pressure;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_LMI
 	case SENSOR_LMI:
 		I2CCM_Pres_LMI_ExtData *pLMI = (I2CCM_Pres_LMI_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pLMI->Pressure * 10);
+		value = pLMI->Pressure;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_PRESS_ABP2
 	case SENSOR_ABP2:
 		I2CCM_Pres_ABP2_ExtData *pABP2 = (I2CCM_Pres_ABP2_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (int16_t)(pABP2->Pressure * 10);
+		value = pABP2->Pressure;
 		break;
 #endif
 	case SENSOR_BENCHTEST:
 		UNUSED(deviceIdx);
 		// ne rien faire
-		break;
+		return;
 	default:
-		pData->value = INT16_MIN;
-		break;
+		pData->value = UINT16_MAX;
+		return;
 	}
+
+	pData->value = (uint16_t) fabsf(value * I2C_PRESSURE_PRECISON);
 }
 
 void updateI2cHrValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){
 	uint8_t deviceIdx = updateI2cDeviceId(&(pData->base), pDevice, nbDevice);
+	float value;
 	// Récupération de la valeur à la bonne source :
 	switch(pData->base.id)
 	{
 #if I2CCM_NB_MAX_DEV_HR_SHT3x
 	case SENSOR_SHT3x:
 		I2CCM_Hr_SHT3x_ExtData *pSHT3x = (I2CCM_Hr_SHT3x_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (uint16_t)(pSHT3x->HygroRelative * 10);
+		value = pSHT3x->HygroRelative;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_HR_SHT4x
 	case SENSOR_SHT4x:
 		I2CCM_Hr_SHT4x_ExtData *pSHT4x = (I2CCM_Hr_SHT4x_ExtData*)pDevice[deviceIdx].pDevice;
-		pData->value = (uint16_t(pSHT4x->HygroRelative * 10);
+		value = pSHT4x->HygroRelative;
 		break;
 #endif
 #if I2CCM_NB_MAX_DEV_HR_HTU31
 	case SENSOR_HTU31: // TODO
-		//I2CCM_Co2_EE895_ExtData *p = (I2CCM_Co2_EE895_ExtData*)pDevice[deviceIdx].pDevice;
-		//pData->value = (uint16_t)p->Co2Value;
+		//I2CCM_HR_HTU31_ExtData *p = (I2CCM_HR_HTU31_ExtData*)pDevice[deviceIdx].pDevice;
+		//value = p->HygroRelative;
 		break;
 #endif
 	case SENSOR_BENCHTEST:
 		UNUSED(deviceIdx);
 		// ne rien faire
-		break;
+		return;
 	default:
 		pData->value = UINT16_MAX;
-		break;
+		return;
 	}
+
+	pData->value = (uint16_t) (value * I2C_HR_PRECISON);
 }
 
 void updateI2cCOVValueUint(gis_UIntValue *pData, gis_device *pDevice, uint8_t nbDevice){

@@ -130,26 +130,28 @@ Remarque : je recommande de re- "GENERATE CODE" si l'un des paramètres ci-dessu
 ## Etape II : Configurer la lib 
 **Dans le fichier "FanPwmIcConf.h"**
 
-1) Indiquer dans "FPIC_NB_FANS_WITH_FEEDBACK" (cf. plus bas) le nombre de Ventilateurs AVEC retour Feedback
+1) Indiquer dans "FPIC_NB_FANS_WITH_FEEDBACK" (cf FanPwmIcConf.h) le nombre de Ventilateurs AVEC retour Feedback
  que devra gérer cette Librairie
 
-2) Indiquer dans "FPIC_NB_FANS_ONLY_COMMAND" (cf. plus bas) le nombre de Ventilateurs SANS retour Feedback
+2) Indiquer dans "FPIC_NB_FANS_ONLY_COMMAND" (cf FanPwmIcConf.h) le nombre de Ventilateurs SANS retour Feedback
  que devra gérer cette Librairie
 
-3) Indiquer dans "FPIC_NB_FANS_ONLY_FEEDBACK" (cf. plus bas) le nombre d'entrées Feedback, SANS commande,
+3) Indiquer dans "FPIC_NB_FANS_ONLY_FEEDBACK" (cf FanPwmIcConf.h) le nombre d'entrées Feedback, SANS commande,
  que devra gérer cette Librairie
 
-4) Indiquer dans "FPIC_NB_MAX_OF_INIT_PARAMS" (cf. plus bas) le nombre total d'éléments que devra gérer cette Librairie
+4) Indiquer dans "FPIC_NB_MAX_OF_INIT_PARAMS" (cf FanPwmIcConf.h) le nombre total d'éléments que devra gérer cette Librairie
 
-5) Décommenter et Configurer "FPIC_MOY_FEED_BACK_CONV" (cf. plus bas) pour le nombre d'intervalles de temps à intégrer dans la Moyenne
+5) Décommenter et Configurer "FPIC_MOY_FEED_BACK_CONV" (cf FanPwmIcConf.h) pour le nombre d'intervalles de temps à intégrer dans la Moyenne
  glissante interne
 -> Mettre en commentaire pour désactiver la Moyenne glissante automatique intégrée.
 
-6) Décommenter ou Commenter "FPIC_GET_LAST_DELTA_TIME" (cf. plus bas) pour demander à récupérer le dernier deltaTime calculé
+6) Décommenter ou Commenter "FPIC_GET_LAST_DELTA_TIME" (cf FanPwmIcConf.h) pour demander à récupérer le dernier deltaTime calculé
 
-7) Décommenter ou Commenter "FPIC_GET_LAST_FEED_BACK" (cf. plus bas) pour demander à récupérer le dernier résultat de calcul Feedback
+7) Décommenter ou Commenter "FPIC_GET_LAST_FREQUENCY" (cf FanPwmIcConf.h) Pour demander à récupérer la dernière fréquence du signal entrant
 
-8) Décommenter "FPIC_FEED_BACK_IS_FLOAT" (cf. plus bas) pour que le résultat final de Feedback soit moyenné puis stocké en Float
+8) Décommenter ou Commenter "FPIC_GET_LAST_FEED_BACK" (cf FanPwmIcConf.h) pour demander à récupérer le dernier résultat de calcul Feedback
+
+9) Décommenter "FPIC_FEED_BACK_IS_FLOAT" (cf FanPwmIcConf.h) pour que le résultat final de Feedback soit moyenné puis stocké en Float
     * Remarque : le Float permet d'être plus précis sur les calculs, au détriment d'un impact plus fort sur la RAM
     * Mettre en commentaire pour que la moyenne puis le résultat final soient calculés & stocké en UINT16 (2x plus petit)
 

@@ -67,6 +67,8 @@ extern "C" {
 	#define IS_IN_RANGE(val,min,max)	(((val) >= (min)) && ((val) <= (max)))
 #endif // IS_IN_RANGE
 
+#define ROUND_TO_UINT_CAST(t,f)	(t)((f) + 0.5f)	// (float, type) -> (type)
+
 /******************************************************************************/
 // Macros utiles à la Librairie "DigitalInputs" :
 

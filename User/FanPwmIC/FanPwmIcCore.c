@@ -4,8 +4,8 @@
  *  Created on: 15 févr. 2022
  *  Original Author: j.proux
  *
- *  Updated on: 19 Déc. 2023
- *  Updated by: j.proux
+ *  Updated on: 26 Mars 2025
+ *  Updated by: m.faget
  *
  *  Version 1.0
  */
@@ -204,6 +204,10 @@ void Gestion_FanPwmIC(void)
 				pDatas->lastDeltaTime = 0;
 #endif // FPIC_GET_LAST_DELTA_TIME
 
+#ifdef FPIC_GET_LAST_FREQUENCY
+				pDatas->lastFrequency = 0.0f;
+#endif // FPIC_GET_LAST_FREQUENCY
+
 #ifdef FPIC_GET_LAST_FEED_BACK
 				pDatas->lastFeedBackValue = 0.0f;
 #endif // FPIC_GET_LAST_FEED_BACK
@@ -258,6 +262,10 @@ void Gestion_FanPwmIC(void)
 #ifdef FPIC_GET_LAST_DELTA_TIME
 		pDatas->lastDeltaTime = newDelta;
 #endif // FPIC_GET_LAST_DELTA_TIME
+
+#ifdef FPIC_GET_LAST_FREQUENCY
+		pDatas->lastFrequency = (pIcInitParams->kFreq/(float)newDelta);
+#endif // FPIC_GET_LAST_FREQUENCY
 
 #ifdef FPIC_GET_LAST_FEED_BACK
 		pDatas->lastFeedBackValue = newFeedBack;
@@ -477,6 +485,20 @@ inline uint16_t FanPwmIC_getLastDeltaTime(tFanIcData* pIcData)
 		return pDatas->lastDeltaTime;
 	}
 #endif // FPIC_GET_LAST_DELTA_TIME
+	return 0;
+}
+
+inline uint32_t FanPwmIC_getLastFrequency(tFanIcData* pIcData)
+{
+#ifdef FPIC_GET_LAST_FREQUENCY
+	if(0 != pIcData)
+	{
+		FPIC_MAKE_VAR_AND_SET_VALUE(tFanIcSrcDatas*, pDatas, pIcData->pDatas);
+		if(0 == pDatas) return 0;
+		// Tout est OK :
+		return (uint32_t)(pDatas->lastFrequency*10);
+	}
+#endif // FPIC_GET_LAST_FREQUENCY
 	return 0;
 }
 
