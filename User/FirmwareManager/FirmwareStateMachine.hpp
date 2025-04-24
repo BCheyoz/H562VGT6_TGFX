@@ -12,7 +12,6 @@
 // User Include
 #include "AppointElec.hpp"
 #include "DigitalInputs.hpp"
-#include "FanPwmIcUser.h"
 #include "TFLOW4_Ctrl.h"
 /* Attention class Singleton (instance unique) */
 

@@ -13,6 +13,8 @@
 #include "utils.h"
 #include "main.h"
 #include "GestionInputSensor.h"
+#include "FanPwmIcUser.h"
+#include "EmbracoInverter.h"
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -33,12 +35,6 @@
 
 #define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
 
-/*******************************************************************************************************/
-// fonction redéfinie dans FirmwareGateway en "privé"
-__attribute__((weak)) void setFanExhaustVoltage_mV(uint16_t cmd){}
-__attribute__((weak)) uint16_t fanFeedbackSpeed(void){ return 0; }
-__attribute__((weak)) void SetEmbracoInverterSpeedConsRPM(uint16_t cmd){}
-__attribute__((weak)) uint16_t GetEmbracoInverterPowerRead(void){ return 0; }
 
 /******************************************************************************/
 // Initialisation des variables static partagé entre toutes les instances de l'objet
@@ -563,7 +559,7 @@ void FwMng::CtrlCmdTask(){
 	cc_input.HW.Cs_pump_evap_temp_raw = getCtn(3) / 10.; // ta_temps : int16 °C x10
 	cc_input.HW.Cs_vent_temp_raw = getCtn(4) / 10.; // ta_temps : int16 °C x10
 	cc_input.HW.Cs_vent_pres_raw = getPressure(0); // ta_air_pres : uint16 Pa x10
-	cc_input.HW.Cs_vent_rot_spd_raw = fanFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
+	cc_input.HW.Cs_vent_rot_spd_raw = getFanExhaustFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
 	cc_input.HW.Cs_heat_pump_pwr = GetEmbracoInverterPowerRead(); // ta_pwr : uint32 Watt x10
 
 	// TODO
