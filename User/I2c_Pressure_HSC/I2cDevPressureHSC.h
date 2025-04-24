@@ -106,6 +106,15 @@ typedef enum _I2CCM_Pressure_HSC_AZ_Status
 
 int16_t i2cCM_PressureHSC_Init(I2CCM_Device* pDevice, I2CCM_DevInitParams* pInitParams);
 uint16_t i2cCM_ReframeOffsetInAllowedRange(uint16_t newOffset);
+/************************** provisoire **************************************************/
+/* trop risqué de s'aventurer dans la lib de Joel ...
+* -> mission de refaire un lien au propre pour Joel -> future evolution librairie
+*/
+void setI2C_PresHSC_BrdgOfstOpId(uint16_t offset_command);
+uint16_t getI2C_PresHSC_BrdgOfstOpId(void);
+void setI2C_PresHSC_BridgeOffset(uint16_t offset_value);
+uint16_t getI2C_PresHSC_BridgeOffset(void);
+/************************** fin zone provisoire **************************************************/
 
 #ifdef __cplusplus
 }
