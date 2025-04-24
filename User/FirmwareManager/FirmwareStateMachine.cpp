@@ -13,6 +13,8 @@
 #include "utils.h"
 #include "main.h"
 #include "GestionInputSensor.h"
+#include "FanPwmIcUser.h"
+#include "EmbracoInverter.h"
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -33,17 +35,13 @@
 
 #define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
 
-/*******************************************************************************************************/
-// fonction redéfinie dans FirmwareGateway en "privé"
-__attribute__((weak)) void setFanExhaustVoltage_mV(uint16_t cmd){}
-__attribute__((weak)) uint16_t fanFeedbackSpeed(void){ return 0; }
-__attribute__((weak)) void SetEmbracoInverterSpeedConsRPM(uint16_t cmd){}
-__attribute__((weak)) uint16_t GetEmbracoInverterPowerRead(void){ return 0; }
 
 /******************************************************************************/
 // Initialisation des variables static partagé entre toutes les instances de l'objet
 uint8_t FwMng::timer_100ms = 0;
 FwMng *FwMng::d = nullptr;
+tb_Control_In FwMng::cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+tb_Control_Out FwMng::cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
 
 FwMng * FwMng::getInstance(){
 	FwMng *obj;
@@ -308,8 +306,6 @@ FwMng::FwMng()
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
 
-	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
-
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
 	cc_input.HMI.TECH.Ss_ctry; // te_ctry enum France = 33, Germany = 49, Spain = 34, Marocco = 212, WesternSahara = 213
@@ -563,7 +559,7 @@ void FwMng::CtrlCmdTask(){
 	cc_input.HW.Cs_pump_evap_temp_raw = getCtn(3) / 10.; // ta_temps : int16 °C x10
 	cc_input.HW.Cs_vent_temp_raw = getCtn(4) / 10.; // ta_temps : int16 °C x10
 	cc_input.HW.Cs_vent_pres_raw = getPressure(0); // ta_air_pres : uint16 Pa x10
-	cc_input.HW.Cs_vent_rot_spd_raw = fanFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
+	cc_input.HW.Cs_vent_rot_spd_raw = getFanExhaustFeedbackSpeed(); // ta_rot_spd : uint16 RPM x1
 	cc_input.HW.Cs_heat_pump_pwr = GetEmbracoInverterPowerRead(); // ta_pwr : uint32 Watt x10
 
 	// TODO
@@ -586,7 +582,7 @@ void FwMng::CtrlCmdTask(){
 	cc_out = ctrlCmd->getExternalOutputs().Control_Out;
 
 	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
-	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
+	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
 
 	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
 		appointElec->SetMode(E_APPOINT_ELEC_ON);

@@ -15,6 +15,10 @@
 #include "EmbracoInverterConf.h"	// Pour accès à la Configuration EmbracoInverter
 #include "UartComUtils.h"			// Pour pouvoir s'appuyer sur la Librairie UART_COM
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define HZ_TO_RPM(h)		((h) * 60)
 
 #define EMBRACO_INVERTER_TX_FOOTER_SIZE 	1
@@ -242,5 +246,9 @@ int EMBRACO_INVERTER_RX_FN_HANDLER(tRxTxBufInfo* pRxTxBI, void* pVoidParam);
 #define EMBRACO_INVERTER_TX_DEF_FRAME_SIZE	EMBRACO_INVERTER_BUF_DEF_TX_SIZE
 
 uint16_t EMBRACO_INVERTER_TX_REGULAR_FN(tComFrameParams* pFI, void* pVoidParam);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* EMBRACOINVERTER_EMBRACOINVERTER_H_ */
