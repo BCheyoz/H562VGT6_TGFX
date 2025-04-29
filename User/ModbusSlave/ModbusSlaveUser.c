@@ -365,6 +365,36 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 16056,	{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarULongGetVarSetVar},		&iBusInfos[0].nbFramesNoRxHandler,	&iBusInfos[0].nbFramesNoRxHandler},
 #endif // IBUS_SUPPORT_STATS
 
+	// Input Control Command
+	{ 0x4F00,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_err_dtct_shnt_ena, setBs_err_dtct_shnt_ena},
+	{ 0x4F01,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_ctry, setSs_ctry},
+	{ 0x4F02,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_tech_mode, setSs_tech_mode},
+	{ 0x4F03,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getNs_anti_lgn_day, setNs_anti_lgn_day},
+	{ 0x4F04,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_pump_test_rqst, setSs_heat_pump_test_rqst},
+	{ 0x4F05,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_tank_size, setSs_tank_size},
+	{ 0x4F06,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_sys_ver, setSs_sys_ver},
+	{ 0x4F07,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres_min, setCs_vent_pres_min},
+	{ 0x4F08,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres_sys, setCs_vent_pres_sys},
+	{ 0x4F09,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getNs_hldy_nb, setNs_hldy_nb},
+	{ 0x4F0A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getNs_pers_nb, setNs_pers_nb},
+	{ 0x4F0B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_user_mode, setSs_user_mode},
+	{ 0x4F0C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_anti_lgn_ena, setSs_anti_lgn_ena},
+	{ 0x4F0D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_wtr_cnsp_rst, setSs_heat_wtr_cnsp_rst},
+	{ 0x4F0E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_vent_cnsp_rst, setSs_vent_cnsp_rst},
+	{ 0x4F0F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_tot_cnsp_rst, setSs_tot_cnsp_rst},
+	{ 0x4F00,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_sg_mode_ena, setSs_sg_mode_ena},
+	{ 0x4F01,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_oph_mode_ena, setSs_oph_mode_ena},
+	{ 0x4F02,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_hldy_rqst, setSs_hldy_rqst},
+	{ 0x4F03,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_bst_rqst, setSs_bst_rqst},
+	{ 0x4F04,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_down_temp_raw, setCs_tank_down_temp_raw},
+	{ 0x4F05,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_up_temp_raw, setCs_tank_up_temp_raw},
+	{ 0x4F06,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_xhst_temp_raw, setCs_pump_xhst_temp_raw},
+	{ 0x4F07,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_evap_temp_raw, setCs_pump_evap_temp_raw},
+	{ 0x4F08,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_temp_raw, setCs_vent_temp_raw},
+	{ 0x4F09,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres_raw, setCs_vent_pres_raw},
+	{ 0x4F0A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_rot_spd_raw, setCs_vent_rot_spd_raw},
+	{ 0x4F0B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_heat_pump_pwr, setCs_heat_pump_pwr},
+
 	// Bypass Control Command
 	{ 0x5000,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_mode_simu,	setSs_heat_mode_simu},
 	{ 0x5001,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_v40_sp_simu,	setCs_v40_sp_simu},
@@ -414,6 +444,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x502D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_pump_evap_pres_simu_ena,	setBs_pump_evap_pres_simu_ena},
 	{ 0x502E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_v40_min_simu_ena,	setBs_v40_min_simu_ena},
 	{ 0x502F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_vent_rot_spd_simu_ena,	setBs_vent_rot_spd_simu_ena},
+
+	// Output Control Command
 	{ 0x5030,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_v40_lvl, setCs_v40_lvl},
 	{ 0x5031,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_op_mode, setSs_op_mode},
 	{ 0x5032,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_sg_stt, setSs_sg_stt},
@@ -435,6 +467,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x5042,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_flow_sp, setCs_vent_flow_sp},
 	{ 0x5043,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_vltg_sp, setCs_vent_vltg_sp},
 	{ 0x5044,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres, setCs_vent_pres},
+	{ 0x5045,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pres_mes_filt, setCs_pres_mes_filt},
+
 
 	// Calibration Control Command
 	{ 0x6000,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUCharGetFctSetFct},	getControlTick,	setControlTick},
