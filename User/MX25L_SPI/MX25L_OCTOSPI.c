@@ -5,6 +5,9 @@
  *      Author: m.faget
  */
 
+// Le fichier "octospi.c" pour STM32H5652 généré par CubeMX utilise les fonctions HAL "XSPI*",
+// => cette Librairie s'appuie dons également uniquement sur les HAL "XSPI*".
+
 #ifndef MX25L_SPI_MX25L_OCTOSPI_C_
 #define MX25L_SPI_MX25L_OCTOSPI_C_
 
