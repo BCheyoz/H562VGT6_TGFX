@@ -215,6 +215,24 @@ SECTIONS
     . = ALIGN(4);
     KEEP (*(.Ext_Flash_TGFX_RSC_Section))
     . = ALIGN(4);
+
+    KEEP (*(.FontFlashSection))
+    . = ALIGN(4);
+    KEEP (*(FontFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.FontSearchFlashSection))
+    . = ALIGN(4);
+    KEEP (*(FontSearchFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.TextFlashSection))
+    . = ALIGN(4);
+    KEEP (*(TextFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.ExtFlashSection))
+    . = ALIGN(4);
+    KEEP (*(ExtFlashSection))
+    . = ALIGN(4);
+    
   } >Ext_Flash_TGFX_RSC
 
  /*  Unitialized Ext_Flash_Info_update section into "Ext_Flash_Info_update" Ext_Flash_Info_update type memory */
