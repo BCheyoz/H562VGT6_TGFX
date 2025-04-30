@@ -23,6 +23,7 @@
 #include "FanPwmIcCore.h"
 #include "GestionInputSensor.h"
 #include "FirmwareCInterface.h"
+#include "MX25L_OCTOSPI.h"
 /* USER CODE END Includes */
 
 
@@ -56,10 +57,11 @@ inline __attribute__((always_inline)) void InitBaseDeTemps(void)
 	// Initialise ici les Variables utilisées au RunTime :
 	nb10msRT = 0;
 	nb100msRT = 0;
-
+	Test_memory_init();
 #ifdef BDT_SUPPORT_ALIVE_RT
 	AliveRunTime1s = 0;
 #endif // BDT_SUPPORT_ALIVE_RT
+	Test_memory_in_init();
 
 }
 
@@ -138,7 +140,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			Handle_InputSensor_RT_100ms();
 			handleFirmwareManager_RT_100ms();
 			Handle_DigitalInputs_RT_100ms();
-
+			Test_memory();
 		/* USER CODE END RT_100ms */
 
 // Fin de Zone des Appels exécutés au RumTime dans le Programme Principal @ 100ms.

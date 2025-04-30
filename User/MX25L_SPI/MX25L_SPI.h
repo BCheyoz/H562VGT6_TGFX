@@ -30,6 +30,8 @@
 
 
 #include <stdint.h>
+#include <string.h> // pour MemSet
+
 #ifndef OCTOSPI
 #include "spi.h"
 #else
@@ -52,16 +54,16 @@
     #define MEM_MX25L_PERIF_HANDLE  &hospi1
     #define MEM_MX25L_CS_PORT       Flash_Qspi_CS_GPIO_Port // GPIOE
     #define MEM_MX25L_CS_PIN        Flash_Qspi_CS_Pin       // P11
-	#define MEM_MX25l_CLK_PIN  Flash_Qspi_Clk_Pin
-	#define MEM_MX25l_CLK_PORT Flash_Qspi_Clk_GPIO_Port
-	#define MEM_MX25l_IO0_PORT Flash_Qspi_IO0_GPIO_Port
-	#define MEM_MX25l_IO0_PIN  Flash_Qspi_IO0_Pin
-	#define MEM_MX25l_IO1_PORT Flash_Qspi_IO1_GPIO_Port
-	#define MEM_MX25l_IO1_PIN  Flash_Qspi_IO1_Pin
-	#define MEM_MX25l_IO2_PORT Flash_Qspi_IO2_GPIO_Port
-	#define MEM_MX25l_IO2_PIN  Flash_Qspi_IO2_Pin
-	#define MEM_MX25l_IO3_PORT Flash_Qspi_IO3_GPIO_Port
-	#define MEM_MX25l_IO3_PIN  Flash_Qspi_IO3_Pin
+	#define MEM_MX25l_CLK_PIN  		Flash_Qspi_Clk_Pin
+	#define MEM_MX25l_CLK_PORT 		Flash_Qspi_Clk_GPIO_Port
+	#define MEM_MX25l_IO0_PORT 		Flash_Qspi_IO0_GPIO_Port
+	#define MEM_MX25l_IO0_PIN  		Flash_Qspi_IO0_Pin
+	#define MEM_MX25l_IO1_PORT 		Flash_Qspi_IO1_GPIO_Port
+	#define MEM_MX25l_IO1_PIN  		Flash_Qspi_IO1_Pin
+	#define MEM_MX25l_IO2_PORT 		Flash_Qspi_IO2_GPIO_Port
+	#define MEM_MX25l_IO2_PIN  		Flash_Qspi_IO2_Pin
+	#define MEM_MX25l_IO3_PORT 		Flash_Qspi_IO3_GPIO_Port
+	#define MEM_MX25l_IO3_PIN  		Flash_Qspi_IO3_Pin
 
 #else // ! SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
     // Paramètre unique (statique) sur SPI4 + CS sur PE15 :
@@ -134,6 +136,7 @@
 #define MEM_MX25L_RETURN_FAILURE    0x00
 
 #define MEM_MX25L_GET_BYTE_N(value,N)   (((value)>>(8*(N))) & 0xFF)
+#define MEM_MX25L_CLEAR_STRUCT(Struct)	memset(&Struct, 0, sizeof(Struct))
 
 #define SPI_MEM_MX25L_MAKE_DWORD_4B(b3,b2,b1,b0)   (((b3) << 24) | ((b2) << 16) |((b1) << 8) | ((b0) << 0))
 
@@ -167,36 +170,6 @@ typedef struct _SPI_CS_TypeDef
     // (autres fonctions publiques manquantes)
     #warning "Support MULTI_INSTANCE incomplet !!!"
 #elif defined(OCTOSPI)
-    HAL_StatusTypeDef HAL_XSPI_Transmit_lf(XSPI_HandleTypeDef *hxspi,const uint8_t *pData, uint32_t Size, uint32_t Timeout);
-    HAL_StatusTypeDef HAL_XSPI_Receive_lf(XSPI_HandleTypeDef *hxspi, uint8_t *const pData, uint32_t Size, uint32_t Timeout);
-    uint8_t Mem_MX25L_ReadStatusRegister(uint8_t *pStatusRegister);
-    uint8_t Mem_MX25L_IsWriteBusy();
-    uint8_t Mem_MX25L_Wait4WriteNotBusy();
-    uint8_t Mem_MX25L_ReadConfigRegister(uint8_t *pConfigRegister);
-    uint8_t Mem_MX25L_WriteStatusConfigRegister(uint8_t newStatusRegister, uint8_t newConfigRegister);
-    uint8_t Mem_MX25L_ReadIdRegister(void *pID_24bits);
-    uint8_t Mem_MX25L_ReadSecurityRegister(uint8_t *pSecurityRegister);
-    uint8_t Mem_MX25L_ReadDataBytes(uint32_t baseAdr_24bits, uint32_t nbBytes2Read, void *pReadBuf);
-    uint8_t Mem_MX25L_ReadDataBytes_HighSpeed(uint32_t baseAdr_24bits, uint16_t nbBytes2Read, void *pReadBuf);
-
-
-    uint8_t Mem_MX25L_StartReadArraySequence(uint32_t baseAdr_24bits);
-    uint8_t Mem_MX25L_ReadArrayInSequence(uint32_t nbBytes2Read, void *pReadBuf);
-    uint8_t Mem_MX25L_StopReadArraySequence(void);
-    uint8_t Mem_MX25L_NoOperation(void);
-    uint8_t Mem_MX25L_SectorErase4K(uint32_t baseAdr_24bits);
-    uint8_t Mem_MX25L_BlockErase64K(uint32_t baseAdr_24bits);
-    uint8_t Mem_MX25L_BlockErase32K(uint32_t baseAdr_24bits);
-    uint8_t Mem_MX25L_ChipErase(void);
-    uint8_t Mem_MX25L_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, uint32_t nbBytes2Write);
-
-    uint8_t Mem_MX25L_StartWriteArraySequence(uint32_t baseAdr_24bits);
-    uint8_t Mem_MX25L_WriteArrayInSequence(void* pArray2Write, uint32_t nbBytes2Write);
-    uint8_t Mem_MX25L_StopWriteArraySequence(void);
-
-    uint8_t Mem_MX25L_QuadPageProgram_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, uint32_t nbBytes2Write);
-    uint8_t Mem_MX25L_QuadRead_Sequence(uint32_t baseAdr_24bits, uint32_t nbBytes2Read, void *pReadBuf);
-
 
 #else // ! SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
     uint8_t Mem_MX25L_ReadStatusRegister(uint8_t *pStatusRegister);

@@ -117,7 +117,7 @@ int main(void)
   MX_GPIO_Init();
   MX_GPDMA1_Init();
 //  MX_ADC1_Init(); 		// Désactivé_Jp le 28/02/2025 -> laisser "InitAnalogInputs" faire le nécessaire !
-  MX_OCTOSPI1_Init();
+  //MX_OCTOSPI1_Init();
   MX_SPI2_Init();
   MX_SPI3_Init();
   MX_SPI4_Init();

@@ -171,7 +171,7 @@ uint8_t Mem_MX25L_ReadIdRegister(void *pID_24bits)
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_ReadSecurityRegister(uint8_t *pSecurityRegister)
+uint8_t Mem_MX25L_ReadSecurityRegister(uint8_t *pSecurityRegister)//todo
 { // Non testé !
     uint8_t TxCmd[] = { MEM_MX25L_CMD_READ_SECURITY_REG };
     return Mem_MX25L_SendReceiveArray(TxCmd, sizeof(TxCmd), sizeof(uint8_t), pSecurityRegister);
@@ -385,7 +385,7 @@ uint8_t Mem_MX25L_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, uint16
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_StartWriteArraySequence(uint32_t baseAdr_24bits)
+uint8_t Mem_MX25L_StartWriteArraySequence(uint32_t baseAdr_24bits)//todo
 { // Non testé au 10/07/2019 !
 
     uint8_t returnValue = MEM_MX25L_RETURN_FAILURE;
