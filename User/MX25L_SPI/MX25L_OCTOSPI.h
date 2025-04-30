@@ -32,7 +32,7 @@ typedef union _tJedecInfos
 
 
 uint8_t MX25_xspi_ReadIDReg(void *pID_24bits);
-uint8_t MX25_xspi_ReadStatusReg(void *pID_16bits);
+uint8_t MX25_xspi_ReadStatusReg(void *pID_8bits);
 uint8_t MX25_xspi_ReadConfigReg(void *pID_16bits);
 
 
