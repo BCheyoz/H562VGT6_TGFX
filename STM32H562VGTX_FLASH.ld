@@ -50,10 +50,10 @@ MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 640K
   FLASH    (rx)    : ORIGIN = 0x08000000,   LENGTH = 1024K
-  Ext_Flash_TGFX_RSC	(rx)	: ORIGIN = 0x90000000, LENGTH = 3456K
-  Ext_Flash_BL_RSC		(rx)	: ORIGIN = 0x90360000, LENGTH = 188K
-  Ext_Flash_Bin_update	(rx)	: ORIGIN = 0x9038f000, LENGTH = 4544K
-  Ext_Flash_Info_update	(rx)	: ORIGIN = 0x907ff000, LENGTH = 4K
+  Ext_Flash_TGFX_RSC	(r)	: ORIGIN = 0x90000000, LENGTH = 3456K
+  Ext_Flash_BL_RSC		(r)	: ORIGIN = 0x90360000, LENGTH = 188K
+  Ext_Flash_Bin_update	(r)	: ORIGIN = 0x9038f000, LENGTH = 4544K
+  Ext_Flash_Info_update	(r)	: ORIGIN = 0x907ff000, LENGTH = 4K
 }
 
 /* Sections */
