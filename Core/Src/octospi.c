@@ -42,7 +42,7 @@ void MX_OCTOSPI1_Init(void)
   hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
   hospi1.Init.MemorySize = HAL_XSPI_SIZE_64MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 1;// 3 ? datasheet OCTOSPI p54 AN5050 Rev 12 DM00407776.pdf
+  hospi1.Init.ChipSelectHighTimeCycle = 3;// 3 ? datasheet OCTOSPI p54 AN5050 Rev 12 DM00407776.pdf
   hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
   hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;

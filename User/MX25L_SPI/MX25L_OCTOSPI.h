@@ -34,6 +34,8 @@ typedef union _tJedecInfos
 uint8_t MX25_xspi_ReadIDReg(void *pID_24bits);
 uint8_t MX25_xspi_ReadStatusReg(void *pID_8bits);
 uint8_t MX25_xspi_ReadConfigReg(void *pID_16bits);
+uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);
+uint8_t MX25_xspi_QuadReadData(uint32_t Address, void *Value, uint32_t nbBytes2Read);
 
 
 //static void Configure_APMemory(void);
@@ -41,8 +43,19 @@ void MX25L_xspi_Init(void);
 uint8_t MX25L_xspi_WriteEnable(void);
 uint8_t MX25L_xspi_WriteDisable(void);
 uint8_t MX25L_xspi_Wait4WriteNotBusy(void);
-uint32_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits,void *pArray2Write, uint32_t nbBytes2Write);
-uint8_t MX25_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);
+uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);
+uint8_t MX25_xspi_WriteStatusAndConfigReg(uint8_t StatusRegisterValue, uint8_t ConfigRegisterValue);
+uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue);
+
+uint8_t MX25L_xspi_Enable_QE_Bit(void);
+uint8_t MX25L_xspi_Disable_QE_Bit(void);
+
+
+uint8_t MX25L_xspi_SectorErase4K(uint32_t baseAdr_24bits);
+uint8_t MX25L_xspi_BlocErase64K(uint32_t baseAdr_24bits);
+uint8_t MX25L_xspi_BlocErase32K(uint32_t baseAdr_24bits);
+uint8_t MX25L_xspi_ChipErase(void);
+
 
 void Test_memory_init(void);
 void Test_memory_in_init(void);
