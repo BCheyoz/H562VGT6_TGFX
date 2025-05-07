@@ -1,5 +1,5 @@
 /*
- * MX25L_OCTOSPI.c
+ * MX25L_XSPI.c
  *
  *  Created on: Apr 25, 2025
  *      Author: m.faget
@@ -8,10 +8,10 @@
 // Le fichier "octospi.c" pour STM32H5652 généré par CubeMX utilise les fonctions HAL "XSPI*",
 // => cette Librairie s'appuie dons également uniquement sur les HAL "XSPI*".
 
-#ifndef MX25L_SPI_MX25L_OCTOSPI_C_
-#define MX25L_SPI_MX25L_OCTOSPI_C_
+#ifndef MX25L_SPI_MX25L_XSPI_C_
+#define MX25L_SPI_MX25L_XSPI_C_
 
-#include "MX25L_OCTOSPI.h"
+#include <MX25L_XSPI.h>
 
 
 /*
@@ -24,9 +24,23 @@ communication example**";
  *
  *
  */
+
+// tests
+typedef union _tJedecInfos
+{
+    uint32_t U24bits;
+    struct {
+        uint8_t ManufacturerID;
+        uint8_t DeviceType;
+        uint8_t DeviceID;
+        uint8_t FoundMemType;
+    };
+} tJedecInfos;
+
 tJedecInfos mJedecInfos;
-uint8_t byte2_info;
-uint16_t byte2_info2;
+uint8_t byte_status_info;
+uint8_t byte_config_info;
+uint8_t byte_secu_info;
 uint16_t byte_info;
 uint16_t byte_info2;
 uint16_t word_info_rx = 4;
@@ -39,8 +53,9 @@ uint16_t word_info_tx = 0xEABC;
 void MX25L_xspi_Init(void)
 {
 	byte_info = 0;
-	byte2_info = 0;
-	byte2_info2 = 0;
+	byte_status_info = 0;
+	byte_config_info = 0;
+	byte_secu_info = 0;
 	//word_info_rx = 0;
     MEM_MX25L_CS_INIT();
     MEM_MX25L_PERIF_INIT();
@@ -127,7 +142,7 @@ uint8_t MX25L_xspi_WriteDisable(void)
 }
 
 uint8_t MX25L_xspi_Wait4WriteNotBusy(void) // from "MX25L3233F" v1.9 du 19/04/2025 p21
-{//non testé
+{//test ok
     uint8_t returnValue = HAL_ERROR;
 	XSPI_RegularCmdTypeDef sCommand;
 	XSPI_AutoPollingTypeDef sConfig;
@@ -171,86 +186,6 @@ uint8_t MX25L_xspi_Wait4WriteNotBusy(void) // from "MX25L3233F" v1.9 du 19/04/20
     return returnValue;
 }
 
-/*PageProgram*/
-uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write)
-{// non testé
-#define MEM_MX25L_WRITE_PAGE_BOUNDARY   256 // Program Page = 256 bytes
-
-    uint8_t returnValue = HAL_ERROR;
-
-    if( (0 != pArray2Write) && (0 < nbBytes2Write) )
-    {
-        uint16_t thisBlocSize;
-        uint8_t *pData2Write = pArray2Write;
-        uint8_t mayStop = 0;
-
-		XSPI_RegularCmdTypeDef sCommand;
-		MEM_MX25L_CLEAR_STRUCT(sCommand);
-		/*Initialize the write register command */
-
-		/* config part */
-		sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
-		//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;
-		sCommand.Instruction = MEM_MX25L_CMD_PAGE_PROGRAM;//PP
-		sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
-		sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
-		sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
-		//sCommand.Address = Address;
-		sCommand.AddressMode = HAL_XSPI_ADDRESS_1_LINE;
-		sCommand.AddressWidth = HAL_XSPI_ADDRESS_24_BITS;
-		sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_DISABLE;
-		//sCommand.AlternateBytes = ;
-		sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
-		sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
-		//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
-		sCommand.DataMode = HAL_XSPI_DATA_1_LINE;
-		//sCommand.DataLength = nbBytes2Send;//max : 0xFF;//256
-		sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
-		sCommand.DummyCycles = 0;
-		sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
-		sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
-		/* end of config part */
-
-        while(0 < nbBytes2Write)
-        { // Calcule le Max autorisé en Ecriture à partir de cette Adresse :
-            thisBlocSize = (MEM_MX25L_WRITE_PAGE_BOUNDARY) - (baseAdr_24bits & ((MEM_MX25L_WRITE_PAGE_BOUNDARY) -1));
-            if(thisBlocSize > nbBytes2Write)    { thisBlocSize = nbBytes2Write; } // Ramène au nb de Bytes demandés / disponibles
-
-            sCommand.Address = baseAdr_24bits;
-            sCommand.DataLength = thisBlocSize;
-
-            if(HAL_OK != MX25L_xspi_WriteEnable()) { mayStop = 1; break; } // Arrêt immédiat, mais on peut faire le Break parce que CS n'est pas encore actif !
-
-#ifdef MEM_MX25L_CS_PIN
-            MEM_MX25L_ACTIVATE_CS();
-#endif // MEM_MX25L_CS_PIN
-
-            if(MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand) != HAL_OK) { mayStop = 1; } // Envoi Commande + Adresse 24 bits
-            if(0 == mayStop)
-            {
-            	if(MEM_MX25L_PERIF_SEND_XSPI_STREAM(pData2Write) != HAL_OK) { mayStop = 1; } // Envoi DataBytes
-            }
-
-#ifdef MEM_MX25L_CS_PIN
-            MEM_MX25L_DEACTIVATE_CS();
-#endif // MEM_MX25L_CS_PIN
-
-            if(0 != mayStop) { break; } // S'il y a 1 erreur : on peut quitter ici (CS n'est plus actif) !
-
-            if(HAL_OK != MX25L_xspi_Wait4WriteNotBusy()) { mayStop = 1; break; } // Attente Fin d'exécution
-
-            // Write is OK :
-            baseAdr_24bits  += thisBlocSize;
-            pData2Write     += thisBlocSize;
-            nbBytes2Write   -= thisBlocSize;
-        }
-
-        // Boucle terminée :
-        if( (0 == nbBytes2Write) && (0 == mayStop)) { returnValue = HAL_OK; }
-    }
-
-    return returnValue;
-}
 
 /**Read ID register value*/
 uint8_t MX25_xspi_ReadIDReg(void *pID_24bits)
@@ -299,7 +234,7 @@ uint8_t MX25_xspi_ReadIDReg(void *pID_24bits)
 
 /**Read Status register value*/
 uint8_t MX25_xspi_ReadStatusReg(void *pID_8bits)
-{//non testé
+{//test ok
 	uint8_t returnValue = HAL_ERROR;
 
 	XSPI_RegularCmdTypeDef sCommand;
@@ -308,7 +243,7 @@ uint8_t MX25_xspi_ReadStatusReg(void *pID_8bits)
 	/* config part */
 	sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
 	//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;//The SIO[3:1] are don't care
-	sCommand.Instruction = MEM_MX25L_CMD_READ_STATUS_REGISTER;//RDID
+	sCommand.Instruction = MEM_MX25L_CMD_READ_STATUS_REGISTER;//RDSR
 	sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
 	sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
 	sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
@@ -342,7 +277,7 @@ uint8_t MX25_xspi_ReadStatusReg(void *pID_8bits)
 }
 
 /**Read Config mode register value*/
-uint8_t MX25_xspi_ReadConfigReg(void *pID_16bits)
+uint8_t MX25_xspi_ReadConfigReg(void *pID_8bits)
 {//non testé
 	uint8_t returnValue = HAL_ERROR;
 
@@ -365,7 +300,7 @@ uint8_t MX25_xspi_ReadConfigReg(void *pID_16bits)
 	//sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
 	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
 	sCommand.DataMode = HAL_XSPI_DATA_1_LINE;
-	sCommand.DataLength = 2;
+	sCommand.DataLength = 1;
 	sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
 	sCommand.DummyCycles = 0;
 	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
@@ -376,7 +311,7 @@ uint8_t MX25_xspi_ReadConfigReg(void *pID_16bits)
 	if (HAL_OK == MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand))
 	{
 		/* Reception of the data */
-		if (HAL_OK == MEM_MX25L_PERIF_RECV_XSPI_STREAM((uint8_t *)pID_16bits))
+		if (HAL_OK == MEM_MX25L_PERIF_RECV_XSPI_STREAM((uint8_t *)pID_8bits))
 		{
 			returnValue = HAL_OK;
 		}
@@ -433,12 +368,12 @@ uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2
 
 
 /**Quad Read Data Bytes value*/
-uint8_t MX25_xspi_QuadReadData(uint32_t Address, void *Value, uint32_t nbBytes2Read)
+uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read)
 {// non testé
 
 	// en cours de dev
 	// a Quad Enable (QE) bi of status must be set to "1" before sending QREAD instr
-	uint8_t returnValue = HAL_ERROR;
+	uint8_t returnValue = MX25L_xspi_Enable_QE_Bit();
 
 	XSPI_RegularCmdTypeDef sCommand;
 	MEM_MX25L_CLEAR_STRUCT(sCommand);
@@ -463,7 +398,7 @@ uint8_t MX25_xspi_QuadReadData(uint32_t Address, void *Value, uint32_t nbBytes2R
 	sCommand.DataMode = HAL_XSPI_DATA_4_LINES;
 	sCommand.DataLength = nbBytes2Read;//max : 0xFF;//256
 	sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
-	sCommand.DummyCycles = 8;
+	sCommand.DummyCycles = 6;// datasheet -> p24 MX25L6433F Table7
 	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
 	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
 	/* end of config part */
@@ -588,23 +523,16 @@ uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue)
 
 uint8_t MX25L_xspi_Enable_QE_Bit(void)
 {// test nok
-	// on recupere le status actuel pour ne changer que le bit concerné
-	uint8_t readStatusData;
-	uint8_t returnValue = MX25_xspi_ReadStatusReg(&readStatusData);
-	readStatusData = readStatusData | (1<<6);
-	return MX25_xspi_WriteStatusReg(readStatusData);
+	return MX25_xspi_WriteStatusReg((1<<6));
 }
 
 uint8_t MX25L_xspi_Disable_QE_Bit(void)
 {// test nok
-	uint8_t readStatusData;
-	uint8_t returnValue = MX25_xspi_ReadStatusReg(&readStatusData);
-	readStatusData = readStatusData & ~(1<<6);
-	return MX25_xspi_WriteStatusReg(readStatusData);
+	return MX25_xspi_WriteStatusReg(0);
 }
 
 uint8_t MX25L_xspi_SectorErase4K(uint32_t baseAdr_24bits)
-{//non testé
+{//test ok
 	uint8_t returnValue = MX25L_xspi_WriteEnable(); // Enable Write First !
 
 	XSPI_RegularCmdTypeDef sCommand;
@@ -647,7 +575,7 @@ uint8_t MX25L_xspi_SectorErase4K(uint32_t baseAdr_24bits)
 }
 
 uint8_t MX25L_xspi_BlocErase64K(uint32_t baseAdr_24bits)
-{//non testé
+{//test ok
 	MEM_MX25L_ACTIVATE_CS();
 	uint8_t returnValue = MX25L_xspi_WriteEnable(); // Enable Write First !
 
@@ -691,7 +619,7 @@ uint8_t MX25L_xspi_BlocErase64K(uint32_t baseAdr_24bits)
 }
 
 uint8_t MX25L_xspi_BlocErase32K(uint32_t baseAdr_24bits)
-{//non testé
+{//test ok
 	MEM_MX25L_ACTIVATE_CS();
 	uint8_t returnValue = MX25L_xspi_WriteEnable(); // Enable Write First !
 
@@ -753,11 +681,11 @@ uint8_t MX25L_xspi_ChipErase(void)
 	sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_DISABLE;
 	//sCommand.AlternateBytes = ;
 	sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
-	//sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
-	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+	sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+	sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
 	sCommand.DataMode = HAL_XSPI_DATA_NONE;
 	sCommand.DataLength = 0;
-	//sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
+	sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
 	sCommand.DummyCycles = 0;// 6? page 24 MX25L6433F
 	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
 	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
@@ -777,6 +705,243 @@ uint8_t MX25L_xspi_ChipErase(void)
     return returnValue;
 }
 
+/*PageProgram*/
+uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write)
+{//test ok
+#define MEM_MX25L_WRITE_PAGE_BOUNDARY   256 // Program Page = 256 bytes
+
+    uint8_t returnValue = HAL_ERROR;
+
+    if( (0 != pArray2Write) && (0 < nbBytes2Write) )
+    {
+        uint16_t thisBlocSize;
+        uint8_t *pData2Write = pArray2Write;
+        uint8_t mayStop = 0;
+
+		XSPI_RegularCmdTypeDef sCommand;
+		MEM_MX25L_CLEAR_STRUCT(sCommand);
+		/*Initialize the write register command */
+
+		/* config part */
+		sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
+		//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;
+		sCommand.Instruction = MEM_MX25L_CMD_PAGE_PROGRAM;//PP
+		sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+		sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+		sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+		//sCommand.Address = Address;
+		sCommand.AddressMode = HAL_XSPI_ADDRESS_1_LINE;
+		sCommand.AddressWidth = HAL_XSPI_ADDRESS_24_BITS;
+		sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_DISABLE;
+		//sCommand.AlternateBytes = ;
+		sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+		sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+		//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+		sCommand.DataMode = HAL_XSPI_DATA_1_LINE;
+		//sCommand.DataLength = nbBytes2Send;//max : 0xFF;//256
+		sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
+		sCommand.DummyCycles = 0;
+		sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
+		sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
+		/* end of config part */
+
+        while(0 < nbBytes2Write)
+        { // Calcule le Max autorisé en Ecriture à partir de cette Adresse :
+            thisBlocSize = (MEM_MX25L_WRITE_PAGE_BOUNDARY) - (baseAdr_24bits & ((MEM_MX25L_WRITE_PAGE_BOUNDARY) -1));
+            if(thisBlocSize > nbBytes2Write)    { thisBlocSize = nbBytes2Write; } // Ramène au nb de Bytes demandés / disponibles
+
+            sCommand.Address = baseAdr_24bits;
+            sCommand.DataLength = thisBlocSize;
+
+            if(HAL_OK != MX25L_xspi_WriteEnable()) { mayStop = 1; break; } // Arrêt immédiat, mais on peut faire le Break parce que CS n'est pas encore actif !
+
+#ifdef MEM_MX25L_CS_PIN
+            MEM_MX25L_ACTIVATE_CS();
+#endif // MEM_MX25L_CS_PIN
+
+            if(MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand) != HAL_OK) { mayStop = 1; } // Envoi Commande + Adresse 24 bits
+            if(0 == mayStop)
+            {
+            	if(MEM_MX25L_PERIF_SEND_XSPI_STREAM(pData2Write) != HAL_OK) { mayStop = 1; } // Envoi DataBytes
+            }
+
+#ifdef MEM_MX25L_CS_PIN
+            MEM_MX25L_DEACTIVATE_CS();
+#endif // MEM_MX25L_CS_PIN
+
+            if(0 != mayStop) { break; } // S'il y a 1 erreur : on peut quitter ici (CS n'est plus actif) !
+
+            if(HAL_OK != MX25L_xspi_Wait4WriteNotBusy()) { mayStop = 1; break; } // Attente Fin d'exécution
+
+            // Write is OK :
+            baseAdr_24bits  += thisBlocSize;
+            pData2Write     += thisBlocSize;
+            nbBytes2Write   -= thisBlocSize;
+        }
+
+        // Boucle terminée :
+        if( (0 == nbBytes2Write) && (0 == mayStop)) { returnValue = HAL_OK; }
+    }
+
+    return returnValue;
+}
+
+uint8_t MX25_xspi_ReadSecurityReg(void *pID_8bits)
+{//test nok
+	uint8_t returnValue = HAL_ERROR;
+
+	XSPI_RegularCmdTypeDef sCommand;
+	/* Initialize the read register command */
+
+	/* config part */
+	sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
+	//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;//The SIO[3:1] are don't care
+	sCommand.Instruction = MEM_MX25L_CMD_READ_SECURITY_REG;//RDSR
+	sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+	sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+	sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+	//sCommand.Address = Address;
+	sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
+	//sCommand.AddressWidth = HAL_XSPI_ADDRESS_24_BITS;
+	sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_DISABLE;
+	//sCommand.AlternateBytes = ;
+	sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+	//sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+	sCommand.DataMode = HAL_XSPI_DATA_1_LINE;
+	sCommand.DataLength = 1;
+	sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;//disable = only falling edge data receiving/transmiting
+	sCommand.DummyCycles = 0;
+	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
+	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
+	/* end of config part */
+	MEM_MX25L_ACTIVATE_CS();
+	/* Configure the command */
+	if (HAL_OK == MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand))
+	{
+		/* Reception of the data */
+		if (HAL_OK == MEM_MX25L_PERIF_RECV_XSPI_STREAM((uint8_t *)pID_8bits))
+		{
+			returnValue = HAL_OK;
+		}
+	}
+	MEM_MX25L_DEACTIVATE_CS();
+	return returnValue;
+}
+
+uint8_t MX25L_xspi_WriteSecurityReg(void)
+{// test nok
+    uint8_t returnValue = HAL_ERROR;
+	XSPI_RegularCmdTypeDef sCommand;
+	MEM_MX25L_CLEAR_STRUCT(sCommand);
+
+	/* Initialize the Write Enable cmd in single SPI mode */
+	/* config part */
+	sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
+	//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;
+	sCommand.Instruction = MEM_MX25L_CMD_WRITE_SECURITY_REG;//WREN
+	sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+	sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+	sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+	//sCommand.Address = Address;
+	sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;// no adress to send
+	//sCommand.AddressWidth = HAL_XSPI_ADDRESS_8_BITS;
+	//sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_ENABLE;
+	//sCommand.AlternateBytes = ;
+	sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+	sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+	sCommand.DataMode = HAL_XSPI_DATA_NONE;// no data to send
+	sCommand.DataLength = 0;
+	//sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;
+	sCommand.DummyCycles = 0;
+	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
+	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
+	/* end of config part */
+	MEM_MX25L_ACTIVATE_CS();
+	/* Send Write Enable command in single SPI mode */
+	if (HAL_OK == MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand))
+	{
+		returnValue = HAL_OK;
+	}
+	MEM_MX25L_DEACTIVATE_CS();
+	return returnValue;
+}
+
+uint8_t MX25L_xspi_SoftReset(void)
+{// test nok
+    uint8_t returnValue = HAL_ERROR;
+	XSPI_RegularCmdTypeDef sCommand;
+	MEM_MX25L_CLEAR_STRUCT(sCommand);
+	/* config part */
+	sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
+	//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;
+	sCommand.Instruction = MEM_MX25L_CMD_RESET_ENABLE;//RSTEN
+	sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+	sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+	sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+	//sCommand.Address = Address;
+	sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;// no adress to send
+	//sCommand.AddressWidth = HAL_XSPI_ADDRESS_8_BITS;
+	//sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_ENABLE;
+	//sCommand.AlternateBytes = ;
+	sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+	sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+	sCommand.DataMode = HAL_XSPI_DATA_NONE;// no data to send
+	sCommand.DataLength = 0;
+	//sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;
+	sCommand.DummyCycles = 0;
+	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
+	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
+	/* end of config part */
+	MEM_MX25L_ACTIVATE_CS();
+	/* Send Write Enable command in single SPI mode */
+	if (HAL_OK == MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand))
+	{
+		returnValue = HAL_OK;
+	}
+	MEM_MX25L_DEACTIVATE_CS();
+
+	MEM_MX25L_CLEAR_STRUCT(sCommand);
+
+	/* config part */
+	sCommand.OperationType = HAL_XSPI_OPTYPE_COMMON_CFG;
+	//sCommand.IOSelect = HAL_XSPI_SELECT_IO_3_0;
+	sCommand.Instruction = MEM_MX25L_CMD_DO_SOFT_RESET;//RST
+	sCommand.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+	sCommand.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+	sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+	//sCommand.Address = Address;
+	sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;// no adress to send
+	//sCommand.AddressWidth = HAL_XSPI_ADDRESS_8_BITS;
+	//sCommand.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_ENABLE;
+	//sCommand.AlternateBytes = ;
+	sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+	sCommand.AlternateBytesWidth = HAL_XSPI_ALT_BYTES_8_BITS;
+	//sCommand.AlternateBytesDTRMode = HAL_XSPI_ALT_BYTES_DTR_DISABLE;
+	sCommand.DataMode = HAL_XSPI_DATA_NONE;// no data to send
+	sCommand.DataLength = 0;
+	//sCommand.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;
+	sCommand.DummyCycles = 0;
+	sCommand.DQSMode = HAL_XSPI_DQS_DISABLE;
+	sCommand.SIOOMode = HAL_XSPI_SIOO_INST_EVERY_CMD;
+	/* end of config part */
+	MEM_MX25L_ACTIVATE_CS();
+	/* Send Write Enable command in single SPI mode */
+	if (HAL_OK == MEM_MX25L_PERIF_SEND_XSPI_COMMAND(&sCommand))
+	{
+		returnValue = HAL_OK;
+	}
+	MEM_MX25L_DEACTIVATE_CS();
+
+    if(HAL_OK == returnValue)
+    {
+        returnValue = MX25L_xspi_Wait4WriteNotBusy(); // Attente Fin d'exécution
+    }
+	return returnValue;
+}
+
 /********* TEST ZONE *********/
 
 void Test_memory_init(void)
@@ -786,53 +951,73 @@ void Test_memory_init(void)
 
 void Test_memory_in_init(void)
 {
-	//uint8_t returnValue = MX25L_xspi_ChipErase();
+	uint8_t returnValue;
+	//returnValue = MX25L_xspi_SoftReset();
 	//returnValue = MX25L_xspi_SectorErase4K(test_read_adress);
 	//HAL_Delay(1000);
 	// = MX25_xspi_ReadDataBytes(0x00,&byte_info,sizeof(byte_info));
-	uint8_t returnValue;
 	returnValue = MX25_xspi_ReadIDReg(&mJedecInfos);
+	returnValue = MX25_xspi_ReadConfigReg(&byte_config_info);
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	returnValue = MX25_xspi_ReadSecurityReg(&byte_secu_info);
 	returnValue = MX25L_xspi_WriteEnable();
-	returnValue = MX25_xspi_ReadStatusReg(&byte2_info);
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	//returnValue = MX25L_xspi_WriteDisable();
+	//returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
 
-	/*returnValue = MX25L_xspi_Enable_QE_Bit();
-
-	returnValue = MX25_xspi_ReadStatusReg(&byte2_info);
-
-	returnValue = MX25L_xspi_Disable_QE_Bit();
-
-	returnValue = MX25_xspi_ReadStatusReg(&byte2_info);
-
-	returnValue = MX25L_xspi_WriteDisable();
-	returnValue = MX25_xspi_ReadConfigReg(&byte2_info2);*/
-
+	MEM_MX25L_ACTIVATE_SIO2();
+	MX25_xspi_WriteStatusReg(0);
 
 	//returnValue = MX25L_xspi_Enable_QE_Bit();
-	//returnValue = MX25_xspi_ReadStatusReg(&byte2_info);
-	//returnValue = MX25_xspi_WriteStatusReg(0x42);
-	//returnValue = MX25L_xspi_Disable_QE_Bit();
-	//returnValue = MX25_xspi_ReadStatusReg(&byte2_info);
-	//returnValue = MX25_xspi_ReadStatusReg(&byte2_info2);
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	returnValue = MX25L_xspi_WriteEnable();
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	returnValue = MX25L_xspi_Disable_QE_Bit();
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
 
-
-	//returnValue = MX25L_xspi_WriteEnable();
-	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
-	//HAL_Delay(1000);
-	//returnValue = MX25L_xspi_SectorErase4K(test_read_adress);
+	returnValue = MX25L_xspi_WriteEnable();
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	returnValue = MX25L_xspi_Disable_QE_Bit();
+	returnValue = MX25_xspi_ReadStatusReg(&byte_status_info);
+	/*returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
 	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
-	//HAL_Delay(1000);
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));*/
 
+	/*returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
 	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
-	returnValue = MX25L_xspi_WriteDisable();
+
+	returnValue = MX25L_xspi_ChipErase();
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
 
 	//returnValue = MX25L_xspi_WriteEnable();
-	//returnValue = MX25L_xspi_SectorErase4K(0x0A);
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+
+	//returnValue = MX25L_xspi_WriteEnable();
+	returnValue = MX25L_xspi_SectorErase4K(test_read_adress);
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+
+	returnValue = MX25L_xspi_BlocErase32K(test_read_adress);
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+
+	returnValue = MX25L_xspi_BlocErase64K(test_read_adress);
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+	returnValue = MX25_xspi_PageProgram(test_write_adress, &word_info_tx, sizeof(word_info_tx));
+	returnValue = MX25_xspi_ReadDataBytes(test_read_adress,&word_info_rx,sizeof(word_info_rx));*/
+
+	//returnValue = MX25_xspi_QuadReadData(test_read_adress,&word_info_rx,sizeof(word_info_rx));
+
 	//returnValue = MX25_xspi_ReadDataBytes(0x0A,&word_info_rx,sizeof(word_info_rx));
 	//returnValue = MX25L_xspi_WriteDisable();
-
 	//returnValue = MX25_xspi_ReadDataBytes(0x01,&word_info_rx,sizeof(word_info_rx));
-
-
 
 }
 
@@ -845,4 +1030,4 @@ void Test_memory(void){
 
 }
 
-#endif /* MX25L_SPI_MX25L_OCTOSPI_C_ */
+#endif /* MX25L_SPI_MX25L_XSPI_C_ */

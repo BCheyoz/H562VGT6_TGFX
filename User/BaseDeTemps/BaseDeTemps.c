@@ -13,6 +13,7 @@
  */
 
 
+#include <MX25L_XSPI.h>
 #include "BaseDeTemps.h"		// Pour accès à nos propres déclarations publiques
 
 /* USER CODE BEGIN Includes */
@@ -23,7 +24,6 @@
 #include "FanPwmIcCore.h"
 #include "GestionInputSensor.h"
 #include "FirmwareCInterface.h"
-#include "MX25L_OCTOSPI.h"
 /* USER CODE END Includes */
 
 
