@@ -265,6 +265,7 @@ GET_SET_CC_DEFINITION(Cs_vent_vltg_sp, CC_output, uint16_t, ta_vltg)
 GET_SET_CC_DEFINITION(Cs_vent_pres, CC_output, uint16_t, ta_air_pres)
 
 GET_SET_CC_DEFINITION(Cs_pres_mes_filt, CC_subVentCtrlOutput, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_pwr, CC_subInputSecuOutput, uint16_t, ta_pwr)
 
 GET_SET_CC_DEFINITION(pressSpfilt_K, CC_VentCtrlParam, float, float)
 GET_SET_CC_DEFINITION(firstOpressSpFilt_K, CC_VentCtrlParam, float, float)

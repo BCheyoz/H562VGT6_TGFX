@@ -468,6 +468,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x5043,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_vltg_sp, setCs_vent_vltg_sp},
 	{ 0x5044,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres, setCs_vent_pres},
 	{ 0x5045,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pres_mes_filt, setCs_pres_mes_filt},
+	{ 0x5046,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pwr, setCs_vent_pwr},
 
 
 	// Calibration Control Command
