@@ -42,7 +42,7 @@ void MX_OCTOSPI1_Init(void)
   hospi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hospi1.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
   hospi1.Init.MemorySize = HAL_XSPI_SIZE_64MB;
-  hospi1.Init.ChipSelectHighTimeCycle = 3;// 3 ? datasheet OCTOSPI p54 AN5050 Rev 12 DM00407776.pdf
+  hospi1.Init.ChipSelectHighTimeCycle = 3;
   hospi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hospi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
   hospi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
@@ -109,6 +109,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* xspiHandle)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF10_OCTOSPI1;
     HAL_GPIO_Init(Flash_Qspi_IO2_GPIO_Port, &GPIO_InitStruct);
+    //HAL_GPIO_WritePin(Flash_Qspi_IO2_GPIO_Port, Flash_Qspi_IO2_Pin, GPIO_PIN_SET);
 
     GPIO_InitStruct.Pin = Flash_Qspi_IO1_Pin|Flash_Qspi_IO0_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -130,6 +131,7 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* xspiHandle)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF6_OCTOSPI1;
     HAL_GPIO_Init(Flash_Qspi_CS_GPIO_Port, &GPIO_InitStruct);
+    //HAL_GPIO_WritePin(Flash_Qspi_CS_GPIO_Port, Flash_Qspi_CS_Pin, GPIO_PIN_SET);
 
   /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 

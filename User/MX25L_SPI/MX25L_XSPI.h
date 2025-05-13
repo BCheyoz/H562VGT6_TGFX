@@ -64,6 +64,7 @@ uint8_t MX25_xspi_ReadConfigReg(void *pID_8bits);// RDCR
  */
 
 uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue);//todo WRSR 01h
+uint8_t MX25_xspi_WriteStatusReg2bytes(uint8_t StatusRegisterValue1, uint8_t StatusRegisterValue2);
 
 uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);// READ 03h
 uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo FAST_READ 0Bh
@@ -153,6 +154,8 @@ uint8_t MX25_xspi_WriteStatusAndConfigReg(uint8_t StatusRegisterValue, uint8_t C
 uint8_t MX25L_xspi_Enable_QE_Bit(void);
 uint8_t MX25L_xspi_Disable_QE_Bit(void);
 
+void MX25L_xspi_Exit_HPM(void);// hardware protection mode
+void MX25L_xspi_DisableAllBlockProtection(void);// d blocks protection
 
 
 
