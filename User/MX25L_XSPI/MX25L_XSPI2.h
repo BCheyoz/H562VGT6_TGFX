@@ -5,6 +5,7 @@
  *      Author: j.proux
  */
 
+#pragma once
 #ifndef MX25L_XSPI_MX25L_XSPI_H_
 #define MX25L_XSPI_MX25L_XSPI_H_
 
@@ -81,7 +82,16 @@
 #define MEM_MX25L_CMD_SET_BURST_LENGTH_ALT  0x77 // SBL : (other)Set Burst Length alternative command
 #define MEM_MX25L_CMD_NO_OPERATION          0x00 // NOP : No Operation
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Prototypes Publics :
 void Mem_MX25L_XSPI_Init(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MX25L_XSPI_MX25L_XSPI_H_ */

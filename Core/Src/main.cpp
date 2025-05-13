@@ -47,7 +47,7 @@
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
 
-#include "../../User/MX25L_XSPI/MX25L_XSPI.h"
+#include "../../User/MX25L_XSPI/MX25L_XSPI2.h"
 
 /* USER CODE END Includes */
 
@@ -151,7 +151,6 @@ int main(void)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
-
 
   Mem_MX25L_XSPI_Init();
 

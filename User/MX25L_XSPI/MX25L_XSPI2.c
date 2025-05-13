@@ -5,12 +5,19 @@
  *      Author: j.proux
  */
 
-#include "MX25L_XSPI.h"
+#include "MX25L_XSPI2.h"
 
 #include "octospi.h"
 #include "main.h"
 #include <string.h> // pour MemSet
 
+
+#if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_MX25L_XSPI)
+	#define MX25L_XSPI_HALT_IF_DEBUG()	__BKPT(0) // { while(1) ClrWdt(); }
+//	#warning "DEBUG_MX25L_XSPI is Active !!!"
+#else // (! __DEBUG) && (! DEBUG_MX25L_XSPI) :
+	#define MX25L_XSPI_HALT_IF_DEBUG()	// Nop();
+#endif // __DEBUG ; DEBUG_MX25L_XSPI
 
 #define MEM_MX25L_XSPI_CLEAR_STRUCT(Struct)	memset(&Struct, 0, sizeof(Struct))
 
@@ -37,6 +44,7 @@
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_ADDRESS(XSPI_Cmd)						MEM_MX25L_BUILD_XSPI_CMD_ADDR_NO_DTR(XSPI_Cmd, HAL_XSPI_ADDRESS_NONE, HAL_XSPI_ADDRESS_8_BITS, 0)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(XSPI_Cmd)						MEM_MX25L_BUILD_XSPI_CMD_ALT_BYTES_NO_DTR(XSPI_Cmd, HAL_XSPI_ALT_BYTES_NONE, HAL_XSPI_ALT_BYTES_8_BITS, 0)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DATA(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DATA_NO_DTR(XSPI_Cmd, HAL_XSPI_DATA_NONE, 0)
+#define MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(XSPI_Cmd,Length)				MEM_MX25L_BUILD_XSPI_CMD_DATA_NO_DTR(XSPI_Cmd, HAL_XSPI_DATA_1_LINE, Length)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DUMMY(XSPI_Cmd, 0)
 //#define MEM_MX25L_BUILD_XSPI_CMD_NO_DDR(XSPI_Cmd)			MEM_MX25L_BUILD_XSPI_CMD_DUAL_RATE(XSPI_Cmd, XSPI_DDR_MODE_DISABLE, XSPI_DDR_HHC_ANALOG_DELAY)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DQS(XSPI_Cmd, HAL_XSPI_DQS_DISABLE)
@@ -50,16 +58,23 @@
 uint8_t Mem_MX25L_XSPI_Init_Config(void);
 uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy();
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void Mem_MX25L_XSPI_Init(void)
 {
 	// Init Hardware :
     MEM_MX25L_XSPI_CS_INIT();
-    HAL_GPIO_WritePin(GPIOA, Flash_Qspi_IO3_Pin|Flash_Qspi_IO2_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOA, Flash_Qspi_IO3_Pin|Flash_Qspi_IO2_Pin, GPIO_PIN_SET); // Tant qu'on est en mode DUAL uniquement !
     MEM_MX25L_XSPI_PERIF_INIT();
 
     // Init Software :
 	Mem_MX25L_XSPI_Init_Config();
 //	Mem_MX25L_XSPI_DoSoftwareReset(); // Temporaire
+
+	MX25L_XSPI_HALT_IF_DEBUG();
 }
 
 //******************************************************************************
@@ -75,7 +90,7 @@ uint8_t Mem_MX25L_XSPI_Init_Config(void)
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy() // from "MX25L6433F" v1.9 du 09/04/2025 p15 :
+uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy() // from "MX25L6433F" v1.9 du 09/04/2025 p16 & 21 :
 {
     uint8_t returnValue = MEM_MX25L_XSPI_RETURN_FAILURE;
 	XSPI_RegularCmdTypeDef sCommand;
@@ -87,7 +102,7 @@ uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy() // from "MX25L6433F" v1.9 du 09/04/20
 	MEM_MX25L_BUILD_XSPI_CMD_INSTR_1_LINE(sCommand, MEM_MX25L_CMD_READ_STATUS_REGISTER);	// Instruction is ALWAYS 1 line / 8 bits / No DTR
 	MEM_MX25L_BUILD_XSPI_CMD_NO_ADDRESS(sCommand);
 	MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_NO_DATA(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 0);
 	MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(sCommand);
 	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
 	MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(sCommand);
@@ -106,6 +121,8 @@ uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy() // from "MX25L6433F" v1.9 du 09/04/20
 	MEM_MX25L_XSPI_DEACTIVATE_CS();
 
     return returnValue;
-//	if(HAL_OK != MEM_MX25L_XSPI_PERIF_AUTO_POLLING(&sCommand, &sConfig)) { return MEM_MX25L_XSPI_RETURN_FAILURE; }
-//    return MEM_MX25L_XSPI_RETURN_SUCCESS;
 }
+
+#ifdef __cplusplus
+}
+#endif
