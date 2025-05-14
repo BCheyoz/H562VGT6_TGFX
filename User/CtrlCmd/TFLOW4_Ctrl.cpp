@@ -222,8 +222,8 @@ const tb_Control_In TFLOW4_Ctrl_rtZtb_Control_In{ { { false// Bs_err_dtct_shnt_e
       te_on_off::off,                  // Ss_heat_pump_test_rqst
       te_tank_size::L105,              // Ss_tank_size
       te_sys_ver::Collective,          // Ss_sys_ver
-      1050U,                           // Cs_vent_pres_min
-      1050U,                           // Cs_vent_pres_sys
+      0U,                              // Cs_vent_pres_min
+      0U,                              // Cs_vent_pres_sys
 
       { te_tor_mode::NotConnected, te_tor_mode::NotConnected }// St_tor_mode
     }                                  // TECH
