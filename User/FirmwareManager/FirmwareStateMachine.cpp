@@ -335,8 +335,7 @@ FwMng::FwMng()
 	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
 
 	ctrlCmd = new TFLOW4_Ctrl;
-	ctrlCmd->initialize();
-	ctrlCmdCounter = 0;
+	initCtrlCmd();
 
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
@@ -447,7 +446,7 @@ void FwMng::run(void)
 #endif
 		if(regReset == TRUE){
 			regReset = FALSE;
-			ctrlCmd->initialize();
+			initCtrlCmd();
 		}
 		else {
 			if(powerOnTimer >= POWER_ON_WAIT){
@@ -565,6 +564,20 @@ void FwMng::requestBlinkMode(uint16_t newBlinkMode){
 	}
 }
 #endif
+
+void FwMng::initCtrlCmd(){
+	if(ctrlCmd == nullptr) return;
+
+	ctrlCmd->initialize();
+	ctrlCmdCounter = 0;
+
+	// set default value
+	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+	cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
+	cc_input.HMI.TECH.Cs_vent_pres_min = 1050;
+	cc_input.HMI.TECH.Cs_vent_pres_sys = 1050;
+	cc_input.HMI.TECH.Ss_sys_ver = te_sys_ver::Individual;
+}
 
 void FwMng::CtrlCmdTask(){
 	if(ctrlCmdCounter < CTRL_CMD_TIMER){

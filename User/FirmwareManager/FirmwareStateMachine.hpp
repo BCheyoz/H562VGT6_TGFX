@@ -78,6 +78,8 @@ private :
 // Core variable
 	FwMng();
 
+	void initCtrlCmd();
+
 	static FwMng *d; // instance singleton
 
 	e_softState state;
