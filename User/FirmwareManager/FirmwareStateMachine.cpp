@@ -298,6 +298,8 @@ GET_SET_CC_DEFINITION(Cs_flow_fan_sp_C_Value, CC_VentCtrlParam, uint16_t, ta_flo
 GET_SET_CC_DEFINITION(NullFlowConstant_Value, CC_VentCtrlParam, uint16_t, ta_flow)
 GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uint16_t)
 
+GET_SET_CC_DEFINITION(FPresVent_Tau, CC_InputMngParam, float, float)
+
 }
 /*******************************************************************************************************/
 

@@ -200,6 +200,8 @@ GET_SET_CC_UINT16_PROTOTYPE(Cs_flow_fan_sp_C_Value)
 GET_SET_CC_UINT16_PROTOTYPE(NullFlowConstant_Value)
 GET_SET_CC_UINT16_PROTOTYPE(flowEsti_InitialCondition)
 
+GET_SET_CC_FLOAT_PROTOTYPE(FPresVent_Tau)
+
 #ifdef __cplusplus
 }
 #endif

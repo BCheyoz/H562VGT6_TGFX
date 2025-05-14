@@ -505,6 +505,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x601E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_flow_fan_sp_C_Value,	setCs_flow_fan_sp_C_Value},
 	{ 0x601F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getNullFlowConstant_Value,	setNullFlowConstant_Value},
 	{ 0x6020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getflowEsti_InitialCondition,	setflowEsti_InitialCondition},
+	{ 0x6021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFPresVent_Tau,	setFPresVent_Tau},
 
 
 //	// Code Installation pour l'IHM :
