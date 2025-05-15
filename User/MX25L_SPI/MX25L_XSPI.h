@@ -66,7 +66,7 @@ uint8_t MX25_xspi_ReadConfigReg(void *pID_8bits);// RDCR
 uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue);// WRSR 01h
 
 uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);// READ 03h
-uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo FAST_READ 0Bh
+uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);// FAST_READ 0Bh
 uint8_t MX25_xspi_DualReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// DREAD 3Bh
 uint8_t MX25_xspi_TwoReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// 2READ BBh
 uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// QREAD 6Bh
@@ -80,7 +80,7 @@ uint8_t MX25L_xspi_BlocErase32K(uint32_t baseAdr_24bits);// BE32K 52h
 uint8_t MX25L_xspi_ChipErase(void);// CE 60h or C7h
 
 uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);// PP 02h
-uint8_t MX25_xspi_FourPageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);//todo 4PP 38h
+uint8_t MX25_xspi_FourPageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);// 4PP 38h
 
 uint8_t MX25L_xspi_DeepPowerDown(void);//todo DP B9h
 uint8_t MX25_xspi_ReadElecSign(void *Value);//todo RES ABh
@@ -108,7 +108,7 @@ uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);//todo REMS 9
 uint8_t MX25L_xspi_EnterSecuredOTP(void);//todo ENSO B1h
 uint8_t MX25L_xspi_ExitSecuredOTP(void);//todo EXSO C1h
 
-uint8_t MX25_xspi_ReadSecurityReg(void *pID_8bits);//todo RDSCUR 2Bh
+uint8_t MX25_xspi_ReadSecurityReg(void *pID_8bits);// RDSCUR 2Bh
 
 /*
 *  Table 10 : Security Register Definition
