@@ -88,6 +88,7 @@
 #define MEM_MX25L_ACTIVATE_SIO2()   HAL_GPIO_WritePin(MEM_MX25l_IO2_PORT, MEM_MX25l_IO2_PIN, GPIO_PIN_RESET)// Active Low
 
 #define QE_BIT_MASK 0x40
+#define DC_BIT_MASK 0x40
 
 #ifdef OCTOSPI
 
@@ -123,7 +124,6 @@
 #define MEM_MX25L_CMD_CHIP_ERASE            0x60 // CE : Chip Erase
 #define MEM_MX25L_CMD_PAGE_PROGRAM          0x02 // PP -> Attention Page Boundary = 256 Bytes !
 #define MEM_MX25L_CMD_FOURPAGE_PROGRAM      0x38 // 4PP -> Attention Page Boundary = 256 Bytes !
-#define MEM_MX25L_CMD_QUADPAGE_PROGRAM      0x38 // QPP -> Attention Page Boundary = 256 Bytes !
 
 // MX25L Misc Commands :
 #define MEM_MX25L_CMD_NO_OPERATION          0x00 // NOP : No Operation

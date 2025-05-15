@@ -69,8 +69,8 @@ uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2
 uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo FAST_READ 0Bh
 uint8_t MX25_xspi_DualReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// DREAD 3Bh
 uint8_t MX25_xspi_TwoReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// 2READ BBh
-uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo QREAD 6Bh
-uint8_t MX25_xspi_FourReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo 4READ EBh
+uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// QREAD 6Bh
+uint8_t MX25_xspi_FourReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// 4READ EBh
 
 uint8_t MX25_xspi_BurstRead(void *Value, uint32_t nbBytes2Read);//todo SBL Read or write ? C0h or 77h
 
