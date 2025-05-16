@@ -85,14 +85,31 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* xspiHandle)
     /* OCTOSPI1 clock enable */
     __HAL_RCC_OSPI1_CLK_ENABLE();
 
+    __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOE_CLK_ENABLE();
     /**OCTOSPI1 GPIO Configuration
+    PA6     ------> OCTOSPI1_IO3
+    PA7     ------> OCTOSPI1_IO2
     PB0     ------> OCTOSPI1_IO1
     PB1     ------> OCTOSPI1_IO0
     PB2     ------> OCTOSPI1_CLK
     PE11     ------> OCTOSPI1_NCS
     */
+    GPIO_InitStruct.Pin = Flash_Qspi_IO3_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF6_OCTOSPI1;
+    HAL_GPIO_Init(Flash_Qspi_IO3_GPIO_Port, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = Flash_Qspi_IO2_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF10_OCTOSPI1;
+    HAL_GPIO_Init(Flash_Qspi_IO2_GPIO_Port, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin = Flash_Qspi_IO1_Pin|Flash_Qspi_IO0_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -132,11 +149,15 @@ void HAL_XSPI_MspDeInit(XSPI_HandleTypeDef* xspiHandle)
     __HAL_RCC_OSPI1_CLK_DISABLE();
 
     /**OCTOSPI1 GPIO Configuration
+    PA6     ------> OCTOSPI1_IO3
+    PA7     ------> OCTOSPI1_IO2
     PB0     ------> OCTOSPI1_IO1
     PB1     ------> OCTOSPI1_IO0
     PB2     ------> OCTOSPI1_CLK
     PE11     ------> OCTOSPI1_NCS
     */
+    HAL_GPIO_DeInit(GPIOA, Flash_Qspi_IO3_Pin|Flash_Qspi_IO2_Pin);
+
     HAL_GPIO_DeInit(GPIOB, Flash_Qspi_IO1_Pin|Flash_Qspi_IO0_Pin|Flash_Qspi_Clk_Pin);
 
     HAL_GPIO_DeInit(Flash_Qspi_CS_GPIO_Port, Flash_Qspi_CS_Pin);
