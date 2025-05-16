@@ -2,7 +2,16 @@
  * MX25L_XSPI.c
  *
  *  Created on: May 13, 2025
- *      Author: j.proux
+ *  Original Author: j.proux
+ *
+ *  Updated on: 16 May 2025
+ *  Updated by: j.proux
+ *  Copyright © ALDES 2025
+ *  LibVersion: v1.0.0
+ *
+ *  Pour intégrer facilement cette Librairie "MX25L_XSPI" dans un nouveau Projet :
+ *   -> Suivre la Procédure décrite dans "MX25L_XSPI\README.md"
+ *
  */
 
 #include "MX25L_XSPI2.h"
@@ -119,7 +128,7 @@ void Mem_MX25L_XSPI_Init(void)
 //	retVal = Mem_MX25L_XSPI_IsWriteBusy();
 //	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
 	retVal = Mem_MX25L_XSPI_ReadConfigRegister(&tmpU8);
-//	retVal = Mem_MX25L_XSPI_ReadIdRegister(tmpU24); // OK
+	retVal = Mem_MX25L_XSPI_ReadIdRegister(tmpU24); // OK
 	retVal = Mem_MX25L_XSPI_ReadSecurityRegister(&tmpU8);
 //	retVal = Mem_MX25L_XSPI_ReadElectronicID(&tmpU8); // OK
 //	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(0, tmpU24);// OK
@@ -536,6 +545,79 @@ uint8_t Mem_MX25L_XSPI_ReadIdRegister(void *pID_24bits) // RDID from "MX25L6433F
 	// Note: The RDID instruction is for reading the 1-byte manufacturer ID and the 2-byte Device ID that follows.
 	return Mem_MX25L_XSPI_SendCmdReceiveArray(MEM_MX25L_CMD_READ_IDENTIFICATION, 3, pID_24bits);
 }
+
+//******************************************************************************
+
+uint8_t Mem_MX25L_XSPI_ReadElectronicID(uint8_t *pElectronicID) // RES from "MX25L6433F" v1.9 du 09/04/2025 p16 & 46 :
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025 : 0x16
+
+#ifdef MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS
+	uint8_t returnValue = MEM_MX25L_XSPI_RETURN_FAILURE;
+	XSPI_RegularCmdTypeDef sCommand;
+
+	MEM_MX25L_XSPI_CLEAR_STRUCT(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_OP_TYPE_COMMON(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_INSTR_1_LINE(sCommand, MEM_MX25L_CMD_READ_ELECTRONIC_ID);	// Instruction is ALWAYS 1 line / 8 bits / No DTR
+	MEM_MX25L_BUILD_XSPI_CMD_NO_ADDRESS(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_DUMMY(sCommand, 8*3);
+	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 1);	// HAL_XSPI_DATA_1_LINE pour RES
+	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(sCommand);
+
+	MEM_MX25L_XSPI_ACTIVATE_CS();
+	if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))
+	{
+		if (HAL_OK == MEM_MX25L_XSPI_PERIF_RECV_STREAM(pElectronicID))
+		{
+			returnValue = MEM_MX25L_XSPI_RETURN_SUCCESS;
+		}
+	}
+	MEM_MX25L_XSPI_DEACTIVATE_CS();
+
+	return returnValue;
+#else // ! MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS :
+	return MEM_MX25L_XSPI_RETURN_FAILURE;
+#endif // MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS
+
+}
+
+//******************************************************************************
+
+uint8_t Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(uint8_t Adr, uint8_t *pManufacturerAndDeviceID) // REMS from "MX25L6433F" v1.9 du 09/04/2025 p16, 48 & Table 9 p49 :
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025 : [ 0xC2 ; 0x16 ] si Adr = 0 ; [ 0x16 ; 0xC2 ] si Adr = 1 => OK.
+
+#ifdef MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS
+	uint8_t returnValue = MEM_MX25L_XSPI_RETURN_FAILURE;
+	XSPI_RegularCmdTypeDef sCommand;
+
+	MEM_MX25L_XSPI_CLEAR_STRUCT(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_OP_TYPE_COMMON(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_INSTR_1_LINE(sCommand, MEM_MX25L_CMD_READ_MFG_DEV_ID);	// Instruction is ALWAYS 1 line / 8 bits / No DTR
+	MEM_MX25L_BUILD_XSPI_CMD_ADDR_NO_DTR(sCommand, HAL_XSPI_ADDRESS_1_LINE, HAL_XSPI_ADDRESS_24_BITS, Adr); // Remarque_Jp : (ADR_24 + NoAlt + NoDummy) remplace (2 Dummy Bytes + Add_8) !
+	MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 2);	// HAL_XSPI_DATA_1_LINE pour REMS
+	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(sCommand);
+
+	MEM_MX25L_XSPI_ACTIVATE_CS();
+	if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))
+	{
+		if (HAL_OK == MEM_MX25L_XSPI_PERIF_RECV_STREAM(pManufacturerAndDeviceID))
+		{
+			returnValue = MEM_MX25L_XSPI_RETURN_SUCCESS;
+		}
+	}
+	MEM_MX25L_XSPI_DEACTIVATE_CS();
+
+	return returnValue;
+#else // ! MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS :
+	return MEM_MX25L_XSPI_RETURN_FAILURE;
+#endif // MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS
+
+}
+
 //******************************************************************************
 
 uint8_t Mem_MX25L_XSPI_ReadSecurityRegister(uint8_t *pSecurityRegister) // RDSCUR from "MX25L6433F" v1.9 du 09/04/2025 p17, 50 & 51 :
@@ -571,13 +653,6 @@ uint8_t Mem_MX25L_XSPI_ReadDataBytes(uint32_t baseAdr_24bits, uint16_t nbBytes2R
 	MEM_MX25L_XSPI_DEACTIVATE_CS();
 
     return returnValue;
-}
-
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_NoOperation(void) // NOP from "MX25L6433F" v1.9 du 09/04/2025 p17 & 56
-{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_NO_OPERATION);
 }
 
 //******************************************************************************
@@ -930,6 +1005,35 @@ uint8_t Mem_MX25L_XSPI_WriteArray_QuadWrite(uint32_t baseAdr_24bits, void* pArra
 
 //******************************************************************************
 
+uint8_t Mem_MX25L_XSPI_WriteEnable(void)	// WREN from "MX25L6433F" v1.9 du 09/04/2025 p16 & 18 :
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_ENABLE);
+}
+
+//******************************************************************************
+
+uint8_t Mem_MX25L_XSPI_WriteDisable(void)	// WRDI from "MX25L6433F" v1.9 du 09/04/2025 p16 & 19 :
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_DISABLE);
+}
+
+//******************************************************************************
+
+uint8_t Mem_MX25L_XSPI_NoOperation(void) // NOP from "MX25L6433F" v1.9 du 09/04/2025 p17 & 56
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_NO_OPERATION);
+}
+
+//******************************************************************************
+
+uint8_t MemMX25L_XSPI_SetBurstLength(uint8_t newBurstLength) // SBL from "MX25L6433F" v1.9 du 09/04/2025 p17 & 36 :
+{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
+	uint8_t tmpBurstLength = newBurstLength; // Variable intermédiaire pour accès au pointeur
+	return Mem_MX25L_XSPI_SendCmdAndArray(MEM_MX25L_CMD_SET_BURST_LENGTH, &tmpBurstLength, sizeof(uint8_t));
+}
+
+//******************************************************************************
+
 uint8_t Mem_MX25L_XSPI_DoSoftwareReset(void) // RSTEN & RST from "MX25L6433F" v1.9 du 09/04/2025 p17 & 56 :
 { // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
     uint8_t returnValue = Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_RESET_ENABLE);	// RSTEN
@@ -942,43 +1046,9 @@ uint8_t Mem_MX25L_XSPI_DoSoftwareReset(void) // RSTEN & RST from "MX25L6433F" v1
     return returnValue;
 }
 
-// ******************************************************************************
-
-uint8_t MemMX25L_XSPI_SetBurstLength(uint8_t newBurstLength) // SBL from "MX25L6433F" v1.9 du 09/04/2025 p17 & 36 :
-{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
-	uint8_t tmpBurstLength = newBurstLength; // Variable intermédiaire pour accès au pointeur
-	return Mem_MX25L_XSPI_SendCmdAndArray(MEM_MX25L_CMD_SET_BURST_LENGTH, &tmpBurstLength, sizeof(uint8_t));
-}
-
 //******************************************************************************
 
-uint8_t Mem_MX25L_XSPI_EnterDeepPowerDown(void)	// DP from "MX25L6433F" v1.9 du 09/04/2025 p16 & 45 :
-{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_ENTER_DEEP_POWER);
-}
-
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_ReleaseFromDeepPower(void)	// RDP from "MX25L6433F" v1.9 du 09/04/2025 p16, 46 & Figure 28 p47 :
-{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_RELEASE_DEEP_POWER);
-}
-
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_EnterSecuredOTP(void)	// ENSO from "MX25L6433F" v1.9 du 09/04/2025 p16 & 49 :
-{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_ENTER_SECURE_OTP);
-}
-
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_ExitSecuredOTP(void) 	// EXSO from "MX25L6433F" v1.9 du 09/04/2025 p16 & 49 :
-{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_EXIT_SECURE_OTP);
-}
-
-//******************************************************************************
+#ifdef MEM_MX25L_XSPI_SUPPORT_DISCOVER_PARAMS
 
 uint8_t Mem_MX25L_XSPI_ReadDiscoverableParameter(uint32_t baseAdr_24bits, uint16_t nbBytes2Read, void *pReadBuf) // RDSFDP from "MX25L6433F" v1.9 du 09/04/2025 p17 & 57 :
 { // Vérif_Jp = OK sur MX25L6433F le 15/05/2025 : 0x50444653 "SFDP Signature" en Adr 0.
@@ -1008,76 +1078,7 @@ uint8_t Mem_MX25L_XSPI_ReadDiscoverableParameter(uint32_t baseAdr_24bits, uint16
     return returnValue;
 }
 
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_ReadElectronicID(uint8_t *pElectronicID) // RES from "MX25L6433F" v1.9 du 09/04/2025 p16 & 46 :
-{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025 : 0x16
-    uint8_t returnValue = MEM_MX25L_XSPI_RETURN_FAILURE;
-	XSPI_RegularCmdTypeDef sCommand;
-
-	MEM_MX25L_XSPI_CLEAR_STRUCT(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_OP_TYPE_COMMON(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_INSTR_1_LINE(sCommand, MEM_MX25L_CMD_READ_ELECTRONIC_ID);	// Instruction is ALWAYS 1 line / 8 bits / No DTR
-	MEM_MX25L_BUILD_XSPI_CMD_NO_ADDRESS(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_DUMMY(sCommand, 8*3);
-	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 1);	// HAL_XSPI_DATA_1_LINE pour RES
-	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(sCommand);
-
-	MEM_MX25L_XSPI_ACTIVATE_CS();
-	if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))
-	{
-		if (HAL_OK == MEM_MX25L_XSPI_PERIF_RECV_STREAM(pElectronicID))
-		{
-			returnValue = MEM_MX25L_XSPI_RETURN_SUCCESS;
-		}
-	}
-	MEM_MX25L_XSPI_DEACTIVATE_CS();
-
-    return returnValue;
-}
-
-//******************************************************************************
-
-uint8_t Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(uint8_t Adr, uint8_t *pManufacturerAndDeviceID) // REMS from "MX25L6433F" v1.9 du 09/04/2025 p16, 48 & Table 9 p49 :
-{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025 : [ 0xC2 ; 0x16 ] si Adr = 0 ; [ 0x16 ; 0xC2 ] si Adr = 1 => OK.
-    uint8_t returnValue = MEM_MX25L_XSPI_RETURN_FAILURE;
-	XSPI_RegularCmdTypeDef sCommand;
-
-	MEM_MX25L_XSPI_CLEAR_STRUCT(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_OP_TYPE_COMMON(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_INSTR_1_LINE(sCommand, MEM_MX25L_CMD_READ_MFG_DEV_ID);	// Instruction is ALWAYS 1 line / 8 bits / No DTR
-	MEM_MX25L_BUILD_XSPI_CMD_ADDR_NO_DTR(sCommand, HAL_XSPI_ADDRESS_1_LINE, HAL_XSPI_ADDRESS_24_BITS, Adr); // Remarque_Jp : (ADR_24 + NoAlt + NoDummy) remplace (2 Dummy Bytes + Add_8) !
-	MEM_MX25L_BUILD_XSPI_CMD_NO_ALT_BYTES(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 2);	// HAL_XSPI_DATA_1_LINE pour REMS
-	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(sCommand);
-
-	MEM_MX25L_XSPI_ACTIVATE_CS();
-	if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))
-	{
-		if (HAL_OK == MEM_MX25L_XSPI_PERIF_RECV_STREAM(pManufacturerAndDeviceID))
-		{
-			returnValue = MEM_MX25L_XSPI_RETURN_SUCCESS;
-		}
-	}
-	MEM_MX25L_XSPI_DEACTIVATE_CS();
-
-    return returnValue;
-}
-
-//******************************************************************************
-
-#ifdef MEM_MX25L_XSPI_SUPPORT_WRSCUR
-
-uint8_t Mem_MX25L_XSPI_WriteSecurityRegister(void)	// WRSCUR from "MX25L6433F" v1.9 du 09/04/2025 p16 & 52 :
-{ // NotTested_Jp on 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_SECURITY_REG);
-}
-
-#endif // MEM_MX25L_XSPI_SUPPORT_WRSCUR
+#endif // MEM_MX25L_XSPI_SUPPORT_DISCOVER_PARAMS
 
 //******************************************************************************
 
@@ -1124,19 +1125,59 @@ uint8_t Mem_MX25L_XSPI_ResumeErase(void) // ERS from "MX25L6433F" v1.9 du 09/04/
 #endif // MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
 
 //******************************************************************************
-// Basic useful functions :
 
-uint8_t Mem_MX25L_XSPI_WriteEnable(void)	// WREN from "MX25L6433F" v1.9 du 09/04/2025 p16 & 18 :
-{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_ENABLE);
+#ifdef MEM_MX25L_XSPI_SUPPORT_DEEP_POWER
+
+uint8_t Mem_MX25L_XSPI_EnterDeepPowerDown(void)	// DP from "MX25L6433F" v1.9 du 09/04/2025 p16 & 45 :
+{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_ENTER_DEEP_POWER);
 }
+
+#endif // MEM_MX25L_XSPI_SUPPORT_DEEP_POWER
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_XSPI_WriteDisable(void)	// WRDI from "MX25L6433F" v1.9 du 09/04/2025 p16 & 19 :
-{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
-	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_DISABLE);
+#ifdef MEM_MX25L_XSPI_SUPPORT_DEEP_POWER
+
+uint8_t Mem_MX25L_XSPI_ReleaseFromDeepPower(void)	// RDP from "MX25L6433F" v1.9 du 09/04/2025 p16, 46 & Figure 28 p47 :
+{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_RELEASE_DEEP_POWER);
 }
+
+#endif // MEM_MX25L_XSPI_SUPPORT_DEEP_POWER
+
+//******************************************************************************
+
+#ifdef MEM_MX25L_XSPI_SUPPORT_SECURED_OTP
+
+uint8_t Mem_MX25L_XSPI_EnterSecuredOTP(void)	// ENSO from "MX25L6433F" v1.9 du 09/04/2025 p16 & 49 :
+{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_ENTER_SECURE_OTP);
+}
+
+#endif // MEM_MX25L_XSPI_SUPPORT_SECURED_OTP
+
+//******************************************************************************
+
+#ifdef MEM_MX25L_XSPI_SUPPORT_SECURED_OTP
+
+uint8_t Mem_MX25L_XSPI_ExitSecuredOTP(void) 	// EXSO from "MX25L6433F" v1.9 du 09/04/2025 p16 & 49 :
+{ // Envoi_Jp = OK sur MX25L6433F le 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_EXIT_SECURE_OTP);
+}
+
+#endif // MEM_MX25L_XSPI_SUPPORT_SECURED_OTP
+
+//******************************************************************************
+
+#ifdef MEM_MX25L_XSPI_SUPPORT_WRSCUR
+
+uint8_t Mem_MX25L_XSPI_WriteSecurityRegister(void)	// WRSCUR from "MX25L6433F" v1.9 du 09/04/2025 p16 & 52 :
+{ // NotTested_Jp on 15/05/2025.
+	return Mem_MX25L_XSPI_SendThisCommand(MEM_MX25L_CMD_WRITE_SECURITY_REG);
+}
+
+#endif // MEM_MX25L_XSPI_SUPPORT_WRSCUR
 
 //******************************************************************************
 // Low level functions :

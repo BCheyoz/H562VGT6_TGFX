@@ -2,7 +2,16 @@
  * MX25L_XSPI.h
  *
  *  Created on: May 13, 2025
- *      Author: j.proux
+ *  Original Author: j.proux
+ *
+ *  Updated on: 16 May 2025
+ *  Updated by: j.proux
+ *  Copyright © ALDES 2025
+ *  LibVersion: v1.0.0
+ *
+ *  Pour intégrer facilement cette Librairie "MX25L_XSPI" dans un nouveau Projet :
+ *   -> Suivre la Procédure décrite dans "MX25L_XSPI\README.md"
+ *
  */
 
 #pragma once
@@ -10,12 +19,16 @@
 #define MX25L_XSPI_MX25L_XSPI_H_
 
 // Activation des Fonctions XSPI autorisées :
-#define MEM_MX25L_XSPI_SUPPORT_2_LINES
-#define MEM_MX25L_XSPI_SUPPORT_4_LINES
-//#define MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND
-//#define MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
-#define MEM_MX25L_XSPI_SUPPORT_CHIP_ERASE
-//#define MEM_MX25L_XSPI_SUPPORT_WRSCUR	//!\ WARNING : Writing SecurityRegister locks down the Secured OTP (LDSO) /!\ !
+//#define MEM_MX25L_XSPI_SUPPORT_2_LINES  		// Pour activer le support des fonctions en DualMode
+#define MEM_MX25L_XSPI_SUPPORT_4_LINES  		// Pour activer le support des fonctions en QuadMode
+//#define MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS 	// Pour activer le support des fonctions Read "Signature" (RES) & "Manufacturer & Device ID" (REMS)
+//#define MEM_MX25L_XSPI_SUPPORT_CHIP_ERASE		// Pour activer le support du ChipErase
+//#define MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND // Pour activer le support des fonctions Suspend & Resume Program
+//#define MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND	// Pour activer le support des fonctions Suspend & Resume Erase
+//#define MEM_MX25L_XSPI_SUPPORT_DEEP_POWER		// Pour activer le support des fonctions de Deep Power
+//#define MEM_MX25L_XSPI_SUPPORT_SECURED_OTP	// Pour activer le support des fonctions de Secure OTP
+//#define MEM_MX25L_XSPI_SUPPORT_DISCOVER_PARAMS // Pour activer le support de la fonction de DiscoverParameter
+//#define MEM_MX25L_XSPI_SUPPORT_WRSCUR			//!\ WARNING : Writing SecurityRegister locks down the Secured OTP (LDSO) /!\ !
 
 // Opérations de Configuration à effectuer lors de l'Init :
 #define MEM_MX25L_XSPI_CONFIG_QUAD_ENABLE_AT_INIT		1	// Vérif_Jp = OK sur MX25L6433F le 15/05/2025 pour Forçage à 0 ou 1.
@@ -29,16 +42,16 @@
 #define MEM_MX25L_XSPI_CS_INIT()		MEM_MX25L_XSPI_DEACTIVATE_CS()	// Force IDLE @ Init
 
 //// Si le ChipSelect n'était pas géré en automatique par le Périphérique :
-//#define MEM_MX25L_XSPI_CS_PORT			Flash_Qspi_CS_GPIO_Port	// GPIOE
+//#define MEM_MX25L_XSPI_CS_PORT  		Flash_Qspi_CS_GPIO_Port	// GPIOE
 //#define MEM_MX25L_XSPI_CS_PIN			Flash_Qspi_CS_Pin		// P11
 
-#define MEM_MX25L_XSPI_CS_ACTIVE		GPIO_PIN_RESET	// Active on Low
-#define MEM_MX25L_XSPI_CS_INACTIVE		GPIO_PIN_SET	// IDLE when High
+#define MEM_MX25L_XSPI_CS_ACTIVE		GPIO_PIN_RESET	// Memory is Active on Low
+#define MEM_MX25L_XSPI_CS_INACTIVE		GPIO_PIN_SET	// Memory is IDLE when High
 
 // Config des TimeOut pour les fonctions XSPI :
 #define MEM_MX25L_XSPI_SEND_TO			100U            // Send TimeOut : 100 x 1ms = 100ms
 #define MEM_MX25L_XSPI_RECV_TO			100U            // Receive TimeOut : 100 x 1ms = 100ms
-#define MEM_MX25L_XSPI_POLL_TO			1500U			// Polling TimeOut : 1500ms
+#define MEM_MX25L_XSPI_POLL_TO			1500U			// Polling TimeOut : 1500ms = 1.5s
 
 // Config des valeurs de retour XSPI :
 #define MEM_MX25L_XSPI_RETURN_SUCCESS	HAL_OK
@@ -54,11 +67,10 @@
 #define MEM_MX25L_XSPI_RETURN_FALSE 	(uint8_t)INT8_MIN	// 0x80
 
 // Config des Fonctions HAL pour XSPI :
-#define MEM_MX25L_XSPI_PERIF_SEND_COMMAND(pCmdStruct)	HAL_XSPI_Command(MEM_MX25L_XSPI_PERIF_HANDLE, pCmdStruct, MEM_MX25L_XSPI_SEND_TO)
-#define MEM_MX25L_XSPI_PERIF_SEND_STREAM(pTxBuf)		HAL_XSPI_Transmit(MEM_MX25L_XSPI_PERIF_HANDLE, pTxBuf, MEM_MX25L_XSPI_SEND_TO)
-#define MEM_MX25L_XSPI_PERIF_RECV_STREAM(pRxBuf)		HAL_XSPI_Receive( MEM_MX25L_XSPI_PERIF_HANDLE, pRxBuf, MEM_MX25L_XSPI_RECV_TO)
-//#define MEM_MX25L_XSPI_PERIF_AUTO_POLLING(pCmdStr,pCfg)	HAL_XSPI_AutoPolling(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg, MEM_MX25L_XSPI_POLL_TO)
-#define MEM_MX25L_XSPI_PERIF_AUTO_POLLING(pCfg) 		HAL_XSPI_AutoPolling(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg, MEM_MX25L_XSPI_POLL_TO)
+#define MEM_MX25L_XSPI_PERIF_SEND_COMMAND(pCmd) 	HAL_XSPI_Command(MEM_MX25L_XSPI_PERIF_HANDLE, pCmd, MEM_MX25L_XSPI_SEND_TO)
+#define MEM_MX25L_XSPI_PERIF_SEND_STREAM(pTxBuf)	HAL_XSPI_Transmit(MEM_MX25L_XSPI_PERIF_HANDLE, pTxBuf, MEM_MX25L_XSPI_SEND_TO)
+#define MEM_MX25L_XSPI_PERIF_RECV_STREAM(pRxBuf)	HAL_XSPI_Receive( MEM_MX25L_XSPI_PERIF_HANDLE, pRxBuf, MEM_MX25L_XSPI_RECV_TO)
+#define MEM_MX25L_XSPI_PERIF_AUTO_POLLING(pCfg) 	HAL_XSPI_AutoPolling(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg, MEM_MX25L_XSPI_POLL_TO)
 
 // MX25L Read Commands (from "MX25L6433F" v1.9 du 09/04/2025 p15) :
 #define MEM_MX25L_CMD_READ_DATA_BYTES       0x03 // READ : Normal Read (+3 bytes for 24bits Address)
@@ -104,15 +116,6 @@
 #define MEM_MX25L_CMD_SET_BURST_LENGTH      0xC0 // SBL : Set Burst Length
 #define MEM_MX25L_CMD_SET_BURST_LENGTH_ALT  0x77 // SBL : (other)Set Burst Length alternative command
 #define MEM_MX25L_CMD_NO_OPERATION          0x00 // NOP : No Operation
-
-// Sélection du ChipSelect (Manuel ou Auto) :
-#if defined(MEM_MX25L_XSPI_CS_PORT) && defined(MEM_MX25L_XSPI_CS_PIN)
-	#define MEM_MX25L_XSPI_ACTIVATE_CS()     HAL_GPIO_WritePin(MEM_MX25L_XSPI_CS_PORT, MEM_MX25L_XSPI_CS_PIN, MEM_MX25L_XSPI_CS_ACTIVE)
-	#define MEM_MX25L_XSPI_DEACTIVATE_CS()   HAL_GPIO_WritePin(MEM_MX25L_XSPI_CS_PORT, MEM_MX25L_XSPI_CS_PIN, MEM_MX25L_XSPI_CS_INACTIVE)
-#else // ! MEM_MX25L_XSPI_CS_PORT || ! MEM_MX25L_XSPI_CS_PIN
-	#define MEM_MX25L_XSPI_ACTIVATE_CS()     // Nothing to Do !
-	#define MEM_MX25L_XSPI_DEACTIVATE_CS()   // Nothing to Do !
-#endif // MEM_MX25L_XSPI_CS_PORT & MEM_MX25L_XSPI_CS_PIN
 
 #ifdef __cplusplus
 extern "C" {
@@ -186,6 +189,15 @@ uint8_t Mem_MX25L_XSPI_DoSoftwareReset(void); // RSTEN & RST
 uint8_t MemMX25L_XSPI_SetBurstLength(uint8_t newBurstLength); // SBL
 uint8_t Mem_MX25L_XSPI_ReadDiscoverableParameter(uint32_t baseAdr_24bits, uint16_t nbBytes2Read, void *pReadBuf); // RDSFDP
 #define Mem_MX25L_XSPI_WriteSecurityRegister	Mem_MX25L_XSPI_NoOperation // (Voluntarily discarded by Jp on 15/05/2025)
+
+// Sélection du ChipSelect (Manuel ou Auto) :
+#if defined(MEM_MX25L_XSPI_CS_PORT) && defined(MEM_MX25L_XSPI_CS_PIN)
+	#define MEM_MX25L_XSPI_ACTIVATE_CS()     HAL_GPIO_WritePin(MEM_MX25L_XSPI_CS_PORT, MEM_MX25L_XSPI_CS_PIN, MEM_MX25L_XSPI_CS_ACTIVE)
+	#define MEM_MX25L_XSPI_DEACTIVATE_CS()   HAL_GPIO_WritePin(MEM_MX25L_XSPI_CS_PORT, MEM_MX25L_XSPI_CS_PIN, MEM_MX25L_XSPI_CS_INACTIVE)
+#else // ! MEM_MX25L_XSPI_CS_PORT || ! MEM_MX25L_XSPI_CS_PIN
+	#define MEM_MX25L_XSPI_ACTIVATE_CS()     // Nothing to Do !
+	#define MEM_MX25L_XSPI_DEACTIVATE_CS()   // Nothing to Do !
+#endif // MEM_MX25L_XSPI_CS_PORT & MEM_MX25L_XSPI_CS_PIN
 
 // Redirections de Disponibilité 4_Lines -> Read 2_Line & Write 1_Line :
 #ifndef MEM_MX25L_XSPI_SUPPORT_4_LINES
