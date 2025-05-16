@@ -48,7 +48,6 @@
 #define MEM_MX25L_BUILD_XSPI_CMD_DATA(XSPI_Cmd,Mode,Length, DTR)			XSPI_Cmd.DataMode = Mode; XSPI_Cmd.DataLength = Length; XSPI_Cmd.DataDTRMode = DTR
 #define MEM_MX25L_BUILD_XSPI_CMD_DATA_NO_DTR(XSPI_Cmd,Mode,Length)			XSPI_Cmd.DataMode = Mode; XSPI_Cmd.DataLength = Length
 #define MEM_MX25L_BUILD_XSPI_CMD_DUMMY(XSPI_Cmd,Val)						XSPI_Cmd.DummyCycles = Val
-//#define MEM_MX25L_BUILD_XSPI_CMD_DUAL_RATE(XSPI_Cmd,Mode,Val)		XSPI_Cmd.DdrMode = Mode; XSPI_Cmd.DdrHoldHalfCycle = Val
 #define MEM_MX25L_BUILD_XSPI_CMD_DQS(XSPI_Cmd,Val)							XSPI_Cmd.DQSMode = Val
 #define MEM_MX25L_BUILD_XSPI_CMD_SIOO(XSPI_Cmd,Mode)						XSPI_Cmd.SIOOMode = Mode
 
@@ -61,7 +60,6 @@
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DATA(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DATA_NO_DTR(XSPI_Cmd, HAL_XSPI_DATA_NONE, 0)
 #define MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(XSPI_Cmd,Length)				MEM_MX25L_BUILD_XSPI_CMD_DATA_NO_DTR(XSPI_Cmd, HAL_XSPI_DATA_1_LINE, Length)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DUMMY(XSPI_Cmd, 0)
-//#define MEM_MX25L_BUILD_XSPI_CMD_NO_DDR(XSPI_Cmd)			MEM_MX25L_BUILD_XSPI_CMD_DUAL_RATE(XSPI_Cmd, XSPI_DDR_MODE_DISABLE, XSPI_DDR_HHC_ANALOG_DELAY)
 #define MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(XSPI_Cmd)							MEM_MX25L_BUILD_XSPI_CMD_DQS(XSPI_Cmd, HAL_XSPI_DQS_DISABLE)
 #define MEM_MX25L_BUILD_XSPI_CMD_SIOO_EACH_CMD(XSPI_Cmd)					MEM_MX25L_BUILD_XSPI_CMD_SIOO(XSPI_Cmd, HAL_XSPI_SIOO_INST_EVERY_CMD)
 #define MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD(XSPI_Cmd)					MEM_MX25L_BUILD_XSPI_CMD_SIOO(XSPI_Cmd, HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD)
@@ -450,7 +448,7 @@ uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy() // from "MX25L6433F" v1.9 du 09/04/20
 	MEM_MX25L_BUILD_XSPI_CMD_DATA_1_LINE(sCommand, 0);
 	MEM_MX25L_BUILD_XSPI_CMD_NO_DUMMY(sCommand);
 	MEM_MX25L_BUILD_XSPI_CMD_NO_DQS(sCommand);
-	MEM_MX25L_BUILD_XSPI_CMD_SIOO_EACH_CMD(sCommand);
+	MEM_MX25L_BUILD_XSPI_CMD_SIOO_EACH_CMD(sCommand);	// Ne marche pas en MEM_MX25L_BUILD_XSPI_CMD_SIOO_FIRST_CMD !
 
 	MEM_MX25L_XSPI_CLEAR_STRUCT(sConfig);
 	MEM_MX25L_BUILD_XSPI_CMP_PARAMS(sConfig, HAL_XSPI_MATCH_MODE_AND, MEM_MX25L_XSPI_RDSR_WIP, 0x00); // OK si bit0 "WIP" ("Write in Progress") = 0
@@ -490,7 +488,7 @@ uint8_t Mem_MX25L_XSPI_ReadConfigRegister(uint8_t *pConfigRegister) // RDCR from
 //******************************************************************************
 
 uint8_t Mem_MX25L_XSPI_WriteStatusRegister(uint8_t newStatusRegister) // WRSR from "MX25L6433F" v1.9 du 09/04/2025 p16 & 25 :
-{
+{ // NonTesté_Jp au 16/05/2025.
 	uint8_t tmpNewStatusRegister = newStatusRegister; // Variable intermédiaire pour accès au pointeur
     return Mem_MX25L_XSPI_WriteStatusConfigRegisterArray(&tmpNewStatusRegister, sizeof(tmpNewStatusRegister));
 }
@@ -498,7 +496,7 @@ uint8_t Mem_MX25L_XSPI_WriteStatusRegister(uint8_t newStatusRegister) // WRSR fr
 //******************************************************************************
 
 uint8_t Mem_MX25L_XSPI_WriteStatusConfigRegister(uint8_t newStatusRegister, uint8_t newConfigRegister) // WRSR from "MX25L6433F" v1.9 du 09/04/2025 p16 & 25 :
-{
+{ // NonTesté_Jp au 16/05/2025.
     uint8_t TxArray[] = { newStatusRegister, newConfigRegister }; // StatusRegister puis ConfigRegister
     return Mem_MX25L_XSPI_WriteStatusConfigRegisterArray(TxArray, sizeof(TxArray));
 }
@@ -506,7 +504,7 @@ uint8_t Mem_MX25L_XSPI_WriteStatusConfigRegister(uint8_t newStatusRegister, uint
 //******************************************************************************
 
 uint8_t Mem_MX25L_XSPI_WriteStatusConfigRegisterArray(uint8_t* pNewStatusConfigRegister, uint8_t newStatusConfigRegisterSize) // WRSR from "MX25L6433F" v1.9 du 09/04/2025 p16 & 25 :
-{
+{ // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
 #define MIN_STATUS_CONFIG_REGISTER_SIZE	1
 #define MAX_STATUS_CONFIG_REGISTER_SIZE	2
 	if(newStatusConfigRegisterSize > MAX_STATUS_CONFIG_REGISTER_SIZE) { newStatusConfigRegisterSize = MAX_STATUS_CONFIG_REGISTER_SIZE; }
@@ -726,7 +724,7 @@ uint8_t Mem_MX25L_XSPI_ReadDataBytes_QuadRead(uint32_t baseAdr_24bits, uint16_t 
 #ifdef MEM_MX25L_XSPI_SUPPORT_4_LINES
 
 uint8_t Mem_MX25L_XSPI_ReadDataBytes_FourRead(uint32_t baseAdr_24bits, uint16_t nbBytes2Read, void *pReadBuf) // 4READ from "MX25L6433F" v1.9 du 09/04/2025 p15, 33 & Table 7 p24 :
-{
+{ // Vérif_Jp = OK sur MX25L6433F le 16/05/2025.
 
 #if 1 == MEM_MX25L_XSPI_CONFIG_DUMMY_CYCLES_AT_INIT
 	#define FOUR_READ_DUMMY	10
@@ -839,32 +837,6 @@ uint8_t Mem_MX25L_XSPI_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, u
             sCommand.Address = baseAdr_24bits;
             sCommand.DataLength = thisBlocSize;
 
-            if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_WriteEnable())
-            {
-                MEM_MX25L_XSPI_ACTIVATE_CS();
-
-                if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))	// Envoi Commande + Adresse 24 bits
-                {
-                	if(HAL_OK != MEM_MX25L_XSPI_PERIF_SEND_STREAM(pData)) { mayStop = 1; } // Envoi DataBytes
-                } else { mayStop = 1; } // Erreur envoi Commande & Adresse => Imposible de continuer !
-
-                MEM_MX25L_XSPI_DEACTIVATE_CS();
-
-                if(0 == mayStop) // Si tout est OK jusqu'à présent :
-                {
-                	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_Wait4WriteNotBusy()) // Attente Fin d'exécution
-                	{
-                        // Write is OK :
-                        baseAdr_24bits  += thisBlocSize;
-                        pData           += thisBlocSize;
-                        nbBytes2Write   -= thisBlocSize;
-                	} else { mayStop = 1; } // Imposible de continuer !
-                }
-            } else { mayStop = 1; }	// Imposible de continuer !
-
-            if(0 != mayStop) { break; } // S'il y a 1 erreur => abandoner l'écriture !
-
-/*
             if(MEM_MX25L_XSPI_RETURN_SUCCESS != Mem_MX25L_XSPI_WriteEnable()) { mayStop = 1; break; } // Arrêt immédiat, mais on peut faire le Break parce que CS n'est pas encore actif !
 
             MEM_MX25L_XSPI_ACTIVATE_CS();
@@ -883,7 +855,6 @@ uint8_t Mem_MX25L_XSPI_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, u
             baseAdr_24bits  += thisBlocSize;
             pData           += thisBlocSize;
             nbBytes2Write   -= thisBlocSize;
-*/
     	}
 
         // Boucle terminée :
@@ -927,32 +898,6 @@ uint8_t Mem_MX25L_XSPI_WriteArray_QuadWrite(uint32_t baseAdr_24bits, void* pArra
             sCommand.Address = baseAdr_24bits;
             sCommand.DataLength = thisBlocSize;
 
-            if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_WriteEnable())
-            {
-                MEM_MX25L_XSPI_ACTIVATE_CS();
-
-                if(HAL_OK == MEM_MX25L_XSPI_PERIF_SEND_COMMAND(&sCommand))	// Envoi Commande + Adresse 24 bits
-                {
-                	if(HAL_OK != MEM_MX25L_XSPI_PERIF_SEND_STREAM(pData)) { mayStop = 1; } // Envoi DataBytes
-                } else { mayStop = 1; } // Erreur envoi Commande & Adresse => Imposible de continuer !
-
-                MEM_MX25L_XSPI_DEACTIVATE_CS();
-
-                if(0 == mayStop) // Si tout est OK jusqu'à présent :
-                {
-                	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_Wait4WriteNotBusy()) // Attente Fin d'exécution
-                	{
-                        // Write is OK :
-                        baseAdr_24bits  += thisBlocSize;
-                        pData           += thisBlocSize;
-                        nbBytes2Write   -= thisBlocSize;
-                	} else { mayStop = 1; } // Imposible de continuer !
-                }
-            } else { mayStop = 1; }	// Imposible de continuer !
-
-            if(0 != mayStop) { break; } // S'il y a 1 erreur => abandoner l'écriture !
-
-/*
             if(MEM_MX25L_XSPI_RETURN_SUCCESS != Mem_MX25L_XSPI_WriteEnable()) { mayStop = 1; break; } // Arrêt immédiat, mais on peut faire le Break parce que CS n'est pas encore actif !
 
             MEM_MX25L_XSPI_ACTIVATE_CS();
@@ -971,7 +916,6 @@ uint8_t Mem_MX25L_XSPI_WriteArray_QuadWrite(uint32_t baseAdr_24bits, void* pArra
             baseAdr_24bits  += thisBlocSize;
             pData           += thisBlocSize;
             nbBytes2Write   -= thisBlocSize;
-*/
     	}
 
         // Boucle terminée :
