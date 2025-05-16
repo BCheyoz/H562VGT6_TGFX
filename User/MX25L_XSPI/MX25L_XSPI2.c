@@ -88,22 +88,8 @@ static uint8_t Mem_MX25L_XSPI_SendCmdAndArray(uint8_t Cmd2Send, void* pArray2Sen
 static uint8_t Mem_MX25L_XSPI_SendCmdReceiveArray(uint8_t Cmd2Send, uint16_t nbBytes2Read, void* pArray2Receive);
 static uint8_t Mem_MX25L_XSPI_SendWriteCmdAndAddress(uint8_t WriteCmd2Send, uint32_t baseAdr_24bits);
 
-typedef union {
-	uint8_t U8[4];
-	uint16_t U16[2];
-	uint32_t U32;
-} tU8_16_32;
-
-#define TestBuf_Size	4096
-tU8_16_32 TestBuf[TestBuf_Size] = {0};
-
 void Mem_MX25L_XSPI_Init(void)
 {
-	// Variables Temporaires :
-	uint8_t tmpU24[3];
-	uint8_t retVal;
-	uint8_t tmpU8;
-
 	// Init Hardware :
 	MEM_MX25L_XSPI_CS_INIT();
 //	HAL_GPIO_WritePin(GPIOA, Flash_Qspi_IO3_Pin|Flash_Qspi_IO2_Pin, GPIO_PIN_SET); // Tant qu'on est en mode DUAL uniquement !
@@ -112,213 +98,6 @@ void Mem_MX25L_XSPI_Init(void)
     // Init Software :
 	Mem_MX25L_XSPI_UpdateConfigMemory();
 //	Mem_MX25L_XSPI_DoSoftwareReset();	// Si besoin de DEBUG de la Mémoire XSPI !
-
-	MX25L_XSPI_HALT_IF_DEBUG();
-
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_ReadConfigRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_ReadSecurityRegister(&tmpU8);
-
-
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_ReadConfigRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_ReadSecurityRegister(&tmpU8);
-
-//	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-//	retVal = Mem_MX25L_XSPI_IsWriteBusy();
-//	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
-	retVal = Mem_MX25L_XSPI_ReadConfigRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_ReadIdRegister(tmpU24); // OK
-	retVal = Mem_MX25L_XSPI_ReadSecurityRegister(&tmpU8);
-//	retVal = Mem_MX25L_XSPI_ReadElectronicID(&tmpU8); // OK
-//	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(0, tmpU24);// OK
-//	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(1, tmpU24);// OK
-//	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(2, tmpU24);// OK
-//	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(3, tmpU24);// OK
-
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_WriteEnable();
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-//	retVal = Mem_MX25L_XSPI_IsWriteBusy();
-	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
-
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_XSPI_WriteDisable();
-	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-//	retVal = Mem_MX25L_XSPI_IsWriteBusy();
-	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
-
-	// Test de Read Memory :
-	uint32_t adr = 0; uint16_t nb2Read = TestBuf_Size * sizeof(tU8_16_32); uint16_t readMode = 0;
-	uint32_t adrMax = 8UL * 1024UL * 1024UL; uint32_t nbU32Virgin = 0; uint32_t nbU32NotVirgin = 0; uint32_t nbU32AdrOK = 0;
-	uint8_t curReadMode = 0;
-	for(; adr < adrMax;)
-	{
-		switch(readMode)
-		{
-		case 1:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
-			break;
-		case 2:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes_DualRead(adr, nb2Read, TestBuf);
-			break;
-		case 3:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes_TwoRead(adr, nb2Read, TestBuf);
-			break;
-		case 4:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes_QuadRead(adr, nb2Read, TestBuf);
-			break;
-		case 5:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes_FourRead(adr, nb2Read, TestBuf);
-			break;
-		default:
-		case 0:
-			retVal = Mem_MX25L_XSPI_ReadDataBytes(adr, nb2Read, TestBuf);
-			break;
-		}
-		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
-		{
-			for(int i = 0; i < (nb2Read/4); i++)
-			{
-				if(UINT32_MAX == TestBuf[i].U32)
-				{
-					if(1 != curReadMode)
-					{
-						curReadMode = 1;
-						nbU32Virgin = 0;
-					}
-					nbU32Virgin++;
-				} else if((adr + i) == TestBuf[i].U32)
-				{
-					if(2 != curReadMode)
-					{
-						curReadMode = 2;
-						nbU32AdrOK = 0;
-					}
-					nbU32AdrOK++;
-				} else {
-					MX25L_XSPI_HALT_IF_DEBUG();
-					nbU32NotVirgin++;
-				}
-			}
-		} else {
-			MX25L_XSPI_HALT_IF_DEBUG();
-		}
-		adr += nb2Read;
-	}
-
-	MX25L_XSPI_HALT_IF_DEBUG();
-
-	// Test de Erase Sector :
-	uint32_t eraseStep = 4096;
-	adr = 0; uint32_t nbU32Erased = 0; uint32_t nbU32NotErased = 0; uint16_t eraseMode = 0;
-	for(; adr < adrMax;)
-	{
-		switch(eraseMode)
-		{
-		case 1:
-			retVal = Mem_MX25L_XSPI_BlocErase32K(adr);
-			break;
-		case 2:
-			retVal = Mem_MX25L_XSPI_BlockErase64K(adr);
-			break;
-		case 0:
-		default:
-			retVal = Mem_MX25L_XSPI_SectorErase4K(adr);
-			break;
-		}
-		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
-		{
-			nbU32Erased++;
-		} else {
-			MX25L_XSPI_HALT_IF_DEBUG();
-			nbU32NotErased++;
-		}
-		adr += eraseStep;
-	}
-
-	MX25L_XSPI_HALT_IF_DEBUG();
-
-	// Test du Chip Erase :
-	retVal = Mem_MX25L_XSPI_ChipErase();
-	if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
-	{
-		MX25L_XSPI_HALT_IF_DEBUG();
-	} else if(MEM_MX25L_XSPI_RETURN_BUSY == retVal)
-	{
-		retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
-		retVal = Mem_MX25L_XSPI_IsWriteBusy();
-		retVal = Mem_MX25L_XSPI_Wait4WriteNotBusy(); // Attente Fin d'exécution
-	} else {
-		MX25L_XSPI_HALT_IF_DEBUG();
-	}
-
-	MX25L_XSPI_HALT_IF_DEBUG();
-
-	// Test de Write Memory :
-	uint16_t nb2Write = TestBuf_Size * sizeof(tU8_16_32); uint16_t writeMode = 0;
-	adr = 0; uint32_t nbU32Written = 0; uint32_t nbU32NotWritten = 0;
-	for(; adr < adrMax;)
-	{
-		for(int i = 0; i < (nb2Write/4); i++)
-		{
-			TestBuf[i].U32 = adr + i;
-		}
-		switch(writeMode)
-		{
-		case 1:
-			retVal = Mem_MX25L_XSPI_WriteArray_QuadWrite(adr, TestBuf, nb2Write);
-			break;
-		default:
-		case 0:
-			retVal = Mem_MX25L_XSPI_WriteArray(adr, TestBuf, nb2Write);
-			break;
-		}
-		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
-		{
-			nbU32Written++;
-		} else {
-			MX25L_XSPI_HALT_IF_DEBUG();
-			nbU32NotWritten++;
-		}
-		adr += nb2Write;
-	}
-
-	MX25L_XSPI_HALT_IF_DEBUG();
-
-	// Test Suspend & Resume Program :
-#ifdef MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND
-	retVal = Mem_MX25L_XSPI_SuspendProgram();
-	retVal = Mem_MX25L_XSPI_ResumeProgram();
-#endif // MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND
-
-	// Test Suspend & Resume Erase :
-#ifdef MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
-	retVal = Mem_MX25L_XSPI_SuspendErase();
-	retVal = Mem_MX25L_XSPI_ResumeErase();
-#endif // MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
-
-	// Test Deep Power :
-	retVal = Mem_MX25L_XSPI_EnterDeepPowerDown();	// DP
-	retVal = Mem_MX25L_XSPI_ReleaseFromDeepPower();	// RDP
-
-	// Test Secure OTP :
-	retVal = Mem_MX25L_XSPI_EnterSecuredOTP();	// ENSO
-	retVal = Mem_MX25L_XSPI_ExitSecuredOTP();	// EXSO
-
-	// Test Misc :
-	retVal = Mem_MX25L_XSPI_NoOperation(); // NOP
-	tmpU8 = 0;	// 0 => Wrap 8-byte
-	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
-	tmpU8 = 3;	// 3 => Wrap around 64-byte
-	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
-	tmpU8 = 0x10; // 1xh => Disable Wrap
-	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
-
-	adr = 0;
-	retVal = Mem_MX25L_XSPI_ReadDiscoverableParameter(adr, nb2Read, TestBuf); // RDSFDP
-
-	MX25L_XSPI_HALT_IF_DEBUG();
 }
 
 //******************************************************************************
@@ -1305,6 +1084,223 @@ uint8_t Mem_MX25L_XSPI_SendWriteCmdAndAddress(uint8_t WriteCmd2Send, uint32_t ba
 
 	return returnValue;
 }
+
+//******************************************************************************
+
+/* Variables Spéciales & Temporaires pour Test de la Mémoire XSPI :
+typedef union {
+	uint8_t U8[4];
+	uint16_t U16[2];
+	uint32_t U32;
+} tU8_16_32;
+
+#define TestBuf_Size	4096
+tU8_16_32 TestBuf[TestBuf_Size] = {0};
+
+uint8_t tmpU24[3];
+uint8_t retVal;
+uint8_t tmpU8;
+
+void Mem_MX25L_XSPI_DoTestMemory(void)
+{
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_ReadConfigRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_ReadSecurityRegister(&tmpU8);
+
+	retVal = Mem_MX25L_XSPI_ReadIdRegister(tmpU24); // OK
+	retVal = Mem_MX25L_XSPI_ReadElectronicID(&tmpU8); // OK
+	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(0, tmpU24);// OK
+	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(1, tmpU24);// OK
+	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(2, tmpU24);// OK
+	retVal = Mem_MX25L_XSPI_ReadManufacturerAndDeviceID(3, tmpU24);// OK
+
+	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_WriteEnable();
+	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
+
+	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_WriteDisable();
+	retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_XSPI_IsWriteEnabled();
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	// Test de Read Memory :
+	uint32_t adr = 0; uint16_t nb2Read = TestBuf_Size * sizeof(tU8_16_32); uint16_t readMode = 0;
+	uint32_t adrMax = 8UL * 1024UL * 1024UL; uint32_t nbU32Virgin = 0; uint32_t nbU32NotVirgin = 0; uint32_t nbU32AdrOK = 0;
+	uint8_t curReadMode = 0;
+	for(; adr < adrMax;)
+	{
+		switch(readMode)
+		{
+		case 1:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
+			break;
+		case 2:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes_DualRead(adr, nb2Read, TestBuf);
+			break;
+		case 3:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes_TwoRead(adr, nb2Read, TestBuf);
+			break;
+		case 4:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes_QuadRead(adr, nb2Read, TestBuf);
+			break;
+		case 5:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes_FourRead(adr, nb2Read, TestBuf);
+			break;
+		default:
+		case 0:
+			retVal = Mem_MX25L_XSPI_ReadDataBytes(adr, nb2Read, TestBuf);
+			break;
+		}
+		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
+		{
+			for(int i = 0; i < (nb2Read/4); i++)
+			{
+				if(UINT32_MAX == TestBuf[i].U32)
+				{
+					if(1 != curReadMode)
+					{
+						curReadMode = 1;
+						nbU32Virgin = 0;
+					}
+					nbU32Virgin++;
+				} else if((adr + i) == TestBuf[i].U32)
+				{
+					if(2 != curReadMode)
+					{
+						curReadMode = 2;
+						nbU32AdrOK = 0;
+					}
+					nbU32AdrOK++;
+				} else {
+					MX25L_XSPI_HALT_IF_DEBUG();
+					nbU32NotVirgin++;
+				}
+			}
+		} else {
+			MX25L_XSPI_HALT_IF_DEBUG();
+		}
+		adr += nb2Read;
+	}
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	// Test de Erase Sector :
+	uint32_t eraseStep = 4096;
+	adr = 0; uint32_t nbU32Erased = 0; uint32_t nbU32NotErased = 0; uint16_t eraseMode = 0;
+	for(; adr < adrMax;)
+	{
+		switch(eraseMode)
+		{
+		case 1:
+			retVal = Mem_MX25L_XSPI_BlocErase32K(adr);
+			break;
+		case 2:
+			retVal = Mem_MX25L_XSPI_BlockErase64K(adr);
+			break;
+		case 0:
+		default:
+			retVal = Mem_MX25L_XSPI_SectorErase4K(adr);
+			break;
+		}
+		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
+		{
+			nbU32Erased++;
+		} else {
+			MX25L_XSPI_HALT_IF_DEBUG();
+			nbU32NotErased++;
+		}
+		adr += eraseStep;
+	}
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	// Test du Chip Erase :
+	retVal = Mem_MX25L_XSPI_ChipErase();
+	if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
+	{
+		MX25L_XSPI_HALT_IF_DEBUG();
+	} else if(MEM_MX25L_XSPI_RETURN_BUSY == retVal)
+	{
+		retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+		retVal = Mem_MX25L_XSPI_IsWriteBusy();
+		retVal = Mem_MX25L_XSPI_Wait4WriteNotBusy(); // Attente Fin d'exécution
+	} else {
+		MX25L_XSPI_HALT_IF_DEBUG();
+	}
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	// Test de Write Memory :
+	uint16_t nb2Write = TestBuf_Size * sizeof(tU8_16_32); uint16_t writeMode = 0;
+	adr = 0; uint32_t nbU32Written = 0; uint32_t nbU32NotWritten = 0;
+	for(; adr < adrMax;)
+	{
+		for(int i = 0; i < (nb2Write/4); i++)
+		{
+			TestBuf[i].U32 = adr + i;
+		}
+		switch(writeMode)
+		{
+		case 1:
+			retVal = Mem_MX25L_XSPI_WriteArray_QuadWrite(adr, TestBuf, nb2Write);
+			break;
+		default:
+		case 0:
+			retVal = Mem_MX25L_XSPI_WriteArray(adr, TestBuf, nb2Write);
+			break;
+		}
+		if(MEM_MX25L_XSPI_RETURN_SUCCESS == retVal)
+		{
+			nbU32Written++;
+		} else {
+			MX25L_XSPI_HALT_IF_DEBUG();
+			nbU32NotWritten++;
+		}
+		adr += nb2Write;
+	}
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+
+	// Test Suspend & Resume Program :
+#ifdef MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND
+	retVal = Mem_MX25L_XSPI_SuspendProgram();
+	retVal = Mem_MX25L_XSPI_ResumeProgram();
+#endif // MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND
+
+	// Test Suspend & Resume Erase :
+#ifdef MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
+	retVal = Mem_MX25L_XSPI_SuspendErase();
+	retVal = Mem_MX25L_XSPI_ResumeErase();
+#endif // MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND
+
+	// Test Deep Power :
+	retVal = Mem_MX25L_XSPI_EnterDeepPowerDown();	// DP
+	retVal = Mem_MX25L_XSPI_ReleaseFromDeepPower();	// RDP
+
+	// Test Secure OTP :
+	retVal = Mem_MX25L_XSPI_EnterSecuredOTP();	// ENSO
+	retVal = Mem_MX25L_XSPI_ExitSecuredOTP();	// EXSO
+
+	// Test Misc :
+	retVal = Mem_MX25L_XSPI_NoOperation(); // NOP
+	tmpU8 = 0;	// 0 => Wrap 8-byte
+	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
+	tmpU8 = 3;	// 3 => Wrap around 64-byte
+	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
+	tmpU8 = 0x10; // 1xh => Disable Wrap
+	retVal = MemMX25L_XSPI_SetBurstLength(tmpU8); // SBL
+
+	adr = 0;
+	retVal = Mem_MX25L_XSPI_ReadDiscoverableParameter(adr, nb2Read, TestBuf); // RDSFDP
+
+	MX25L_XSPI_HALT_IF_DEBUG();
+}
+//*/
 
 //******************************************************************************
 
