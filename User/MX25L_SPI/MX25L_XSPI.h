@@ -83,8 +83,9 @@ uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint3
 uint8_t MX25_xspi_FourPageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);// 4PP 38h
 
 uint8_t MX25L_xspi_DeepPowerDown(void);//todo DP B9h
-uint8_t MX25_xspi_ReadElecSign(void *Value);//todo RES ABh
-uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);//todo REMS 90h
+uint8_t MX25L_xspi_ReleaseDeepPowerDown(void);//todo RDP ABh
+uint8_t MX25_xspi_ReadElecSign(void *pID_8bits);// RES ABh
+uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);// REMS 90h
 
 /*
  *  Table 9 ID Definitions : Configuration Register
@@ -108,7 +109,7 @@ uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);//todo REMS 9
 uint8_t MX25L_xspi_EnterSecuredOTP(void);//todo ENSO B1h
 uint8_t MX25L_xspi_ExitSecuredOTP(void);//todo EXSO C1h
 
-uint8_t MX25_xspi_ReadSecurityReg(void *pID_8bits);// RDSCUR 2Bh
+uint8_t MX25_xspi_ReadSecurityReg(void *pID_16bits);// RDSCUR 2Bh
 
 /*
 *  Table 10 : Security Register Definition
