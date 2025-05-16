@@ -63,15 +63,14 @@ uint8_t MX25_xspi_ReadConfigReg(void *pID_8bits);// RDCR
  *
  */
 
-uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue);//todo WRSR 01h
-uint8_t MX25_xspi_WriteStatusReg2bytes(uint8_t StatusRegisterValue1, uint8_t StatusRegisterValue2);
+uint8_t MX25_xspi_WriteStatusReg(uint8_t StatusRegisterValue);// WRSR 01h
 
 uint8_t MX25_xspi_ReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);// READ 03h
-uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo FAST_READ 0Bh
-uint8_t MX25_xspi_DualReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo DREAD 3Bh
-uint8_t MX25_xspi_TwoReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo 2READ BBh
-uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo QREAD 6Bh
-uint8_t MX25_xspi_FourReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);//todo 4READ EBh
+uint8_t MX25_xspi_FastReadDataBytes(uint32_t Address, void *Value, uint32_t nbBytes2Read);// FAST_READ 0Bh
+uint8_t MX25_xspi_DualReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// DREAD 3Bh
+uint8_t MX25_xspi_TwoReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// 2READ BBh
+uint8_t MX25_xspi_QuadReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// QREAD 6Bh
+uint8_t MX25_xspi_FourReadMode(uint32_t Address, void *Value, uint32_t nbBytes2Read);// 4READ EBh
 
 uint8_t MX25_xspi_BurstRead(void *Value, uint32_t nbBytes2Read);//todo SBL Read or write ? C0h or 77h
 
@@ -81,11 +80,12 @@ uint8_t MX25L_xspi_BlocErase32K(uint32_t baseAdr_24bits);// BE32K 52h
 uint8_t MX25L_xspi_ChipErase(void);// CE 60h or C7h
 
 uint8_t MX25_xspi_PageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);// PP 02h
-uint8_t MX25_xspi_FourPageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);//todo 4PP 38h
+uint8_t MX25_xspi_FourPageProgram(uint32_t baseAdr_24bits, void *pArray2Write, uint32_t nbBytes2Write);// 4PP 38h
 
 uint8_t MX25L_xspi_DeepPowerDown(void);//todo DP B9h
-uint8_t MX25_xspi_ReadElecSign(void *Value);//todo RES ABh
-uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);//todo REMS 90h
+uint8_t MX25L_xspi_ReleaseDeepPowerDown(void);//todo RDP ABh
+uint8_t MX25_xspi_ReadElecSign(void *pID_8bits);// RES ABh
+uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);// REMS 90h
 
 /*
  *  Table 9 ID Definitions : Configuration Register
@@ -109,7 +109,7 @@ uint8_t MX25_xspi_ReadElecManufacturerIdDeviceId(void *pID_16bits);//todo REMS 9
 uint8_t MX25L_xspi_EnterSecuredOTP(void);//todo ENSO B1h
 uint8_t MX25L_xspi_ExitSecuredOTP(void);//todo EXSO C1h
 
-uint8_t MX25_xspi_ReadSecurityReg(void *pID_8bits);//todo RDSCUR 2Bh
+uint8_t MX25_xspi_ReadSecurityReg(void *pID_16bits);// RDSCUR 2Bh
 
 /*
 *  Table 10 : Security Register Definition
@@ -151,8 +151,8 @@ uint8_t MX25_xspi_ReadSerialFlashDiscovParameter(void *pID_8bits);//todo RDSFDP 
 // added functions
 uint8_t MX25_xspi_WriteStatusAndConfigReg(uint8_t StatusRegisterValue, uint8_t ConfigRegisterValue);
 
-uint8_t MX25L_xspi_Enable_QE_Bit(void);
-uint8_t MX25L_xspi_Disable_QE_Bit(void);
+uint8_t MX25L_xspi_Enable_QuadMode(void);
+uint8_t MX25L_xspi_Disable_QuadMode(void);
 
 void MX25L_xspi_Exit_HPM(void);// hardware protection mode
 void MX25L_xspi_DisableAllBlockProtection(void);// d blocks protection

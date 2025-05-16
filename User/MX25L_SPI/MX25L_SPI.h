@@ -84,8 +84,11 @@
 #define MEM_MX25L_ACTIVATE_CS()     HAL_GPIO_WritePin(MEM_MX25L_CS_PORT, MEM_MX25L_CS_PIN, MEM_MX25L_CS_ACTIVE)
 #define MEM_MX25L_DEACTIVATE_CS()   HAL_GPIO_WritePin(MEM_MX25L_CS_PORT, MEM_MX25L_CS_PIN, MEM_MX25L_CS_INACTIVE)
 
-#define MEM_MX25L_DEACTIVATE_SIO2()   HAL_GPIO_WritePin(MEM_MX25l_IO2_PORT, MEM_MX25l_IO2_PIN, GPIO_PIN_SET)
+#define MEM_MX25L_DEACTIVATE_SIO2()   HAL_GPIO_WritePin(MEM_MX25l_IO2_PORT, MEM_MX25l_IO2_PIN, GPIO_PIN_RESET)
 #define MEM_MX25L_ACTIVATE_SIO2()   HAL_GPIO_WritePin(MEM_MX25l_IO2_PORT, MEM_MX25l_IO2_PIN, GPIO_PIN_RESET)// Active Low
+
+#define QE_BIT_MASK 0x40
+#define DC_BIT_MASK 0x40
 
 #ifdef OCTOSPI
 
@@ -103,6 +106,8 @@
 #define MEM_MX25L_CMD_READ_SECURITY_REG     0x2B // RDSCUR : Read Security Register
 #define MEM_MX25L_CMD_READ_DATA_BYTES       0x03 // READ : Normal Read
 #define MEM_MX25L_CMD_FAST_READ_DATA_BYTES  0x0B // FAST_READ : Fast Read
+#define MEM_MX25L_CMD_DUAL_READ_DATA_BYTES  0x3B // DREAD : Dual Read
+#define MEM_MX25L_CMD_TWO_READ_DATA_BYTES   0xBB // TREAD : Two Read
 #define MEM_MX25L_CMD_READ_ELECTRONIC_ID    0xAB // RES : Read Electronic ID
 #define MEM_MX25L_CMD_READ_MFG_DEV_ID       0x90 // REMS : Read Electronic Manufacturer & device ID
 #define MEM_MX25L_CMD_FOUR_READ_DATA_BYTES  0xEB // 4READ : Normal Read
@@ -119,7 +124,6 @@
 #define MEM_MX25L_CMD_CHIP_ERASE            0x60 // CE : Chip Erase
 #define MEM_MX25L_CMD_PAGE_PROGRAM          0x02 // PP -> Attention Page Boundary = 256 Bytes !
 #define MEM_MX25L_CMD_FOURPAGE_PROGRAM      0x38 // 4PP -> Attention Page Boundary = 256 Bytes !
-#define MEM_MX25L_CMD_QUADPAGE_PROGRAM      0x38 // QPP -> Attention Page Boundary = 256 Bytes !
 
 // MX25L Misc Commands :
 #define MEM_MX25L_CMD_NO_OPERATION          0x00 // NOP : No Operation
