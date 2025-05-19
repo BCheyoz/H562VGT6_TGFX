@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.143
+// Model version                  : 1.146
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 12:15:17 2025
+// C/C++ source code generated on : Wed May 14 14:09:23 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -53,12 +53,12 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Mask Parameter: pressSpfilt_Tau
   //  Referenced by: '<S11>/firstOrderTF'
 
-  20.0F,
+  11.0F,
 
   // Mask Parameter: firstOpressSpFilt_Tau
   //  Referenced by: '<S10>/firstOrderTF'
 
-  9.0F,
+  8.5F,
 
   // Mask Parameter: presMesfilt_Tau
   //  Referenced by: '<S9>/firstOrderTF'
@@ -128,7 +128,7 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Computed Parameter: flow_min_Value
   //  Referenced by: '<S5>/flow_min'
 
-  400.0,
+  0.0,
 
   // Expression: Cs_press_reg_init_C
   //  Referenced by: '<S5>/PressureRegulator'
@@ -143,17 +143,17 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Expression: Cs_reg_press_tau_1_C*Cs_reg_press_tau_2_C*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  1.8F,
+  1.87F,
 
   // Expression: Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.01F,
+  0.02F,
 
   // Expression: (Cs_reg_press_tau_1_C+Cs_reg_press_tau_2_C)*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.29F,
+  0.39F,
 
   // Expression: Cs_PressCtrl_TimeSample_C
   //  Referenced by: '<S5>/PressureRegulator'
@@ -178,12 +178,12 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Expression: Ct_mtr_volt_data_C
   //  Referenced by: '<S2>/flow2volt'
 
-  { 0U, 3000U, 4000U, 5000U, 6000U, 7000U, 8000U, 9000U, 9500U, 10000U },
+  { 0U, 2000U, 3000U, 4000U, 5000U, 6000U, 7000U, 8000U, 9000U, 9500U, 10000U },
 
   // Expression: Ct_mtr_flow_bkpt_C
   //  Referenced by: '<S2>/flow2volt'
 
-  { 0U, 400U, 800U, 1200U, 1600U, 2000U, 2400U, 2800U, 3000U, 3200U },
+  { 0U, 1U, 400U, 800U, 1200U, 1600U, 2000U, 2400U, 2800U, 3000U, 3200U },
 
   // Expression: Ct_rise_curv_data_C
   //  Referenced by: '<S6>/Rise_Curve'
@@ -236,7 +236,7 @@ void VentCtrl::VentCtrl_ConsTens() const
     VentCtrl_rty_VentCtrl_Out->Cs_vent_vltg_sp = VentCtrl_rtu_VentCtrl_In->Cs_vent_vltg_sp_simu;
   } else {
     VentCtrl_rty_VentCtrl_Out->Cs_vent_vltg_sp = look1_iu16lu32n16_binlcse(VentCtrl_DW.VentFlowSwitch, VentCtrl_rtP.flow2volt_bp01Data,
-      VentCtrl_rtP.flow2volt_tableData, 9U);
+      VentCtrl_rtP.flow2volt_tableData, 10U);
   }
 }
 

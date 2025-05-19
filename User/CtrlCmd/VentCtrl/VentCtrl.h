@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.143
+// Model version                  : 1.146
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 12:15:17 2025
+// C/C++ source code generated on : Wed May 14 14:09:23 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -132,10 +132,10 @@ class VentCtrl final
     ta_flow NullFlowConstant_Value;    // Computed Parameter: NullFlowConstant_Value
                                           //  Referenced by: '<S1>/NullFlowConstant'
 
-    ta_vltg flow2volt_tableData[10];   // Expression: Ct_mtr_volt_data_C
+    ta_vltg flow2volt_tableData[11];   // Expression: Ct_mtr_volt_data_C
                                           //  Referenced by: '<S2>/flow2volt'
 
-    ta_flow flow2volt_bp01Data[10];    // Expression: Ct_mtr_flow_bkpt_C
+    ta_flow flow2volt_bp01Data[11];    // Expression: Ct_mtr_flow_bkpt_C
                                           //  Referenced by: '<S2>/flow2volt'
 
     ta_air_pres Rise_Curve_tableData[33];// Expression: Ct_rise_curv_data_C

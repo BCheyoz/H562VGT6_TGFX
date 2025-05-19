@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.345
+// Model version                  : 1.349
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 12:16:13 2025
+// C/C++ source code generated on : Mon May 12 09:59:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -56,13 +56,13 @@ class TFLOW4_Ctrl final
  public:
   // Block signals and states (default storage) for system '<Root>'
   struct DW_TFLOW4_Ctrl_T {
-    tb_InPutMng_In InPutMng_Bus_Creator;// '<S8>/InPutMng_Bus_Creator'
-    tb_SysMng_In SysMng_In;            // '<S9>/SysMng_Bus_Creator'
-    tb_OutPutMng_In OutPutMng_In;      // '<S2>/OutPutMngIn'
-    tb_WaterHeatCtrl_In WaterHeatCtrl_Bus_Creator;// '<S11>/WaterHeatCtrl_Bus_Creator'
+    tb_InPutMng_In In_InPutMng;        // '<S8>/In_InPutMng'
+    tb_SysMng_In SysMng_In;            // '<S9>/In_SysMng'
     tb_InPutMng_Out InPutSecu_Out;     // '<S1>/InPutMng'
+    tb_OutPutMng_In OutPutMng_In;      // '<S2>/In_OutPutMng'
+    tb_WaterHeatCtrl_In In_WaterHeatCtrl;// '<S11>/In_WaterHeatCtrl'
     tb_WaterHeatCtrl_Out WaterHeatDrv_Out;// '<S7>/WaterHeatCtrl'
-    tb_VentCtrl_In VentCtrl_Bus_Creator;// '<S10>/VentCtrl_Bus_Creator'
+    tb_VentCtrl_In In_VentCtrl;        // '<S10>/In_VentCtrl'
     tb_SysMng_Out SysMng_Out;          // '<S4>/SysMng'
     tb_SysConfigCalib_Out SysConfigCalib_Out;// '<S3>/SysConfigCalib'
     tb_VentCtrl_Out VentCtrl_Out;      // '<S6>/VentCtrl'
@@ -128,6 +128,18 @@ class TFLOW4_Ctrl final
   const ExtY_TFLOW4_Ctrl_T &getExternalOutputs() const
   {
     return TFLOW4_Ctrl_Y;
+  }
+
+  // Block states get method
+  const DW_TFLOW4_Ctrl_T &getDWork() const
+  {
+    return TFLOW4_Ctrl_DW;
+  }
+
+  // Block states set method
+  void setDWork(const DW_TFLOW4_Ctrl_T *pDW_TFLOW4_Ctrl_T)
+  {
+    TFLOW4_Ctrl_DW = *pDW_TFLOW4_Ctrl_T;
   }
 
   // model initialize function

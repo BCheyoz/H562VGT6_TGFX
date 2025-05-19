@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.345
+// Model version                  : 1.349
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 12:16:13 2025
+// C/C++ source code generated on : Mon May 12 09:59:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -352,109 +352,109 @@ void TFLOW4_Ctrl::TFLOW4_Ctr_OutPutMng_Interfaces()
 // Output and update for atomic system: '<S7>/WaterHeatCtrl_Interfaces'
 void TFLOW4_Ctrl::TFLOW4_WaterHeatCtrl_Interfaces()
 {
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_op_mode = TFLOW4_Ctrl_DW.SysMng_Out.Ss_op_mode;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_pump_xhst_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_xhst_pres;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_pump_evap_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_evap_pres;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_tank_down_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_tank_down_temp;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_tank_up_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_tank_up_temp;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_pump_xhst_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_xhst_temp;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_pump_evap_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_evap_temp;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_vent_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_temp;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_heat_pump_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_heat_pump_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_elec_bstr_htr_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_elec_bstr_htr_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_v40_min = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_v40_min;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ns_pers_nb = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ns_pers_nb;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_tank_size = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_tank_size;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_heat_mode_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_heat_mode_simu;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_v40_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_v40_sp_simu;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_temp_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_temp_sp_simu;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Cs_heat_pump_rot_spd_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_heat_pump_rot_spd_sp_simu;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Ss_elec_bstr_htr_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_elec_bstr_htr_sp_simu;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Bs_heat_mode_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_mode_simu_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Bs_v40_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_v40_sp_simu_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Bs_temp_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_temp_sp_simu_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Bs_heat_pump_freq_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_pump_freq_sp_simu_ena;
-  TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator.Bs_elec_bstr_htr_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_elec_bstr_htr_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_op_mode = TFLOW4_Ctrl_DW.SysMng_Out.Ss_op_mode;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_pump_xhst_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_xhst_pres;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_pump_evap_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_evap_pres;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_tank_down_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_tank_down_temp;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_tank_up_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_tank_up_temp;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_pump_xhst_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_xhst_temp;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_pump_evap_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_pump_evap_temp;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_vent_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_temp;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_heat_pump_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_heat_pump_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_elec_bstr_htr_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_elec_bstr_htr_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_v40_min = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_v40_min;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ns_pers_nb = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ns_pers_nb;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_tank_size = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_tank_size;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_heat_mode_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_heat_mode_simu;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_v40_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_v40_sp_simu;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_temp_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_temp_sp_simu;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_heat_pump_rot_spd_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_heat_pump_rot_spd_sp_simu;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_elec_bstr_htr_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_elec_bstr_htr_sp_simu;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_heat_mode_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_mode_simu_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_v40_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_v40_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_temp_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_temp_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_heat_pump_freq_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_pump_freq_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_elec_bstr_htr_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_elec_bstr_htr_sp_simu_ena;
 }
 
 // Output and update for atomic system: '<S6>/VentCtrl_Interfaces'
 void TFLOW4_Ctrl::TFLOW4_Ctrl_VentCtrl_Interfaces()
 {
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Ss_vent_op_mode = TFLOW4_Ctrl_DW.SysMng_Out.Ss_vent_op_mode;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_pres;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_pres_min = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Cs_vent_pres_min;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_pres_sys = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Cs_vent_pres_sys;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Bs_vent_pres_err = TFLOW4_Ctrl_DW.InPutSecu_Out.Bs_vent_pres_err;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_pres_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_pres_sp_simu;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_flow_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_flow_sp_simu;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Cs_vent_vltg_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_vltg_sp_simu;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Bs_vent_pres_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_sp_simu_ena;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Bs_vent_flow_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_flow_sp_simu_ena;
-  TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator.Bs_vent_vltg_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_vltg_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Ss_vent_op_mode = TFLOW4_Ctrl_DW.SysMng_Out.Ss_vent_op_mode;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_pres = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_pres;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_pres_min = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Cs_vent_pres_min;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_pres_sys = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Cs_vent_pres_sys;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Bs_vent_pres_err = TFLOW4_Ctrl_DW.InPutSecu_Out.Bs_vent_pres_err;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_pres_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_pres_sp_simu;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_flow_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_flow_sp_simu;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Cs_vent_vltg_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_vltg_sp_simu;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Bs_vent_pres_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Bs_vent_flow_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_flow_sp_simu_ena;
+  TFLOW4_Ctrl_DW.In_VentCtrl.Bs_vent_vltg_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_vltg_sp_simu_ena;
 }
 
 // Output and update for atomic system: '<S1>/InPutMng_Interfaces'
 void TFLOW4_Ctrl::TFLOW4_Ctrl_InPutMng_Interfaces()
 {
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_ctry = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_ctry;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_sys_ver = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_sys_ver;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_vol_up = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_up;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_vol_btwn = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_btwn;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_vol_down = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_down;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_vol_tot = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_tot;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_down_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_tank_down_temp_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_up_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_tank_up_temp_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_xhst_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_pump_xhst_temp_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_evap_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_pump_evap_temp_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_temp_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_pres_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_pres_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_rot_spd_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_rot_spd_raw;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_heat_wtr_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_heat_wtr_cnsp_rst;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_vent_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_vent_cnsp_rst;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_tot_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_tot_cnsp_rst;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.St_tor_mode[0] = TFLOW4_Ctrl_U.Control_In.HMI.TECH.St_tor_mode[0];
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.St_tor_stt_raw[0] = TFLOW4_Ctrl_U.Control_In.HW.St_tor_stt_raw[0];
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.St_tor_mode[1] = TFLOW4_Ctrl_U.Control_In.HMI.TECH.St_tor_mode[1];
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.St_tor_stt_raw[1] = TFLOW4_Ctrl_U.Control_In.HW.St_tor_stt_raw[1];
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_err_dtct_shnt_ena = TFLOW4_Ctrl_U.Control_In.HMI.EXPERT.Bs_err_dtct_shnt_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_hw_fan_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_fan_err;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_hw_pres_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_pres_err;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_hw_anod_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_anod_err;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_heat_pump_stt = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Ss_heat_pump_stt;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Ss_elec_htr_bstr_stt = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Ss_elec_htr_bstr_stt;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_heat_pump_pwr = TFLOW4_Ctrl_U.Control_In.HW.Cs_heat_pump_pwr;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_down_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_tank_down_temp_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_tank_up_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_tank_up_temp_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_xhst_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_xhst_temp_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_evap_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_evap_temp_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_temp_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_pres_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_xhst_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_xhst_pres_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_pump_evap_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_evap_pres_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_v40_min_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_v40_min_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Cs_vent_rot_spd_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_rot_spd_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_down_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_tank_down_temp_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_up_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_tank_up_temp_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_xhst_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_pump_xhst_temp_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_evap_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_pump_evap_temp_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_vent_temp_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_pres_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_vent_pres_err_simu;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_down_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_down_temp_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_up_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_up_temp_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_xhst_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_temp_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_evap_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_temp_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_temp_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_down_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_down_temp_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_tank_up_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_up_temp_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_xhst_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_temp_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_evap_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_temp_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_temp_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_pres_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_err_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_xhst_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_pres_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_pump_evap_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_pres_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_v40_min_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_v40_min_simu_ena;
-  TFLOW4_Ctrl_DW.InPutMng_Bus_Creator.Bs_vent_rot_spd_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_rot_spd_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_ctry = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_ctry;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_sys_ver = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_sys_ver;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_vol_up = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_up;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_vol_btwn = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_btwn;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_vol_down = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_down;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_vol_tot = TFLOW4_Ctrl_DW.SysConfigCalib_Out.Cs_tank_vol_tot;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_down_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_tank_down_temp_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_up_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_tank_up_temp_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_xhst_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_pump_xhst_temp_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_evap_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_pump_evap_temp_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_temp_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_temp_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_pres_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_pres_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_rot_spd_raw = TFLOW4_Ctrl_U.Control_In.HW.Cs_vent_rot_spd_raw;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_heat_wtr_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_heat_wtr_cnsp_rst;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_vent_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_vent_cnsp_rst;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_tot_cnsp_rst = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ss_tot_cnsp_rst;
+  TFLOW4_Ctrl_DW.In_InPutMng.St_tor_mode[0] = TFLOW4_Ctrl_U.Control_In.HMI.TECH.St_tor_mode[0];
+  TFLOW4_Ctrl_DW.In_InPutMng.St_tor_stt_raw[0] = TFLOW4_Ctrl_U.Control_In.HW.St_tor_stt_raw[0];
+  TFLOW4_Ctrl_DW.In_InPutMng.St_tor_mode[1] = TFLOW4_Ctrl_U.Control_In.HMI.TECH.St_tor_mode[1];
+  TFLOW4_Ctrl_DW.In_InPutMng.St_tor_stt_raw[1] = TFLOW4_Ctrl_U.Control_In.HW.St_tor_stt_raw[1];
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_err_dtct_shnt_ena = TFLOW4_Ctrl_U.Control_In.HMI.EXPERT.Bs_err_dtct_shnt_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_hw_fan_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_fan_err;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_hw_pres_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_pres_err;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_hw_anod_err = TFLOW4_Ctrl_U.Control_In.ERR.Bs_hw_anod_err;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_heat_pump_stt = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Ss_heat_pump_stt;
+  TFLOW4_Ctrl_DW.In_InPutMng.Ss_elec_htr_bstr_stt = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Ss_elec_htr_bstr_stt;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_heat_pump_pwr = TFLOW4_Ctrl_U.Control_In.HW.Cs_heat_pump_pwr;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_down_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_tank_down_temp_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_tank_up_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_tank_up_temp_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_xhst_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_xhst_temp_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_evap_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_evap_temp_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_temp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_temp_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_pres_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_xhst_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_xhst_pres_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_pump_evap_pres_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_pump_evap_pres_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_v40_min_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_v40_min_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Cs_vent_rot_spd_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_vent_rot_spd_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_down_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_tank_down_temp_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_up_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_tank_up_temp_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_xhst_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_pump_xhst_temp_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_evap_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_pump_evap_temp_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_temp_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_vent_temp_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_pres_err_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Bs_vent_pres_err_simu;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_down_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_down_temp_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_up_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_up_temp_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_xhst_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_temp_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_evap_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_temp_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_temp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_temp_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_down_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_down_temp_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_tank_up_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_tank_up_temp_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_xhst_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_temp_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_evap_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_temp_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_temp_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_temp_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_pres_err_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_pres_err_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_xhst_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_xhst_pres_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_pump_evap_pres_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_pump_evap_pres_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_v40_min_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_v40_min_simu_ena;
+  TFLOW4_Ctrl_DW.In_InPutMng.Bs_vent_rot_spd_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_vent_rot_spd_simu_ena;
 }
 
 // Output and update for atomic system: '<S4>/SysMng_Interfaces'
@@ -524,19 +524,19 @@ void TFLOW4_Ctrl::step()
     // case IN_Normal:
     if (TFLOW4_Ctrl_DW.temporalCounter_i1 == 1) {
       TFLOW4_Ctrl_InPutMng_Interfaces();
-      InPutMngMDLOBJ1.step(&TFLOW4_Ctrl_DW.InPutMng_Bus_Creator, &TFLOW4_Ctrl_DW.InPutSecu_Out);
+      InPutMngMDLOBJ1.step(&TFLOW4_Ctrl_DW.In_InPutMng, &TFLOW4_Ctrl_DW.InPutSecu_Out);
       TFLOW4_Ctrl_SysMng_Interfaces();
       SysMngMDLOBJ3.step(&TFLOW4_Ctrl_DW.SysMng_In, &TFLOW4_Ctrl_DW.SysMng_Out);
     }
 
     if (TFLOW4_Ctrl_DW.temporalCounter_i2 == TFLOW4_Ctr_WaterHeatCtrl_tick_C) {
       TFLOW4_WaterHeatCtrl_Interfaces();
-      WaterHeatCtrlMDLOBJ5.step(&TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator, &TFLOW4_Ctrl_DW.WaterHeatDrv_Out);
+      WaterHeatCtrlMDLOBJ5.step(&TFLOW4_Ctrl_DW.In_WaterHeatCtrl, &TFLOW4_Ctrl_DW.WaterHeatDrv_Out);
     }
 
     if (TFLOW4_Ctrl_DW.temporalCounter_i3 == TFLOW4_Ctrl_VentCtrl_tick_C) {
       TFLOW4_Ctrl_VentCtrl_Interfaces();
-      VentCtrlMDLOBJ4.step(&TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator, &TFLOW4_Ctrl_DW.VentCtrl_Out);
+      VentCtrlMDLOBJ4.step(&TFLOW4_Ctrl_DW.In_VentCtrl, &TFLOW4_Ctrl_DW.VentCtrl_Out);
     }
   }
 
@@ -563,11 +563,11 @@ void TFLOW4_Ctrl::initialize()
 
   // states (dwork)
   {
-    TFLOW4_Ctrl_DW.InPutMng_Bus_Creator = TFLOW4_Ctrl_rtZtb_InPutMng_In;
+    TFLOW4_Ctrl_DW.In_InPutMng = TFLOW4_Ctrl_rtZtb_InPutMng_In;
     TFLOW4_Ctrl_DW.SysMng_In = TFLOW4_Ctrl_rtZtb_SysMng_In;
-    TFLOW4_Ctrl_DW.WaterHeatCtrl_Bus_Creator = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;
+    TFLOW4_Ctrl_DW.In_WaterHeatCtrl = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;
     TFLOW4_Ctrl_DW.OutPutMng_In = TFLOW4_Ctrl_rtZtb_OutPutMng_In;
-    TFLOW4_Ctrl_DW.VentCtrl_Bus_Creator = TFLOW4_Ctrl_rtZtb_VentCtrl_In;
+    TFLOW4_Ctrl_DW.In_VentCtrl = TFLOW4_Ctrl_rtZtb_VentCtrl_In;
     TFLOW4_Ctrl_DW.SysMng_Out = TFLOW4_Ctrl_rtZtb_SysMng_Out;
   }
 
