@@ -47,7 +47,7 @@
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
 
-#include "../../User/MX25L_XSPI/MX25L_XSPI2.h"
+#include "MX25L_XSPI/MX25L_XSPI.h"
 
 /* USER CODE END Includes */
 
