@@ -19,7 +19,7 @@
 #define MX25L_SPI_MX25L_SPI_H_
 
 #ifndef USE_HAL_DRIVER
-    #error "SPI Memory MX25L Error : HAL Driver Required !"
+	#error "SPI Memory MX25L Error : HAL Driver Required !"
 #else // HAL_DRIVER :
 
 #endif
