@@ -4,7 +4,7 @@
  *  Created on: May 13, 2025
  *  Original Author: j.proux
  *
- *  Updated on: 16 May 2025
+ *  Updated on: 19 May 2025
  *  Updated by: j.proux
  *  Copyright © ALDES 2025
  *  LibVersion: v1.0.0
@@ -19,20 +19,21 @@
 #define MX25L_XSPI_MX25L_XSPI_H_
 
 // Activation des Fonctions XSPI autorisées :
-//#define MEM_MX25L_XSPI_SUPPORT_2_LINES  		// Pour activer le support des fonctions en DualMode
+#define MEM_MX25L_XSPI_SUPPORT_2_LINES  		// Pour activer le support des fonctions en DualMode
 #define MEM_MX25L_XSPI_SUPPORT_4_LINES  		// Pour activer le support des fonctions en QuadMode
-//#define MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS 	// Pour activer le support des fonctions Read "Signature" (RES) & "Manufacturer & Device ID" (REMS)
-//#define MEM_MX25L_XSPI_SUPPORT_CHIP_ERASE		// Pour activer le support du ChipErase
-//#define MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND // Pour activer le support des fonctions Suspend & Resume Program
-//#define MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND	// Pour activer le support des fonctions Suspend & Resume Erase
-//#define MEM_MX25L_XSPI_SUPPORT_DEEP_POWER		// Pour activer le support des fonctions de Deep Power
-//#define MEM_MX25L_XSPI_SUPPORT_SECURED_OTP	// Pour activer le support des fonctions de Secure OTP
-//#define MEM_MX25L_XSPI_SUPPORT_DISCOVER_PARAMS // Pour activer le support de la fonction de DiscoverParameter
+#define MEM_MX25L_XSPI_SUPPORT_READ_RES_REMS 	// Pour activer le support des fonctions Read "Signature" (RES) & "Manufacturer & Device ID" (REMS)
+#define MEM_MX25L_XSPI_SUPPORT_CHIP_ERASE		// Pour activer le support du ChipErase
+#define MEM_MX25L_XSPI_SUPPORT_PROGRAM_SUSPEND // Pour activer le support des fonctions Suspend & Resume Program
+#define MEM_MX25L_XSPI_SUPPORT_ERASE_SUSPEND	// Pour activer le support des fonctions Suspend & Resume Erase
+#define MEM_MX25L_XSPI_SUPPORT_DEEP_POWER		// Pour activer le support des fonctions de Deep Power
+#define MEM_MX25L_XSPI_SUPPORT_SECURED_OTP	// Pour activer le support des fonctions de Secure OTP
+#define MEM_MX25L_XSPI_SUPPORT_DISCOVER_PARAMS // Pour activer le support de la fonction de DiscoverParameter
 //#define MEM_MX25L_XSPI_SUPPORT_WRSCUR			//!\ WARNING : Writing SecurityRegister locks down the Secured OTP (LDSO) /!\ !
 
 // Opérations de Configuration à effectuer lors de l'Init :
-#define MEM_MX25L_XSPI_CONFIG_QUAD_ENABLE_AT_INIT		1	// Vérif_Jp = OK sur MX25L6433F le 15/05/2025 pour Forçage à 0 ou 1.
-#define MEM_MX25L_XSPI_CONFIG_DUMMY_CYCLES_AT_INIT  	0	// Vérif_Jp = OK sur MX25L6433F le 15/05/2025 pour Forçage à 0 ou 1.
+#define MEM_MX25L_XSPI_USE_CONFIG_DUMMY_CYCLES  	// Pour TwoRead & QuadRead, utiliser ConfigRegister.DC comme DummyCycle Automatique !
+#define MEM_MX25L_XSPI_CONFIG_QUAD_ENABLE_AT_INIT		1	// Vérif_Jp = OK sur MX25L6433F le 19/05/2025 pour Forçage à 0 ou 1.
+#define MEM_MX25L_XSPI_CONFIG_DUMMY_CYCLES_AT_INIT  	0	// Vérif_Jp = OK sur MX25L6433F le 19/05/2025 pour Forçage à 0 ou 1.
 //#define MEM_MX25L_XSPI_CONFIG_TOP_BOTTOM_AT_INIT		0	// Default is 0 /!\ WARNING : This bit is OTP if set to '1' /!\ !
 //#define MEM_MX25L_XSPI_CONFIG_ODS_AT_INIT 			0	// "Output Driver Strength" default's value is 0.
 
@@ -51,7 +52,10 @@
 // Config des TimeOut pour les fonctions XSPI :
 #define MEM_MX25L_XSPI_SEND_TO			100U            // Send TimeOut : 100 x 1ms = 100ms
 #define MEM_MX25L_XSPI_RECV_TO			100U            // Receive TimeOut : 100 x 1ms = 100ms
-#define MEM_MX25L_XSPI_POLL_TO			1500U			// Polling TimeOut : 1500ms = 1.5s
+#define MEM_MX25L_XSPI_POLL_TO			1100U			// Polling TimeOut : 1100ms = 1.1s
+// Remarque_Jp le 19/05/2025 : According to "MX25L6433F" v1.9 du 09/04/2025 p63, "Block Erase Cycle Time 64KB" is [0.25 to 1s]
+#define MEM_MX25L_XSPI_CHIP_ERASE_TO	61000U			// Chip Erase TimeOut : 61s
+// Remarque_Jp le 19/05/2025 : According to "MX25L6433F" v1.9 du 09/04/2025 p63, "Chip Erase Cycle Time" is [20 to 60s]
 
 // Config des valeurs de retour XSPI :
 #define MEM_MX25L_XSPI_RETURN_SUCCESS	HAL_OK
@@ -126,14 +130,22 @@ extern "C" {
 // Prototypes Publics :
 void Mem_MX25L_XSPI_Init(void);
 
-// Read the Status & Config Register :
+// Read the Status Register :
 uint8_t Mem_MX25L_XSPI_ReadStatusRegister(uint8_t *pStatusRegister);	// RDSR
 uint8_t Mem_MX25L_XSPI_IsWriteBusy();
 uint8_t Mem_MX25L_XSPI_IsWriteEnabled();
+uint8_t Mem_MX25L_XSPI_IsQuadEnabled();
 uint8_t Mem_MX25L_XSPI_Wait4WriteNotBusy();
+
+// Read the Config Register :
 uint8_t Mem_MX25L_XSPI_ReadConfigRegister(uint8_t *pConfigRegister);	// RDCR
+uint8_t Mem_MX25L_XSPI_IsDummyCycleDC();
 
 // Write the Status & Config Register :
+uint8_t Mem_MX25L_XSPI_Enable_QuadMode(void);	// Suggested from @MatthieuF
+uint8_t Mem_MX25L_XSPI_Disable_QuadMode(void);	// Suggested from @MatthieuF
+uint8_t Mem_MX25L_XSPI_Enable_DummyCycleDC(void);	// Suggested from @MatthieuF
+uint8_t Mem_MX25L_XSPI_Disable_DummyCycleDC(void);	// Suggested from @MatthieuF
 uint8_t Mem_MX25L_XSPI_WriteStatusRegister(uint8_t newStatusRegister);	// WRSR
 uint8_t Mem_MX25L_XSPI_WriteStatusConfigRegister(uint8_t newStatusRegister, uint8_t newConfigRegister);
 uint8_t Mem_MX25L_XSPI_WriteStatusConfigRegisterArray(uint8_t* pNewStatusConfigRegister, uint8_t newStatusConfigRegisterSize);
