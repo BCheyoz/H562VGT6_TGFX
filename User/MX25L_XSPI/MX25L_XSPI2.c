@@ -12,6 +12,9 @@
  * Le fichier "octospi.c" pour STM32H5652 généré par CubeMX utilise les fonctions HAL "XSPI*",
  * => cette Librairie s'appuie donc également uniquement sur les HAL "XSPI*".
  *
+ * Pour utiliser la version SPI classique de cette Librairie, se reporter à "MX25L_SPI\README.md"
+ * Pour obtenir une version équivalente en QSPI, considérer le Repo de l'IHM "FW_Easykub"
+ *
  *  Pour intégrer facilement cette Librairie "MX25L_XSPI" dans un nouveau Projet :
  *   -> Suivre la Procédure décrite dans "MX25L_XSPI\README.md"
  *

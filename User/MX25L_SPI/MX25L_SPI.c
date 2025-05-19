@@ -12,10 +12,9 @@
  *
  */
 
-#include "MX25L_SPI.h"
-
 #include "stm32h5xx_hal.h"
 
+#include "MX25L_SPI.h"
 #include "spi.h"
 #include "main.h"
 
@@ -27,21 +26,14 @@
     #define MEM_MX25L_PERIF_HANDLE  pSPI_CS->hSPI
     #define MEM_MX25L_CS_PORT       pSPI_CS->csPort
     #define MEM_MX25L_CS_PIN        pSPI_CS->csPin
-#elif defined(OCTOSPI)
-    #define MEM_MX25L_PERIF_INIT()  MX_OCTOSPI1_Init()  // OCTOSPI1
-    #define MEM_MX25L_CS_INIT()     MEM_MX25L_DEACTIVATE_CS() //a verifier
-
-    #define MEM_MX25L_PERIF_HANDLE  &hospi1
-    #define MEM_MX25L_CS_PORT       Flash_Qspi_CS_GPIO_Port // GPIOE
-    #define MEM_MX25L_CS_PIN        Flash_Qspi_CS_Pin       // P11
 #else // ! SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
     // Paramètre unique (statique) sur SPI4 + CS sur PE15 :
-    #define MEM_MX25L_PERIF_INIT()  MX_SPI1_Init()  // SPI1
+    #define MEM_MX25L_PERIF_INIT()  MX_SPI3_Init()  // SPI3
     #define MEM_MX25L_CS_INIT()     MEM_MX25L_DEACTIVATE_CS()
 
-    #define MEM_MX25L_PERIF_HANDLE  &hspi1
-    #define MEM_MX25L_CS_PORT       Memory_CS_GPIO_Port // PC12
-    #define MEM_MX25L_CS_PIN        Memory_CS_Pin       // PC12
+    #define MEM_MX25L_PERIF_HANDLE  &hspi3
+    #define MEM_MX25L_CS_PORT       Flash_SPI_CS_GPIO_Port	// PA15
+    #define MEM_MX25L_CS_PIN        Flash_SPI_CS_Pin		// PA15
 #endif // SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
 
 
@@ -54,14 +46,8 @@
 #define MEM_MX25L_ACTIVATE_CS()     HAL_GPIO_WritePin(MEM_MX25L_CS_PORT, MEM_MX25L_CS_PIN, MEM_MX25L_CS_ACTIVE)
 #define MEM_MX25L_DEACTIVATE_CS()   HAL_GPIO_WritePin(MEM_MX25L_CS_PORT, MEM_MX25L_CS_PIN, MEM_MX25L_CS_INACTIVE)
 
-#ifdef OCTOSPI
-#define MEM_MX25L_PERIF_SEND_STREAM(TxBuf) HAL_XSPI_Transmit(MEM_MX25L_PERIF_HANDLE, TxBuf, MEM_MX25L_SEND_TO)
-#define MEM_MX25L_PERIF_RECV_STREAM(RxBuf) HAL_XSPI_Receive( MEM_MX25L_PERIF_HANDLE, RxBuf, MEM_MX25L_RECV_TO)
-#else
 #define MEM_MX25L_PERIF_SEND_STREAM(TxBuf,BufSize) HAL_SPI_Transmit(MEM_MX25L_PERIF_HANDLE, TxBuf, BufSize, MEM_MX25L_SEND_TO)
 #define MEM_MX25L_PERIF_RECV_STREAM(RxBuf,nb2Read) HAL_SPI_Receive( MEM_MX25L_PERIF_HANDLE, RxBuf, nb2Read, MEM_MX25L_RECV_TO)
-#endif
-
 
 // MX25L Read Commands :
 #define MEM_MX25L_CMD_READ_STATUS_REGISTER  0x05 // RDSR : Read Status Register

@@ -7,9 +7,13 @@
  *  Updated on: 31 Janv. 2024
  *  Updated by: j.proux
  *
+ *  History Usage :
+ *-> 14/01/2020 : Added by AA to Nükub732_Firmware (STM32F732VE : productprojects/ventilation/double-flux/nukub/Nukub_firmware)
+ *-> 14/06/2021 : Added by BC to CarteAqui_BestCC (STM32F732VE : innoprojects/carte-acquisition/banc-de-test-statique/best-cc)
+ *-> 04/08/2023 : Added by AB to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
+ *-> 10/01/2024 : Added by Jp to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
+ *
  */
-
-#define OCTOSPI
 
 #ifndef MX25L_SPI_MX25L_SPI_H_
 #define MX25L_SPI_MX25L_SPI_H_
@@ -21,12 +25,7 @@
 #endif
 
 #include <stdint.h>
-#ifndef OCTOSPI
 #include "spi.h"
-#else
-#include "octospi.h"
-#endif
-
 
 //#define SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE // Activer uniquement si plusieurs Mémoires à gérer en SPI !
 #define SPI_MEM_MX25L_MAKE_DWORD_4B(b3,b2,b1,b0)   (((b3) << 24) | ((b2) << 16) |((b1) << 8) | ((b0) << 0))

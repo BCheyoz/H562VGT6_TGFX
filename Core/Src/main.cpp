@@ -149,10 +149,9 @@ int main(void)
   InitFanPwmIC();
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
+  Mem_MX25L_XSPI_Init();
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
-
-  Mem_MX25L_XSPI_Init();
 
   /* USER CODE END 2 */
 

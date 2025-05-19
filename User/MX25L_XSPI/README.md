@@ -1,14 +1,12 @@
-# MX25L_SPI c Lib v1.0
+# Librairie `MX25L_XSPI.c` v1.0.0
+Copyright © ALDES 2025 -
+Updated on 19 May 2025, by j.proux (@JoelP)
 
-Basé sur la libraire Mem_MX25L_SPI.c crée par j.proux
 
 ## History Usage :
-* 14/01/2020 : Added by AA to Nükub732_Firmware (STM32F732VE : productprojects/ventilation/double-flux/nukub/Nukub_firmware)
-* 14/06/2021 : Added by BC to CarteAqui_BestCC (STM32F732VE : innoprojects/carte-acquisition/banc-de-test-statique/best-cc)
-* 04/08/2023 : Added by AB to HII_CarteMere_App (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_app)
-* 10/01/2024 : Added by Jp to HII_CarteMere_Bootloader (STM32F732VETx : productprojects/ventilation/individuel/himalaya2/carte-mere/h2_cartemere_bootloader)
+* 13/05/2025 : Added by @JoelP to [TFL4_CarteMere_App](https://git-ext.aldes.com/be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app) (STM32H562VGT6)
 
--> Merci d'utiliser une version récente fournée par ST.
+>[!ToDo] Poursuivre la Mise à Jour de ce ReadMe.md.
 
 # Procédure pour intégrer cette Librairie
 ## Etape I : Configurer CubeMX 
@@ -28,11 +26,11 @@ Basé sur la libraire Mem_MX25L_SPI.c crée par j.proux
 
 **Dans le nouveau Projet**
 
-1) Ajouter le Dossier "Mem_MX25L_SPI" à l' "IncludePath" pour toutes les Configs de Build.
+1) Ajouter le Dossier "Mem_MX25L_XSPI" à l' "IncludePath" pour toutes les Configs de Build.
 (Attention : CubeIDE a l'habitude de stocker les chemins relatifs au Workspace, et non au Dossier)
-il est souvent préférable d'utiliser la formulation "../User/Mem_MX25L_SPI" (sans les guillemets)
+il est souvent préférable d'utiliser la formulation "../User/Mem_MX25L_XSPI" (sans les guillemets)
 
-2) Vérifier que le Dossier "Mem_MX25L_SPI" ne soit "Exclude From Build" d'aucune des Configs.
+2) Vérifier que le Dossier "Mem_MX25L_XSPI" ne soit "Exclude From Build" d'aucune des Configs.
   (y compris "Debug" & "Release")
 *Info : Pour vérifier, sélectionner "Properties" du Dossier -> "C/C++ Build" -> "Settings".
 

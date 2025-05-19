@@ -18,6 +18,12 @@
 #ifndef MX25L_XSPI_MX25L_XSPI_H_
 #define MX25L_XSPI_MX25L_XSPI_H_
 
+#ifndef USE_HAL_DRIVER
+    #error "XSPI Memory MX25L Error : HAL Driver Required !"
+#else // HAL_DRIVER :
+
+#endif
+
 // Activation des Fonctions XSPI autorisées :
 #define MEM_MX25L_XSPI_SUPPORT_2_LINES  		// Pour activer le support des fonctions en DualMode
 #define MEM_MX25L_XSPI_SUPPORT_4_LINES  		// Pour activer le support des fonctions en QuadMode
@@ -75,6 +81,20 @@
 #define MEM_MX25L_XSPI_PERIF_SEND_STREAM(pTxBuf)	HAL_XSPI_Transmit(MEM_MX25L_XSPI_PERIF_HANDLE, pTxBuf, MEM_MX25L_XSPI_SEND_TO)
 #define MEM_MX25L_XSPI_PERIF_RECV_STREAM(pRxBuf)	HAL_XSPI_Receive( MEM_MX25L_XSPI_PERIF_HANDLE, pRxBuf, MEM_MX25L_XSPI_RECV_TO)
 #define MEM_MX25L_XSPI_PERIF_AUTO_POLLING(pCfg) 	HAL_XSPI_AutoPolling(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg, MEM_MX25L_XSPI_POLL_TO)
+
+#define MEM_MX25L_XSPI_MAKE_DWORD_4B(b3,b2,b1,b0)   (((b3) << 24) | ((b2) << 16) |((b1) << 8) | ((b0) << 0))
+
+// MX25L ID Definitions :
+#define MEM_MX25L_XSPI_RDID_MFG 	0xC2 // Manufacturer ID : $C2 = Macronix
+#define MEM_MX25L_XSPI_RDID_MMT 	0x20 // Memory Type
+//#define MEM_MX25L_XSPI_RDID_MMD	0x16 // Memory Density : 16 = 4MBytes (from Table 9 p50)
+#define MEM_MX25L_XSPI_RDID_MMD 	0x17 // Memory Density : 17 = 8MBytes (from Table 9 p49)
+
+#define MEM_MX25L_XSPI_RDID_VAL MEM_MX25L_XSPI_MAKE_DWORD_4B(0, \
+                                                        SPI_MEM_MX25L_RDID_MMD, \
+                                                        SPI_MEM_MX25L_RDID_MMT, \
+                                                        SPI_MEM_MX25L_RDID_MFG) // 0x001720C2 <=> Macronix 8MBytes
+#define MEM_MX25L_XSPI_RDID_MSK 0x00FFFFFF
 
 // MX25L Read Commands (from "MX25L6433F" v1.9 du 09/04/2025 p15) :
 #define MEM_MX25L_CMD_READ_DATA_BYTES       0x03 // READ : Normal Read (+3 bytes for 24bits Address)
