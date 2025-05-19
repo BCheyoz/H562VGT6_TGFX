@@ -48,6 +48,7 @@
 #include "UartComCore.h"
 
 #include "MX25L_XSPI/MX25L_XSPI.h"
+//#include "MX25L_SPI/MX25L_SPI.h"
 
 /* USER CODE END Includes */
 
@@ -121,7 +122,7 @@ int main(void)
 //  MX_ADC1_Init(); 		// Désactivé_Jp le 28/02/2025 -> laisser "InitAnalogInputs" faire le nécessaire !
   //MX_OCTOSPI1_Init();
   MX_SPI2_Init();
-  MX_SPI3_Init();
+  //MX_SPI3_Init();
   MX_SPI4_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
@@ -150,6 +151,7 @@ int main(void)
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
   Mem_MX25L_XSPI_Init();
+  //Mem_MX25L_Init();
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
 

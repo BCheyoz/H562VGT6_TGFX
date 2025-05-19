@@ -40,6 +40,10 @@
                                                         SPI_MEM_MX25L_RDID_MFG) // 0x001620C2
 #define SPI_MEM_MX25L_RDID_MSK 0x00FFFFFF
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _SPI_CS_TypeDef
 {
     SPI_HandleTypeDef  *hSPI;
@@ -80,5 +84,9 @@ typedef struct _SPI_CS_TypeDef
     uint8_t Mem_MX25L_StopWriteArraySequence(void);
     uint8_t Mem_MX25L_DoSoftwareReset(void);
 #endif // SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MX25L_SPI_MX25L_SPI_H_ */

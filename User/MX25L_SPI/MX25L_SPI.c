@@ -93,6 +93,10 @@
 
 //******************************************************************************
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Internal only usage functions :
 #ifdef SPI_MEM_MX25L_SUPPORT_MULTI_INSTANCE
     uint8_t Mem_MX25L_WriteEnable(SPI_CS_TypeDef *pSPI_CS);
@@ -694,3 +698,7 @@ uint8_t Mem_MX25L_StopReadArraySequence(void)
 
     return MEM_MX25L_RETURN_SUCCESS;
 }
+
+#ifdef __cplusplus
+}
+#endif

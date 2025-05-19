@@ -26,7 +26,6 @@
 #include "main.h"
 #include <string.h> // pour MemSet
 
-
 #if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_MX25L_XSPI)
 	#define MX25L_XSPI_HALT_IF_DEBUG()	__BKPT(0) // { while(1) ClrWdt(); }
 //	#warning "DEBUG_MX25L_XSPI is Active !!!"
