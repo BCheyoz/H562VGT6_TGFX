@@ -4,7 +4,7 @@
  *  Created on: May 13, 2025
  *  Original Author: j.proux
  *
- *  Updated on: 19 May 2025
+ *  Updated on: 20 May 2025
  *  Updated by: j.proux
  *  Copyright © ALDES 2025
  *  LibVersion: v1.0.0
@@ -208,7 +208,7 @@ uint8_t Mem_MX25L_XSPI_ReadStatusRegister(uint8_t *pStatusRegister) // RDSR from
 
 uint8_t Mem_MX25L_XSPI_IsWriteBusy()
 { // Vérif_Jp = OK sur MX25L6433F le 16/05/2025.
-	uint8_t tmpStatusReg;
+	uint8_t tmpStatusReg = 0;	// Modif_Jp le 20/05/2025 pour éviter CodeSonar "Uninitialized Variable".
 	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_ReadStatusRegister(&tmpStatusReg))
 	{
 		return (tmpStatusReg & MEM_MX25L_XSPI_RDSR_WIP) ? MEM_MX25L_XSPI_RETURN_BUSY : MEM_MX25L_XSPI_RETURN_READY; // bit0 = WIP "Write in Progress" du StatusRegister
@@ -220,7 +220,7 @@ uint8_t Mem_MX25L_XSPI_IsWriteBusy()
 
 uint8_t Mem_MX25L_XSPI_IsWriteEnabled()
 { // Vérif_Jp = OK sur MX25L6433F le 19/05/2025.
-	uint8_t tmpStatusReg;
+	uint8_t tmpStatusReg = 0;	// Modif_Jp le 20/05/2025 pour éviter CodeSonar "Uninitialized Variable".
 	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_ReadStatusRegister(&tmpStatusReg))
 	{
 		return (tmpStatusReg & MEM_MX25L_XSPI_RDSR_WEL) ? MEM_MX25L_XSPI_RETURN_TRUE : MEM_MX25L_XSPI_RETURN_FALSE; // bit1 = WEL "Write Enable Latch" du StatusRegister
@@ -232,7 +232,7 @@ uint8_t Mem_MX25L_XSPI_IsWriteEnabled()
 
 uint8_t Mem_MX25L_XSPI_IsQuadEnabled()
 { // Vérif_Jp = OK sur MX25L6433F le 19/05/2025.
-	uint8_t tmpStatusReg;
+	uint8_t tmpStatusReg = 0;	// Modif_Jp le 20/05/2025 pour éviter CodeSonar "Uninitialized Variable".
 	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_ReadStatusRegister(&tmpStatusReg))
 	{
 		return (tmpStatusReg & MEM_MX25L_XSPI_RDSR_QE) ? MEM_MX25L_XSPI_RETURN_TRUE : MEM_MX25L_XSPI_RETURN_FALSE; // bit6 = QE "Quad Enable" du StatusRegister
@@ -310,7 +310,7 @@ uint8_t Mem_MX25L_XSPI_ReadConfigRegister(uint8_t *pConfigRegister) // RDCR from
 
 uint8_t Mem_MX25L_XSPI_IsDummyCycleDC()
 { // Vérif_Jp = OK sur MX25L6433F le 19/05/2025.
-	uint8_t tmpStatusReg;
+	uint8_t tmpStatusReg = 0;	// Modif_Jp le 20/05/2025 pour éviter CodeSonar "Uninitialized Variable".
 	if(MEM_MX25L_XSPI_RETURN_SUCCESS == Mem_MX25L_XSPI_ReadConfigRegister(&tmpStatusReg))
 	{
 		return (tmpStatusReg & MEM_MX25L_XSPI_RDCR_DC) ? MEM_MX25L_XSPI_RETURN_TRUE : MEM_MX25L_XSPI_RETURN_FALSE; // bit6 = DC "Dummy Cycle" du ConfigRegister

@@ -91,6 +91,13 @@
 
 #define MEM_MX25L_GET_BYTE_N(value,N)   (((value)>>(8*(N))) & 0xFF)
 
+#if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_MX25L_SPI)
+	#define MX25L_SPI_HALT_IF_DEBUG()	__BKPT(0) // { while(1) ClrWdt(); }
+//	#warning "DEBUG_MX25L_SPI is Active !!!"
+#else // (! __DEBUG) && (! DEBUG_MX25L_XSPI) :
+	#define MX25L_SPI_HALT_IF_DEBUG()	// Nop();
+#endif // __DEBUG ; DEBUG_MX25L_SPI
+
 //******************************************************************************
 
 #ifdef __cplusplus
@@ -123,6 +130,14 @@ void Mem_MX25L_Init(void)
 { // Vérif_Jp = OK sur IS25LP le 21/06/2019
     MEM_MX25L_CS_INIT();
     MEM_MX25L_PERIF_INIT();
+
+    MX25L_SPI_HALT_IF_DEBUG();
+
+    uint8_t ret = Mem_MX25L_NoOperation();
+    ret = Mem_MX25L_IsWriteBusy();
+
+    MX25L_SPI_HALT_IF_DEBUG();
+
 }
 
 //******************************************************************************
