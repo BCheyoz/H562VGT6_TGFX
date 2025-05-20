@@ -126,6 +126,9 @@ extern "C" {
 
 //******************************************************************************
 
+uint8_t tmpU24[3];
+uint8_t tmpU8;
+
 void Mem_MX25L_Init(void)
 { // Vérif_Jp = OK sur IS25LP le 21/06/2019
     MEM_MX25L_CS_INIT();
@@ -133,11 +136,24 @@ void Mem_MX25L_Init(void)
 
     MX25L_SPI_HALT_IF_DEBUG();
 
-    uint8_t ret = Mem_MX25L_NoOperation();
-    ret = Mem_MX25L_IsWriteBusy();
+    uint8_t retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_ReadConfigRegister(&tmpU8);
+	retVal = Mem_MX25L_ReadSecurityRegister(&tmpU8);
+
+	retVal = Mem_MX25L_ReadIdRegister(tmpU24);
+
+	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_WriteEnable();	// WEL in StatusRegister
+	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+
+	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal = Mem_MX25L_WriteDisable();	// WEL in StatusRegister
+	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+
+	retVal = Mem_MX25L_NoOperation();
+	retVal = Mem_MX25L_IsWriteBusy();
 
     MX25L_SPI_HALT_IF_DEBUG();
-
 }
 
 //******************************************************************************
