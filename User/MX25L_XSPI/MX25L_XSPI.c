@@ -778,7 +778,7 @@ uint8_t Mem_MX25L_XSPI_BlockErase64K(uint32_t baseAdr_24bits)	// BE from "MX25L6
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_XSPI_BlocErase32K(uint32_t baseAdr_24bits)	// BE32K from "MX25L6433F" v1.9 du 09/04/2025 p16 & 39 :
+uint8_t Mem_MX25L_XSPI_BlockErase32K(uint32_t baseAdr_24bits)	// BE32K from "MX25L6433F" v1.9 du 09/04/2025 p16 & 39 :
 { // Vérif_Jp = OK sur MX25L6433F le 15/05/2025.
 	return Mem_MX25L_XSPI_SendWriteCmdAndAddress(MEM_MX25L_CMD_BLOC_ERASE_32K, baseAdr_24bits);
 }

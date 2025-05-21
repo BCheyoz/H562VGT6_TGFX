@@ -126,6 +126,15 @@ extern "C" {
 
 //******************************************************************************
 
+typedef union {
+	uint8_t U8[4];
+	uint16_t U16[2];
+	uint32_t U32;
+} tU8_16_32;
+
+#define TestBuf_Size	4096
+tU8_16_32 TestBuf[TestBuf_Size] = {0};
+
 uint8_t tmpU24[3];
 uint8_t tmpU8;
 
@@ -150,10 +159,139 @@ void Mem_MX25L_Init(void)
 	retVal = Mem_MX25L_WriteDisable();	// WEL in StatusRegister
 	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
 
+    MX25L_SPI_HALT_IF_DEBUG();
+
+	// Test de Read Memory :
+	uint32_t adr = 0; uint16_t nb2Read = TestBuf_Size * sizeof(tU8_16_32); uint16_t readMode = 0;
+	uint32_t adrMax = 8UL * 1024UL * 1024UL; uint32_t nbU32Virgin = 0; uint32_t nbU32NotVirgin = 0; uint32_t nbU32AdrOK = 0;
+	uint8_t curReadMode = 0;
+	for(; adr < adrMax;)
+	{
+		switch(readMode)
+		{
+		case 1:
+			retVal = Mem_MX25L_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
+			break;
+		default:
+		case 0:
+			retVal = Mem_MX25L_ReadDataBytes(adr, nb2Read, TestBuf);
+			break;
+		}
+		if(MEM_MX25L_RETURN_SUCCESS == retVal)
+		{
+			for(int i = 0; i < (nb2Read/4); i++)
+			{
+				if(UINT32_MAX == TestBuf[i].U32)
+				{
+					if(1 != curReadMode)
+					{
+						curReadMode = 1;
+						nbU32Virgin = 0;
+					}
+					nbU32Virgin++;
+				} else if((adr + i) == TestBuf[i].U32)
+				{
+					if(2 != curReadMode)
+					{
+						curReadMode = 2;
+						nbU32AdrOK = 0;
+					}
+					nbU32AdrOK++;
+				} else {
+					MX25L_SPI_HALT_IF_DEBUG();
+					nbU32NotVirgin++;
+				}
+			}
+		} else {
+			MX25L_SPI_HALT_IF_DEBUG();
+		}
+		adr += nb2Read;
+	}
+
+	MX25L_SPI_HALT_IF_DEBUG();
+
+	// Test de Erase Sector :
+	uint32_t eraseStep = 4096;
+	adr = 0; uint32_t nbU32Erased = 0; uint32_t nbU32NotErased = 0; uint16_t eraseMode = 0;
+	for(; adr < adrMax;)
+	{
+		switch(eraseMode)
+		{
+		case 1:
+			retVal = Mem_MX25L_BlockErase32K(adr);
+			break;
+		case 2:
+			retVal = Mem_MX25L_BlockErase64K(adr);
+			break;
+		case 0:
+		default:
+			retVal = Mem_MX25L_SectorErase4K(adr);
+			break;
+		}
+		if(MEM_MX25L_RETURN_SUCCESS == retVal)
+		{
+			nbU32Erased++;
+		} else {
+			MX25L_SPI_HALT_IF_DEBUG();
+			nbU32NotErased++;
+		}
+		adr += eraseStep;
+	}
+
+	MX25L_SPI_HALT_IF_DEBUG();
+
+	// Test du Chip Erase :
+	retVal = Mem_MX25L_ChipErase();
+	if(MEM_MX25L_RETURN_SUCCESS == retVal)
+	{
+		MX25L_SPI_HALT_IF_DEBUG();
+//	} else if(MEM_MX25L_RETURN_BUSY == retVal)
+//	{
+//		retVal = Mem_MX25L_XSPI_ReadStatusRegister(&tmpU8);
+//		retVal = Mem_MX25L_XSPI_IsWriteBusy();
+//		retVal = Mem_MX25L_XSPI_Wait4WriteNotBusy(); // Attente Fin d'exécution
+	} else {
+		MX25L_SPI_HALT_IF_DEBUG();
+	}
+
+	MX25L_SPI_HALT_IF_DEBUG();
+
+	// Test de Write Memory :
+	uint16_t nb2Write = TestBuf_Size * sizeof(tU8_16_32); uint16_t writeMode = 0;
+	adr = 0; uint32_t nbU32Written = 0; uint32_t nbU32NotWritten = 0;
+	for(; adr < adrMax;)
+	{
+		for(int i = 0; i < (nb2Write/4); i++)
+		{
+			TestBuf[i].U32 = adr + i;
+		}
+		switch(writeMode)
+		{
+		case 1:
+//			retVal = Mem_MX25L_XSPI_WriteArray_QuadWrite(adr, TestBuf, nb2Write);
+//			break;
+		default:
+		case 0:
+			retVal = Mem_MX25L_WriteArray(adr, TestBuf, nb2Write);
+			break;
+		}
+		if(MEM_MX25L_RETURN_SUCCESS == retVal)
+		{
+			nbU32Written++;
+		} else {
+			MX25L_SPI_HALT_IF_DEBUG();
+			nbU32NotWritten++;
+		}
+		adr += nb2Write;
+	}
+
+	MX25L_SPI_HALT_IF_DEBUG();
+
 	retVal = Mem_MX25L_NoOperation();
 	retVal = Mem_MX25L_IsWriteBusy();
 
     MX25L_SPI_HALT_IF_DEBUG();
+    tmpU8 = 0;
 }
 
 //******************************************************************************
@@ -393,7 +531,7 @@ uint8_t Mem_MX25L_BlockErase64K(uint32_t baseAdr_24bits)
 
 //******************************************************************************
 
-uint8_t Mem_MX25L_BlocErase32K(uint32_t baseAdr_24bits)
+uint8_t Mem_MX25L_BlockErase32K(uint32_t baseAdr_24bits)
 { // Non testé !
     uint8_t returnValue = Mem_MX25L_WriteEnable(); // Enable Write First !
 

@@ -190,7 +190,7 @@ uint8_t Mem_MX25L_XSPI_ReadDataBytes_FourRead(uint32_t baseAdr_24bits, uint16_t 
 // Erase Sector, Bloc or Chip :
 uint8_t Mem_MX25L_XSPI_SectorErase4K(uint32_t baseAdr_24bits);	// SE
 uint8_t Mem_MX25L_XSPI_BlockErase64K(uint32_t baseAdr_24bits);	// BE
-uint8_t Mem_MX25L_XSPI_BlocErase32K(uint32_t baseAdr_24bits);	// BE32K
+uint8_t Mem_MX25L_XSPI_BlockErase32K(uint32_t baseAdr_24bits);	// BE32K
 uint8_t Mem_MX25L_XSPI_ChipErase(void);	// CE
 
 // Write Data to the Memory :
