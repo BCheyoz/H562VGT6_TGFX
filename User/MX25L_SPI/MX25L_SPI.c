@@ -145,6 +145,7 @@ void Mem_MX25L_Init(void)
 
     MX25L_SPI_HALT_IF_DEBUG();
 
+    tmpU8 = 25;
     uint8_t retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
 	retVal = Mem_MX25L_ReadConfigRegister(&tmpU8);
 	retVal = Mem_MX25L_ReadSecurityRegister(&tmpU8);
