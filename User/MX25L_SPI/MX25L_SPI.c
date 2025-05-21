@@ -135,7 +135,7 @@ typedef union {
 #define TestBuf_Size	4096
 tU8_16_32 TestBuf[TestBuf_Size] = {0};
 
-uint8_t tmpU24[3];
+uint8_t tmpU24[3] = {0};
 uint8_t tmpU8;
 
 void Mem_MX25L_Init(void)
