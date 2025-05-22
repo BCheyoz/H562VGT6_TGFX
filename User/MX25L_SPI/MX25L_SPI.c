@@ -138,6 +138,8 @@ tU8_16_32 TestBuf[TestBuf_Size] = {0};
 uint8_t tmpU24[3] = {0};
 uint8_t tmpU8;
 
+// Problem with NSSP Hrdware : https://community.st.com/t5/stm32-mcus-products/stm32-g4-spi-hardware-nss-with-nssp-diabled-does-not-work-only/td-p/127135
+
 void Mem_MX25L_Init(void)
 { // Vérif_Jp = OK sur IS25LP le 21/06/2019
     MEM_MX25L_CS_INIT();
