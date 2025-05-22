@@ -293,8 +293,8 @@ void Mem_MX25L_Init(void)
 	retVal = Mem_MX25L_NoOperation();
 	retVal = Mem_MX25L_IsWriteBusy();
 
-    MX25L_SPI_HALT_IF_DEBUG();
-    tmpU8 = 0;
+	MX25L_SPI_HALT_IF_DEBUG();
+	tmpU8 = 0;
 }
 
 //******************************************************************************

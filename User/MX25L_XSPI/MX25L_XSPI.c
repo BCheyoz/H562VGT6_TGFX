@@ -1532,6 +1532,7 @@ void Mem_MX25L_XSPI_DoTestMemory(void)
 	retVal = Mem_MX25L_XSPI_ReadDiscoverableParameter(adr, nb2Read, TestBuf); // RDSFDP
 
 	MX25L_XSPI_HALT_IF_DEBUG();
+	tmpU8 = 0;
 }
 //*/
 
