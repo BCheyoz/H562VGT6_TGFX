@@ -4,7 +4,7 @@
  *  Created on: May 13, 2025
  *  Original Author: j.proux
  *
- *  Updated on: 19 May 2025
+ *  Updated on: 23 May 2025
  *  Updated by: j.proux
  *  Copyright © ALDES 2025
  *  LibVersion: v1.0.0
@@ -63,6 +63,13 @@
 #define MEM_MX25L_XSPI_CHIP_ERASE_TO	61000U			// Chip Erase TimeOut : 61s
 // Remarque_Jp le 19/05/2025 : According to "MX25L6433F" v1.9 du 09/04/2025 p63, "Chip Erase Cycle Time" is [20 to 60s]
 
+// Organisation interne de la Mémoire MX25L6433F :
+#define MEM_MX25L_FLASH_SIZE			0x4000000		// 512 Mbits = 64Mbytes
+#define MEM_MX25L_BLOCK_SIZE			0x10000 		// 128 blocks of 64KBytes
+#define MEM_MX25L_SUBBLOCK_SIZE			0x8000			// 256 subblocks of 32kBytes
+#define MEM_MX25L_SECTOR_SIZE			0x1000			// 2048 sectors of 4kBytes
+#define MEM_MX25L_PAGE_SIZE				0x100			// 262144 pages of 256 bytes
+
 // Config des valeurs de retour XSPI :
 #define MEM_MX25L_XSPI_RETURN_SUCCESS	HAL_OK
 #define MEM_MX25L_XSPI_RETURN_FAILURE	HAL_ERROR
@@ -81,6 +88,7 @@
 #define MEM_MX25L_XSPI_PERIF_SEND_STREAM(pTxBuf)	HAL_XSPI_Transmit(MEM_MX25L_XSPI_PERIF_HANDLE, pTxBuf, MEM_MX25L_XSPI_SEND_TO)
 #define MEM_MX25L_XSPI_PERIF_RECV_STREAM(pRxBuf)	HAL_XSPI_Receive( MEM_MX25L_XSPI_PERIF_HANDLE, pRxBuf, MEM_MX25L_XSPI_RECV_TO)
 #define MEM_MX25L_XSPI_PERIF_AUTO_POLLING(pCfg) 	HAL_XSPI_AutoPolling(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg, MEM_MX25L_XSPI_POLL_TO)
+#define MEM_MX25L_XSPI_PERIF_MEMORY_MAPPED(pCfg)	HAL_XSPI_MemoryMapped(MEM_MX25L_XSPI_PERIF_HANDLE, pCfg)
 
 #define MEM_MX25L_XSPI_MAKE_DWORD_4B(b3,b2,b1,b0)   (((b3) << 24) | ((b2) << 16) |((b1) << 8) | ((b0) << 0))
 
@@ -91,9 +99,9 @@
 #define MEM_MX25L_XSPI_RDID_MMD 	0x17 // Memory Density : 17 = 8MBytes (from Table 9 p49)
 
 #define MEM_MX25L_XSPI_RDID_VAL MEM_MX25L_XSPI_MAKE_DWORD_4B(0, \
-                                                        SPI_MEM_MX25L_RDID_MMD, \
-                                                        SPI_MEM_MX25L_RDID_MMT, \
-                                                        SPI_MEM_MX25L_RDID_MFG) // 0x001720C2 <=> Macronix 8MBytes
+											SPI_MEM_MX25L_RDID_MMD, \
+											SPI_MEM_MX25L_RDID_MMT, \
+											SPI_MEM_MX25L_RDID_MFG) // 0x001720C2 <=> Macronix 8MBytes
 #define MEM_MX25L_XSPI_RDID_MSK 0x00FFFFFF
 
 // MX25L Read Commands (from "MX25L6433F" v1.9 du 09/04/2025 p15) :
@@ -192,6 +200,7 @@ uint8_t Mem_MX25L_XSPI_SectorErase4K(uint32_t baseAdr_24bits);	// SE
 uint8_t Mem_MX25L_XSPI_BlockErase64K(uint32_t baseAdr_24bits);	// BE
 uint8_t Mem_MX25L_XSPI_BlockErase32K(uint32_t baseAdr_24bits);	// BE32K
 uint8_t Mem_MX25L_XSPI_ChipErase(void);	// CE
+uint8_t Mem_MX25L_XSPI_EraseSector(uint32_t EraseStartAddress, uint32_t EraseEndAddress);
 
 // Write Data to the Memory :
 uint8_t Mem_MX25L_XSPI_WriteArray(uint32_t baseAdr_24bits, void* pArray2Write, uint16_t nbBytes2Write);	// PP
@@ -221,6 +230,8 @@ uint8_t Mem_MX25L_XSPI_DoSoftwareReset(void); // RSTEN & RST
 uint8_t MemMX25L_XSPI_SetBurstLength(uint8_t newBurstLength); // SBL
 uint8_t Mem_MX25L_XSPI_ReadDiscoverableParameter(uint32_t baseAdr_24bits, uint16_t nbBytes2Read, void *pReadBuf); // RDSFDP
 #define Mem_MX25L_XSPI_WriteSecurityRegister	Mem_MX25L_XSPI_NoOperation // (Voluntarily discarded by Jp on 15/05/2025)
+
+uint8_t Mem_MX25L_XSPI_EnableMemoryMappedMode(void);	// from @MatthieuF
 
 // Sélection du ChipSelect (Manuel ou Auto) :
 #if defined(MEM_MX25L_XSPI_CS_PORT) && defined(MEM_MX25L_XSPI_CS_PIN)
