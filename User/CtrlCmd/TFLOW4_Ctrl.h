@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.349
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 24 11:42:21 2025
+// C/C++ source code generated on : Mon May 12 09:59:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -58,9 +58,9 @@ class TFLOW4_Ctrl final
   struct DW_TFLOW4_Ctrl_T {
     tb_InPutMng_In In_InPutMng;        // '<S8>/In_InPutMng'
     tb_SysMng_In SysMng_In;            // '<S9>/In_SysMng'
+    tb_InPutMng_Out InPutSecu_Out;     // '<S1>/InPutMng'
     tb_OutPutMng_In OutPutMng_In;      // '<S2>/In_OutPutMng'
     tb_WaterHeatCtrl_In In_WaterHeatCtrl;// '<S11>/In_WaterHeatCtrl'
-    tb_InPutMng_Out InPutSecu_Out;     // '<S1>/InPutMng'
     tb_WaterHeatCtrl_Out WaterHeatDrv_Out;// '<S7>/WaterHeatCtrl'
     tb_VentCtrl_In In_VentCtrl;        // '<S10>/In_VentCtrl'
     tb_SysMng_Out SysMng_Out;          // '<S4>/SysMng'

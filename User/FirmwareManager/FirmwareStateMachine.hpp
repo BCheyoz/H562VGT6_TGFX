@@ -61,16 +61,25 @@ public :
 	inline uint8_t isAnodeFlags(){return (uint8_t)di_Anode->getFlags();}
 	inline uint8_t isAnodeState(){return (uint8_t)di_Anode->getcurState();}
 
-	inline tb_simu_ena* getCC_SimuEna(){return &cc_input.SIMU.ENA;}
-	inline tb_simu_var* getCC_SimuVar(){return &cc_input.SIMU.VAR;}
-	inline tb_Control_Out* getCC_output(){return &cc_out;}
-	inline VentCtrl::P_VentCtrl_T* getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
+	inline tb_simu_ena* 			getCC_SimuEna(){return &cc_input.SIMU.ENA;}
+	inline tb_simu_var* 			getCC_SimuVar(){return &cc_input.SIMU.VAR;}
+	inline tb_hmi_expert* 			getCC_HmiExpert(){return &cc_input.HMI.EXPERT;}
+	inline tb_hmi_tech* 			getCC_HmiTech(){return &cc_input.HMI.TECH;}
+	inline tb_hmi_user* 			getCC_HmiUser(){return &cc_input.HMI.USER;}
+	inline tb_hw* 					getCC_HW(){return &cc_input.HW;}
+	inline tb_Control_Out* 			getCC_output(){return &cc_out;}
+	inline tb_VentCtrl_Out* 		getCC_subVentCtrlOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.VentCtrl_Out_Y0);}
+	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.InPutSecu_Out_Y0);}
+	inline VentCtrl::P_VentCtrl_T* 	getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
+	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
 
 
 private :
 /********************************************************************************************/
 // Core variable
 	FwMng();
+
+	void initCtrlCmd();
 
 	static FwMng *d; // instance singleton
 
