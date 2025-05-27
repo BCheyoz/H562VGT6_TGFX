@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.143
+// Model version                  : 1.146
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 24 11:22:17 2025
+// C/C++ source code generated on : Wed May 14 14:09:23 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

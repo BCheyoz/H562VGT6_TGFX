@@ -213,6 +213,34 @@ GET_SET_CC_DEFINITION(Bs_pump_xhst_pres_simu_ena, CC_SimuEna, uint16_t, bool)
 GET_SET_CC_DEFINITION(Bs_pump_evap_pres_simu_ena, CC_SimuEna, uint16_t, bool)
 GET_SET_CC_DEFINITION(Bs_v40_min_simu_ena, CC_SimuEna, uint16_t, bool)
 GET_SET_CC_DEFINITION(Bs_vent_rot_spd_simu_ena, CC_SimuEna, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_err_dtct_shnt_ena, CC_HmiExpert, uint16_t, bool)
+GET_SET_CC_DEFINITION(Ss_ctry, CC_HmiTech, uint16_t, te_ctry)
+GET_SET_CC_DEFINITION(Ss_tech_mode, CC_HmiTech, uint16_t, te_tech_mode)
+GET_SET_CC_DEFINITION(Ns_anti_lgn_day, CC_HmiTech, uint16_t, ta_time_day)
+GET_SET_CC_DEFINITION(Ss_heat_pump_test_rqst, CC_HmiTech, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_tank_size, CC_HmiTech, uint16_t, te_tank_size)
+GET_SET_CC_DEFINITION(Ss_sys_ver, CC_HmiTech, uint16_t, te_sys_ver)
+GET_SET_CC_DEFINITION(Cs_vent_pres_min, CC_HmiTech, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_pres_sys, CC_HmiTech, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Ns_hldy_nb, CC_HmiUser, uint16_t, ta_time_day)
+GET_SET_CC_DEFINITION(Ns_pers_nb, CC_HmiUser, uint16_t, ta_pers_nb)
+GET_SET_CC_DEFINITION(Ss_user_mode, CC_HmiUser, uint16_t, te_user_mode)
+GET_SET_CC_DEFINITION(Ss_anti_lgn_ena, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_heat_wtr_cnsp_rst, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_vent_cnsp_rst, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_tot_cnsp_rst, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_sg_mode_ena, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_oph_mode_ena, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_hldy_rqst, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Ss_bst_rqst, CC_HmiUser, uint16_t, te_on_off)
+GET_SET_CC_DEFINITION(Cs_tank_down_temp_raw, CC_HW, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_tank_up_temp_raw, CC_HW, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_xhst_temp_raw, CC_HW, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_pump_evap_temp_raw, CC_HW, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_temp_raw, CC_HW, uint16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_vent_pres_raw, CC_HW, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_rot_spd_raw, CC_HW, uint16_t, ta_rot_spd)
+GET_SET_CC_DEFINITION(Cs_heat_pump_pwr, CC_HW, uint16_t, ta_pwr)
 
 GET_SET_CC_DEFINITION(Cs_v40_lvl, CC_output, uint16_t, uint8_t)
 GET_SET_CC_DEFINITION(Ss_op_mode, CC_output, uint16_t, te_op_mode)
@@ -226,7 +254,6 @@ GET_SET_CC_DEFINITION(Cs_vent_temp, CC_output, uint16_t, ta_temp)
 GET_SET_CC_DEFINITION(Ss_elec_bstr_htr_sp, CC_output, uint16_t, te_on_off)
 GET_SET_CC_DEFINITION(Cs_heat_pump_rot_spd_sp, CC_output, uint16_t, ta_rot_spd)
 GET_SET_CC_DEFINITION(Cs_vent_rot_spd, CC_output, uint16_t, ta_rot_spd)
-GET_SET_CC_DEFINITION(Cs_vent_cnsp, CC_output, uint16_t, ta_pwr)
 GET_SET_CC_DEFINITION(Cs_heat_wtr_cnsp, CC_output, uint16_t, ta_pwr)
 GET_SET_CC_DEFINITION(Cs_tot_cnsp, CC_output, uint16_t, ta_pwr)
 GET_SET_CC_DEFINITION(Cs_v40_sp, CC_output, uint16_t, ta_wtr_vol)
@@ -235,6 +262,10 @@ GET_SET_CC_DEFINITION(Cs_vent_pres_sp, CC_output, uint16_t, ta_air_pres)
 GET_SET_CC_DEFINITION(Cs_vent_flow_sp, CC_output, uint16_t, ta_flow)
 GET_SET_CC_DEFINITION(Cs_vent_vltg_sp, CC_output, uint16_t, ta_vltg)
 GET_SET_CC_DEFINITION(Cs_vent_pres, CC_output, uint16_t, ta_air_pres)
+
+GET_SET_CC_DEFINITION(Cs_pres_mes_filt, CC_subVentCtrlOutput, uint16_t, ta_air_pres)
+GET_SET_CC_DEFINITION(Cs_vent_cnsp, CC_subInputSecuOutput, uint16_t, ta_egy)
+GET_SET_CC_DEFINITION(Cs_vent_pwr, CC_subInputSecuOutput, uint16_t, ta_pwr)
 
 GET_SET_CC_DEFINITION(pressSpfilt_K, CC_VentCtrlParam, float, float)
 GET_SET_CC_DEFINITION(firstOpressSpFilt_K, CC_VentCtrlParam, float, float)
@@ -266,6 +297,8 @@ GET_SET_CC_DEFINITION(PressureRegulator_Tau_f, CC_VentCtrlParam, float, float)
 GET_SET_CC_DEFINITION(Cs_flow_fan_sp_C_Value, CC_VentCtrlParam, uint16_t, ta_flow)
 GET_SET_CC_DEFINITION(NullFlowConstant_Value, CC_VentCtrlParam, uint16_t, ta_flow)
 GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uint16_t)
+
+GET_SET_CC_DEFINITION(FPresVent_Tau, CC_InputMngParam, float, float)
 
 }
 /*******************************************************************************************************/
@@ -304,8 +337,7 @@ FwMng::FwMng()
 	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
 
 	ctrlCmd = new TFLOW4_Ctrl;
-	ctrlCmd->initialize();
-	ctrlCmdCounter = 0;
+	initCtrlCmd();
 
 	/*
 	TODO données récuperer de la mémoire et a MAJ lors d'action utilisateur
@@ -416,7 +448,7 @@ void FwMng::run(void)
 #endif
 		if(regReset == TRUE){
 			regReset = FALSE;
-			ctrlCmd->initialize();
+			initCtrlCmd();
 		}
 		else {
 			if(powerOnTimer >= POWER_ON_WAIT){
@@ -534,6 +566,20 @@ void FwMng::requestBlinkMode(uint16_t newBlinkMode){
 	}
 }
 #endif
+
+void FwMng::initCtrlCmd(){
+	if(ctrlCmd == nullptr) return;
+
+	ctrlCmd->initialize();
+	ctrlCmdCounter = 0;
+
+	// set default value
+	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
+	cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
+	cc_input.HMI.TECH.Cs_vent_pres_min = 1050;
+	cc_input.HMI.TECH.Cs_vent_pres_sys = 1050;
+	cc_input.HMI.TECH.Ss_sys_ver = te_sys_ver::Individual;
+}
 
 void FwMng::CtrlCmdTask(){
 	if(ctrlCmdCounter < CTRL_CMD_TIMER){
