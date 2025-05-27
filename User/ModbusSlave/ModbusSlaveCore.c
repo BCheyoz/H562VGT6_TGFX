@@ -32,7 +32,7 @@
 #if defined(MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY)	// cf. "ModbusSlaveConf.h"
 // Requiert la Configuration de "MODBUS_SLAVE_GETTER_EXT_MEM_MAX_ADR" (cf. "ModbusSlaveConf.h"), par exemple "MEM_DEV_MAX_ADR" from "MemHistoCore.h"
 	#include "MemHistoCore.h"	// Pour accès à MEM_DEV_MAX_ADR
-	#include "Memoire.h"		// Pour accès aux Fonctions sur la Mémoire Externe, Requires Library "MemoryBridge" (cf. FW HII_CarteMere_App)
+	#include "MemoryBridge.h"	// Pour accès aux Fonctions sur la Mémoire Externe, Requires Library "MemoryBridge" (cf. FW HII_CarteMere_App)
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
 #if defined(MODBUS_SLAVE_SUPPORT_WRITE_EXTERNAL_RESSOURCE)	// cf. "ModbusSlaveConf.h"
