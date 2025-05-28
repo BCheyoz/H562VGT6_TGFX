@@ -47,7 +47,7 @@
 #include "I2cComMasterSystem.h"
 #include "GestionInputSensor.h"
 #include "UartComCore.h"
-
+#include "Display_FF028T010.h"
 #include "MX25L_XSPI/MX25L_XSPI.h"
 #include "MX25L_SPI/MX25L_SPI.h"
 
@@ -128,7 +128,7 @@ int main(void)
   //MX_OCTOSPI1_Init();
   MX_SPI2_Init();
   //MX_SPI3_Init();
-  MX_SPI4_Init();
+  //MX_SPI4_Init();
   MX_USB_HCD_Init();
   MX_TIM17_Init();
   MX_ADC2_Init();
@@ -158,6 +158,7 @@ int main(void)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
   Mem_MX25L_XSPI_Init();
   Mem_MX25L_Init();
+  Display_FF028T010_Init();
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
 
