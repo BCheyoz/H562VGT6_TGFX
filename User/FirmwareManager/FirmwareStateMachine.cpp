@@ -16,6 +16,10 @@
 #include "FanPwmIcUser.h"
 #include "EmbracoInverter.h"
 
+#include "Display_FF028T010.h"
+#include "string.h"
+#include "imgTest.h"
+
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
 #define COMMISSIONNING_RESET_PWD    76
@@ -355,6 +359,27 @@ FwMng::FwMng()
 	cc_input.HMI.USER.Ns_pers_nb; // ta_pers_nb uint8 Nb de personne dans le foyer
 	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
 	*/
+
+
+	/*** affiche une couleur uni ***********************************/
+	uint32_t col = LCD_HEIGHT/2;
+	uint32_t size = LCD_WIDTH * col * BSP_LCD_GetPixelDepth();
+	uint8_t pData[153600];
+	rgb565 pixColor;
+	pixColor.color = 3968;
+
+	for(uint32_t i = 0; i < size; i += BSP_LCD_GetPixelDepth() ){
+	  pData[i] = pixColor.B0;
+	  pData[i+1] = pixColor.B1;
+	}
+
+	//first part
+	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, col);
+	BSP_LCD_WriteData(pData, size);
+
+	// second part
+	BSP_LCD_SetDisplayWindow(0, col, LCD_WIDTH, col);
+	BSP_LCD_WriteData(pData, size);
 }
 
 void FwMng::run(void)
@@ -369,6 +394,9 @@ void FwMng::run(void)
 		powerOnTimer++;
 		return;
 	}
+
+	uint32_t col = LCD_HEIGHT/2;
+	uint32_t size = LCD_WIDTH * col * BSP_LCD_GetPixelDepth();
 
 	switch(state)
 	{
@@ -417,6 +445,15 @@ void FwMng::run(void)
 #endif
 
 	case E_PRODUCT_COMPLETE_STATE:
+		/*** affiche l'image de test par defaut ***********************************/
+
+		//first part
+		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, col);
+		BSP_LCD_WriteData((uint8_t*)imgData, size);
+
+		// second part
+		BSP_LCD_SetDisplayWindow(0, col, LCD_WIDTH, col);
+		BSP_LCD_WriteData((uint8_t*)&(imgData[size]), size);
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
 #endif
