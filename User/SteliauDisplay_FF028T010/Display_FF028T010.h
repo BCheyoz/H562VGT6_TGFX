@@ -16,7 +16,7 @@
 #endif
 
 #include "Display_FF028T010_conf.h"
-#include "st7789v.h"
+#include "ST7789.h"
 
  /* Defines *******************************************************************/
 

@@ -42,10 +42,10 @@
 #define LCD_SPI_POLL_TIMEOUT            0x50U // ms
 
 /*** Display configuration ***********************************************/
-#define LCD_ORIENTATION            		ST7789V_ORIENTATION_LANDSCAPE
+#define LCD_ORIENTATION            		ST7789_ORIENTATION_LANDSCAPE
 #define LCD_HEIGHT 						240
 #define LCD_WIDTH  						320
-#define LCD_COLOR_FORMAT  				ST7789V_FORMAT_RBG565
+#define LCD_COLOR_FORMAT  				ST7789_FORMAT_RBG565
 
 
 #ifdef __cplusplus

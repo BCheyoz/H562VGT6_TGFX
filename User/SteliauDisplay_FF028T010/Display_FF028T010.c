@@ -25,8 +25,8 @@ extern "C" {
 #define LCD_DC_HIGH()		WRITE_REG(LCD_DCX_GPIO_PORT->BRR, LCD_DCX_GPIO_PIN)
 
 /*** Variables globals ****************************************************************/
-static ST7789V_IO_t     IOCtx = { 0 };
-static ST7789V_Object_t ObjCtx = { 0 };
+static ST7789_IO_t     IOCtx = { 0 };
+static ST7789_Object_t ObjCtx = { 0 };
 static int32_t display_status = BSP_ERROR_NONE;
 static uint8_t DisplayInit = 0;
 static volatile uint8_t displayLock = 0;
@@ -45,7 +45,7 @@ uint8_t LCD_Unlock();
 
 void Display_FF028T010_Init(){
 	int32_t ret = BSP_ERROR_NONE;
-	ST7789V_InitParams_t ST7789V_InitParams;
+	ST7789_InitParams_t ST7789_InitParams;
 	uint32_t UserBaudRatePrescaler = 0;
 	uint32_t id = 0;
 
@@ -85,7 +85,7 @@ void Display_FF028T010_Init(){
 
 		if(ret == BSP_ERROR_NONE)
 		{
-			if((ST7789V_ReadID(&ObjCtx, &id) == ST7789V_OK) && (id == ST7789V_ID))
+			if((ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && (id == ST7789_ID))
 			{
 				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
 				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
@@ -96,21 +96,21 @@ void Display_FF028T010_Init(){
 					/* LCD Initialization */
 					ObjCtx.IsInitialized = 0;
 
-					ST7789V_InitParams.Endian         = ST7789V_ENDIAN_BIG;
-					ST7789V_InitParams.SwapRB         = 0;
-					ST7789V_InitParams.InvertColor    = 1;
-					ST7789V_InitParams.ColorCoding    = LCD_COLOR_FORMAT;
-					ST7789V_InitParams.Orientation    = LCD_ORIENTATION;
-					ST7789V_InitParams.FrameRate      = ST7789V_60_Hz;
-					ST7789V_InitParams.TEScanline     = 0;
-					ST7789V_InitParams.TEMode         = ST7789V_TE_DISABLED;
-					ST7789V_InitParams.Timings.hsync  = ST7789V_HSYNC;
-					ST7789V_InitParams.Timings.hbp    = ST7789V_HBP;
-					ST7789V_InitParams.Timings.hfp    = ST7789V_HFP;
-					ST7789V_InitParams.Timings.vsync  = ST7789V_VSYNC;
-					ST7789V_InitParams.Timings.vbp    = ST7789V_VBP;
-					ST7789V_InitParams.Timings.vfp    = ST7789V_VFP;
-					if(ST7789V_Init(&ObjCtx, &ST7789V_InitParams) != ST7789V_OK){
+					ST7789_InitParams.Endian         = ST7789_ENDIAN_BIG;
+					ST7789_InitParams.SwapRB         = 0;
+					ST7789_InitParams.InvertColor    = 1;
+					ST7789_InitParams.ColorCoding    = LCD_COLOR_FORMAT;
+					ST7789_InitParams.Orientation    = LCD_ORIENTATION;
+					ST7789_InitParams.FrameRate      = ST7789_60_Hz;
+					ST7789_InitParams.TEScanline     = 0;
+					ST7789_InitParams.TEMode         = ST7789_TE_DISABLED;
+					ST7789_InitParams.Timings.hsync  = ST7789_HSYNC;
+					ST7789_InitParams.Timings.hbp    = ST7789_HBP;
+					ST7789_InitParams.Timings.hfp    = ST7789_HFP;
+					ST7789_InitParams.Timings.vsync  = ST7789_VSYNC;
+					ST7789_InitParams.Timings.vbp    = ST7789_VBP;
+					ST7789_InitParams.Timings.vfp    = ST7789_VFP;
+					if(ST7789_Init(&ObjCtx, &ST7789_InitParams) != ST7789_OK){
 						ret = BSP_ERROR_COMPONENT_FAILURE;
 					}
 				}
@@ -174,7 +174,7 @@ int32_t BSP_LCD_SetOrientation(uint32_t Orientation)
 	}
 	else
 	{
-		if(ST7789V_SetOrientation(&ObjCtx, Orientation) < 0)
+		if(ST7789_SetOrientation(&ObjCtx, Orientation) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -211,7 +211,7 @@ int32_t BSP_LCD_GetOrientation(uint32_t *pOrientation)
 	else
 	{
 
-		if(ST7789V_GetOrientation(&ObjCtx, pOrientation) < 0)
+		if(ST7789_GetOrientation(&ObjCtx, pOrientation) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -243,7 +243,7 @@ int32_t BSP_LCD_GetXSize(uint32_t *pXSize)
 	}
 	else
 	{
-		if(ST7789V_GetXSize(&ObjCtx, pXSize) < 0)
+		if(ST7789_GetXSize(&ObjCtx, pXSize) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -275,7 +275,7 @@ int32_t BSP_LCD_GetYSize(uint32_t *pYSize)
 	}
 	else
 	{
-		if(ST7789V_GetYSize(&ObjCtx, pYSize) < 0)
+		if(ST7789_GetYSize(&ObjCtx, pYSize) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -305,7 +305,7 @@ int32_t BSP_LCD_DisplayOn()
 	}
 	else
 	{
-		if(ST7789V_DisplayOn(&ObjCtx) < 0)
+		if(ST7789_DisplayOn(&ObjCtx) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -335,7 +335,7 @@ int32_t BSP_LCD_DisplayOff()
 	}
 	else
 	{
-		if(ST7789V_DisplayOff(&ObjCtx) < 0)
+		if(ST7789_DisplayOff(&ObjCtx) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -408,7 +408,7 @@ int32_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, u
 	}
 	else
 	{
-		if (ST7789V_SetDisplayWindow(&ObjCtx, Xpos, Ypos, Width, Height) < 0)
+		if (ST7789_SetDisplayWindow(&ObjCtx, Xpos, Ypos, Width, Height) < 0)
 		{
 			ret = BSP_ERROR_COMPONENT_FAILURE;
 		}
@@ -437,10 +437,10 @@ uint8_t BSP_LCD_GetTransferStatus()
 uint8_t BSP_LCD_GetPixelDepth(){
 	uint8_t depth;
 	switch(LCD_COLOR_FORMAT){
-	case ST7789V_FORMAT_RBG565:
+	case ST7789_FORMAT_RBG565:
 		depth = 2;
 		break;
-	case ST7789V_FORMAT_RBG666:
+	case ST7789_FORMAT_RBG666:
 		depth = 3;
 		break;
 	default :
