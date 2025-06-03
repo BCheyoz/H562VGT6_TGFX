@@ -1,5 +1,5 @@
 /*
- *  ST7789v_define.h
+ *  ST7789Conf.h
  *
  *  Created on: 27 mai 2025
  *  Original Author: b.chhay

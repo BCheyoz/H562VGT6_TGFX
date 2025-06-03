@@ -16,7 +16,7 @@
 #endif
 
 #include "stm32h5xx.h"
-#include "ST7789v.h"
+#include <ST7789.h>
 #include "spi.h"
 
 /*** BSP / HW configuration ***********************************************/

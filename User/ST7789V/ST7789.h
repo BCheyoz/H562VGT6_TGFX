@@ -1,5 +1,5 @@
 /*
- *  ST7789v.h
+ *  ST7789.h
  *
  *  Created on: 27 mai 2025
  *  Original Author: b.chhay
@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#include "st7789v_define.h"
+#include <ST7789Conf.h>
 
 
 /*** prototype du pointer de fonction */

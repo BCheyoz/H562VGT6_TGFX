@@ -1,5 +1,5 @@
 /*
- *  ST7789v.h
+ *  ST7789.h
  *
  *  Created on: 27 mai 2025
  *  Original Author: b.chhay
@@ -8,7 +8,7 @@
  *  Version 1.0
  */
 
-#include "st7789v.h"
+#include <ST7789.h>
 
 typedef struct
 {
