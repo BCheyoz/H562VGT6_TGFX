@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'InPutMng'.
 //
-// Model version                  : 1.329
+// Model version                  : 1.335
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon May 12 09:59:06 2025
+// C/C++ source code generated on : Wed Jun  4 11:34:54 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -219,8 +219,11 @@ struct tb_InPutMng_Out
   te_on_off Ss_oph_stt;
   te_on_off Ss_vent_sys_stop_stt;
   ta_egy Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
+  ta_pwr Cs_vent_pwr;
+  ta_pwr Cs_heat_wtr_pwr;
+  ta_pwr Cs_tot_pwr;
   bool Bs_tank_down_temp_err;
   bool Bs_tank_up_temp_err;
   bool Bs_pump_xhst_temp_err;
@@ -229,7 +232,6 @@ struct tb_InPutMng_Out
   bool Bs_vent_pres_err;
   bool Bs_vent_fan_err;
   bool Bs_tank_anod_err;
-  ta_pwr Cs_vent_pwr;
 };
 
 #endif

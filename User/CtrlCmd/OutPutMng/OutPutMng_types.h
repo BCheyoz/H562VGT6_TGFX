@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'OutPutMng'.
 //
-// Model version                  : 1.22
+// Model version                  : 1.23
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 24 11:21:43 2025
+// C/C++ source code generated on : Wed Jun  4 11:33:48 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -63,10 +63,10 @@ using ta_rot_spd = uint16_t;
 
 #endif
 
-#ifndef DEFINED_TYPEDEF_FOR_ta_pwr_
-#define DEFINED_TYPEDEF_FOR_ta_pwr_
+#ifndef DEFINED_TYPEDEF_FOR_ta_egy_
+#define DEFINED_TYPEDEF_FOR_ta_egy_
 
-using ta_pwr = uint32_t;
+using ta_egy = uint32_t;
 
 #endif
 
@@ -115,9 +115,9 @@ struct tb_OutPutMng_In
   te_on_off Ss_elec_bstr_htr_sp;
   ta_rot_spd Cs_heat_pump_rot_spd_sp;
   ta_rot_spd Cs_vent_rot_spd;
-  ta_pwr Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_vent_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
   ta_wtr_vol Cs_v40_sp;
   ta_temp Cs_temp_sp;
   ta_air_pres Cs_vent_pres_sp;
@@ -145,9 +145,9 @@ struct tb_Control_Out
   te_on_off Ss_elec_bstr_htr_sp;
   ta_rot_spd Cs_heat_pump_rot_spd_sp;
   ta_rot_spd Cs_vent_rot_spd;
-  ta_pwr Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_vent_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
   ta_wtr_vol Cs_v40_sp;
   ta_temp Cs_temp_sp;
   ta_air_pres Cs_vent_pres_sp;
