@@ -27,8 +27,8 @@
 #define ABP2_UNKNOWN_TEMPERATURE_DEG_C	-999.0f	// Par défaut, la Température est initialisée à -999°c (= physiquement impossible)
 #define ABP2_PRESS_MAX_ALLOWED_ERRORS	5
 
-#define ABP2_MOY_PRES 	10	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de pression
-#define ABP2_MOY_TEMP 	10	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de température
+#define ABP2_MOY_PRES 	1	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de pression
+#define ABP2_MOY_TEMP 	1	// > 1 Pour activer un Moyennage sur les échantillons des valeurs de température
 
 // Sensor Options :
 #define ABP2_READ_TEMPERATURE		// Demander à récupérer la Température du Capteur
