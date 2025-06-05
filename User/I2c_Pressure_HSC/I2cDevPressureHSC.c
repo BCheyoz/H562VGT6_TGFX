@@ -34,8 +34,8 @@ typedef enum
 
 /******************************************************************************/
 
-#define HSC_MOY_P_FROM_ECH_BRUT 	30	// Pour activer un Moyennage sur les échantillons bruts issus du Capteur
-#define HSC_MOY_P_FROM_P_CALC		10	// Pour activer un Moyennage des valeurs déjà converties en Pression
+//#define HSC_MOY_P_FROM_ECH_BRUT 	10	// Pour activer un Moyennage sur les échantillons bruts issus du Capteur
+//#define HSC_MOY_P_FROM_P_CALC		10	// Pour activer un Moyennage des valeurs déjà converties en Pression
 #define HSC_NB_MOY_PRESSURE_AUTOZ	10	// Nb d'échantillons à prendre pour Déterminer le nouvel Offset
 
 // Temporisations :
@@ -126,12 +126,12 @@ uint16_t getI2C_HSC_Pressure_UserOffset(I2CCM_DevInitParams* pInitParams);
 
 #ifdef HSC_MOY_P_FROM_ECH_BRUT
 	uint16_t i2cCM_ReframeHSC_MaxEchBrut4Pmoy(uint16_t newValue);
-	uint16_t getI2CCM_HSC_MaxPresBrut4Moy(I2CCM_DevInitParams* pInitParams);
+	uint16_t getI2CCM_HSC_MaxEchBrut4Pmoy(I2CCM_DevInitParams* pInitParams);
 #endif // HSC_MOY_P_FROM_ECH_BRUT
 
 #ifdef HSC_MOY_P_FROM_P_CALC
 	uint16_t i2cCM_ReframeHSC_MaxPresBrut4Moy(uint16_t newValue);
-	uint16_t getI2CCM_HSC_MaxEchBrut4Pmoy(I2CCM_DevInitParams* pInitParams);
+	uint16_t getI2CCM_HSC_MaxPresBrut4Moy(I2CCM_DevInitParams* pInitParams);
 #endif // HSC_MOY_P_FROM_P_CALC
 
 /******************************************************************************/
