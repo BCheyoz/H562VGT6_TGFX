@@ -630,7 +630,7 @@ void FwMng::CtrlCmdTask(){
 	cc_DW = ctrlCmd->getDWork();
 
 	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
-	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
+	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
 
 	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
 		appointElec->SetMode(E_APPOINT_ELEC_ON);
