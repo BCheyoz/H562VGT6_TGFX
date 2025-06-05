@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatController'.
 //
-// Model version                  : 1.570
+// Model version                  : 1.598
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:52:49 2025
+// C/C++ source code generated on : Wed Jun  4 11:34:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -33,6 +33,17 @@ enum class te_heat_mode
   : int32_t {
   v40_ctrl = 0,                        // Default value
   temp_ctrl
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_te_tank_size_
+#define DEFINED_TYPEDEF_FOR_te_tank_size_
+
+enum class te_tank_size
+  : int32_t {
+  L105 = 105,                          // Default value
+  L180 = 180
 };
 
 #endif
@@ -85,6 +96,13 @@ enum class te_op_mode
   Boost = 30,
   Holidays = 40
 };
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_ta_pers_nb_
+#define DEFINED_TYPEDEF_FOR_ta_pers_nb_
+
+using ta_pers_nb = uint8_t;
 
 #endif
 

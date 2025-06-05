@@ -573,12 +573,25 @@ void FwMng::initCtrlCmd(){
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
 
+	// Calibration
+	float Cs_reg_pres_tau_1_C = 8;
+	float Cs_reg_pres_tau2_C = 3;
+	float Cs_reg_pres_gain_C = 0.05;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = (Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
 	cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
 	cc_input.HMI.TECH.Cs_vent_pres_min = 1050;
 	cc_input.HMI.TECH.Cs_vent_pres_sys = 1050;
 	cc_input.HMI.TECH.Ss_sys_ver = te_sys_ver::Individual;
+	cc_input.HMI.TECH.Ss_ctry = te_ctry::France;
+	cc_input.HMI.TECH.Ss_tech_mode = te_tech_mode::HeatPump;
+	cc_input.HMI.TECH.Ss_tank_size = te_tank_size::L180;
+	cc_input.HMI.USER.Ss_user_mode = te_user_mode::Eco;
+	cc_input.HMI.USER.Ns_pers_nb = 3;
 }
 
 void FwMng::CtrlCmdTask(){
@@ -630,7 +643,7 @@ void FwMng::CtrlCmdTask(){
 	cc_DW = ctrlCmd->getDWork();
 
 	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
-	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
+	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
 
 	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
 		appointElec->SetMode(E_APPOINT_ELEC_ON);
