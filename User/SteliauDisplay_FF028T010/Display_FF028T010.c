@@ -27,7 +27,7 @@ extern "C" {
 /*** Variables globals ****************************************************************/
 static ST7789_IO_t     IOCtx = { 0 };
 static ST7789_Object_t ObjCtx = { 0 };
-static int32_t display_status = BSP_ERROR_NONE;
+static int16_t display_status = BSP_ERROR_NONE;
 static uint8_t DisplayInit = 0;
 static volatile uint8_t displayLock = 0;
 
@@ -44,7 +44,7 @@ uint8_t LCD_TryLock(uint32_t Timeout);
 uint8_t LCD_Unlock();
 
 void Display_FF028T010_Init(){
-	int32_t ret = BSP_ERROR_NONE;
+	int16_t ret = BSP_ERROR_NONE;
 	ST7789_InitParams_t ST7789_InitParams;
 	uint32_t UserBaudRatePrescaler = 0;
 	uint32_t id = 0;
@@ -134,11 +134,11 @@ void Display_FF028T010_Init(){
 /**
  * @brief  De-Initializes the LCD resources.
 
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_DeInit()
+int16_t BSP_LCD_DeInit()
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_IO_DeInit < 0)
 	{
@@ -162,11 +162,11 @@ int32_t BSP_LCD_DeInit()
  *          @arg @ref LCD_ORIENTATION_LANDSCAPE          Landscape orientation choice of LCD screen.
  *          @arg @ref LCD_ORIENTATION_PORTRAIT_ROT180    Portrait rotated 180° orientation choice of LCD screen.
  *          @arg @ref LCD_ORIENTATION_LANDSCAPE_ROT180   Landscape rotated 180° orientation choice of LCD screen.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_SetOrientation(uint32_t Orientation)
+int16_t BSP_LCD_SetOrientation(uint32_t Orientation)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -198,11 +198,11 @@ int32_t BSP_LCD_SetOrientation(uint32_t Orientation)
  *          @arg @ref LCD_ORIENTATION_LANDSCAPE          Landscape orientation choice of LCD screen.
  *          @arg @ref LCD_ORIENTATION_PORTRAIT_ROT180    Portrait rotated 180° orientation choice of LCD screen.
  *          @arg @ref LCD_ORIENTATION_LANDSCAPE_ROT180   Landscape rotated 180° orientation choice of LCD screen.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_GetOrientation(uint32_t *pOrientation)
+int16_t BSP_LCD_GetOrientation(uint32_t *pOrientation)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -231,11 +231,11 @@ int32_t BSP_LCD_GetOrientation(uint32_t *pOrientation)
  * @brief  Gets the LCD X size.
 
  * @param  pXSize:       Pointer to Used LCD X size.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_GetXSize(uint32_t *pXSize)
+int16_t BSP_LCD_GetXSize(uint32_t *pXSize)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -263,11 +263,11 @@ int32_t BSP_LCD_GetXSize(uint32_t *pXSize)
  * @brief  Gets the LCD Y size.
 
  * @param  pYSize:       Pointer to Used LCD Y size.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_GetYSize(uint32_t *pYSize)
+int16_t BSP_LCD_GetYSize(uint32_t *pYSize)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -293,11 +293,11 @@ int32_t BSP_LCD_GetYSize(uint32_t *pYSize)
 /**
  * @brief  Switch On the display.
 
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_DisplayOn()
+int16_t BSP_LCD_DisplayOn()
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -323,11 +323,11 @@ int32_t BSP_LCD_DisplayOn()
 /**
  * @brief  Switch Off the display.
 
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_DisplayOff()
+int16_t BSP_LCD_DisplayOff()
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -355,11 +355,11 @@ int32_t BSP_LCD_DisplayOff()
 
  * @param  pData:        Pointer to data to write to LCD GRAM.
  * @param  Length:       Length of data to write to LCD GRAM.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length)
+int16_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -396,11 +396,11 @@ int32_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length)
  * @param  Ypos:         Specifies the Y position.
  * @param  Height:       Specifies the height of the rectangle to fill.
  * @param  Width:        Specifies the width of the rectangle to fill.
- * @retval int32_t:      BSP status.
+ * @retval int16_t:      BSP status.
  */
-int32_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height)
+int16_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height)
 {
-	int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
 	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
@@ -484,9 +484,9 @@ static int32_t LCD_IO_Delay(uint32_t Delay)
 	return BSP_ERROR_NONE;
 }
 
-static int32_t LCD_IO_Init(void)
+static int16_t LCD_IO_Init(void)
 {
-	int32_t ret = BSP_ERROR_NONE;
+	int16_t ret = BSP_ERROR_NONE;
 
 	// reset SW
 	LCD_RST_LOW();
@@ -517,9 +517,9 @@ static int32_t LCD_IO_Init(void)
 	return ret;
 }
 
-static int32_t LCD_IO_DeInit(void)
+static int16_t LCD_IO_DeInit(void)
 {
-	int32_t ret = BSP_ERROR_BUS_FAILURE;
+	int16_t ret = BSP_ERROR_BUS_FAILURE;
 
 	if(DisplayInit > 0){
 		HAL_SPI_MspDeInit(&hLCDSPI);
@@ -538,9 +538,9 @@ static int32_t LCD_IO_DeInit(void)
  * @param  Length length of data be read from the LCD GRAM
  * @retval BSP status
  */
-static int32_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length)
+static int16_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length)
 {
-	int32_t ret = BSP_ERROR_NONE;
+	int16_t ret = BSP_ERROR_NONE;
 
 	LCD_CS_LOW();
 	LCD_DC_HIGH();
@@ -561,7 +561,7 @@ static int32_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length)
  * @param  Length length of data be read from the LCD GRAM
  * @retval BSP status
  */
-static int32_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length)
+static int16_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length)
 {
 	/* USER CODE BEGIN LCD_IO_ReadReg */
 
@@ -576,9 +576,9 @@ static int32_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length)
  * @param  Length length of data to write to LCD GRAM
  * @retval Error status
  */
-static int32_t LCD_IO_SendData(uint8_t *pData, uint32_t Length)
+static int16_t LCD_IO_SendData(uint8_t *pData, uint32_t Length)
 {
-	int32_t ret = BSP_ERROR_NONE;
+	int16_t ret = BSP_ERROR_NONE;
 
 	LCD_CS_LOW();
 	LCD_DC_LOW();
@@ -598,9 +598,9 @@ static int32_t LCD_IO_SendData(uint8_t *pData, uint32_t Length)
  * @param  Length length of data to read from selected LCD GRAM
  * @retval Error status
  */
-static int32_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length)
+static int16_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length)
 {
-	int32_t ret = BSP_ERROR_NONE;
+	int16_t ret = BSP_ERROR_NONE;
 
 	LCD_CS_LOW();
 	LCD_DC_HIGH();

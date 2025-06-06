@@ -76,19 +76,19 @@ typedef enum
 
 /* prototypes *******************************************************************/
 void Display_FF028T010_Init();
-int32_t Display_FF028T010_Status();
+int16_t Display_FF028T010_Status();
 
-int32_t BSP_LCD_DeInit();
-int32_t BSP_LCD_SetOrientation(uint32_t Orientation);
-int32_t BSP_LCD_GetOrientation(uint32_t *pOrientation);
-int32_t BSP_LCD_GetXSize(uint32_t *pXSize);
-int32_t BSP_LCD_GetYSize(uint32_t *pYSize);
-int32_t BSP_LCD_DisplayOn();
-int32_t BSP_LCD_DisplayOff();
-int32_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length);
-int32_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height);
-uint8_t BSP_LCD_GetTransferStatus();
-uint8_t BSP_LCD_GetPixelDepth();
+int16_t BSP_LCD_DeInit();
+int16_t BSP_LCD_SetOrientation(uint32_t Orientation);
+int16_t BSP_LCD_GetOrientation(uint32_t *pOrientation);
+int16_t BSP_LCD_GetXSize(uint32_t *pXSize);
+int16_t BSP_LCD_GetYSize(uint32_t *pYSize);
+int16_t BSP_LCD_DisplayOn();
+int16_t BSP_LCD_DisplayOff();
+int16_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length);
+int16_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height);
+int16_t BSP_LCD_GetTransferStatus();
+int16_t BSP_LCD_GetPixelDepth();
 void    BSP_LCD_WaitForTransferToBeDone();
 void    BSP_LCD_SignalTransferDone();
 void    BSP_LCD_SignalTearingEffectEvent(uint8_t State, uint16_t Line);
