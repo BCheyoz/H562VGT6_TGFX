@@ -131,6 +131,11 @@ void Display_FF028T010_Init(){
 	display_status = ret;
 }
 
+int16_t Display_FF028T010_Status(){
+	return display_status;
+}
+
+
 /**
  * @brief  De-Initializes the LCD resources.
 
