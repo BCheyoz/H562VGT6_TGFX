@@ -21,13 +21,13 @@
 	* User Label : Indiquer le nom de la fonction associée, 
 
 1) Dans `Timers` -> `TIMX` Activer la PWM connecter au Backlight de l'afficheur et configurer comme suis :
-	* ![pwm param config](/doc/pwm_param.jpg)
-	* ![pwm gpio config](/doc/pwm_gpio.jpg)  
+	* ![pwm param config](doc/pwm_param.jpg)
+	* ![pwm gpio config](doc/pwm_gpio.jpg)  
 
 2) Dans `Connectivity` -> `SPIX`, Activer le port SPI connecter à l'afficheur, configurer les options ainsi :
-	* ![pwm param config](/doc/spi_param.jpg)
-	* ![pwm gpio config](/doc/spi_nvic.jpg)
-	* ![pwm gpio config](/doc/spi_gpio.jpg)  
+	* ![pwm param config](doc/spi_param.jpg)
+	* ![pwm gpio config](doc/spi_nvic.jpg)
+	* ![pwm gpio config](doc/spi_gpio.jpg)  
 
 	> Si la vitesse du SPI ne peut pas être à `128MHz`, trouver la bonne paire entre l'horloge et le Prescaler pour avoir un BaudRate d'environ `30 MBits/s`
 
