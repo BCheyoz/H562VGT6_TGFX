@@ -157,7 +157,7 @@ int main(void)
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
   Mem_MX25L_XSPI_Init();
-  Mem_MX25L_Init();
+  //Mem_MX25L_Init();
   Display_FF028T010_Init();
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
