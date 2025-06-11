@@ -19,14 +19,14 @@ extern "C" {
 
 
 /*** prototype du pointer de fonction */
-typedef int32_t (*ST7789_Init_Func)     (void);
-typedef int32_t (*ST7789_DeInit_Func)   (void);
+typedef int16_t (*ST7789_Init_Func)     (void);
+typedef int16_t (*ST7789_DeInit_Func)   (void);
 typedef int32_t (*ST7789_GetTick_Func)  (void);
 typedef int32_t (*ST7789_Delay_Func)    (uint32_t);
-typedef int32_t (*ST7789_WriteReg_Func) (volatile uint8_t*, uint32_t);
-typedef int32_t (*ST7789_ReadReg_Func)  (volatile uint8_t*, uint32_t);
-typedef int32_t (*ST7789_SendData_Func) (uint8_t*, uint32_t);
-typedef int32_t (*ST7789_RecvData_Func) (uint8_t*, uint32_t);
+typedef int16_t (*ST7789_WriteReg_Func) (volatile uint8_t*, uint32_t);
+typedef int16_t (*ST7789_ReadReg_Func)  (volatile uint8_t*, uint32_t);
+typedef int16_t (*ST7789_SendData_Func) (uint8_t*, uint32_t);
+typedef int16_t (*ST7789_RecvData_Func) (uint8_t*, uint32_t);
 
 typedef enum
 {
@@ -81,7 +81,7 @@ typedef struct
 {
 	ST7789_Init_Func          Init;
 	ST7789_DeInit_Func        DeInit;
-	uint16_t                   Address;
+	uint16_t                  Address;
 	ST7789_WriteReg_Func      WriteReg;
 	ST7789_ReadReg_Func       ReadReg;
 	ST7789_SendData_Func      SendData;

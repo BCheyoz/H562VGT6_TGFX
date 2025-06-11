@@ -34,12 +34,12 @@ static volatile uint8_t displayLock = 0;
 /*** Prototypes privées ***************************************************************/
 static int32_t LCD_IO_GetTick(void);
 static int32_t LCD_IO_Delay(uint32_t Delay);
-static int32_t LCD_IO_Init(void);
-static int32_t LCD_IO_DeInit(void);
-static int32_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length);
-static int32_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length);
-static int32_t LCD_IO_SendData(uint8_t *pData, uint32_t Length);
-static int32_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length);
+static int16_t LCD_IO_Init(void);
+static int16_t LCD_IO_DeInit(void);
+static int16_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length);
+static int16_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length);
+static int16_t LCD_IO_SendData(uint8_t *pData, uint32_t Length);
+static int16_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length);
 uint8_t LCD_TryLock(uint32_t Timeout);
 uint8_t LCD_Unlock();
 
@@ -434,8 +434,7 @@ int16_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, u
 
  * @retval uint8_t:      Zero if no Transfer, Transfer Operation code otherwise.
  */
-uint8_t BSP_LCD_GetTransferStatus()
-{
+uint8_t BSP_LCD_GetTransferStatus(){
 	return displayLock;
 }
 
