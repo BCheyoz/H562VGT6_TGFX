@@ -33,6 +33,8 @@
 
 3) Dans l'onglet général `Project Manager` -> `Advanded Settings` -> `Driver Selector` :
     * s'assurer que GPIO soit bien configuré de type `HAL`
+	* s'assurer que TIM soit bien configuré de type `HAL`
+	* s'assurer que SPI soit bien configuré de type `HAL`
 
 1) Dans `ProjectManager -> Code Generator` s'assurer des Paramètres suivants :
 	* `Generate peripheral initialization as a pair of '.c/.h' files per peripheral` -> Coché
@@ -55,6 +57,76 @@ il est souvent préférable d'utiliser la formulation `../User/SteliauDisplay_FF
 
 *Info : Pour vérifier, sélectionner `Properties` du Dossier -> `C/C++ Build` -> `Settings`.*
 
+3) Définir les signaux HW des GPIOs, de la SPI et de la PWM utiliser par l'afficheur dans le fichier `Display_FF028T010_conf.h`    
+
+	```C
+	/*** BSP / HW configuration ***********************************************/
+	#define hLCDSPI                         hspi4
+	#define LCD_SPI_INIT                    MX_SPI4_Init
+
+	/* CS Pin mapping */
+	#define LCD_CS_GPIO_PORT                GPIOE
+	#define LCD_CS_GPIO_PIN                 GPIO_PIN_4
+
+	/* DCX Pin mapping */
+	#define LCD_DCX_GPIO_PORT               GPIOE
+	#define LCD_DCX_GPIO_PIN                GPIO_PIN_3
+
+	/* RESET Pin mapping */
+	#define LCD_RESET_GPIO_PORT             GPIOC
+	#define LCD_RESET_GPIO_PIN              GPIO_PIN_4
+
+	/* BackLight PWM pin */
+	#define LCD_BACKLIGHT_HANDLE            &htim17
+	#define LCD_BACKLIGHT_CHANNEL_ID        TIM_CHANNEL_1	// TIM17_CH1
+	```
+
+4) Définir l'orientation de l'afficheur dans le fichier `Display_FF028T010_conf.h`    
+
+	```C
+	/*** Display configuration ***********************************************/
+	#define LCD_ORIENTATION            		ST7789_ORIENTATION_LANDSCAPE
+	```
+
+5) Dans le fichier `main.c/cpp` rajouter l'include de la librairie
+
+	```C
+	/* Private includes ----------------------------------------------------------*/
+	/* USER CODE BEGIN Includes */
+	#include "Display_FF028T010.h"
+	```
+
+6) Desactiver l'init de la SPI et appeler l'init du display à la place dans le fichier `main.c/cpp`
+
+	```C
+	/* Initialize all configured peripherals */
+	//MX_SPI4_Init();
+	/* USER CODE BEGIN 2 */
+
+	Display_FF028T010_Init();
+	```
+
+7) Envoyer le(s) bloc(s) d'images à afficher comme suit
+
+	```C
+	uint32_t col = LCD_HEIGHT;
+	uint32_t line = LCD_WIDTH;
+	uint32_t size = line * col;
+	uint16_t pData[size];
+	rgb565 pixColor;
+	pixColor.color = 3968; // Green
+
+	for(uint32_t i = 0; i < size; i++){
+	  pData[i] = pixColor.color;
+	}
+
+	BSP_LCD_SetDisplayWindow(0, 0, line, col);
+	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
+	```
+	
+><span style="color:red">Attention la dataSize de la HAL SPI est configurer en 16bits "HAL_SPI_Transmit" & "HAL_SPI_Receive" </span>   
+La fonction "LCD_IO_SendData" enchaine les transmitions pour palier à la limitation.  
+Par contre Les fonctios "LCD_IO_RecvData", et "LCD_IO_WriteReg" n'ont pas la fonctionnalité 
 
 
 Félicitations, c'est prêt :-) !
