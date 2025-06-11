@@ -583,13 +583,27 @@ static int16_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length)
 static int16_t LCD_IO_SendData(uint8_t *pData, uint32_t Length)
 {
 	int16_t ret = BSP_ERROR_NONE;
+	HAL_StatusTypeDef spiRet = HAL_OK;
+	uint32_t size = Length;
+	uint32_t pOffset = 0;
 
 	LCD_CS_LOW();
 	LCD_DC_LOW();
 
-	if(HAL_SPI_Transmit(&hLCDSPI, pData, Length, LCD_SPI_POLL_TIMEOUT) != HAL_OK){
+	while(size > UINT16_MAX && spiRet == HAL_OK){
+		spiRet = HAL_SPI_Transmit(&hLCDSPI, &pData[pOffset], UINT16_MAX, LCD_SPI_POLL_TIMEOUT);
+		size -= UINT16_MAX;
+		pOffset += (UINT16_MAX * 2); // x2 car les données envoyé sont en 16bits
+		if(spiRet != HAL_OK){
+			ret = BSP_ERROR_UNKNOWN_FAILURE;
+			break;
+		}
+	}
+
+	if(spiRet != HAL_OK || HAL_SPI_Transmit(&hLCDSPI, &pData[pOffset], size, LCD_SPI_POLL_TIMEOUT) != HAL_OK){
 		ret = BSP_ERROR_UNKNOWN_FAILURE;
 	}
+
 
 	LCD_CS_HIGH();
 

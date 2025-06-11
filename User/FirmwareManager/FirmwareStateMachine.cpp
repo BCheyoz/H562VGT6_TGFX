@@ -362,24 +362,15 @@ FwMng::FwMng()
 
 
 	/*** affiche une couleur uni ***********************************/
-	uint32_t col = LCD_HEIGHT/2;
-	uint32_t size = LCD_WIDTH * col * BSP_LCD_GetPixelDepth();
-	uint8_t pData[153600];
-	rgb565 pixColor;
-	pixColor.color = 3968;
+	const uint32_t size = LCD_WIDTH * LCD_HEIGHT;
+	uint16_t pData[size];
 
-	for(uint32_t i = 0; i < size; i += BSP_LCD_GetPixelDepth() ){
-	  pData[i] = pixColor.B0;
-	  pData[i+1] = pixColor.B1;
+	for(uint32_t i = 0; i < size; i++){
+	  pData[i] = 3968; // Green
 	}
 
-	//first part
-	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, col);
-	BSP_LCD_WriteData(pData, size);
-
-	// second part
-	BSP_LCD_SetDisplayWindow(0, col, LCD_WIDTH, col);
-	BSP_LCD_WriteData(pData, size);
+	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
 }
 
 void FwMng::run(void)
@@ -395,8 +386,7 @@ void FwMng::run(void)
 		return;
 	}
 
-	uint32_t col = LCD_HEIGHT/2;
-	uint32_t size = LCD_WIDTH * col * BSP_LCD_GetPixelDepth();
+	uint32_t size = LCD_WIDTH * LCD_HEIGHT * BSP_LCD_GetPixelDepth();
 
 	switch(state)
 	{
@@ -446,14 +436,8 @@ void FwMng::run(void)
 
 	case E_PRODUCT_COMPLETE_STATE:
 		/*** affiche l'image de test par defaut ***********************************/
-
-		//first part
-		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, col);
+		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
 		BSP_LCD_WriteData((uint8_t*)imgData, size);
-
-		// second part
-		BSP_LCD_SetDisplayWindow(0, col, LCD_WIDTH, col);
-		BSP_LCD_WriteData((uint8_t*)&(imgData[size]), size);
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
 #endif
