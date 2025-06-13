@@ -142,7 +142,7 @@ int main(void)
   MX_FileX_Init();
   MX_USBX_Host_Init();
   MX_FLASH_Init();
-  MX_TouchGFX_Init();
+  //MX_TouchGFX_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -178,7 +178,7 @@ int main(void)
 	GestionDigitalInputs();
 
     /* USER CODE END WHILE */
-	MX_TouchGFX_Process();
+	//MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
 	FwManager->run();
   }
