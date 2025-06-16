@@ -51,7 +51,7 @@ void Display_FF028T010_Init(){
 
 	if(LCD_TryLock(LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
-		ret = BSP_ERROR_BUSY;
+		display_status = BSP_ERROR_BUSY;
 		return;
 	}
 
@@ -83,11 +83,13 @@ void Display_FF028T010_Init(){
 			ret = BSP_ERROR_BUS_FAILURE;
 		}
 
+		// restaure le prescaler pour le prochain HAL_SPI_Init
+		hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+
 		if(ret == BSP_ERROR_NONE)
 		{
 			if((ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && (id == ST7789_ID))
 			{
-				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
 				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
 					ret = BSP_ERROR_BUS_FAILURE;
 				}
@@ -132,6 +134,44 @@ void Display_FF028T010_Init(){
 }
 
 int16_t Display_FF028T010_Status(){
+	return display_status;
+}
+
+int16_t Display_FF028T010_isAlive(){
+	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
+	{
+		display_status = BSP_ERROR_BUSY;
+	}
+	else
+	{
+		uint32_t UserBaudRatePrescaler = hLCDSPI.Init.BaudRatePrescaler;
+		hLCDSPI.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64; // Ralenti au maximum la clock pour etre sur de lire l'ID
+		if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
+			hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+			display_status = BSP_ERROR_BUS_FAILURE;
+		}
+		else
+		{
+			uint32_t id = 0;
+			if((ST7789_ReadID(&ObjCtx, &id) != ST7789_OK) || (id != ST7789_ID)){
+				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+				display_status = BSP_ERROR_COMPONENT_FAILURE;
+			}
+			else {
+				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
+					display_status = BSP_ERROR_BUS_FAILURE;
+				}
+				else {
+					display_status = BSP_ERROR_NONE;
+				}
+			}
+		}
+
+		LCD_Unlock();
+	}
+
+
 	return display_status;
 }
 
@@ -464,7 +504,6 @@ void BSP_LCD_WaitForTransferToBeDone()
 		HAL_Delay(1);
 	}
 }
-
 
 /**
  * @brief  Provide a tick value in millisecond.
