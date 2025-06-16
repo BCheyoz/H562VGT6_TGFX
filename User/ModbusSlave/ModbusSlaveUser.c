@@ -190,6 +190,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x1202,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeState,				0},
 	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeFlags,				0},
 	{ 0x1204,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		Display_FF028T010_Status,	0},
+	{ 0x1205,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetFctSetFct},		Display_FF028T010_backLightLevel, Display_FF028T010_setBackLightLevel},
 
 	// Gestion bypass
 	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},

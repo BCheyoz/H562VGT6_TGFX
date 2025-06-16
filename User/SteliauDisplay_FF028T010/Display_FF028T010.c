@@ -29,6 +29,7 @@ static ST7789_IO_t     IOCtx = { 0 };
 static ST7789_Object_t ObjCtx = { 0 };
 static int16_t display_status = BSP_ERROR_NONE;
 static uint8_t DisplayInit = 0;
+static uint8_t backlight_lvl = 100;
 static volatile uint8_t displayLock = 0;
 
 /*** Prototypes privées ***************************************************************/
@@ -56,7 +57,7 @@ void Display_FF028T010_Init(){
 	}
 
 	// Active le backlight à 100%
-	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, 100);
+	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, backlight_lvl);
 	HAL_TIM_PWM_Start(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID);
 
 	/* Configure le driver ST7789 pour utiliser les requetes SPI*/
@@ -175,7 +176,17 @@ int16_t Display_FF028T010_isAlive(){
 	return display_status;
 }
 
+void Display_FF028T010_setBackLightLevel(uint8_t lvl){
+	if(lvl < 10 || lvl > 100) return;
 
+	backlight_lvl = lvl;
+	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, backlight_lvl);
+	HAL_TIM_PWM_Start(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID);
+}
+
+uint8_t Display_FF028T010_backLightLevel(){
+	return backlight_lvl;
+}
 /**
  * @brief  De-Initializes the LCD resources.
 
