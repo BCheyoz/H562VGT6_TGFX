@@ -436,8 +436,17 @@ void FwMng::run(void)
 
 	case E_PRODUCT_COMPLETE_STATE:
 		/*** affiche l'image de test par defaut ***********************************/
+		static int8_t prevStatus = BSP_ERROR_NONE;
+		static int8_t newStatus = BSP_ERROR_NONE;
+		newStatus = Display_FF028T010_isAlive(); // verifie si l'afficheur répond toujours
+		if (prevStatus != newStatus && newStatus == BSP_ERROR_NONE){
+			Display_FF028T010_Init(); // reinit si l'afficheur est reconnecter
+		}
+		prevStatus = newStatus; // TODO a déplacer dans le gestionnaire d'erreur
+
 		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
 		BSP_LCD_WriteData((uint8_t*)imgData, size);
+
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
 #endif
