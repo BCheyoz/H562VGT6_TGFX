@@ -89,7 +89,17 @@ void Display_FF028T010_Init(){
 
 		if(ret == BSP_ERROR_NONE)
 		{
-			if((ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && (id == ST7789_ID))
+			/* on position le CS a un etat haut car le ST7789 a besoin de "voir" un front descendant
+			 * pour prendre en compte une commande */
+			LCD_CS_HIGH();
+			uint8_t count = 0;
+			do{
+				count++;
+				ST7789_ReadID(&ObjCtx, &id);
+			}
+			while(id != ST7789_ID && count <= 8); // a amélioré je ne sais pas pourquoi on n'arrive pas a lire l'ID du premier coup en release
+
+			if(/*(ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && */(id == ST7789_ID))
 			{
 				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
 					ret = BSP_ERROR_BUS_FAILURE;
@@ -116,6 +126,14 @@ void Display_FF028T010_Init(){
 					if(ST7789_Init(&ObjCtx, &ST7789_InitParams) != ST7789_OK){
 						ret = BSP_ERROR_COMPONENT_FAILURE;
 					}
+					else {
+						if(ST7789_DisplayOn(&ObjCtx) < 0){
+							ret = BSP_ERROR_COMPONENT_FAILURE;
+						}
+						else{
+							ret = BSP_ERROR_NONE;
+						}
+					}
 				}
 			}
 			else
@@ -126,10 +144,6 @@ void Display_FF028T010_Init(){
 	}
 
 	LCD_Unlock();
-
-	if(ret == BSP_ERROR_NONE){
-		ret = BSP_LCD_DisplayOn();
-	}
 
 	display_status = ret;
 }
@@ -153,13 +167,23 @@ int16_t Display_FF028T010_isAlive(){
 		}
 		else
 		{
+			/* on position le CS a un etat haut car le ST7789 a besoin de "voir" un front descendant
+			 * pour prendre en compte une commande */
+			LCD_CS_HIGH();
 			uint32_t id = 0;
-			if((ST7789_ReadID(&ObjCtx, &id) != ST7789_OK) || (id != ST7789_ID)){
-				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+			uint8_t count = 0;
+
+			do{
+				count++;
+				ST7789_ReadID(&ObjCtx, &id);
+			}
+			while(id != ST7789_ID && count <= 8); // a amélioré je ne sais pas pourquoi on n'arrive pas a lire l'ID du premier coup en release
+
+			hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+			if(id != ST7789_ID){
 				display_status = BSP_ERROR_COMPONENT_FAILURE;
 			}
 			else {
-				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
 				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
 					display_status = BSP_ERROR_BUS_FAILURE;
 				}

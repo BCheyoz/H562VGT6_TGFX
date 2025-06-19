@@ -23,6 +23,7 @@ extern "C" {
 #define ST7789_OK                (0)
 #define ST7789_ERROR             (-1)
 
+// a vérifier avec steliau => dans la doc l'ID est 0x8181B3U masi l'afficheur retourne l'ID générique
 #define  ST7789_ID              0x858552U
 
 /**
