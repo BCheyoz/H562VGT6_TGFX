@@ -574,12 +574,15 @@ void FwMng::initCtrlCmd(){
 	ctrlCmdCounter = 0;
 
 	// Calibration
-	float Cs_reg_pres_tau_1_C = 8;
-	float Cs_reg_pres_tau2_C = 3;
-	float Cs_reg_pres_gain_C = 0.05;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = Cs_reg_pres_gain_C;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = (Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+//	float Cs_reg_pres_tau_1_C = 8;
+//	float Cs_reg_pres_tau2_C = 3;
+//	float Cs_reg_pres_gain_C = 0.05;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = 1.32; //Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = 0.04; //Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = 0.56; //(Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.presFilter_Tau = 0.05;
+	VentCtrl::VentCtrl_rtP.presMesfilt_Tau = 0.05;
+	InPutMng::InPutMng_rtP.FPresVent_Tau = 8;
 
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
