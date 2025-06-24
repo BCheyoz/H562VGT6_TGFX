@@ -123,8 +123,15 @@ il est souvent préférable d'utiliser la formulation `../User/SteliauDisplay_FF
 	BSP_LCD_SetDisplayWindow(0, 0, line, col);
 	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
 	```
+
+8) Controler si l'afficheur est toujours actif via la fonction `Display_FF028T010_isAlive()`    
+	Pour savoir si l'afficheur est actif/présent on a besoin de lire l'ID à la bonne vitesse.     
+	En temps normal on ne fait que transférer sans avoir de retour et on ne peut savoir si on envoie dans le "vide"   
 	
-><span style="color:red">Attention la dataSize de la HAL SPI est configurer en 16bits "HAL_SPI_Transmit" & "HAL_SPI_Receive" </span>   
+9) Pour Controler le rétro éclairage utilise la fonction `Display_FF028T010_setBackLightLevel()`    
+	Il est réglable de 10 à 100% 
+	
+<span style="color:red">Attention la dataSize de la HAL SPI est configurer en 16bits => "HAL_SPI_Transmit" & "HAL_SPI_Receive" </span>   
 La fonction "LCD_IO_SendData" enchaine les transmitions pour palier à la limitation.  
 Par contre Les fonctios "LCD_IO_RecvData", et "LCD_IO_WriteReg" n'ont pas la fonctionnalité 
 

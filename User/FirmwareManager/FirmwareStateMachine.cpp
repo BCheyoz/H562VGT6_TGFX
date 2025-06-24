@@ -17,7 +17,6 @@
 #include "EmbracoInverter.h"
 
 #include "Display_FF028T010.h"
-#include "string.h"
 #include "imgTest.h"
 
 #ifdef USE_COMMISIONNING_STATE
@@ -386,7 +385,7 @@ void FwMng::run(void)
 		return;
 	}
 
-	uint32_t size = LCD_WIDTH * LCD_HEIGHT * BSP_LCD_GetPixelDepth();
+	const uint32_t size = LCD_WIDTH * LCD_HEIGHT * BSP_LCD_GetPixelDepth();
 
 	switch(state)
 	{
@@ -438,6 +437,7 @@ void FwMng::run(void)
 		/*** affiche l'image de test par defaut ***********************************/
 		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
 		BSP_LCD_WriteData((uint8_t*)imgData, size);
+
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
 #endif
@@ -594,12 +594,28 @@ void FwMng::initCtrlCmd(){
 	ctrlCmd->initialize();
 	ctrlCmdCounter = 0;
 
+	// Calibration
+//	float Cs_reg_pres_tau_1_C = 8;
+//	float Cs_reg_pres_tau2_C = 3;
+//	float Cs_reg_pres_gain_C = 0.05;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = 1.32; //Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = 0.04; //Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = 0.56; //(Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.presFilter_Tau = 0.05;
+	VentCtrl::VentCtrl_rtP.presMesfilt_Tau = 0.05;
+	InPutMng::InPutMng_rtP.FPresVent_Tau = 8;
+
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
 	cc_out = TFLOW4_Ctrl_rtZtb_Control_Out; // initialise la structure avec les valeurs par defaut
 	cc_input.HMI.TECH.Cs_vent_pres_min = 1050;
 	cc_input.HMI.TECH.Cs_vent_pres_sys = 1050;
 	cc_input.HMI.TECH.Ss_sys_ver = te_sys_ver::Individual;
+	cc_input.HMI.TECH.Ss_ctry = te_ctry::France;
+	cc_input.HMI.TECH.Ss_tech_mode = te_tech_mode::HeatPump;
+	cc_input.HMI.TECH.Ss_tank_size = te_tank_size::L180;
+	cc_input.HMI.USER.Ss_user_mode = te_user_mode::Eco;
+	cc_input.HMI.USER.Ns_pers_nb = 3;
 }
 
 void FwMng::CtrlCmdTask(){

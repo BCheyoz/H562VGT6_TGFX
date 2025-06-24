@@ -29,6 +29,7 @@ static ST7789_IO_t     IOCtx = { 0 };
 static ST7789_Object_t ObjCtx = { 0 };
 static int16_t display_status = BSP_ERROR_NONE;
 static uint8_t DisplayInit = 0;
+static uint8_t backlight_lvl = 100;
 static volatile uint8_t displayLock = 0;
 
 /*** Prototypes privées ***************************************************************/
@@ -51,12 +52,12 @@ void Display_FF028T010_Init(){
 
 	if(LCD_TryLock(LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
 	{
-		ret = BSP_ERROR_BUSY;
+		display_status = BSP_ERROR_BUSY;
 		return;
 	}
 
 	// Active le backlight à 100%
-	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, 100);
+	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, backlight_lvl);
 	HAL_TIM_PWM_Start(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID);
 
 	/* Configure le driver ST7789 pour utiliser les requetes SPI*/
@@ -83,11 +84,23 @@ void Display_FF028T010_Init(){
 			ret = BSP_ERROR_BUS_FAILURE;
 		}
 
+		// restaure le prescaler pour le prochain HAL_SPI_Init
+		hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+
 		if(ret == BSP_ERROR_NONE)
 		{
-			if((ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && (id == ST7789_ID))
+			/* on position le CS a un etat haut car le ST7789 a besoin de "voir" un front descendant
+			 * pour prendre en compte une commande */
+			LCD_CS_HIGH();
+			uint8_t count = 0;
+			do{
+				count++;
+				ST7789_ReadID(&ObjCtx, &id);
+			}
+			while(id != ST7789_ID && count <= 8); // a amélioré je ne sais pas pourquoi on n'arrive pas a lire l'ID du premier coup en release
+
+			if(/*(ST7789_ReadID(&ObjCtx, &id) == ST7789_OK) && */(id == ST7789_ID))
 			{
-				hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
 				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
 					ret = BSP_ERROR_BUS_FAILURE;
 				}
@@ -113,6 +126,14 @@ void Display_FF028T010_Init(){
 					if(ST7789_Init(&ObjCtx, &ST7789_InitParams) != ST7789_OK){
 						ret = BSP_ERROR_COMPONENT_FAILURE;
 					}
+					else {
+						if(ST7789_DisplayOn(&ObjCtx) < 0){
+							ret = BSP_ERROR_COMPONENT_FAILURE;
+						}
+						else{
+							ret = BSP_ERROR_NONE;
+						}
+					}
 				}
 			}
 			else
@@ -124,10 +145,6 @@ void Display_FF028T010_Init(){
 
 	LCD_Unlock();
 
-	if(ret == BSP_ERROR_NONE){
-		ret = BSP_LCD_DisplayOn();
-	}
-
 	display_status = ret;
 }
 
@@ -135,7 +152,65 @@ int16_t Display_FF028T010_Status(){
 	return display_status;
 }
 
+int16_t Display_FF028T010_isAlive(){
+	if(LCD_TryLock( LCD_OS_TIMEOUT_BUSY) != LCD_OS_ERROR_NONE)
+	{
+		display_status = BSP_ERROR_BUSY;
+	}
+	else
+	{
+		uint32_t UserBaudRatePrescaler = hLCDSPI.Init.BaudRatePrescaler;
+		hLCDSPI.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64; // Ralenti au maximum la clock pour etre sur de lire l'ID
+		if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
+			hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+			display_status = BSP_ERROR_BUS_FAILURE;
+		}
+		else
+		{
+			/* on position le CS a un etat haut car le ST7789 a besoin de "voir" un front descendant
+			 * pour prendre en compte une commande */
+			LCD_CS_HIGH();
+			uint32_t id = 0;
+			uint8_t count = 0;
 
+			do{
+				count++;
+				ST7789_ReadID(&ObjCtx, &id);
+			}
+			while(id != ST7789_ID && count <= 8); // a amélioré je ne sais pas pourquoi on n'arrive pas a lire l'ID du premier coup en release
+
+			hLCDSPI.Init.BaudRatePrescaler = UserBaudRatePrescaler;
+			if(id != ST7789_ID){
+				display_status = BSP_ERROR_COMPONENT_FAILURE;
+			}
+			else {
+				if (HAL_SPI_Init(&hLCDSPI) != HAL_OK){
+					display_status = BSP_ERROR_BUS_FAILURE;
+				}
+				else {
+					display_status = BSP_ERROR_NONE;
+				}
+			}
+		}
+
+		LCD_Unlock();
+	}
+
+
+	return display_status;
+}
+
+void Display_FF028T010_setBackLightLevel(uint8_t lvl){
+	if(lvl < 10 || lvl > 100) return;
+
+	backlight_lvl = lvl;
+	__HAL_TIM_SET_COMPARE(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID, backlight_lvl);
+	HAL_TIM_PWM_Start(LCD_BACKLIGHT_HANDLE, LCD_BACKLIGHT_CHANNEL_ID);
+}
+
+uint8_t Display_FF028T010_backLightLevel(){
+	return backlight_lvl;
+}
 /**
  * @brief  De-Initializes the LCD resources.
 
@@ -464,7 +539,6 @@ void BSP_LCD_WaitForTransferToBeDone()
 		HAL_Delay(1);
 	}
 }
-
 
 /**
  * @brief  Provide a tick value in millisecond.

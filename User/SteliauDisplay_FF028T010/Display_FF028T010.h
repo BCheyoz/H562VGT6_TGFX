@@ -75,8 +75,11 @@ typedef enum
 } LCD_OS_Error_t;
 
 /* prototypes *******************************************************************/
-void Display_FF028T010_Init();
+void    Display_FF028T010_Init();
 int16_t Display_FF028T010_Status();
+int16_t Display_FF028T010_isAlive();
+void    Display_FF028T010_setBackLightLevel(uint8_t lvl);
+uint8_t Display_FF028T010_backLightLevel();
 
 int16_t BSP_LCD_DeInit();
 int16_t BSP_LCD_SetOrientation(uint32_t Orientation);
@@ -90,8 +93,8 @@ int16_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, u
 uint8_t BSP_LCD_GetTransferStatus();
 uint8_t BSP_LCD_GetPixelDepth();
 void    BSP_LCD_WaitForTransferToBeDone();
-void    BSP_LCD_SignalTransferDone();
-void    BSP_LCD_SignalTearingEffectEvent(uint8_t State, uint16_t Line);
+//void    BSP_LCD_SignalTransferDone();
+//void    BSP_LCD_SignalTearingEffectEvent(uint8_t State, uint16_t Line);
 
 #ifdef __cplusplus
 }
