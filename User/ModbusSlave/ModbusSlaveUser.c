@@ -38,6 +38,7 @@
 //#include "ERR_ErrorManager.h"		// pour la remontee des erreurs
 //#include "DateTime32.h" 			// Pour accès à la Gestion de la DateTime
 #include "ParamProductInfo.h"		// pour la lecture de l'etat logiciel
+#include "Display_FF028T010.h"		// Pour retourner l'etat de l'afficheur
 //#include "iBusDevTesteur.h" 		// Pour accès aux Commandes de Test des iBus
 //#include "UpgradeFirmware.h"		// Pour accès aux Infos & Commandes de Mise à Jour Firmware
 
@@ -188,6 +189,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x1201,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAppointEnable,			setAppointEnable},	// Name = "AppointEnable", Enum = "0:Appoint Elec Off/1:Appoint Elec On"
 	{ 0x1202,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeState,				0},
 	{ 0x1203,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isAnodeFlags,				0},
+	{ 0x1204,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		Display_FF028T010_Status,	0},
+	{ 0x1205,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetFctSetFct},		Display_FF028T010_backLightLevel, Display_FF028T010_setBackLightLevel},
 
 	// Gestion bypass
 	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},

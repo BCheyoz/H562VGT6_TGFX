@@ -16,6 +16,9 @@
 #include "FanPwmIcUser.h"
 #include "EmbracoInverter.h"
 
+#include "Display_FF028T010.h"
+#include "imgTest.h"
+
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
 #define COMMISSIONNING_RESET_PWD    76
@@ -355,6 +358,18 @@ FwMng::FwMng()
 	cc_input.HMI.USER.Ns_pers_nb; // ta_pers_nb uint8 Nb de personne dans le foyer
 	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
 	*/
+
+
+	/*** affiche une couleur uni ***********************************/
+	const uint32_t size = LCD_WIDTH * LCD_HEIGHT;
+	uint16_t pData[size];
+
+	for(uint32_t i = 0; i < size; i++){
+	  pData[i] = 3968; // Green
+	}
+
+	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
 }
 
 void FwMng::run(void)
@@ -369,6 +384,8 @@ void FwMng::run(void)
 		powerOnTimer++;
 		return;
 	}
+
+	const uint32_t size = LCD_WIDTH * LCD_HEIGHT * BSP_LCD_GetPixelDepth();
 
 	switch(state)
 	{
@@ -417,6 +434,10 @@ void FwMng::run(void)
 #endif
 
 	case E_PRODUCT_COMPLETE_STATE:
+		/*** affiche l'image de test par defaut ***********************************/
+		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+		BSP_LCD_WriteData((uint8_t*)imgData, size);
+
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
 #endif
@@ -574,12 +595,15 @@ void FwMng::initCtrlCmd(){
 	ctrlCmdCounter = 0;
 
 	// Calibration
-	float Cs_reg_pres_tau_1_C = 8;
-	float Cs_reg_pres_tau2_C = 3;
-	float Cs_reg_pres_gain_C = 0.05;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = Cs_reg_pres_gain_C;
-	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = (Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+//	float Cs_reg_pres_tau_1_C = 8;
+//	float Cs_reg_pres_tau2_C = 3;
+//	float Cs_reg_pres_gain_C = 0.05;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kd = 1.32; //Cs_reg_pres_tau_1_C * Cs_reg_pres_tau2_C * Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Ki = 0.04; //Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.PressureRegulator_Kp = 0.56; //(Cs_reg_pres_tau_1_C + Cs_reg_pres_tau2_C)* Cs_reg_pres_gain_C;
+	VentCtrl::VentCtrl_rtP.presFilter_Tau = 0.05;
+	VentCtrl::VentCtrl_rtP.presMesfilt_Tau = 0.05;
+	InPutMng::InPutMng_rtP.FPresVent_Tau = 8;
 
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut

@@ -3,12 +3,41 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
+#include <images/BitmapDatabase.hpp>
 
 Screen1ViewBase::Screen1ViewBase()
 {
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
+
+    box1.setPosition(0, 0, 320, 240);
+    box1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    add(box1);
+
+    textArea1.setXY(170, 10);
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_784X));
+    add(textArea1);
+
+    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_SMPTE_COLOR_BARS_SVG_ID));
+    scalableImage1.setPosition(0, 160, 320, 80);
+    scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
+    add(scalableImage1);
+
+    qrCode1.setXY(9, 10);
+    qrCode1.setBuffers(qrBuffer_qrCode1, qrScratchBuffer_qrCode1);
+    qrCode1.setQRCodeVersion(3);
+    qrCode1.setScale(5);
+    qrCode1.convertStringToQRCode("ALDES.COM");
+    add(qrCode1);
+
+    scalableImage2.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
+    scalableImage2.setPosition(160, 65, 151, 78);
+    scalableImage2.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
+    add(scalableImage2);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
