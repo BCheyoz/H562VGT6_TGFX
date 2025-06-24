@@ -12,7 +12,6 @@
  *
  */
 
-
 #include "BaseDeTemps.h"		// Pour accès à nos propres déclarations publiques
 
 /* USER CODE BEGIN Includes */
@@ -22,6 +21,7 @@
 #include "AnalogInputsCore.h"
 #include "FanPwmIcCore.h"
 #include "GestionInputSensor.h"
+#include "FirmwareCInterface.h"
 /* USER CODE END Includes */
 
 
@@ -135,6 +135,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 			Handle_Led_RT_100ms();
 			Handle_Infos_RT_100ms();
 			Handle_InputSensor_RT_100ms();
+			handleFirmwareManager_RT_100ms();
 			Handle_DigitalInputs_RT_100ms();
 
 		/* USER CODE END RT_100ms */

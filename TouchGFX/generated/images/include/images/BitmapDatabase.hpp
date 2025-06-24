@@ -6,6 +6,8 @@
 #include <touchgfx/hal/Types.hpp>
 #include <touchgfx/Bitmap.hpp>
 
+const uint16_t BITMAP_ALDES100ANS_ID = 0;
+const uint16_t BITMAP_SMPTE_COLOR_BARS_SVG_ID = 1;
 
 namespace BitmapDatabase
 {

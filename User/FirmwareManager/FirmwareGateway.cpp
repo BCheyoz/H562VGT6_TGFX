@@ -12,6 +12,7 @@
 #include "FirmwareGateway.h"
 #include "utils.h"
 #include "FanPwmIcUser.h"
+#include "EmbracoInverter.h"
 #include <list>
 #include <map>
 

@@ -69,14 +69,15 @@ void LedBlinker::Handle_RT_100ms(void) // Gestion Clignotement Led de vie
 				case E_LED_VERY_FAST_BLINK:
 					led->_sabLed = (led->_curLed & 1) ? 1 : 1; // 1=100ms => 100ms ON + 100ms OFF
 					break;
-				case E_LED_HEARTBEAT_BLINK: // cycle de 600ms => 100ms ON + 100ms OFF + 100ms ON + 300ms OFF
+				case E_LED_HEARTBEAT_BLINK: // cycle de 1000ms => 200ms ON + 200ms OFF + 200ms ON + 400ms OFF
 					led->_nbSwitch++;
 					if(led->_nbSwitch < 4){
-						led->_sabLed = 1;
+						led->_sabLed = 2;
 					}
 					else {
+						led->_curLed += (led->_curLed & 1); // Retomber sur un chiffre pair pour être sûr de la maintenir éteinte
 						led->_nbSwitch = 0;
-						led->_sabLed = 3;
+						led->_sabLed = 4;
 					}
 					break;
 				default:

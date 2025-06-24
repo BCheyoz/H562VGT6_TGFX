@@ -25,8 +25,8 @@ extern "C" {
 /*** Alpha 00.01.00 (v0.1.0) by BC le 11/02/2025 ****************************************************/
 #define VERSION_FW_SOFT_TYPE    (0xB0)  // Bin type
 #define VERSION_FW_SOFT_MAJOR   (0x00)  // major version
-#define VERSION_FW_SOFT_MINOR   (0x01)  // Minor version
-#define VERSION_FW_SOFT_DEV     (0x02)  // Dev version
+#define VERSION_FW_SOFT_MINOR   (0x02)  // Minor version
+#define VERSION_FW_SOFT_DEV     (0x0C)  // Dev version
 
 
 #define VERSION_FW_SOFT			VI_MAKE_VER_SOFT_32(VERSION_FW_SOFT_TYPE, VERSION_FW_SOFT_MAJOR, VERSION_FW_SOFT_MINOR, VERSION_FW_SOFT_DEV)

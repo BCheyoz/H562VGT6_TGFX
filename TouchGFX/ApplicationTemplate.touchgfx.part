@@ -2,9 +2,7 @@
 {
   "Application": {
     "Name": "Tflow4",
-	"Info_Jp_Template_Src": "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\ApplicationTemplate.ftl",
-	"Info_Jp_Linked_From": "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\STMicroelectronics.X-CUBE-TOUCHGFX.4.24.1_Configs.xml",
-    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+	"TouchGfxPath": "../Middlewares/ST/touchgfx",
     "AvailableColorDepths": [ 16 ],
     "AvailableLCDs":
     {
