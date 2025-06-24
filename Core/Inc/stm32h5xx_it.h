@@ -63,6 +63,7 @@ void GPDMA1_Channel4_IRQHandler(void);
 void TIM1_CC_IRQHandler(void);
 void USART3_IRQHandler(void);
 void UART5_IRQHandler(void);
+void SPI4_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

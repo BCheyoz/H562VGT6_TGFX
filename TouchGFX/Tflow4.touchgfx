@@ -3,7 +3,65 @@
     "Screens": [
       {
         "Name": "Screen1",
-        "Components": [],
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 320,
+            "Height": 240,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 170,
+            "Y": 10,
+            "Width": 141,
+            "Height": 41,
+            "TextId": "__SingleUse_784X",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "scalableImage1",
+            "Y": 160,
+            "Width": 320,
+            "Height": 80,
+            "Filename": "SMPTE_Color_Bars.svg.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "QRCode",
+            "Name": "qrCode1",
+            "X": 9,
+            "Y": 10,
+            "Width": 145,
+            "Height": 145,
+            "QRVersion": 3,
+            "Scale": 5,
+            "Text": "ALDES.COM",
+            "BackgroundColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "scalableImage2",
+            "X": 160,
+            "Y": 65,
+            "Width": 151,
+            "Height": 78,
+            "Filename": "aldes100ans.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          }
+        ],
         "Interactions": []
       }
     ],

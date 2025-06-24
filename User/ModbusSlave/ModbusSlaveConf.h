@@ -380,7 +380,7 @@ Remarque : La table ModbusSlave est maintenant délocalisée dans "ModbusSlaveUs
 
 #ifdef MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 	#define MODBUS_SLAVE_GETTER_EXT_MEM_MAX_ADR 	MEM_DEV_MAX_ADR	// from "MemHistoCore.h"
-	#define MODBUS_SLAVE_CALLER_ReadArrayFromExternalMemory(a,n,b)	MemoryReadArrayHighSpeed(a,b,n)	// Requires Library "MemoryBridge"
+	#define MODBUS_SLAVE_CALLER_ReadArrayFromExternalMemory(a,n,p)	MemoryReadArrayHighSpeed(a,p,n)	// Requires Library "MemoryBridge"
 #endif // MODBUS_SLAVE_SUPPORT_DUMP_EXTERNAL_MEMORY
 
 /******************************************************************************/

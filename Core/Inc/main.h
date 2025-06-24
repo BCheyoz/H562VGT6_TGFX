@@ -61,8 +61,8 @@ void Error_Handler(void);
 #define AFF_SPI4_SCK_GPIO_Port GPIOE
 #define AFF_D_C_Pin GPIO_PIN_3
 #define AFF_D_C_GPIO_Port GPIOE
-#define AFF_SPI4_CS_Pin GPIO_PIN_4
-#define AFF_SPI4_CS_GPIO_Port GPIOE
+#define AFF_CS_Pin GPIO_PIN_4
+#define AFF_CS_GPIO_Port GPIOE
 #define AFF_SPI4_SDO_Pin GPIO_PIN_5
 #define AFF_SPI4_SDO_GPIO_Port GPIOE
 #define AFF_SPI4_SDA_Pin GPIO_PIN_6
