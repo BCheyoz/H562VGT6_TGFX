@@ -86,8 +86,8 @@
 
 #define MEM_MX25L_PERIF_NO_ERROR    0x00
 
-#define MEM_MX25L_RETURN_SUCCESS    0x01
-#define MEM_MX25L_RETURN_FAILURE    0x00
+#define MEM_MX25L_RETURN_SUCCESS    0x00
+#define MEM_MX25L_RETURN_FAILURE    0x01
 
 #define MEM_MX25L_GET_BYTE_N(value,N)   (((value)>>(8*(N))) & 0xFF)
 
@@ -154,18 +154,18 @@ void Mem_MX25L_test() {
     uint8_t tmpU8 = 25;
 
     uint8_t retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_ReadConfigRegister(&tmpU8);
-	retVal = Mem_MX25L_ReadSecurityRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadConfigRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadSecurityRegister(&tmpU8);
 
-	retVal = Mem_MX25L_ReadIdRegister(tmpU24);
+	retVal += Mem_MX25L_ReadIdRegister(tmpU24);
 
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_WriteEnable();	// WEL in StatusRegister
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_WriteEnable();	// WEL in StatusRegister
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
 
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_WriteDisable();	// WEL in StatusRegister
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_WriteDisable();	// WEL in StatusRegister
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
 
     MX25L_SPI_HALT_IF_DEBUG();
 
@@ -178,11 +178,11 @@ void Mem_MX25L_test() {
 		switch(readMode)
 		{
 		case 1:
-			retVal = Mem_MX25L_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
+			retVal += Mem_MX25L_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
 			break;
 		default:
 		case 0:
-			retVal = Mem_MX25L_ReadDataBytes(adr, nb2Read, TestBuf);
+			retVal += Mem_MX25L_ReadDataBytes(adr, nb2Read, TestBuf);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -226,14 +226,14 @@ void Mem_MX25L_test() {
 		switch(eraseMode)
 		{
 		case 1:
-			retVal = Mem_MX25L_BlockErase32K(adr);
+			retVal += Mem_MX25L_BlockErase32K(adr);
 			break;
 		case 2:
-			retVal = Mem_MX25L_BlockErase64K(adr);
+			retVal += Mem_MX25L_BlockErase64K(adr);
 			break;
 		case 0:
 		default:
-			retVal = Mem_MX25L_SectorErase4K(adr);
+			retVal += Mem_MX25L_SectorErase4K(adr);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -249,7 +249,7 @@ void Mem_MX25L_test() {
 	MX25L_SPI_HALT_IF_DEBUG();
 
 	// Test du Chip Erase :
-	retVal = Mem_MX25L_ChipErase();
+	retVal += Mem_MX25L_ChipErase();
 	if(MEM_MX25L_RETURN_SUCCESS == retVal)
 	{
 		MX25L_SPI_HALT_IF_DEBUG();
@@ -280,7 +280,7 @@ void Mem_MX25L_test() {
 //			break;
 		default:
 		case 0:
-			retVal = Mem_MX25L_WriteArray(adr, TestBuf, nb2Write);
+			retVal += Mem_MX25L_WriteArray(adr, TestBuf, nb2Write);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -295,8 +295,8 @@ void Mem_MX25L_test() {
 
 	MX25L_SPI_HALT_IF_DEBUG();
 
-	retVal = Mem_MX25L_NoOperation();
-	retVal = Mem_MX25L_IsWriteBusy();
+	retVal += Mem_MX25L_NoOperation();
+	retVal += Mem_MX25L_IsWriteBusy();
 
 	MX25L_SPI_HALT_IF_DEBUG();
 	tmpU8 = 0;
