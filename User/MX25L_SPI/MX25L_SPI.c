@@ -91,8 +91,8 @@
 
 #define MEM_MX25L_GET_BYTE_N(value,N)   (((value)>>(8*(N))) & 0xFF)
 
-#if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_MX25L_SPI)
-	#define MX25L_SPI_HALT_IF_DEBUG()	__BKPT(0) // { while(1) ClrWdt(); }
+#ifdef DEBUG_MX25L_SPI
+	#define MX25L_SPI_HALT_IF_DEBUG()	__BKPT() // { while(1) ClrWdt(); }
 //	#warning "DEBUG_MX25L_SPI is Active !!!"
 #else // (! __DEBUG) && (! DEBUG_MX25L_XSPI) :
 	#define MX25L_SPI_HALT_IF_DEBUG()	// Nop();
@@ -126,6 +126,7 @@ extern "C" {
 
 //******************************************************************************
 
+/* Test Variable *****************************************************************/
 typedef union {
 	uint8_t U8[4];
 	uint16_t U16[2];
@@ -134,20 +135,24 @@ typedef union {
 
 #define TestBuf_Size	4096
 tU8_16_32 TestBuf[TestBuf_Size] = {0};
-
-uint8_t tmpU24[3] = {0};
-uint8_t tmpU8;
-
-// Problem with NSSP Hrdware : https://community.st.com/t5/stm32-mcus-products/stm32-g4-spi-hardware-nss-with-nssp-diabled-does-not-work-only/td-p/127135
+void Mem_MX25L_test();
+/*********************************************************************************/
 
 void Mem_MX25L_Init(void)
-{ // Vérif_Jp = OK sur IS25LP le 21/06/2019
+{
     MEM_MX25L_CS_INIT();
     MEM_MX25L_PERIF_INIT();
 
-    MX25L_SPI_HALT_IF_DEBUG();
+#ifdef SPI_MEM_MX25L_RUN_IMPLEMENTATION_TEST
+    Mem_MX25L_test();
+#endif
+}
 
-    tmpU8 = 25;
+void Mem_MX25L_test() {
+    MX25L_SPI_HALT_IF_DEBUG();
+    uint8_t tmpU24[3] = {0};
+    uint8_t tmpU8 = 25;
+
     uint8_t retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
 	retVal = Mem_MX25L_ReadConfigRegister(&tmpU8);
 	retVal = Mem_MX25L_ReadSecurityRegister(&tmpU8);
