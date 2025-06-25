@@ -66,8 +66,8 @@ uint32_t GetVersionSoft32(void);
 /******************************************************************************/
 // ProductInfos : Name = "TFlow4 Product" // "TFL4 Carte Mere App Product"
 // BusConfig : Type = "rtu", Baudrate = "115200", Data = "8", Parity = "none", Stop = "1"
-// EquipmentCfg : Name = "TFL4_Mere_App_A001", Slave = "2"
-// XmlConfig : varPrefix = "modbus_TFlow4_App_", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
+// EquipmentCfg : Name = "TFL4_CarteMere_App", Slave = "2"
+// XmlConfig : varPrefix = "modbus_TFlow4_App", getPrefix = "get", setPrefix = "set", fnRead = "3", fnWrite = "16"
 
 #pragma GCC diagnostic ignored "-Wcomment" // Pour ignorer les Multi-Line dans les commentaires (from "https://stackoverflow.com/questions/925179/selectively-remove-warning-message-gcc#3125889")
 
