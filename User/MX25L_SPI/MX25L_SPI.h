@@ -37,7 +37,7 @@
 /* execute à l'init les fonctions afin de vérifier manuellement quelle fonction
  * Attention le test efface la mémoire !!!
  */
-#define SPI_MEM_MX25L_RUN_IMPLEMENTATION_TEST
+//#define SPI_MEM_MX25L_RUN_IMPLEMENTATION_TEST
 //#define DEBUG_MX25L_SPI // active des breakpoint lors du test
 
 #ifdef __cplusplus
