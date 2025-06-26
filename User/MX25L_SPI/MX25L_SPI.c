@@ -86,13 +86,13 @@
 
 #define MEM_MX25L_PERIF_NO_ERROR    0x00
 
-#define MEM_MX25L_RETURN_SUCCESS    0x01
-#define MEM_MX25L_RETURN_FAILURE    0x00
+#define MEM_MX25L_RETURN_SUCCESS    0x00
+#define MEM_MX25L_RETURN_FAILURE    0x01
 
 #define MEM_MX25L_GET_BYTE_N(value,N)   (((value)>>(8*(N))) & 0xFF)
 
-#if defined(__DEBUG) || defined(DEBUG) || defined(DEBUG_MX25L_SPI)
-	#define MX25L_SPI_HALT_IF_DEBUG()	__BKPT(0) // { while(1) ClrWdt(); }
+#ifdef DEBUG_MX25L_SPI
+	#define MX25L_SPI_HALT_IF_DEBUG()	__BKPT() // { while(1) ClrWdt(); }
 //	#warning "DEBUG_MX25L_SPI is Active !!!"
 #else // (! __DEBUG) && (! DEBUG_MX25L_XSPI) :
 	#define MX25L_SPI_HALT_IF_DEBUG()	// Nop();
@@ -126,6 +126,7 @@ extern "C" {
 
 //******************************************************************************
 
+/* Test Variable *****************************************************************/
 typedef union {
 	uint8_t U8[4];
 	uint16_t U16[2];
@@ -134,33 +135,37 @@ typedef union {
 
 #define TestBuf_Size	4096
 tU8_16_32 TestBuf[TestBuf_Size] = {0};
-
-uint8_t tmpU24[3] = {0};
-uint8_t tmpU8;
-
-// Problem with NSSP Hrdware : https://community.st.com/t5/stm32-mcus-products/stm32-g4-spi-hardware-nss-with-nssp-diabled-does-not-work-only/td-p/127135
+void Mem_MX25L_test();
+/*********************************************************************************/
 
 void Mem_MX25L_Init(void)
-{ // Vérif_Jp = OK sur IS25LP le 21/06/2019
+{
     MEM_MX25L_CS_INIT();
     MEM_MX25L_PERIF_INIT();
 
+#ifdef SPI_MEM_MX25L_RUN_IMPLEMENTATION_TEST
+    Mem_MX25L_test();
+#endif
+}
+
+void Mem_MX25L_test() {
     MX25L_SPI_HALT_IF_DEBUG();
+    uint8_t tmpU24[3] = {0};
+    uint8_t tmpU8 = 25;
 
-    tmpU8 = 25;
     uint8_t retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_ReadConfigRegister(&tmpU8);
-	retVal = Mem_MX25L_ReadSecurityRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadConfigRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadSecurityRegister(&tmpU8);
 
-	retVal = Mem_MX25L_ReadIdRegister(tmpU24);
+	retVal += Mem_MX25L_ReadIdRegister(tmpU24);
 
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_WriteEnable();	// WEL in StatusRegister
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_WriteEnable();	// WEL in StatusRegister
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
 
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
-	retVal = Mem_MX25L_WriteDisable();	// WEL in StatusRegister
-	retVal = Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
+	retVal += Mem_MX25L_WriteDisable();	// WEL in StatusRegister
+	retVal += Mem_MX25L_ReadStatusRegister(&tmpU8);
 
     MX25L_SPI_HALT_IF_DEBUG();
 
@@ -173,11 +178,11 @@ void Mem_MX25L_Init(void)
 		switch(readMode)
 		{
 		case 1:
-			retVal = Mem_MX25L_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
+			retVal += Mem_MX25L_ReadDataBytes_HighSpeed(adr, nb2Read, TestBuf);
 			break;
 		default:
 		case 0:
-			retVal = Mem_MX25L_ReadDataBytes(adr, nb2Read, TestBuf);
+			retVal += Mem_MX25L_ReadDataBytes(adr, nb2Read, TestBuf);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -221,14 +226,14 @@ void Mem_MX25L_Init(void)
 		switch(eraseMode)
 		{
 		case 1:
-			retVal = Mem_MX25L_BlockErase32K(adr);
+			retVal += Mem_MX25L_BlockErase32K(adr);
 			break;
 		case 2:
-			retVal = Mem_MX25L_BlockErase64K(adr);
+			retVal += Mem_MX25L_BlockErase64K(adr);
 			break;
 		case 0:
 		default:
-			retVal = Mem_MX25L_SectorErase4K(adr);
+			retVal += Mem_MX25L_SectorErase4K(adr);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -244,7 +249,7 @@ void Mem_MX25L_Init(void)
 	MX25L_SPI_HALT_IF_DEBUG();
 
 	// Test du Chip Erase :
-	retVal = Mem_MX25L_ChipErase();
+	retVal += Mem_MX25L_ChipErase();
 	if(MEM_MX25L_RETURN_SUCCESS == retVal)
 	{
 		MX25L_SPI_HALT_IF_DEBUG();
@@ -275,7 +280,7 @@ void Mem_MX25L_Init(void)
 //			break;
 		default:
 		case 0:
-			retVal = Mem_MX25L_WriteArray(adr, TestBuf, nb2Write);
+			retVal += Mem_MX25L_WriteArray(adr, TestBuf, nb2Write);
 			break;
 		}
 		if(MEM_MX25L_RETURN_SUCCESS == retVal)
@@ -290,8 +295,8 @@ void Mem_MX25L_Init(void)
 
 	MX25L_SPI_HALT_IF_DEBUG();
 
-	retVal = Mem_MX25L_NoOperation();
-	retVal = Mem_MX25L_IsWriteBusy();
+	retVal += Mem_MX25L_NoOperation();
+	retVal += Mem_MX25L_IsWriteBusy();
 
 	MX25L_SPI_HALT_IF_DEBUG();
 	tmpU8 = 0;
