@@ -69,7 +69,7 @@ inline __attribute__((always_inline)) void HandleBaseDeTemps_IT_1ms(void)
 // Début de Zone des Appels exécutés dans l'Interruption Sytème @ 1ms :
 
 	/* USER CODE BEGIN IT_1ms */
-
+	Handle_DigitalInputs_RT_1ms();
 	/* USER CODE END IT_1ms */
 
 // Fin de Zone des Appels exécutés dans l'Interruption Sytème @ 1ms.
