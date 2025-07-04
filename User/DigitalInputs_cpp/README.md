@@ -4,10 +4,10 @@
 * 06/02/2025 : Added by MF to [TFL4_Cartemere_App](https://git-ext.aldes.com/be-eec/productprojects/confortthermique/chauffe-eau-air/tflow4/tfl4_cartemere_app/-/tree/develop) (STM32H562VGTX)
 
 ## Information complémentaire
-Lors des essais sur la carte Tflow4 avec un échantillionnage à 1ms, le compteur peut avoir un offset allant jusqu'a +20.     
-Ce décallage est du à l'interruption du systick générer par le µC qui peut être dephasé par rapport a l'horloge HW. (déclanche un état haut sur le front montant et/ou descendant)    
-Avec un signal Carré à 50% de la fréquence, l'échantillionnage à 1ms sur 10ms on peut voir le compteur avec un décallage de +1 ou +2.   
-Ce qui entraine un décallage montant à +20 sur une période de 100ms. 
+Lors des essais sur la carte Tflow4 avec un échantillonnage à 1ms, le compteur peut avoir un offset allant jusqu'a +20.     
+Ce décalage est du à l'interruption du systick générer par le µC qui peut être dephasé par rapport a l'horloge HW. (déclanche un état haut sur le front montant et/ou descendant)    
+Avec un signal Carré à 50% de la fréquence, échantillonnage à 1ms sur 10ms on peut voir le compteur avec un décallage de +1 ou +2.   
+Ce qui entraine un décalage montant à +20 sur une période de 100ms. 
 
 # Procédure pour intégrer cette Librairie 
 ## Etape I : Configurer CubeMX 
@@ -49,13 +49,13 @@ il est souvent préférable d'utiliser la formulation "../User/DigitalInputsCore
 
 3) Ajouter l'Include du .hpp dans le "main.cpp" (par exemple parmi les "USER CODE * Includes"),
 ```
-	#include "DigitalInputsCore.hpp"
+	#include "DigitalInputs.hpp"
 ```
 
 4) Ajouter l'interface dans la lib "BaseDeTemps.c" appropriée (par exemple dans "USER CODE * Includes" du .c
  de la librairie "BaseDeTemps") :
 ```
-	#include "DigitalInputsCoreInterface.hpp"
+	#include "DigitalInputsInterface.hpp"
 ```
 
 5) Ajouter le Handler @ 1ms dans la fonction HandleBaseDeTemps_IT_1ms :
@@ -121,7 +121,7 @@ Exemple 2 : Une instance "Di_Anode" est initialisée en fonctionnement "Normalem
 
 
 ## Etape IV : Déclinaison  
-La librairie Digital Input est une classe/objet possédant des fonctions virtuel pour la décliner sur des usages spécifiques.    
+La librairie Digital Input est une classe/objet possédant des fonctions virtuelles pour la décliner sur des usages spécifiques.    
 
 
 1) Commencer par créer une class s'appelant "DigitalInputsXXX" dans un dossier nommé "DigitalInputsXXX_cpp"   

@@ -7,7 +7,7 @@
 
 #include "DigitalInputs.hpp"
 
-// Initialisation des variables static partagé entre toutes les instances de l'objet
+// Initialisation des variables statiques partagé entre toutes les instances de l'objet
 std::vector<DigitalInputs*> DigitalInputs::s_allInputs;
 
 /******************************************************************************/
@@ -104,12 +104,12 @@ void DigitalInputs::GestionDigitalInputs()
 	}
 }
 
-/****** Echantillionages ************************************************************************/
+/****** Echantillonnage ************************************************************************/
 void DigitalInputs::Handle_RT_1ms()
 {
 	for(auto input : s_allInputs)
 	{
-		// On met a jour l'echentillons que ce cadencé a 1ms
+		// On met a jour l'échantillon cadencé a 1ms
 		if(input->_sampleFreq != E_DI_SAMPLE_1ms) continue;
 
 		// handle DigitalInputs
@@ -125,7 +125,7 @@ void DigitalInputs::Handle_RT_10ms()
 {
 	for(auto input : s_allInputs)
 	{
-		// On met a jour l'echentillons que ce cadencé a 10ms
+		// On met a jour l'échantillon cadencé a 10ms
 		if(input->_sampleFreq != E_DI_SAMPLE_10ms) continue;
 
 		// handle DigitalInputs
