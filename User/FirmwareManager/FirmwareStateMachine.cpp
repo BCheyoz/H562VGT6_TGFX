@@ -11,7 +11,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "ParamProductInfo.h"
 #include "utils.h"
-#include "main.h"
+//#include "main.h"
 #include "GestionInputSensor.h"
 #include "FanPwmIcUser.h"
 #include "EmbracoInverter.h"
@@ -336,8 +336,7 @@ FwMng::FwMng()
 // User Init
 	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 
-	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
-	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
+	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
 
 	ctrlCmd = new TFLOW4_Ctrl;
 	initCtrlCmd();

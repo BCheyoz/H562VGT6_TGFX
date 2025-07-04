@@ -68,7 +68,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -98,6 +97,7 @@
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
 									<listOptionValue builtIn="false" value="../User/ST7789V"/>
 									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.32357255" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -169,7 +169,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -192,6 +191,7 @@
 									<listOptionValue builtIn="false" value="../User/UartCom"/>
 									<listOptionValue builtIn="false" value="../User/Utils"/>
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -256,7 +256,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -279,6 +278,7 @@
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/ST7789V"/>
 									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.276423556" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>
@@ -400,7 +400,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -430,6 +429,7 @@
 									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
 									<listOptionValue builtIn="false" value="../User/ST7789V"/>
 									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -500,7 +500,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -523,6 +522,7 @@
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/ST7789V"/>
 									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -587,7 +587,6 @@
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
 									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-									<listOptionValue builtIn="false" value="../User/DigitalInputs"/>
 									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
 									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
 									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -610,6 +609,7 @@
 									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
 									<listOptionValue builtIn="false" value="../User/ST7789V"/>
 									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.459381886" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
