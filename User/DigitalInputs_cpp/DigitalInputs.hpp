@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <vector>
+#include <list>
 #include <stdint.h>				// Pour les types "int*_t" & "uint*_t"
 #include "main.h"
 #include "DigitalInputsInterface.h"
@@ -27,6 +27,7 @@ class DigitalInputs {
 public:
 	DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState WorkState, E_DI_SAMPLE_FREQ freq = E_DI_SAMPLE_10ms);
 	DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState WorkState, uint16_t thresoldOn, uint16_t thresoldOff, E_DI_SAMPLE_FREQ freq = E_DI_SAMPLE_10ms);
+	virtual ~DigitalInputs();
 
 	static void GestionDigitalInputs();
 	static void Handle_RT_1ms();
@@ -65,7 +66,7 @@ protected :
 		uint16_t _Flags;
 	};
 
-	static std::vector<DigitalInputs*> s_allInputs;
+	static std::list<DigitalInputs*> s_allInputs;
 
 	virtual void newStateHandler();
 	virtual void newWorkHandler();

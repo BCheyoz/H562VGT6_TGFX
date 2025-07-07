@@ -8,7 +8,7 @@
 #include "DigitalInputs.hpp"
 
 // Initialisation des variables statiques partagé entre toutes les instances de l'objet
-std::vector<DigitalInputs*> DigitalInputs::s_allInputs;
+std::list<DigitalInputs*> DigitalInputs::s_allInputs;
 
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
@@ -44,6 +44,10 @@ DigitalInputs::DigitalInputs(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinSta
 	_sampleFreq = freq;
 
 	s_allInputs.push_back(this);
+}
+
+DigitalInputs::~DigitalInputs(){
+	s_allInputs.remove(this);
 }
 /******************************************************************************/
 void DigitalInputs::GestionDigitalInputs()
@@ -193,7 +197,7 @@ void DigitalInputs::Handle_RT_100ms()
 }
 
 /****** Controle de l'etat ************************************************************************/
-uint8_t DigitalInputs::getcurState(void) {return (uint8_t)_curState;};
+uint8_t DigitalInputs::getcurState(void) {return (uint8_t)_curState;}
 
 void DigitalInputs::newStateHandler(){
 	// Action à définir dans les classe filles
