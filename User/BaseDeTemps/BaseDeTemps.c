@@ -86,6 +86,7 @@ inline __attribute__((always_inline)) void HandleBaseDeTemps_IT_1ms(void)
 // Fin de Zone des Appels exécutés dans l'Interruption Système @ 10ms.
 
 		flag10msIT = 1; // Terminer par signaler au Programme Principal
+		++nb10msRT;
 	}
 }
 
@@ -119,7 +120,7 @@ inline __attribute__((always_inline)) void GestionBaseDeTemps(void)
 
 // Fin de Zone des Appels exécutés au RunTime dans le Programme Principal @ 10ms.
 
-		++nb10msRT;
+
 		if(nb10msRT >= NB_10ms_IN_100ms)
 		{
 			nb10msRT -= NB_10ms_IN_100ms;
