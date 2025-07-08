@@ -36,7 +36,7 @@
 #define POWER_ON_WAIT               50     // 2 sec avec un pas de temps de 100ms
 #define ERASE_MEM_KEY               3854
 
-#define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
+#define CTRL_CMD_TIMER 9 // cadencement à 1 sec : 10 * 100ms => calibré a 900ms car l'ecran prend 40ms sinon executer le CtrCmd à 1100 msec
 
 
 /******************************************************************************/
