@@ -7,7 +7,7 @@
  *  Updated on: 03 Fev. 2025
  *  Updated by: b.chhay
  *
- *  version 1.0
+ *  version 1.1
  *
  */
 

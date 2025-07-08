@@ -157,6 +157,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	HAL_GPIO_TogglePin(SW_DEBUG1_GPIO_Port, SW_DEBUG1_Pin);
 	GestionBaseDeTemps();
 	ComputeMyInfos();
 	Gestion_AnalogInputs();

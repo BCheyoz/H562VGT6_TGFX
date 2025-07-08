@@ -101,6 +101,10 @@ void Error_Handler(void);
 #define Flash_Qspi_Clk_GPIO_Port GPIOB
 #define Flash_Qspi_CS_Pin GPIO_PIN_11
 #define Flash_Qspi_CS_GPIO_Port GPIOE
+#define SW_DEBUG1_Pin GPIO_PIN_12
+#define SW_DEBUG1_GPIO_Port GPIOE
+#define SW_DEBUG2_Pin GPIO_PIN_13
+#define SW_DEBUG2_GPIO_Port GPIOE
 #define LED_ALIVE_Pin GPIO_PIN_15
 #define LED_ALIVE_GPIO_Port GPIOE
 #define INVERTER_TX_Pin GPIO_PIN_10
