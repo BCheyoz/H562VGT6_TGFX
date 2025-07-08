@@ -623,6 +623,8 @@ void FwMng::CtrlCmdTask(){
 		return;
 	}
 
+	//HAL_GPIO_WritePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_TogglePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin);
 	ctrlCmdCounter = 0;
 
 	// maj des données d'entrées ******************************************
@@ -674,5 +676,6 @@ void FwMng::CtrlCmdTask(){
 	else {
 		appointElec->SetMode(E_APPOINT_ELEC_OFF);
 	}
+	//HAL_GPIO_WritePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin, GPIO_PIN_RESET);
 }
 
