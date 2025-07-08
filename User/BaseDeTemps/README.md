@@ -1,4 +1,4 @@
-# BaseDeTemps Lib v1.0
+# BaseDeTemps Lib v1.1
 
 
 ## History Usage 

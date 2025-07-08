@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.349
+// Model version                  : 1.354
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon May 12 09:59:29 2025
+// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -563,6 +563,13 @@ struct tb_WaterHeatCtrl_In
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_ta_egy_
+#define DEFINED_TYPEDEF_FOR_ta_egy_
+
+using ta_egy = uint32_t;
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_tb_OutPutMng_In_
 #define DEFINED_TYPEDEF_FOR_tb_OutPutMng_In_
 
@@ -580,9 +587,9 @@ struct tb_OutPutMng_In
   te_on_off Ss_elec_bstr_htr_sp;
   ta_rot_spd Cs_heat_pump_rot_spd_sp;
   ta_rot_spd Cs_vent_rot_spd;
-  ta_pwr Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_vent_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
   ta_wtr_vol Cs_v40_sp;
   ta_temp Cs_temp_sp;
   ta_air_pres Cs_vent_pres_sp;
@@ -590,13 +597,6 @@ struct tb_OutPutMng_In
   ta_vltg Cs_vent_vltg_sp;
   ta_air_pres Cs_vent_pres;
 };
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_ta_egy_
-#define DEFINED_TYPEDEF_FOR_ta_egy_
-
-using ta_egy = uint32_t;
 
 #endif
 
@@ -621,8 +621,11 @@ struct tb_InPutMng_Out
   te_on_off Ss_oph_stt;
   te_on_off Ss_vent_sys_stop_stt;
   ta_egy Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
+  ta_pwr Cs_vent_pwr;
+  ta_pwr Cs_heat_wtr_pwr;
+  ta_pwr Cs_tot_pwr;
   bool Bs_tank_down_temp_err;
   bool Bs_tank_up_temp_err;
   bool Bs_pump_xhst_temp_err;
@@ -631,7 +634,6 @@ struct tb_InPutMng_Out
   bool Bs_vent_pres_err;
   bool Bs_vent_fan_err;
   bool Bs_tank_anod_err;
-  ta_pwr Cs_vent_pwr;
 };
 
 #endif
@@ -683,9 +685,9 @@ struct tb_Control_Out
   te_on_off Ss_elec_bstr_htr_sp;
   ta_rot_spd Cs_heat_pump_rot_spd_sp;
   ta_rot_spd Cs_vent_rot_spd;
-  ta_pwr Cs_vent_cnsp;
-  ta_pwr Cs_heat_wtr_cnsp;
-  ta_pwr Cs_tot_cnsp;
+  ta_egy Cs_vent_cnsp;
+  ta_egy Cs_heat_wtr_cnsp;
+  ta_egy Cs_tot_cnsp;
   ta_wtr_vol Cs_v40_sp;
   ta_temp Cs_temp_sp;
   ta_air_pres Cs_vent_pres_sp;

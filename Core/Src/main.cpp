@@ -146,7 +146,7 @@ int main(void)
   UartCom_Devices_Init();				// A appeler dans la partie Init Hardware (main.c)
   UartCom_RunTime_Init();				// A appeler dans la partie Init Logiciel (main.c)
   Mem_MX25L_XSPI_Init();
-  //Mem_MX25L_Init();
+  Mem_MX25L_Init();
   Display_FF028T010_Init();
 
   FwMng *FwManager = FwMng::getInstance(); // A initialiser en dernier
@@ -157,6 +157,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	HAL_GPIO_TogglePin(SW_DEBUG1_GPIO_Port, SW_DEBUG1_Pin);
 	GestionBaseDeTemps();
 	ComputeMyInfos();
 	Gestion_AnalogInputs();
@@ -164,7 +165,7 @@ int main(void)
 	GestionI2cSystem();
 	GestionInputSensor();
 	Gestion_UartCom();					// A appeler dans la Boucle Principale (main.c)
-	GestionDigitalInputs();
+	DigitalInputs::GestionDigitalInputs();
 
     /* USER CODE END WHILE */
 	MX_TouchGFX_Process();

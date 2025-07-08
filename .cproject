@@ -69,7 +69,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -170,7 +170,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -257,7 +257,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -401,7 +401,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -501,7 +501,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
@@ -588,7 +588,7 @@
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
                   <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs"/>
+                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
                   <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
                   <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
                   <listOptionValue builtIn="false" value="../User/FirmwareManager"/>

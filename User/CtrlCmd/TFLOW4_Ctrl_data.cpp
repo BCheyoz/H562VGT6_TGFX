@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.349
+// Model version                  : 1.354
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon May 12 09:59:29 2025
+// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -55,6 +55,9 @@ TFLOW4_Ctrl::P_TFLOW4_Ctrl_T TFLOW4_Ctrl::TFLOW4_Ctrl_P{
     0U,                                // Cs_vent_cnsp
     0U,                                // Cs_heat_wtr_cnsp
     0U,                                // Cs_tot_cnsp
+    0U,                                // Cs_vent_pwr
+    0U,                                // Cs_heat_wtr_pwr
+    0U,                                // Cs_tot_pwr
     false,                             // Bs_tank_down_temp_err
     false,                             // Bs_tank_up_temp_err
     false,                             // Bs_pump_xhst_temp_err
@@ -62,8 +65,7 @@ TFLOW4_Ctrl::P_TFLOW4_Ctrl_T TFLOW4_Ctrl::TFLOW4_Ctrl_P{
     false,                             // Bs_vent_temp_err
     false,                             // Bs_vent_pres_err
     false,                             // Bs_vent_fan_err
-    false,                             // Bs_tank_anod_err
-    0U                                 // Cs_vent_pwr
+    false                              // Bs_tank_anod_err
   },
 
   // Computed Parameter: WaterHeatDrv_Out_Y0

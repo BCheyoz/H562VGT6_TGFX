@@ -11,7 +11,7 @@
 #include "FirmwareStateMachine.hpp"
 #include "ParamProductInfo.h"
 #include "utils.h"
-#include "main.h"
+//#include "main.h"
 #include "GestionInputSensor.h"
 #include "FanPwmIcUser.h"
 #include "EmbracoInverter.h"
@@ -36,7 +36,7 @@
 #define POWER_ON_WAIT               50     // 2 sec avec un pas de temps de 100ms
 #define ERASE_MEM_KEY               3854
 
-#define CTRL_CMD_TIMER 10 // cadencement à 1 sec : 10 * 100ms
+#define CTRL_CMD_TIMER 9 // cadencement à 1 sec : 10 * 100ms => calibré a 900ms car l'ecran prend 40ms sinon executer le CtrCmd à 1100 msec
 
 
 /******************************************************************************/
@@ -336,8 +336,7 @@ FwMng::FwMng()
 // User Init
 	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 
-	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, E_SINGLE_INPUT);
-	RegisterDigitalInput2EventFnHandler(DI_EVENT_NEW_STATE | DI_EVENT_NEW_WORK_STATE, di_Anode, HandleDI_Event);
+	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
 
 	ctrlCmd = new TFLOW4_Ctrl;
 	initCtrlCmd();
@@ -624,6 +623,8 @@ void FwMng::CtrlCmdTask(){
 		return;
 	}
 
+	//HAL_GPIO_WritePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_TogglePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin);
 	ctrlCmdCounter = 0;
 
 	// maj des données d'entrées ******************************************
@@ -667,7 +668,7 @@ void FwMng::CtrlCmdTask(){
 	cc_DW = ctrlCmd->getDWork();
 
 	setFanExhaustVoltage_mV(cc_out.Cs_vent_vltg_sp); // Cs_vent_vltg_sp sortie en milliVolt
-	//SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp); // temporairement désactiver pour le RP1
+	SetEmbracoInverterSpeedConsRPM(cc_out.Cs_heat_pump_rot_spd_sp);
 
 	if(cc_out.Ss_elec_bstr_htr_sp != te_on_off::off){
 		appointElec->SetMode(E_APPOINT_ELEC_ON);
@@ -675,5 +676,6 @@ void FwMng::CtrlCmdTask(){
 	else {
 		appointElec->SetMode(E_APPOINT_ELEC_OFF);
 	}
+	//HAL_GPIO_WritePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin, GPIO_PIN_RESET);
 }
 
