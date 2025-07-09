@@ -18,6 +18,8 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase();
     virtual void setupScreen();
+    virtual void afterTransition();
+    virtual void handleTickEvent();
 
 protected:
     FrontendApplication& application() {
@@ -37,6 +39,12 @@ protected:
     touchgfx::ScalableImage scalableImage2;
 
 private:
+
+    /*
+     * Delay Variable Declarations
+     */
+    static const uint16_t WAIT3SEC_DURATION = 180;
+    uint16_t wait3secCounter;
 
 };
 

@@ -6,7 +6,8 @@
 #include <texts/TextKeysAndLanguages.hpp>
 #include <images/BitmapDatabase.hpp>
 
-Screen1ViewBase::Screen1ViewBase()
+Screen1ViewBase::Screen1ViewBase() :
+    wait3secCounter(0)
 {
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -47,5 +48,30 @@ Screen1ViewBase::~Screen1ViewBase()
 
 void Screen1ViewBase::setupScreen()
 {
+
+}
+
+void Screen1ViewBase::afterTransition()
+{
+    //wait3sec
+    //When screen transition ends delay
+    //Delay for 3000 ms (180 Ticks)
+    wait3secCounter = WAIT3SEC_DURATION;
+}
+
+void Screen1ViewBase::handleTickEvent()
+{
+    if (wait3secCounter > 0)
+    {
+        wait3secCounter--;
+        if (wait3secCounter == 0)
+        {
+
+            //Interaction1
+            //When wait3sec completed change screen to Screen2
+            //Go to Screen2 with screen transition towards East
+            application().gotoScreen2ScreenSlideTransitionEast();
+        }
+    }
 
 }

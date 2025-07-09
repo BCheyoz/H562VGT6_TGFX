@@ -21,7 +21,7 @@
             "X": 170,
             "Y": 10,
             "Width": 141,
-            "Height": 41,
+            "Height": 48,
             "TextId": "__SingleUse_784X",
             "TextRotation": "0",
             "AutoSize": true
@@ -62,7 +62,144 @@
             "ScalingAlgorithm": "Nearest-neighbor"
           }
         ],
-        "Interactions": []
+        "Interactions": [
+          {
+            "InteractionName": "wait3sec",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Type": "ActionDelay",
+              "Duration": 3000
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerInteractionCompleted",
+              "InteractionToTriggerOn": "wait3sec"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen2"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen2",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "Width": 320,
+            "Height": 240,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_poly.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 1,
+            "Y": 156,
+            "Width": 140,
+            "Height": 24,
+            "TextId": "__SingleUse_ZXEM",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_2",
+            "X": 1,
+            "Y": 126,
+            "Width": 176,
+            "Height": 30,
+            "TextId": "__SingleUse_E8VB",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_2_1",
+            "X": 1,
+            "Y": 90,
+            "Width": 211,
+            "Height": 36,
+            "TextId": "__SingleUse_PKVE",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_2_1_1",
+            "Y": 48,
+            "Width": 243,
+            "Height": 42,
+            "TextId": "__SingleUse_MFZB",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_1",
+            "X": 2,
+            "Y": 198,
+            "Width": 69,
+            "Height": 12,
+            "TextId": "__SingleUse_STD5",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_1_1",
+            "X": 1,
+            "Y": 180,
+            "Width": 105,
+            "Height": 18,
+            "TextId": "__SingleUse_04XL",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "Width": 277,
+            "Height": 48,
+            "TextId": "__SingleUse_WJGV",
+            "TextRotation": "0",
+            "AutoSize": true
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "wait3sec",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Type": "ActionDelay",
+              "Duration": 3000
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerInteractionCompleted",
+              "InteractionToTriggerOn": "wait3sec"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen1"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [],

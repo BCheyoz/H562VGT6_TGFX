@@ -7,7 +7,8 @@
 #include <touchgfx/Bitmap.hpp>
 
 const uint16_t BITMAP_ALDES100ANS_ID = 0;
-const uint16_t BITMAP_SMPTE_COLOR_BARS_SVG_ID = 1;
+const uint16_t BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_POLY_ID = 1;
+const uint16_t BITMAP_SMPTE_COLOR_BARS_SVG_ID = 2;
 
 namespace BitmapDatabase
 {
