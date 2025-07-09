@@ -50,6 +50,10 @@ MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 640K
   FLASH    (rx)    : ORIGIN = 0x08000000,   LENGTH = 1024K
+  Ext_Flash_TGFX_RSC	(r)	: ORIGIN = 0x90000000, LENGTH = 3456K
+  Ext_Flash_BL_RSC		(r)	: ORIGIN = 0x90360000, LENGTH = 188K
+  Ext_Flash_Bin_update	(r)	: ORIGIN = 0x9038f000, LENGTH = 4544K
+  Ext_Flash_Info_update	(r)	: ORIGIN = 0x907ff000, LENGTH = 4K
 }
 
 /* Sections */
@@ -186,4 +190,55 @@ SECTIONS
     libm.a ( * )
     libgcc.a ( * )
   }
+
+  .ARM.attributes 0 : { *(.ARM.attributes) }
+ /*  Unitialized Ext_Flash_BL_RSC section into "Ext_Flash_BL_RSC" Ext_Flash_BL_RSC type memory */
+ .Ext_Flash_BL_RSC_Section :
+  {
+    . = ALIGN(4);
+    KEEP (*(.Ext_Flash_BL_RSC_Section))
+    . = ALIGN(4);
+  } >Ext_Flash_BL_RSC
+
+ /*  Unitialized Ext_Flash_Bin_update section into "Ext_Flash_Bin_update" Ext_Flash_Bin_update type memory */
+ .Ext_Flash_Bin_update_Section :
+  {
+    . = ALIGN(4);
+    KEEP (*(.Ext_Flash_Bin_update_Section))
+    . = ALIGN(4);
+  } >Ext_Flash_Bin_update
+
+ /*  Unitialized Ext_Flash_TGFX_RSC section into "Ext_Flash_TGFX_RSC" Ext_Flash_TGFX_RSC type memory */
+ .Ext_Flash_TGFX_RSC_Section :
+  {
+    . = ALIGN(4);
+    KEEP (*(.Ext_Flash_TGFX_RSC_Section))
+    . = ALIGN(4);
+
+    KEEP (*(.FontFlashSection))
+    . = ALIGN(4);
+    KEEP (*(FontFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.FontSearchFlashSection))
+    . = ALIGN(4);
+    KEEP (*(FontSearchFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.TextFlashSection))
+    . = ALIGN(4);
+    KEEP (*(TextFlashSection))
+    . = ALIGN(4);
+    KEEP (*(.ExtFlashSection))
+    . = ALIGN(4);
+    KEEP (*(ExtFlashSection))
+    . = ALIGN(4);
+    
+  } >Ext_Flash_TGFX_RSC
+
+ /*  Unitialized Ext_Flash_Info_update section into "Ext_Flash_Info_update" Ext_Flash_Info_update type memory */
+ .Ext_Flash_Info_update_Section :
+  {
+    . = ALIGN(4);
+    KEEP (*(.Ext_Flash_Info_update_Section))
+    . = ALIGN(4);
+  } >Ext_Flash_Info_update
 }
