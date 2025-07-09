@@ -45,8 +45,3 @@ packages/
 
 # Ceedling's outputs:
 Tests/build/*
-
-
-
-
-TouchGFX/simulator/
