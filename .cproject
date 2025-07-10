@@ -1,700 +1,699 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
-  <storageModule moduleId="org.eclipse.cdt.core.settings">
-    <cconfiguration id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917">
-      <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917" moduleId="org.eclipse.cdt.core.settings" name="Debug">
-        <externalSettings/>
-        <extensions>
-          <extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-          <extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-        </extensions>
-      </storageModule>
-      <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug">
-          <folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917." name="/" resourcePath="">
-            <toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug.2112752495" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug">
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.1925980219" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H562VGTx" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1278850968" name="CPU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid" useByScannerDiscovery="false" value="0" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.1714870521" name="Core" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid" useByScannerDiscovery="false" value="0" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.573685134" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv5-sp-d16" valueType="enumerated"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.925945439" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2141143132" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1408326799" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H562VGTx || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../FileX/App | ../FileX/Target | ../USBX/App | ../USBX/Target | ../Drivers/STM32H5xx_HAL_Driver/Inc | ../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H5xx/Include | ../Middlewares/ST/filex/common/inc | ../Middlewares/ST/filex/ports/generic/inc | ../Middlewares/ST/usbx/common/core/inc | ../Middlewares/ST/usbx/ports/generic/inc | ../Middlewares/ST/usbx/common/usbx_host_classes/inc | ../Drivers/CMSIS/Include | ../TouchGFX/App | ../TouchGFX/target/generated | ../TouchGFX/target ||  ||  || FX_INCLUDE_USER_DEFINE_FILE | UX_INCLUDE_USER_DEFINE_FILE | USE_HAL_DRIVER | STM32H562xx ||  || USBX | Drivers | FileX | TouchGFX | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.751025434" name="Cpu clock frequence" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" useByScannerDiscovery="false" value="240" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary.714473612" name="Convert to binary file (-O binary)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex.1517864391" name="Convert to Intel Hex file (-O ihex)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-              <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.1002289943" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
-              <builder buildPath="${workspace_loc:/Tflow4}/Debug" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.1918672751" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.1341707154" name="MCU/MPU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.827938065" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g3" valueType="enumerated"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.definedsymbols.1408825983" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.definedsymbols" valueType="definedSymbols">
-                  <listOptionValue builtIn="false" value="DEBUG"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths.1432758593" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.32357255" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1054438041" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.1775455748" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1612270433" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1733507934" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-                  <listOptionValue builtIn="false" value="DEBUG"/>
-                  <listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
-                  <listOptionValue builtIn="false" value="STM32H562xx"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1340008254" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../Core/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-                  <listOptionValue builtIn="false" value="../FileX/App"/>
-                  <listOptionValue builtIn="false" value="../FileX/Target"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/App"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
-                  <listOptionValue builtIn="false" value="../USBX/App"/>
-                  <listOptionValue builtIn="false" value="../USBX/Target"/>
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.953852215" name="MCU/MPU G++ Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.226561277" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.748965851" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1233919206" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../Core/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-                  <listOptionValue builtIn="false" value="../FileX/App"/>
-                  <listOptionValue builtIn="false" value="../FileX/Target"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/App"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
-                  <listOptionValue builtIn="false" value="../USBX/App"/>
-                  <listOptionValue builtIn="false" value="../USBX/Target"/>
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.276423556" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-                  <listOptionValue builtIn="false" value="DEBUG"/>
-                  <listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
-                  <listOptionValue builtIn="false" value="STM32H562xx"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.4244353572" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
-                  <listOptionValue builtIn="false" value="-femit-class-debug-always"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.1558947467" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.1352436222" name="MCU/MPU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.302804122" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.2099206760" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
-                  <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-                  <additionalInput kind="additionalinput" paths="$(LIBS)"/>
-                </inputType>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.1931539159" name="MCU/MPU G++ Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.686409330" name="System calls" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.value.minimalimplementation" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.1945018946" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories.4244353572" name="Library search path (-L)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories" valueType="libPaths">
-                  <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Tflow4/Middlewares/ST/touchgfx/lib/core/cortex_m33/gcc}&quot;"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries.3354164258" name="Libraries (-l)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries" valueType="libs">
-                  <listOptionValue builtIn="false" value=":libtouchgfx-float-abi-hard.a"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input.54645982" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input">
-                  <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-                  <additionalInput kind="additionalinput" paths="$(LIBS)"/>
-                </inputType>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.471930823" name="MCU/MPU GCC Archiver" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.1958039611" name="MCU Size" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.1877960861" name="MCU Output Converter list file" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.2054422996" name="MCU Output Converter Hex" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.1852402" name="MCU Output Converter Binary" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.259296218" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.2092217192" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1731229611" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
-            </toolChain>
-          </folderInfo>
-          <sourceEntries>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USBX"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FileX"/>
-            <entry excluding="simulator/main.cpp|generated/simulator/src/mainBase.cpp|generated/simulator/src/video/SoftwareMJPEGDecoder.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="TouchGFX"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="User"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-            <entry excluding="ST/touchgfx/framework/source/platform/driver/touch/SDL2TouchController.cpp|ST/touchgfx/framework/source/touchgfx/widgets|ST/touchgfx/os/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2.cpp|ST/touchgfx/os/OSWrappers_cmsis.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2_icon.cpp|ST/touchgfx/framework/source/touchgfx/containers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-          </sourceEntries>
-        </configuration>
-      </storageModule>
-      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-    </cconfiguration>
-    <cconfiguration id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810">
-      <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810" moduleId="org.eclipse.cdt.core.settings" name="Release">
-        <externalSettings/>
-        <extensions>
-          <extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-          <extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
-          <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-        </extensions>
-      </storageModule>
-      <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-        <configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810" name="Release" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release">
-          <folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810." name="/" resourcePath="">
-            <toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release.1524770890" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release">
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.262545047" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H562VGTx" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1682179657" name="CPU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid" useByScannerDiscovery="false" value="0" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.55672345" name="Core" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid" useByScannerDiscovery="false" value="0" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1398177866" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv5-sp-d16" valueType="enumerated"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.1907526694" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.569869959" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.92681979" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H562VGTx || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../FileX/App | ../FileX/Target | ../USBX/App | ../USBX/Target | ../Drivers/STM32H5xx_HAL_Driver/Inc | ../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H5xx/Include | ../Middlewares/ST/filex/common/inc | ../Middlewares/ST/filex/ports/generic/inc | ../Middlewares/ST/usbx/common/core/inc | ../Middlewares/ST/usbx/ports/generic/inc | ../Middlewares/ST/usbx/common/usbx_host_classes/inc | ../Drivers/CMSIS/Include | ../TouchGFX/App | ../TouchGFX/target/generated | ../TouchGFX/target ||  ||  || FX_INCLUDE_USER_DEFINE_FILE | UX_INCLUDE_USER_DEFINE_FILE | USE_HAL_DRIVER | STM32H562xx ||  || USBX | Drivers | FileX | TouchGFX | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.816133636" name="Cpu clock frequence" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" useByScannerDiscovery="false" value="240" valueType="string"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary.526094446" name="Convert to binary file (-O binary)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-              <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex.181769615" name="Convert to Intel Hex file (-O ihex)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-              <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.718865291" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
-              <builder buildPath="${workspace_loc:/Tflow4}/Release" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.236494204" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.657297274" name="MCU/MPU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.662432241" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g0" valueType="enumerated"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths.1599965877" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1714228704" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.396609023" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.value.g0" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1297877731" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.value.os" valueType="enumerated"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1252844446" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-                  <listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
-                  <listOptionValue builtIn="false" value="STM32H562xx"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1659785554" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../Core/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-                  <listOptionValue builtIn="false" value="../FileX/App"/>
-                  <listOptionValue builtIn="false" value="../FileX/Target"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/App"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
-                  <listOptionValue builtIn="false" value="../USBX/App"/>
-                  <listOptionValue builtIn="false" value="../USBX/Target"/>
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.1509051806" name="MCU/MPU G++ Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.1459762782" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.value.g0" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.1795265822" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.value.os" valueType="enumerated"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1158988192" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
-                  <listOptionValue builtIn="false" value="../Core/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
-                  <listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
-                  <listOptionValue builtIn="false" value="../FileX/App"/>
-                  <listOptionValue builtIn="false" value="../FileX/Target"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
-                  <listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/App"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target"/>
-                  <listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
-                  <listOptionValue builtIn="false" value="../USBX/App"/>
-                  <listOptionValue builtIn="false" value="../USBX/Target"/>
-                  <listOptionValue builtIn="false" value="../User"/>
-                  <listOptionValue builtIn="false" value="../User/AnalogInputs"/>
-                  <listOptionValue builtIn="false" value="../User/AppointElec"/>
-                  <listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
-                  <listOptionValue builtIn="false" value="../User/CrcSoft"/>
-                  <listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
-                  <listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
-                  <listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
-                  <listOptionValue builtIn="false" value="../User/FanPwmIC"/>
-                  <listOptionValue builtIn="false" value="../User/FirmwareManager"/>
-                  <listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
-                  <listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
-                  <listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
-                  <listOptionValue builtIn="false" value="../User/LED_cpp"/>
-                  <listOptionValue builtIn="false" value="../User/MemHisto"/>
-                  <listOptionValue builtIn="false" value="../User/MemoryBridge"/>
-                  <listOptionValue builtIn="false" value="../User/ModbusSlave"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
-                  <listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
-                  <listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
-                  <listOptionValue builtIn="false" value="../User/UartCom"/>
-                  <listOptionValue builtIn="false" value="../User/Utils"/>
-                  <listOptionValue builtIn="false" value="../User/VersionInfos"/>
-                  <listOptionValue builtIn="false" value="../User/ST7789V"/>
-                  <listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.459381886" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
-                  <listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
-                  <listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
-                  <listOptionValue builtIn="false" value="STM32H562xx"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.3354164258" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
-                  <listOptionValue builtIn="false" value="-femit-class-debug-always"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.534143068" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp"/>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.2005264479" name="MCU/MPU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.449865141" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.294766873" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
-                  <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-                  <additionalInput kind="additionalinput" paths="$(LIBS)"/>
-                </inputType>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.1200554442" name="MCU/MPU G++ Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker">
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.708373038" name="System calls" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.systemcalls.value.minimalimplementation" valueType="enumerated"/>
-                <option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.648619149" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories.0628518293" name="Library search path (-L)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories" valueType="libPaths">
-                  <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Tflow4/Middlewares/ST/touchgfx/lib/core/cortex_m33/gcc}&quot;"/>
-                </option>
-                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries.9637725231" name="Libraries (-l)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries" valueType="libs">
-                  <listOptionValue builtIn="false" value=":libtouchgfx-float-abi-hard.a"/>
-                </option>
-                <inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input.1174649128" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input">
-                  <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-                  <additionalInput kind="additionalinput" paths="$(LIBS)"/>
-                </inputType>
-              </tool>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.1102905243" name="MCU/MPU GCC Archiver" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.565277184" name="MCU Size" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.832928252" name="MCU Output Converter list file" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.255797073" name="MCU Output Converter Hex" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.1594979647" name="MCU Output Converter Binary" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.1449288401" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.55934765" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec"/>
-              <tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1862690717" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
-            </toolChain>
-          </folderInfo>
-          <sourceEntries>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USBX"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FileX"/>
-            <entry excluding="simulator/main.cpp|generated/simulator/src/mainBase.cpp|generated/simulator/src/video/SoftwareMJPEGDecoder.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="TouchGFX"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="User"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-            <entry excluding="ST/touchgfx/framework/source/platform/driver/touch/SDL2TouchController.cpp|ST/touchgfx/framework/source/touchgfx/widgets|ST/touchgfx/os/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2.cpp|ST/touchgfx/os/OSWrappers_cmsis.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2_icon.cpp|ST/touchgfx/framework/source/touchgfx/containers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
-            <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-          </sourceEntries>
-        </configuration>
-      </storageModule>
-      <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-    </cconfiguration>
-  </storageModule>
-  <storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
-  <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-    <project id="Tflow4.null.1327574649" name="Tflow4"/>
-  </storageModule>
-  <storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-  <storageModule moduleId="scannerConfiguration">
-    <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-    <scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1054438041;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366">
-      <autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
-    </scannerConfigBuildInfo>
-    <scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.1509051806;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.534143068">
-      <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-    </scannerConfigBuildInfo>
-    <scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.953852215;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.1558947467">
-      <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-    </scannerConfigBuildInfo>
-    <scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1714228704;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534">
-      <autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
-    </scannerConfigBuildInfo>
-  </storageModule>
-  <storageModule moduleId="refreshScope" versionNumber="2">
-    <configuration configurationName="Debug">
-      <resource resourceType="PROJECT" workspacePath="/Tflow4"/>
-    </configuration>
-    <configuration configurationName="Release">
-      <resource resourceType="PROJECT" workspacePath="/Tflow4"/>
-    </configuration>
-  </storageModule>
-  <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917" name="Debug" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug">
+					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917." name="/" resourcePath="">
+						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug.2112752495" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.debug">
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.1925980219" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H562VGTx" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1278850968" name="CPU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid" useByScannerDiscovery="false" value="0" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.1714870521" name="Core" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid" useByScannerDiscovery="false" value="0" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.573685134" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv5-sp-d16" valueType="enumerated"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.925945439" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.2141143132" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.1408326799" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Debug || true || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H562VGTx || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../FileX/App | ../FileX/Target | ../USBX/App | ../USBX/Target | ../Drivers/STM32H5xx_HAL_Driver/Inc | ../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H5xx/Include | ../Middlewares/ST/filex/common/inc | ../Middlewares/ST/filex/ports/generic/inc | ../Middlewares/ST/usbx/common/core/inc | ../Middlewares/ST/usbx/ports/generic/inc | ../Middlewares/ST/usbx/common/usbx_host_classes/inc | ../Drivers/CMSIS/Include | ../TouchGFX/App | ../TouchGFX/target/generated | ../TouchGFX/target ||  ||  || FX_INCLUDE_USER_DEFINE_FILE | UX_INCLUDE_USER_DEFINE_FILE | USE_HAL_DRIVER | STM32H562xx ||  || USBX | Drivers | FileX | TouchGFX | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.751025434" name="Cpu clock frequence" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" useByScannerDiscovery="false" value="240" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary.714473612" name="Convert to binary file (-O binary)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex.1517864391" name="Convert to Intel Hex file (-O ihex)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.1002289943" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
+							<builder buildPath="${workspace_loc:/Tflow4}/Debug" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.1918672751" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.1341707154" name="MCU/MPU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.827938065" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g3" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.definedsymbols.1408825983" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.definedsymbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="DEBUG"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths.1432758593" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.32357255" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1054438041" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.1775455748" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1612270433" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1733507934" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="DEBUG"/>
+									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
+									<listOptionValue builtIn="false" value="STM32H562xx"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1340008254" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="../Core/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.953852215" name="MCU/MPU G++ Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.226561277" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.value.g3" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.748965851" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1233919206" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="../Core/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.276423556" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="DEBUG"/>
+									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
+									<listOptionValue builtIn="false" value="STM32H562xx"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.4244353572" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
+									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.1558947467" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.1352436222" name="MCU/MPU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.302804122" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.2099206760" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.1931539159" name="MCU/MPU G++ Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.686409330" name="System calls" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.value.minimalimplementation" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.1945018946" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories.4244353572" name="Library search path (-L)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Tflow4/Middlewares/ST/touchgfx/lib/core/cortex_m33/gcc}&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries.3354164258" name="Libraries (-l)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value=":libtouchgfx-float-abi-hard.a"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input.54645982" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.471930823" name="MCU/MPU GCC Archiver" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.1958039611" name="MCU Size" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.1877960861" name="MCU Output Converter list file" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.2054422996" name="MCU Output Converter Hex" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.1852402" name="MCU Output Converter Binary" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.259296218" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.2092217192" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1731229611" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USBX"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FileX"/>
+						<entry excluding="simulator/main.cpp|generated/simulator/src/mainBase.cpp|generated/simulator/src/video/SoftwareMJPEGDecoder.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="TouchGFX"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="User"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
+						<entry excluding="ST/touchgfx/framework/source/platform/driver/touch/SDL2TouchController.cpp|ST/touchgfx/framework/source/touchgfx/widgets|ST/touchgfx/os/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2.cpp|ST/touchgfx/os/OSWrappers_cmsis.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2_icon.cpp|ST/touchgfx/framework/source/touchgfx/containers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810" name="Release" parent="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release">
+					<folderInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810." name="/" resourcePath="">
+						<toolChain id="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release.1524770890" name="MCU ARM GCC" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.toolchain.exe.release">
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu.262545047" name="MCU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_mcu" useByScannerDiscovery="true" value="STM32H562VGTx" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid.1682179657" name="CPU" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_cpuid" useByScannerDiscovery="false" value="0" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid.55672345" name="Core" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_coreid" useByScannerDiscovery="false" value="0" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.1398177866" name="Floating-point unit" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.fpu.value.fpv5-sp-d16" valueType="enumerated"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.1907526694" name="Floating-point ABI" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi" useByScannerDiscovery="true" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.floatabi.value.hard" valueType="enumerated"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board.569869959" name="Board" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.target_board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults.92681979" name="Defaults" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.defaults" useByScannerDiscovery="false" value="com.st.stm32cube.ide.common.services.build.inputs.revA.1.0.6 || Release || false || Executable || com.st.stm32cube.ide.mcu.gnu.managedbuild.option.toolchain.value.workspace || STM32H562VGTx || 0 || 0 || arm-none-eabi- || ${gnu_tools_for_stm32_compiler_path} || ../Core/Inc | ../FileX/App | ../FileX/Target | ../USBX/App | ../USBX/Target | ../Drivers/STM32H5xx_HAL_Driver/Inc | ../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy | ../Drivers/CMSIS/Device/ST/STM32H5xx/Include | ../Middlewares/ST/filex/common/inc | ../Middlewares/ST/filex/ports/generic/inc | ../Middlewares/ST/usbx/common/core/inc | ../Middlewares/ST/usbx/ports/generic/inc | ../Middlewares/ST/usbx/common/usbx_host_classes/inc | ../Drivers/CMSIS/Include | ../TouchGFX/App | ../TouchGFX/target/generated | ../TouchGFX/target ||  ||  || FX_INCLUDE_USER_DEFINE_FILE | UX_INCLUDE_USER_DEFINE_FILE | USE_HAL_DRIVER | STM32H562xx ||  || USBX | Drivers | FileX | TouchGFX | Core/Startup | Middlewares | Core ||  ||  || ${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld} || true || NonSecure ||  || secure_nsclib.o ||  || None ||  ||  || " valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.debug.option.cpuclock.816133636" name="Cpu clock frequence" superClass="com.st.stm32cube.ide.mcu.debug.option.cpuclock" useByScannerDiscovery="false" value="240" valueType="string"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary.526094446" name="Convert to binary file (-O binary)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.convertbinary" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex.181769615" name="Convert to Intel Hex file (-O ihex)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.option.converthex" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.718865291" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
+							<builder buildPath="${workspace_loc:/Tflow4}/Release" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.236494204" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.657297274" name="MCU/MPU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.662432241" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g0" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths.1599965877" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.1211732384" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1714228704" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.396609023" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.debuglevel.value.g0" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.1297877731" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.optimization.level.value.os" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols.1252844446" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
+									<listOptionValue builtIn="false" value="STM32H562xx"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.1659785554" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="../Core/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.1509051806" name="MCU/MPU G++ Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.1459762782" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.debuglevel.value.g0" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.1795265822" name="Optimization level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.optimization.level.value.os" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths.1158988192" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="../Core/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32H5xx/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../Drivers/STM32H5xx_HAL_Driver/Inc/Legacy"/>
+									<listOptionValue builtIn="false" value="../FileX/App"/>
+									<listOptionValue builtIn="false" value="../FileX/Target"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/common/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/filex/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/touchgfx/framework/include"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/core/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/common/usbx_host_classes/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/usbx/ports/generic/inc"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/App"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/fonts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/gui_generated/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/images/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/texts/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/generated/videos/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/gui/include"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target"/>
+									<listOptionValue builtIn="false" value="../TouchGFX/target/generated"/>
+									<listOptionValue builtIn="false" value="../USBX/App"/>
+									<listOptionValue builtIn="false" value="../USBX/Target"/>
+									<listOptionValue builtIn="false" value="../User"/>
+									<listOptionValue builtIn="false" value="../User/AnalogInputs"/>
+									<listOptionValue builtIn="false" value="../User/AppointElec"/>
+									<listOptionValue builtIn="false" value="../User/BaseDeTemps"/>
+									<listOptionValue builtIn="false" value="../User/CrcSoft"/>
+									<listOptionValue builtIn="false" value="../User/CTN_TT4_10KC3"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/_sharedutils"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/cntrlSaturation"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Derivator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/FallingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/firstOrderTF"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Hysteresis"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/InPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Integrator"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OpScaleDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/OutPutMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/PID_backCalc"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/R_S_FlipFlop"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/RisingEdgeDetect"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SensErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/StaticErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysConfigCalib"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/SysMng"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/Timer"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariableRisingEdgeDelay"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VariationErrorDetection"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/VentCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatController"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatCtrl"/>
+									<listOptionValue builtIn="false" value="../User/CtrlCmd/WaterHeatSpCalc"/>
+									<listOptionValue builtIn="false" value="../User/DigitalInputs_cpp"/>
+									<listOptionValue builtIn="false" value="../User/EmbracoInverter"/>
+									<listOptionValue builtIn="false" value="../User/FanPwmIC"/>
+									<listOptionValue builtIn="false" value="../User/FirmwareManager"/>
+									<listOptionValue builtIn="false" value="../User/GestionInputSensor"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterCore"/>
+									<listOptionValue builtIn="false" value="../User/I2cComMasterSystem"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_ABP2"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_HSC"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_LMI"/>
+									<listOptionValue builtIn="false" value="../User/I2c_Pressure_SDP8"/>
+									<listOptionValue builtIn="false" value="../User/LED_cpp"/>
+									<listOptionValue builtIn="false" value="../User/MemHisto"/>
+									<listOptionValue builtIn="false" value="../User/MemoryBridge"/>
+									<listOptionValue builtIn="false" value="../User/ModbusSlave"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_SPI"/>
+									<listOptionValue builtIn="false" value="../User/MX25L_XSPI"/>
+									<listOptionValue builtIn="false" value="../User/ParamProductInfo"/>
+									<listOptionValue builtIn="false" value="../User/UartCom"/>
+									<listOptionValue builtIn="false" value="../User/Utils"/>
+									<listOptionValue builtIn="false" value="../User/VersionInfos"/>
+									<listOptionValue builtIn="false" value="../User/ST7789V"/>
+									<listOptionValue builtIn="false" value="../User/SteliauDisplay_FF028T010"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols.459381886" name="Define symbols (-D)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.definedsymbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="FX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="UX_INCLUDE_USER_DEFINE_FILE"/>
+									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
+									<listOptionValue builtIn="false" value="STM32H562xx"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags.3354164258" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.option.otherflags" useByScannerDiscovery="true" valueType="stringList">
+									<listOptionValue builtIn="false" value="-femit-class-debug-always"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.534143068" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp"/>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.2005264479" name="MCU/MPU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.449865141" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.294766873" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.1200554442" name="MCU/MPU G++ Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker">
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls.708373038" name="System calls" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.systemcalls" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.systemcalls.value.minimalimplementation" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.648619149" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="${workspace_loc:/${ProjName}/STM32H562VGTX_FLASH.ld}" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories.0628518293" name="Library search path (-L)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.directories" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Tflow4/Middlewares/ST/touchgfx/lib/core/cortex_m33/gcc}&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries.9637725231" name="Libraries (-l)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.libraries" valueType="libs">
+									<listOptionValue builtIn="false" value=":libtouchgfx-float-abi-hard.a"/>
+								</option>
+								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input.1174649128" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver.1102905243" name="MCU/MPU GCC Archiver" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.archiver"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size.565277184" name="MCU Size" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.size"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile.832928252" name="MCU Output Converter list file" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objdump.listfile"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex.255797073" name="MCU Output Converter Hex" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.hex"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary.1594979647" name="MCU Output Converter Binary" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.binary"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog.1449288401" name="MCU Output Converter Verilog" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.verilog"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec.55934765" name="MCU Output Converter Motorola S-rec" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.srec"/>
+							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.1862690717" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="USBX"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FileX"/>
+						<entry excluding="simulator/main.cpp|generated/simulator/src/mainBase.cpp|generated/simulator/src/video/SoftwareMJPEGDecoder.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="TouchGFX"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="User"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
+						<entry excluding="ST/touchgfx/framework/source/platform/driver/touch/SDL2TouchController.cpp|ST/touchgfx/framework/source/touchgfx/widgets|ST/touchgfx/os/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/OSWrappers.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2.cpp|ST/touchgfx/os/OSWrappers_cmsis.cpp|ST/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSDL2_icon.cpp|ST/touchgfx/framework/source/touchgfx/containers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="Tflow4.null.1327574649" name="Tflow4"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1054438041;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1229277366">
+			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.1509051806;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.534143068">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.395654917.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.953852215;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.compiler.input.cpp.1558947467">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1331021810.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1714228704;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.2004404534">
+			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/Tflow4"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/Tflow4"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
