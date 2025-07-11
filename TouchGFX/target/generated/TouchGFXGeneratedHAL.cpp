@@ -24,6 +24,11 @@
 
 #include "stm32h5xx.h"
 
+extern "C"
+{
+#include "Display_FF028T010.h"
+}
+
 using namespace touchgfx;
 
 /* ******************************************************
@@ -58,6 +63,9 @@ void TouchGFXGeneratedHAL::initialize()
     // Partial framebuffer strategy
     setFrameBufferAllocator(&blockAllocator);
     setFrameRefreshStrategy(HAL::REFRESH_STRATEGY_PARTIAL_FRAMEBUFFER);
+
+    /* Initializing Display */
+	Display_FF028T010_Init();
 }
 
 void TouchGFXGeneratedHAL::configureInterrupts()
@@ -195,6 +203,21 @@ void touchgfxSignalVSync(void)
 
     /* VSync has occurred, signal TouchGFX engine */
     touchgfx::OSWrappers::signalVSync();
+}
+
+
+
+extern "C"
+int touchgfxDisplayDriverTransmitActive(){
+	return BSP_LCD_GetTransferStatus();
+}
+
+extern "C"
+void touchgfxDisplayDriverTransmitBlock(const uint8_t* pixels, uint16_t x, uint16_t y, uint16_t w, uint16_t h){
+	uint16_t Length = w * h * BSP_LCD_GetPixelDepth();
+
+	BSP_LCD_SetDisplayWindow(x, y, w, h);
+	BSP_LCD_WriteData(pixels, Length);
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

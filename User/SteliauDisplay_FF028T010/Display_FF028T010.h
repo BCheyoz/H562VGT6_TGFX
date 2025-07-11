@@ -88,7 +88,7 @@ int16_t BSP_LCD_GetXSize(uint32_t *pXSize);
 int16_t BSP_LCD_GetYSize(uint32_t *pYSize);
 int16_t BSP_LCD_DisplayOn();
 int16_t BSP_LCD_DisplayOff();
-int16_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length);
+int16_t BSP_LCD_WriteData(const uint8_t *pData, uint32_t Length);
 int16_t BSP_LCD_SetDisplayWindow(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height);
 uint8_t BSP_LCD_GetTransferStatus();
 uint8_t BSP_LCD_GetPixelDepth();

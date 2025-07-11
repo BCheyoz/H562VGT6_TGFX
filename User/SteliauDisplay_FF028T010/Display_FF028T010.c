@@ -39,7 +39,7 @@ static int16_t LCD_IO_Init(void);
 static int16_t LCD_IO_DeInit(void);
 static int16_t LCD_IO_WriteReg(volatile uint8_t *Reg, uint32_t Length);
 static int16_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length);
-static int16_t LCD_IO_SendData(uint8_t *pData, uint32_t Length);
+static int16_t LCD_IO_SendData(const uint8_t *pData, uint32_t Length);
 static int16_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length);
 uint8_t LCD_TryLock(uint32_t Timeout);
 uint8_t LCD_Unlock();
@@ -437,7 +437,7 @@ int16_t BSP_LCD_DisplayOff()
  * @param  Length:       Length of data to write to LCD GRAM.
  * @retval int16_t:      BSP status.
  */
-int16_t BSP_LCD_WriteData(uint8_t *pData, uint32_t Length)
+int16_t BSP_LCD_WriteData(const uint8_t *pData, uint32_t Length)
 {
 	int16_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
@@ -654,7 +654,7 @@ static int16_t LCD_IO_ReadReg(volatile uint8_t *Reg, uint32_t Length)
  * @param  Length length of data to write to LCD GRAM
  * @retval Error status
  */
-static int16_t LCD_IO_SendData(uint8_t *pData, uint32_t Length)
+static int16_t LCD_IO_SendData(const uint8_t *pData, uint32_t Length)
 {
 	int16_t ret = BSP_ERROR_NONE;
 	HAL_StatusTypeDef spiRet = HAL_OK;

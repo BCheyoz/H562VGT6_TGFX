@@ -35,6 +35,9 @@ void TouchGFXHAL::initialize()
     // Please note, HAL::initialize() must be called to initialize the framework.
 
     TouchGFXGeneratedHAL::initialize();
+
+    /* Render first frame, so there is valid data in the display's GRAM */
+    HAL::getInstance()->backPorchExited();
 }
 
 /**
