@@ -63,9 +63,6 @@ void TouchGFXGeneratedHAL::initialize()
     // Partial framebuffer strategy
     setFrameBufferAllocator(&blockAllocator);
     setFrameRefreshStrategy(HAL::REFRESH_STRATEGY_PARTIAL_FRAMEBUFFER);
-
-    /* Initializing Display */
-	Display_FF028T010_Init();
 }
 
 void TouchGFXGeneratedHAL::configureInterrupts()

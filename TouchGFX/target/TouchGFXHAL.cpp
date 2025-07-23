@@ -23,6 +23,12 @@
 #include <TouchGFXHAL.hpp>
 
 /* USER CODE BEGIN TouchGFXHAL.cpp */
+#include <touchgfx/hal/OSWrappers.hpp>
+
+extern "C"
+{
+#include "Display_FF028T010.h"
+}
 
 using namespace touchgfx;
 
@@ -34,10 +40,22 @@ void TouchGFXHAL::initialize()
     // and implement the needed functionality here.
     // Please note, HAL::initialize() must be called to initialize the framework.
 
+    /* Initializing Display */
+	Display_FF028T010_Init();
+
     TouchGFXGeneratedHAL::initialize();
+
+    /* Wait for first VSync from display */
+    //touchgfx::OSWrappers::waitForVSync();
+
+    BSP_LCD_DisplayOn(); // test pour voir ce qui est transmit
 
     /* Render first frame, so there is valid data in the display's GRAM */
     HAL::getInstance()->backPorchExited();
+
+    /* GRAM has been filled, turn on display to show content of GRAM */
+    BSP_LCD_DisplayOn();
+    //touchgfx::OSWrappers::signalRenderingDone();
 }
 
 /**

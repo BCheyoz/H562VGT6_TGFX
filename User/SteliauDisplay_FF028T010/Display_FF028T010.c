@@ -127,12 +127,7 @@ void Display_FF028T010_Init(){
 						ret = BSP_ERROR_COMPONENT_FAILURE;
 					}
 					else {
-						if(ST7789_DisplayOn(&ObjCtx) < 0){
-							ret = BSP_ERROR_COMPONENT_FAILURE;
-						}
-						else{
-							ret = BSP_ERROR_NONE;
-						}
+						ret = BSP_ERROR_NONE;
 					}
 				}
 			}
