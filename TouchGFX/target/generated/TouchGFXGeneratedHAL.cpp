@@ -129,6 +129,7 @@ void TouchGFXGeneratedHAL::flushFrameBuffer(const touchgfx::Rect& rect)
         const uint8_t* pixels = frameBufferAllocator->getBlockForTransfer(r);
         // Start transmission of the block
         touchgfxDisplayDriverTransmitBlock((uint8_t*)pixels, r.x, r.y, r.width, r.height);
+        frameBufferAllocator->freeBlockAfterTransfer();
     }
 }
 
