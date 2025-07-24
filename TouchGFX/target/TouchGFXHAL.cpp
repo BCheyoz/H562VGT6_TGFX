@@ -48,8 +48,6 @@ void TouchGFXHAL::initialize()
     /* Wait for first VSync from display */
     //touchgfx::OSWrappers::waitForVSync();
 
-    BSP_LCD_DisplayOn(); // test pour voir ce qui est transmit
-
     /* Render first frame, so there is valid data in the display's GRAM */
     HAL::getInstance()->backPorchExited();
 
