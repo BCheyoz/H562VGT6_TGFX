@@ -18,27 +18,47 @@ Screen1ViewBase::Screen1ViewBase() :
     add(box1);
 
     textArea1.setXY(170, 10);
-    textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(12, 31, 107));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_784X));
     add(textArea1);
 
-    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_SMPTE_COLOR_BARS_SVG_ID));
-    scalableImage1.setPosition(0, 160, 320, 80);
-    scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
-    add(scalableImage1);
-
-    qrCode1.setXY(9, 10);
+    qrCode1.setXY(8, 8);
     qrCode1.setBuffers(qrBuffer_qrCode1, qrScratchBuffer_qrCode1);
     qrCode1.setQRCodeVersion(3);
     qrCode1.setScale(5);
     qrCode1.convertStringToQRCode("ALDES.COM");
     add(qrCode1);
 
-    scalableImage2.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
-    scalableImage2.setPosition(160, 65, 151, 78);
-    scalableImage2.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
-    add(scalableImage2);
+    image1.setXY(0, 160);
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
+    add(image1);
+
+    digitalClock1.setPosition(165, 62, 150, 37);
+    digitalClock1.setColor(touchgfx::Color::getColorFromRGB(16, 120, 16));
+    digitalClock1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_F9VJ));
+    digitalClock1.displayLeadingZeroForHourIndicator(true);
+    digitalClock1.setDisplayMode(touchgfx::DigitalClock::DISPLAY_24_HOUR);
+    digitalClock1.setTime24Hour(17, 29, 43);
+    add(digitalClock1);
+
+    button1.setXY(205, 200);
+    button1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_36_TINY_ROUND_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_36_TINY_ROUND_PRESSED_ID));
+    add(button1);
+
+    boxProgress1.setXY(205, 175);
+    boxProgress1.setProgressIndicatorPosition(0, 0, 100, 18);
+    boxProgress1.setRange(0, 100);
+    boxProgress1.setDirection(touchgfx::AbstractDirectionProgress::RIGHT);
+    boxProgress1.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BOXPROGRESS_THICK_TINY_ID));
+    boxProgress1.setColor(touchgfx::Color::getColorFromRGB(254, 189, 23));
+    boxProgress1.setValue(60);
+    add(boxProgress1);
+
+    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
+    scalableImage1.setPosition(165, 99, 150, 54);
+    scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::BILINEAR_INTERPOLATION);
+    add(scalableImage1);
 }
 
 Screen1ViewBase::~Screen1ViewBase()

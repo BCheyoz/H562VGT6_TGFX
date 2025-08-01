@@ -10,6 +10,9 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/Gauge.hpp>
+#include <touchgfx/widgets/canvas/PainterRGB565Bitmap.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -37,8 +40,17 @@ protected:
     touchgfx::TextArea textArea1_1;
     touchgfx::TextArea textArea1_1_1;
     touchgfx::TextArea textArea2;
+    touchgfx::ButtonWithLabel buttonWithLabel1;
+    touchgfx::Gauge gauge1;
+    touchgfx::PainterRGB565Bitmap gauge1Painter;
 
 private:
+
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint32_t CANVAS_BUFFER_SIZE = 4800;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 
     /*
      * Delay Variable Declarations

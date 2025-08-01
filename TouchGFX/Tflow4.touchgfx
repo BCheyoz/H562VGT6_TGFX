@@ -24,22 +24,18 @@
             "Height": 48,
             "TextId": "__SingleUse_784X",
             "TextRotation": "0",
+            "Color": {
+              "Red": 12,
+              "Green": 31,
+              "Blue": 107
+            },
             "AutoSize": true
-          },
-          {
-            "Type": "ScalableImage",
-            "Name": "scalableImage1",
-            "Y": 160,
-            "Width": 320,
-            "Height": 80,
-            "Filename": "SMPTE_Color_Bars.svg.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
             "Type": "QRCode",
             "Name": "qrCode1",
-            "X": 9,
-            "Y": 10,
+            "X": 8,
+            "Y": 8,
             "Width": 145,
             "Height": 145,
             "QRVersion": 3,
@@ -52,14 +48,72 @@
             }
           },
           {
+            "Type": "Image",
+            "Name": "image1",
+            "Y": 160,
+            "Width": 187,
+            "Height": 80,
+            "RelativeFilename": "aldes100ans.png"
+          },
+          {
+            "Type": "DigitalClock",
+            "Name": "digitalClock1",
+            "X": 165,
+            "Y": 62,
+            "Width": 150,
+            "Height": 37,
+            "TextColor": {
+              "Red": 16,
+              "Green": 120,
+              "Blue": 16
+            },
+            "TextId": "__SingleUse_F9VJ",
+            "DisplaySeconds": true,
+            "DisplayLeadingZeroForHourIndicator": true,
+            "InitialHour": 17,
+            "InitialMinute": 29,
+            "InitialSecond": 43
+          },
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 205,
+            "Y": 200,
+            "Width": 100,
+            "Height": 36,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_36_tiny_round_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_36_tiny_round_action.png",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_36\\tiny_round_action.json"
+          },
+          {
+            "Type": "BoxProgress",
+            "Name": "boxProgress1",
+            "X": 205,
+            "Y": 175,
+            "Width": 100,
+            "Height": 18,
+            "Color": {
+              "Red": 254,
+              "Green": 189,
+              "Blue": 23
+            },
+            "Direction": "Right",
+            "Preset": "alternate_theme\\presets\\boxprogress\\thick\\tiny_action.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_boxprogress_thick_tiny.png",
+            "IndicatorPositionWidth": 100,
+            "IndicatorPositionHeight": 18,
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
             "Type": "ScalableImage",
-            "Name": "scalableImage2",
-            "X": 160,
-            "Y": 65,
-            "Width": 151,
-            "Height": 78,
+            "Name": "scalableImage1",
+            "X": 165,
+            "Y": 99,
+            "Width": 150,
+            "Height": 54,
             "Filename": "aldes100ans.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
+            "ScalingAlgorithm": "Bilinear Interpolation"
           }
         ],
         "Interactions": [
@@ -91,6 +145,7 @@
       },
       {
         "Name": "Screen2",
+        "CanvasBufferSize": 4800,
         "Components": [
           {
             "Type": "Image",
@@ -146,7 +201,7 @@
             "Type": "TextArea",
             "Name": "textArea1_1",
             "X": 2,
-            "Y": 198,
+            "Y": 202,
             "Width": 69,
             "Height": 12,
             "TextId": "__SingleUse_STD5",
@@ -157,7 +212,7 @@
             "Type": "TextArea",
             "Name": "textArea1_1_1",
             "X": 1,
-            "Y": 180,
+            "Y": 181,
             "Width": 105,
             "Height": 18,
             "TextId": "__SingleUse_04XL",
@@ -172,6 +227,104 @@
             "TextId": "__SingleUse_WJGV",
             "TextRotation": "0",
             "AutoSize": true
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "buttonWithLabel1",
+            "X": 253,
+            "Y": 48,
+            "Width": 60,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_action.png",
+            "TextId": "__SingleUse_R5CT",
+            "ReleasedColor": {
+              "Red": 62,
+              "Green": 96,
+              "Blue": 120
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\tiny_fill_action.json"
+          },
+          {
+            "Type": "Gauge",
+            "Name": "gauge1",
+            "X": 193,
+            "Y": 114,
+            "Width": 120,
+            "Height": 120,
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_gauge_tiny_backgrounds_light_filled.png",
+            "RotationCenterX": 60.0,
+            "RotationCenterY": 60.0,
+            "StartAngle": -120.0,
+            "EndAngle": 120.0,
+            "RangeMax": 100.0,
+            "InitialValue": 70.0,
+            "Easing": "Linear",
+            "EasingOption": "In",
+            "FileNameNeedle": "__generated\\alternate_theme_images_widgets_gauge_tiny_needles_rough.png",
+            "NeedleRotationCenterX": 5.0,
+            "NeedleRotationCenterY": 33.0,
+            "NeedleMovingRenderingAlgorithm": "Bilinear Interpolation",
+            "NeedleSteadyRenderingAlgorithm": "Bilinear Interpolation",
+            "UseArc": true,
+            "FileNameArc": "__generated\\alternate_theme_images_widgets_gauge_tiny_fillers_swoop.png",
+            "ArcColor": {
+              "Red": 20,
+              "Green": 151,
+              "Blue": 197
+            },
+            "SetArcPosition": true,
+            "ArcX": 12.0,
+            "ArcY": 12.0,
+            "ArcWidth": 95.0,
+            "ArcHeight": 71.0,
+            "ArcRadius": 50.0,
+            "ArcLineWidth": 49.0,
+            "ArcCapStyle": "Butt"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "wait3sec",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Type": "ActionDelay",
+              "Duration": 3000
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerInteractionCompleted",
+              "InteractionToTriggerOn": "wait3sec"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen3"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen3",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "Width": 320,
+            "Height": 240,
+            "RelativeFilename": "SMPTE_Color_Bars.svg.png"
           }
         ],
         "Interactions": [
