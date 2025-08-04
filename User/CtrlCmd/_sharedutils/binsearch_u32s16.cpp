@@ -1,17 +1,16 @@
 //
 // File: binsearch_u32s16.cpp
 //
-// Code generated for Simulink model 'WaterHeatController'.
+// Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.570
+// Model version                  : 1.150
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon Apr 14 15:39:34 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
 //
 #include "binsearch_u32s16.h"
 #include <stdint.h>
 
-uint32_t binsearch_u32s16(int16_t u, const int16_t bp[], uint32_t startIndex,
-  uint32_t maxIndex)
+uint32_t binsearch_u32s16(int16_t u, const int16_t bp[], uint32_t startIndex, uint32_t maxIndex)
 {
   uint32_t bpIdx;
   uint32_t bpIndex;

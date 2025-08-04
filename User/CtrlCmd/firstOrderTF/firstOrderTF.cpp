@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:50:51 2025
+// C/C++ source code generated on : Thu Jul 31 11:02:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -30,7 +30,8 @@ void firstOrderTF::reset(float rtp_initVal)
 }
 
 // Output and update for referenced model: 'firstOrderTF'
-void firstOrderTF::step(const float *rtu_In, float *rty_Out, float rtp_K, float rtp_Tau, float rtp_Ts)
+void firstOrderTF::step(const float *rtu_In, float *rty_Out, float rtp_K, float
+  rtp_Tau, float rtp_Ts)
 {
   float rtb_Ts_Tau;
   float rtb_TspTau;

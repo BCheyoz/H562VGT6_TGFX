@@ -3,15 +3,14 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.136
+// Model version                  : 1.146
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon Apr 14 14:54:26 2025
+// C/C++ source code generated on : Thu Jul 31 11:04:01 2025
 //
 #include "look1_iu16lu32n16_binlcse.h"
 #include <stdint.h>
 
-uint16_t look1_iu16lu32n16_binlcse(uint16_t u0, const uint16_t bp0[], const
-  uint16_t table[], uint32_t maxIndex)
+uint16_t look1_iu16lu32n16_binlcse(uint16_t u0, const uint16_t bp0[], const uint16_t table[], uint32_t maxIndex)
 {
   uint32_t frac;
   uint32_t iLeft;
@@ -57,8 +56,7 @@ uint16_t look1_iu16lu32n16_binlcse(uint16_t u0, const uint16_t bp0[], const
     }
 
     bpLeftVar = bp0[iLeft];
-    frac = ((static_cast<uint32_t>(u0) - bpLeftVar) << 16) /
-      (static_cast<uint32_t>(bp0[iLeft + 1U]) - bpLeftVar);
+    frac = ((static_cast<uint32_t>(u0) - bpLeftVar) << 16) / (static_cast<uint32_t>(bp0[iLeft + 1U]) - bpLeftVar);
   } else {
     iLeft = maxIndex - 1U;
     frac = 65536U;
@@ -73,13 +71,11 @@ uint16_t look1_iu16lu32n16_binlcse(uint16_t u0, const uint16_t bp0[], const
   bpLeftVar = table[iLeft + 1U];
   yL_0d0 = table[iLeft];
   if (bpLeftVar >= yL_0d0) {
-    y = static_cast<uint16_t>(static_cast<uint32_t>(static_cast<uint16_t>((
-      static_cast<uint16_t>(static_cast<uint32_t>(bpLeftVar) - yL_0d0) * frac) >>
-      16)) + yL_0d0);
+    y = static_cast<uint16_t>(static_cast<uint32_t>(static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(bpLeftVar) - yL_0d0) * frac) >> 16)) +
+      yL_0d0);
   } else {
-    y = static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) -
-      static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0)
-      - bpLeftVar) * frac) >> 16));
+    y = static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) - static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) - bpLeftVar) * frac) >>
+      16));
   }
 
   return y;

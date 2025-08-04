@@ -1,17 +1,16 @@
 //
 // File: look1_is16lu32n16tu16_binlcse.cpp
 //
-// Code generated for Simulink model 'WaterHeatController'.
+// Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.570
+// Model version                  : 1.150
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon Apr 14 15:39:34 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
 //
 #include "look1_is16lu32n16tu16_binlcse.h"
 #include <stdint.h>
 
-uint16_t look1_is16lu32n16tu16_binlcse(int16_t u0, const int16_t bp0[], const
-  uint16_t table[], uint32_t maxIndex)
+uint16_t look1_is16lu32n16tu16_binlcse(int16_t u0, const int16_t bp0[], const uint16_t table[], uint32_t maxIndex)
 {
   uint32_t frac;
   uint32_t iLeft;
@@ -58,8 +57,7 @@ uint16_t look1_is16lu32n16tu16_binlcse(int16_t u0, const int16_t bp0[], const
 
     int16_t bpLeftVar;
     bpLeftVar = bp0[iLeft];
-    frac = (static_cast<uint32_t>(u0 - bpLeftVar) << 16) / static_cast<uint32_t>
-      (bp0[iLeft + 1U] - bpLeftVar);
+    frac = (static_cast<uint32_t>(u0 - bpLeftVar) << 16) / static_cast<uint32_t>(bp0[iLeft + 1U] - bpLeftVar);
   } else {
     iLeft = maxIndex - 1U;
     frac = 65536U;
@@ -74,13 +72,10 @@ uint16_t look1_is16lu32n16tu16_binlcse(int16_t u0, const int16_t bp0[], const
   yR_0d0 = table[iLeft + 1U];
   yL_0d0 = table[iLeft];
   if (yR_0d0 >= yL_0d0) {
-    y = static_cast<uint16_t>(static_cast<uint32_t>(static_cast<uint16_t>((
-      static_cast<uint16_t>(static_cast<uint32_t>(yR_0d0) - yL_0d0) * frac) >>
-      16)) + yL_0d0);
+    y = static_cast<uint16_t>(static_cast<uint32_t>(static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(yR_0d0) - yL_0d0) * frac) >> 16)) +
+      yL_0d0);
   } else {
-    y = static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) -
-      static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0)
-      - yR_0d0) * frac) >> 16));
+    y = static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) - static_cast<uint16_t>((static_cast<uint16_t>(static_cast<uint32_t>(yL_0d0) - yR_0d0) * frac) >> 16));
   }
 
   return y;
