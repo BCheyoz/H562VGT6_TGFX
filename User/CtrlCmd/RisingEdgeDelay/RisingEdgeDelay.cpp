@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:51:47 2025
+// C/C++ source code generated on : Thu Jul 31 11:03:46 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -33,7 +33,8 @@ void RisingEdgeDelay::reset(void)
 }
 
 // Output and update for referenced model: 'RisingEdgeDelay'
-void RisingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float rtp_Delay, float rtp_TimeStep)
+void RisingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float
+  rtp_Delay, float rtp_TimeStep)
 {
   // local block i/o variables
   float rtb_timerValue;
@@ -48,7 +49,8 @@ void RisingEdgeDelay::step(const uint8_t *rtu_In, uint8_t *rty_Out, float rtp_De
   EdgeOffMDLOBJ2.step(rtu_In, &rtb_edgeOff);
   rtb_timerReset = (rtb_edgeOff || RisingEdgeDelay_DW.isTimeOut_DSTATE);
   rtb_timerHold = 0U;
-  DelayTimerMDLOBJ1.step(&rtb_timerLaunch, &rtb_timerReset, &rtb_timerHold, &rtb_timerValue, &rtb_timerState, rtp_TimeStep);
+  DelayTimerMDLOBJ1.step(&rtb_timerLaunch, &rtb_timerReset, &rtb_timerHold,
+    &rtb_timerValue, &rtb_timerState, rtp_TimeStep);
   if (rtb_timerState) {
     *rty_Out = RisingEdgeDelay_DW.previousVal_DSTATE;
   } else {

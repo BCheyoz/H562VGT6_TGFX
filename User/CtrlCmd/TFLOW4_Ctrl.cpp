@@ -531,7 +531,7 @@ void TFLOW4_Ctrl::step()
 
     if (TFLOW4_Ctrl_DW.temporalCounter_i2 == TFLOW4_Ctr_WaterHeatCtrl_tick_C) {
       TFLOW4_WaterHeatCtrl_Interfaces();
-      WaterHeatCtrlMDLOBJ5.step(&TFLOW4_Ctrl_DW.In_WaterHeatCtrl, &TFLOW4_Ctrl_DW.WaterHeatDrv_Out);
+      WaterHeatCtrlMDLOBJ5.output(&TFLOW4_Ctrl_DW.In_WaterHeatCtrl, &TFLOW4_Ctrl_DW.WaterHeatDrv_Out);
     }
 
     if (TFLOW4_Ctrl_DW.temporalCounter_i3 == TFLOW4_Ctrl_VentCtrl_tick_C) {

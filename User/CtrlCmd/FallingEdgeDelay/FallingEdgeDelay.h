@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:51:52 2025
+// C/C++ source code generated on : Thu Jul 31 11:03:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -51,7 +51,8 @@ class FallingEdgeDelay final
   void reset();
 
   // model step function
-  void step(const uint8_t *rtu_In, uint8_t *rty_Out, float rtp_Delay, float rtp_TimeStep);
+  void step(const uint8_t *rtu_In, uint8_t *rty_Out, float rtp_Delay, float
+            rtp_TimeStep);
 
   // Constructor
   FallingEdgeDelay();

@@ -3,15 +3,14 @@
 //
 // Code generated for Simulink model 'InPutMng'.
 //
-// Model version                  : 1.315
+// Model version                  : 1.335
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon Apr 14 15:07:34 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:30 2025
 //
 #include "look1_is16lu16n16Ds32_binlcas.h"
 #include <stdint.h>
 
-int16_t look1_is16lu16n16Ds32_binlcas(int16_t u0, const int16_t bp0[], const
-  int16_t table[], uint32_t maxIndex)
+int16_t look1_is16lu16n16Ds32_binlcas(int16_t u0, const int16_t bp0[], const int16_t table[], uint32_t maxIndex)
 {
   uint32_t iLeft;
   int16_t bpLeftVar;
@@ -57,8 +56,7 @@ int16_t look1_is16lu16n16Ds32_binlcas(int16_t u0, const int16_t bp0[], const
     }
 
     bpLeftVar = bp0[iLeft];
-    frac = static_cast<uint16_t>((static_cast<uint32_t>(u0 - bpLeftVar) << 16) /
-      static_cast<uint32_t>(bp0[iLeft + 1U] - bpLeftVar));
+    frac = static_cast<uint16_t>((static_cast<uint32_t>(u0 - bpLeftVar) << 16) / static_cast<uint32_t>(bp0[iLeft + 1U] - bpLeftVar));
   } else {
     iLeft = maxIndex;
     frac = 0U;
@@ -74,8 +72,7 @@ int16_t look1_is16lu16n16Ds32_binlcas(int16_t u0, const int16_t bp0[], const
     y = table[iLeft];
   } else {
     bpLeftVar = table[iLeft];
-    y = static_cast<int16_t>(static_cast<int16_t>(((table[iLeft + 1U] -
-      bpLeftVar) * frac) >> 16) + bpLeftVar);
+    y = static_cast<int16_t>(static_cast<int16_t>(((table[iLeft + 1U] - bpLeftVar) * frac) >> 16) + bpLeftVar);
   }
 
   return y;

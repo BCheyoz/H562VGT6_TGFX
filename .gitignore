@@ -41,12 +41,18 @@ packages/
 
 #Ignore files generate by Matlab 
 *.mat
+*.tmw
+*.rsp
+*.bat
+*.mk
+*.dmr
 **/html/
+**/tmwinternal/
 
 # Ceedling's outputs:
 Tests/build/*
 
 
-
-
+# TouchGFX outputs:
 TouchGFX/simulator/
+
