@@ -80,6 +80,7 @@ int16_t Display_FF028T010_Status();
 int16_t Display_FF028T010_isAlive();
 void    Display_FF028T010_setBackLightLevel(uint8_t lvl);
 uint8_t Display_FF028T010_backLightLevel();
+void 	Handle_Display_FF028T010_RT_1ms();
 
 int16_t BSP_LCD_DeInit();
 int16_t BSP_LCD_SetOrientation(uint32_t Orientation);

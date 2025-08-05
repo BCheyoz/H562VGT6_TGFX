@@ -40,7 +40,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t timer1ms;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -50,12 +49,8 @@ uint8_t timer1ms;
 __attribute__((weak)) void touchgfx_init(void); 			// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 77 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
 __attribute__((weak)) void touchgfx_components_init(void);	// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 78 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
 __attribute__((weak)) void touchgfx_taskEntry(void);		// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 79 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
-__attribute__((weak)) void touchgfxSignalVSync(void);
 
 /* USER CODE BEGIN PFP */
-void Handle_TouchGFX_RT_1ms(){
-	timer1ms++;
-}
 /* USER CODE END PFP */
 
 /**
@@ -63,7 +58,6 @@ void Handle_TouchGFX_RT_1ms(){
  */
 void MX_TouchGFX_Init(void)
 {
-	timer1ms = 0;
     // Calling forward to touchgfx_init in C++ domain
     touchgfx_components_init();
     touchgfx_init();
@@ -74,11 +68,6 @@ void MX_TouchGFX_Init(void)
  */
 void MX_TouchGFX_Process(void)
 {
-	if(timer1ms > 16){
-		timer1ms = 0;
-		touchgfxSignalVSync();
-	}
-
     // Calling forward to touchgfx_taskEntry in C++ domain
     touchgfx_taskEntry();
 }

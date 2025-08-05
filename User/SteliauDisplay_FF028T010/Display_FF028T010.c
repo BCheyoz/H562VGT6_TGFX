@@ -31,6 +31,7 @@ static int16_t display_status = BSP_ERROR_NONE;
 static uint8_t DisplayInit = 0;
 static uint8_t backlight_lvl = 100;
 static volatile uint8_t displayLock = 0;
+static uint8_t counter_1ms = 0;
 
 /*** Prototypes privées ***************************************************************/
 static int32_t LCD_IO_GetTick(void);
@@ -43,6 +44,9 @@ static int16_t LCD_IO_SendData(const uint8_t *pData, uint32_t Length);
 static int16_t LCD_IO_RecvData(uint8_t *pData, uint32_t Length);
 uint8_t LCD_TryLock(uint32_t Timeout);
 uint8_t LCD_Unlock();
+
+//Signal TE interrupt to TouchGFX
+void touchgfxSignalVSync(void);
 
 void Display_FF028T010_Init(){
 	int16_t ret = BSP_ERROR_NONE;
@@ -205,6 +209,14 @@ void Display_FF028T010_setBackLightLevel(uint8_t lvl){
 
 uint8_t Display_FF028T010_backLightLevel(){
 	return backlight_lvl;
+}
+
+void Handle_Display_FF028T010_RT_1ms(){
+	counter_1ms++;
+	if(counter_1ms > 16){
+		counter_1ms = 0;
+		touchgfxSignalVSync();
+	}
 }
 /**
  * @brief  De-Initializes the LCD resources.

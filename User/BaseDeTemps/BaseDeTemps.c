@@ -22,7 +22,7 @@
 #include "FanPwmIcCore.h"
 #include "GestionInputSensor.h"
 #include "FirmwareCInterface.h"
-#include "app_touchgfx.h"
+#include "Display_FF028T010.h"
 /* USER CODE END Includes */
 
 
@@ -71,7 +71,7 @@ inline __attribute__((always_inline)) void HandleBaseDeTemps_IT_1ms(void)
 
 	/* USER CODE BEGIN IT_1ms */
 	Handle_DigitalInputs_RT_1ms();
-	Handle_TouchGFX_RT_1ms();
+	Handle_Display_FF028T010_RT_1ms();
 	/* USER CODE END IT_1ms */
 
 // Fin de Zone des Appels exécutés dans l'Interruption Sytème @ 1ms.
