@@ -10,26 +10,29 @@ touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId typography)
     switch (typography)
     {
     case Typography::DEFAULT:
-        // verdana_20_4bpp
+        // MyriadPro_Regular_otf_20_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[0]);
     case Typography::LARGE:
-        // verdana_40_4bpp
+        // MyriadPro_Regular_otf_40_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[1]);
     case Typography::SMALL:
-        // verdana_10_4bpp
+        // MyriadPro_Regular_otf_10_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[2]);
-    case Typography::VERDANA15:
-        // verdana_15_4bpp
+    case Typography::HELVETICALINOTYPE15:
+        // HelveticaLinotype_Regular_15_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[3]);
-    case Typography::VERDANA25:
-        // verdana_25_4bpp
+    case Typography::HELVETICALINOTYPE25:
+        // HelveticaLinotype_Regular_25_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[4]);
-    case Typography::VERDANA30:
-        // verdana_30_4bpp
+    case Typography::HELVETICALINOTYPE30:
+        // HelveticaLinotype_Regular_30_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[5]);
-    case Typography::VERDANA35:
-        // verdana_35_4bpp
+    case Typography::HELVETICALINOTYPE35:
+        // HelveticaLinotype_Regular_35_4bpp
         return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[6]);
+    case Typography::HELVETICALINOTYPE40:
+        // HelveticaLinotype_Regular_40_4bpp
+        return const_cast<touchgfx::Font*>(TypedTextDatabase::getFonts()[7]);
     default:
         return 0;
     }

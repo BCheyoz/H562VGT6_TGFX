@@ -6,32 +6,32 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_R5CT" Alignment="Center" TypographyId="Verdana30">
+      <Text Id="__SingleUse_R5CT" Alignment="Center" TypographyId="Large">
         <Translation Language="GB">Btn</Translation>
       </Text>
-      <Text Id="__SingleUse_F9VJ" Alignment="Center" TypographyId="Verdana30">
+      <Text Id="__SingleUse_F9VJ" Alignment="Center" TypographyId="Large">
         <Translation Language="GB">&lt;&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_MFZB" Alignment="Left" TypographyId="Verdana35">
-        <Translation Language="GB">Verdana 35px</Translation>
+      <Text Id="__SingleUse_MFZB" Alignment="Left" TypographyId="HelveticaLinotype35">
+        <Translation Language="GB">Helvetica LT 35px</Translation>
       </Text>
-      <Text Id="__SingleUse_PKVE" Alignment="Left" TypographyId="Verdana30">
-        <Translation Language="GB">Verdana 30px</Translation>
+      <Text Id="__SingleUse_PKVE" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Helvetica LT 30px</Translation>
       </Text>
-      <Text Id="__SingleUse_E8VB" Alignment="Left" TypographyId="Verdana25">
-        <Translation Language="GB">Verdana 25px</Translation>
+      <Text Id="__SingleUse_E8VB" Alignment="Left" TypographyId="HelveticaLinotype25">
+        <Translation Language="GB">Helvetica LT 25px</Translation>
       </Text>
-      <Text Id="__SingleUse_04XL" Alignment="Left" TypographyId="verdana15">
-        <Translation Language="GB">Verdana 15px</Translation>
+      <Text Id="__SingleUse_04XL" Alignment="Left" TypographyId="HelveticaLinotype15">
+        <Translation Language="GB">Helvetica LT 15px</Translation>
       </Text>
       <Text Id="__SingleUse_STD5" Alignment="Left" TypographyId="Small">
-        <Translation Language="GB">Verdana 10px</Translation>
+        <Translation Language="GB">Helvetica LT 10px</Translation>
       </Text>
-      <Text Id="__SingleUse_WJGV" Alignment="Left" TypographyId="Large">
-        <Translation Language="GB">Verdana 40px</Translation>
+      <Text Id="__SingleUse_WJGV" Alignment="Left" TypographyId="HelveticaLinotype40">
+        <Translation Language="GB">Helvetica LT 40px</Translation>
       </Text>
       <Text Id="__SingleUse_ZXEM" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Verdana 20px</Translation>
+        <Translation Language="GB">Helvetica LT 20px</Translation>
       </Text>
       <Text Id="__SingleUse_784X" Alignment="Left" TypographyId="Large">
         <Translation Language="GB">TFlow4</Translation>
@@ -39,12 +39,13 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="verdana15" Font="verdana.ttf" Size="15" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Verdana25" Font="verdana.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Verdana30" Font="verdana.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WidgetWildcardCharacters="0123456789 :APM" />
-    <Typography Id="Verdana35" Font="verdana.ttf" Size="35" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Default" Font="MyriadPro-Regular.otf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Large" Font="MyriadPro-Regular.otf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WidgetWildcardCharacters="0123456789 :APM" />
+    <Typography Id="Small" Font="MyriadPro-Regular.otf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype15" Font="HelveticaLinotype-Regular.ttf" Size="15" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype25" Font="HelveticaLinotype-Regular.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype30" Font="HelveticaLinotype-Regular.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype35" Font="HelveticaLinotype-Regular.ttf" Size="35" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype40" Font="HelveticaLinotype-Regular.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
   </Typographies>
 </TextDatabase>

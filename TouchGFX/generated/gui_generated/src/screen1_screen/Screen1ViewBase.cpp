@@ -34,7 +34,7 @@ Screen1ViewBase::Screen1ViewBase() :
     image1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
     add(image1);
 
-    digitalClock1.setPosition(165, 62, 150, 37);
+    digitalClock1.setPosition(165, 58, 150, 41);
     digitalClock1.setColor(touchgfx::Color::getColorFromRGB(16, 120, 16));
     digitalClock1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_F9VJ));
     digitalClock1.displayLeadingZeroForHourIndicator(true);
