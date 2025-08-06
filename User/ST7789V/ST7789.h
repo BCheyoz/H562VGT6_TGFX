@@ -25,7 +25,7 @@ typedef int32_t (*ST7789_GetTick_Func)  (void);
 typedef int32_t (*ST7789_Delay_Func)    (uint32_t);
 typedef int16_t (*ST7789_WriteReg_Func) (volatile uint8_t*, uint32_t);
 typedef int16_t (*ST7789_ReadReg_Func)  (volatile uint8_t*, uint32_t);
-typedef int16_t (*ST7789_SendData_Func) (uint8_t*, uint32_t);
+typedef int16_t (*ST7789_SendData_Func) (const uint8_t*, uint32_t);
 typedef int16_t (*ST7789_RecvData_Func) (uint8_t*, uint32_t);
 
 typedef enum
