@@ -43,12 +43,9 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-//void touchgfx_init(void);
-//void touchgfx_components_init(void);
-//void touchgfx_taskEntry(void);
-__attribute__((weak)) void touchgfx_init(void); 			// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 77 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
-__attribute__((weak)) void touchgfx_components_init(void);	// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 78 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
-__attribute__((weak)) void touchgfx_taskEntry(void);		// Patch_Jp from "%UserProfile%\STM32Cube\Repository\Packs\STMicroelectronics\X-CUBE-TOUCHGFX\4.24.1\STM32CubeMX\templates\app_touchgfx_c.ftl", Line 79 : Always reset to this WEAK line, instead of the (default) line from CubeMX !
+void touchgfx_init(void);
+void touchgfx_components_init(void);
+void touchgfx_taskEntry(void);
 
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */

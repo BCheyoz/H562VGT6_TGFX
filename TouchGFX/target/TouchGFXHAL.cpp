@@ -32,6 +32,8 @@ extern "C"
 
 using namespace touchgfx;
 
+extern "C" int touchgfxDisplayDriverTransmitActive();
+
 void TouchGFXHAL::initialize()
 {
     // Calling parent implementation of initialize().
@@ -46,14 +48,14 @@ void TouchGFXHAL::initialize()
     TouchGFXGeneratedHAL::initialize();
 
     /* Wait for first VSync from display */
-    //touchgfx::OSWrappers::waitForVSync();
+    touchgfx::OSWrappers::waitForVSync();
 
     /* Render first frame, so there is valid data in the display's GRAM */
     HAL::getInstance()->backPorchExited();
 
     /* GRAM has been filled, turn on display to show content of GRAM */
     BSP_LCD_DisplayOn();
-    //touchgfx::OSWrappers::signalRenderingDone();
+    touchgfx::OSWrappers::signalRenderingDone();
 }
 
 /**
@@ -106,6 +108,8 @@ void TouchGFXHAL::flushFrameBuffer(const touchgfx::Rect& rect)
     // defined in TouchGFXGeneratedHAL.cpp
 
     TouchGFXGeneratedHAL::flushFrameBuffer(rect);
+    frameBufferAllocator->freeBlockAfterTransfer();
+
 }
 
 bool TouchGFXHAL::blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes)
@@ -175,6 +179,11 @@ bool TouchGFXHAL::beginFrame()
 void TouchGFXHAL::endFrame()
 {
     TouchGFXGeneratedHAL::endFrame();
+}
+
+extern "C"
+int touchgfxDisplayDriverTransmitActive(){
+	return BSP_LCD_GetTransferStatus();
 }
 
 /* USER CODE END TouchGFXHAL.cpp */

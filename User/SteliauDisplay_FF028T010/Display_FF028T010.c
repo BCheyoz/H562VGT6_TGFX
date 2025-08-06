@@ -751,6 +751,12 @@ uint8_t LCD_Unlock(){
 	return LCD_OS_ERROR_NONE;
 }
 
+void touchgfxDisplayDriverTransmitBlock(const uint8_t* pixels, uint16_t x, uint16_t y, uint16_t w, uint16_t h){
+	uint16_t Length = w * h * BSP_LCD_GetPixelDepth();
+	BSP_LCD_SetDisplayWindow(x, y, w, h);
+	BSP_LCD_WriteData(pixels, Length);
+}
+
 #ifdef __cplusplus
 }
 #endif
