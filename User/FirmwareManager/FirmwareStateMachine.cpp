@@ -11,13 +11,14 @@
 #include "FirmwareStateMachine.hpp"
 #include "ParamProductInfo.h"
 #include "utils.h"
-//#include "main.h"
+#include "main.h"						// Acces GPIO
 #include "GestionInputSensor.h"
 #include "FanPwmIcUser.h"
 #include "EmbracoInverter.h"
 
 #include "Display_FF028T010.h"
-#include "imgTest.h"
+#include "imgTest.h" 			// test pour ecran fix
+#include "spi.h"				// temporaire pour test la spi du BLE
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -97,6 +98,31 @@ void requestToInitRegulation(uint16_t value){
 	FwMng *fwp = FwMng::getInstance();
 	fwp->requestToInitRegulation(value);
 }
+
+/* Temporaire pour tester la SPI BLE ***********************/
+
+uint32_t requestBleSpiId(){
+	uint8_t tmpU24[3] = {0};
+	uint8_t TxCmd = 0x9F;  // RDID : Read Identification
+	uint32_t returnValue = 0;
+
+	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
+
+	// Partie Send :
+	if(HAL_OK == HAL_SPI_Transmit(&hspi2, &TxCmd, 1, 100))
+	{
+		// Partie Receive :
+		if(HAL_OK == HAL_SPI_Receive(&hspi2, tmpU24, 3, 100))
+		{
+			returnValue = tmpU24[0] | tmpU24[1] << 8 | tmpU24[2] << 16;
+		}
+	}
+
+	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_SET);
+
+	return returnValue;
+}
+/***********************************************************/
 
 #ifdef USE_COMMISIONNING_STATE
 void resetCommissionningState(uint8_t code){
@@ -369,6 +395,11 @@ FwMng::FwMng()
 
 	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
 	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
+
+
+	/* temporaire pour test la SPI Bluetooth *************************************/
+	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
+	/*****************************************************************************/
 }
 
 void FwMng::run(void)
