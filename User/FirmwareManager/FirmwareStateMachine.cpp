@@ -106,6 +106,9 @@ uint32_t requestBleSpiId(){
 	uint8_t TxCmd = 0x9F;  // RDID : Read Identification
 	uint32_t returnValue = 0;
 
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return returnValue;
+
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
 
 	// Partie Send :
