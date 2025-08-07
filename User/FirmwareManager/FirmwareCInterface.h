@@ -38,8 +38,10 @@ uint16_t resetMemoriesState();
 
 void requestToInitRegulation(uint16_t value);
 
-/* Temporaire pour tester la SPI BLE ***********************/
+/* Temporaire pour tester les PINs BLE ***********************/
 uint32_t requestBleSpiId();
+void setBLE(uint16_t value);
+int16_t BleIrqStatus();
 /***********************************************************/
 
 #ifdef USE_COMMISIONNING_STATE

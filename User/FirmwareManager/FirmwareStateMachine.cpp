@@ -125,6 +125,25 @@ uint32_t requestBleSpiId(){
 
 	return returnValue;
 }
+
+void setBLE(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return;
+
+	if(value == 1){
+		HAL_GPIO_WritePin(BLE_EN_GPIO_Port, BLE_EN_Pin, GPIO_PIN_SET);
+	}
+	else {
+		HAL_GPIO_WritePin(BLE_EN_GPIO_Port, BLE_EN_Pin, GPIO_PIN_RESET);
+	}
+}
+
+int16_t BleIrqStatus(){
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return -1;
+
+	return HAL_GPIO_ReadPin(BLE_IRQ_GPIO_Port, BLE_IRQ_Pin);
+}
 /***********************************************************/
 
 #ifdef USE_COMMISIONNING_STATE
