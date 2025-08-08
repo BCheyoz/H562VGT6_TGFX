@@ -407,17 +407,14 @@ FwMng::FwMng()
 	*/
 
 
-	/*** affiche une couleur uni ***********************************/
+	/*** affiche un écran fix ***********************************/
+	refreshFixedScreen = 0;
+	cuurentScreen = 0;
 	const uint32_t size = LCD_WIDTH * LCD_HEIGHT;
-	uint16_t pData[size];
-
-	for(uint32_t i = 0; i < size; i++){
-	  pData[i] = 3968; // Green
-	}
 
 	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
-
+	BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
+	BSP_LCD_DisplayOn();
 
 	/* temporaire pour test la SPI Bluetooth *************************************/
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
@@ -431,6 +428,8 @@ void FwMng::run(void)
 	}
 
 	timer_100ms = 0;
+
+	refreshFixedScreen++;
 
 	if(powerOnTimer < POWER_ON_WAIT){
 		powerOnTimer++;
@@ -487,8 +486,18 @@ void FwMng::run(void)
 
 	case E_PRODUCT_COMPLETE_STATE:
 		/*** affiche l'image de test par defaut ***********************************/
-		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-		BSP_LCD_WriteData((uint8_t*)imgData, size);
+		if(refreshFixedScreen > 50){
+			refreshFixedScreen = 0;
+			BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+			if(cuurentScreen == 0){
+				cuurentScreen = 1;
+				BSP_LCD_WriteData((uint8_t*)imgHelveticaData, size);
+			}
+			else {
+				cuurentScreen = 0;
+				BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
+			}
+		}
 
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);

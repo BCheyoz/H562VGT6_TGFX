@@ -120,6 +120,10 @@ private :
 	static tb_Control_Out cc_out;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	static TFLOW4_Ctrl::DW_TFLOW4_Ctrl_T cc_DW;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
+
+	// todo a supprimer une fois TGFX intégré
+	uint8_t refreshFixedScreen;
+	uint8_t cuurentScreen;
 };
 
 
