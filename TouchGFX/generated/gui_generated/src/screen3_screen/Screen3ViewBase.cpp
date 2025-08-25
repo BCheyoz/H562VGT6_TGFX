@@ -45,8 +45,8 @@ void Screen3ViewBase::handleTickEvent()
 
             //Interaction1
             //When wait3sec completed change screen to Screen1
-            //Go to Screen1 with screen transition towards East
-            application().gotoScreen1ScreenSlideTransitionEast();
+            //Go to Screen1 with no screen transition
+            application().gotoScreen1ScreenNoTransition();
         }
     }
 
