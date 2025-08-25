@@ -21,7 +21,7 @@
             "X": 170,
             "Y": 10,
             "Width": 119,
-            "Height": 48,
+            "Height": 41,
             "TextId": "__SingleUse_784X",
             "TextRotation": "0",
             "Color": {
@@ -370,5 +370,5 @@
     "OptionalComponents": [],
     "AdditionalFeatures": []
   },
-  "Version": "4.24.1"
+  "Version": "4.25.0"
 }
