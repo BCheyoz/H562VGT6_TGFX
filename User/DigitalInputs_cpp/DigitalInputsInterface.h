@@ -31,7 +31,7 @@ typedef enum{
 extern "C" {
 #endif
 	void GestionDigitalInputs();
-	void Handle_DigitalInputs_RT_1ms();
+	void Handle_DigitalInputs_IT_1ms();
 	void Handle_DigitalInputs_RT_10ms();
 	void Handle_DigitalInputs_RT_100ms();
 #ifdef __cplusplus
