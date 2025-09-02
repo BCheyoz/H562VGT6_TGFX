@@ -412,7 +412,7 @@ Même Remarque : pour le chemin, utiliser la bare obliques de la division '/' à
 #define UART_COM_ENABLE_MODBUS_SLAVE		// Pour activer la liaison avec la Librairie "ModBusSlave"
 //#define UART_COM_ENABLE_MODBUS_MASTER		// Pour activer la liaison avec la Librairie "ModBusMaster"
 #define UART_COM_ENABLE_EMBRACO_INVERTER	// Pour activer la liaison avec la Librairie "EmbracoInverter"
-#define UART_COM_ENABLE_BLE					// Pour activer la liaison avec la Librairie "BluetoothUART"
+//#define UART_COM_ENABLE_BLE					// Pour activer la liaison avec la Librairie "BluetoothUART"
 
 #define UART_COM_DISABLE_CHECK_ECHO			// Pour désactiver la gestion de l'écho *Rx = *Tx
 #define UART_COM_IGNORE_EXCEDENT_INIT_PARAMS// Pour désactiver la Vérification des Inits excédentaires/mauvaise Config au RunTime
