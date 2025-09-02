@@ -70,7 +70,30 @@ void setControlTick(uint8_t v);
 void setWaterHeatCtrlTick(uint8_t v);
 void setInputMngTick(uint8_t v);
 
+
+int16_t getCt_180L_eco_3ppl_Value();
+void setCt_180L_eco_3ppl_Value(int16_t v);
+uint16_t getCt_180L_eco_3ppl_Idx();
+void setCt_180L_eco_3ppl_Idx(uint16_t v);
+int16_t getCt_180L_eco_6ppl_Value();
+void setCt_180L_eco_6ppl_Value(int16_t v);
+uint16_t getCt_180L_eco_6ppl_Idx();
+void setCt_180L_eco_6ppl_Idx(uint16_t v);
+int16_t getCt_105L_eco_3ppl_Value();
+void setCt_105L_eco_3ppl_Value(int16_t v);
+uint16_t getCt_105L_eco_3ppl_Idx();
+void setCt_105L_eco_3ppl_Idx(uint16_t v);
+uint16_t getCt_rpm_pump_sp_tank_cold_Value();
+void setCt_rpm_pump_sp_tank_cold_Value(uint16_t v);
+uint16_t getCt_rpm_pump_sp_tank_cold_Idx();
+void setCt_rpm_pump_sp_tank_cold_Idx(uint16_t v);
+uint16_t getCt_temp_tank_cold_sp_bp_Value();
+void setCt_temp_tank_cold_sp_bp_Value(uint16_t v);
+uint16_t getCt_temp_tank_cold_sp_bp_Idx();
+void setCt_temp_tank_cold_sp_bp_Idx(uint16_t v);
+
 #define GET_SET_CC_UINT16_PROTOTYPE(a)	uint16_t get##a(void); void set##a(uint16_t val);
+#define GET_SET_CC_INT16_PROTOTYPE(a)	int16_t get##a(void); void set##a(int16_t val);
 #define GET_SET_CC_FLOAT_PROTOTYPE(a)	float get##a(void); void set##a(float val);
 
 GET_SET_CC_UINT16_PROTOTYPE(Ss_heat_mode_simu)
@@ -207,6 +230,15 @@ GET_SET_CC_UINT16_PROTOTYPE(NullFlowConstant_Value)
 GET_SET_CC_UINT16_PROTOTYPE(flowEsti_InitialCondition)
 
 GET_SET_CC_FLOAT_PROTOTYPE(FPresVent_Tau)
+
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_high)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_med)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_low)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_empt)
+GET_SET_CC_FLOAT_PROTOTYPE(negRateLimCst_Value)
+GET_SET_CC_FLOAT_PROTOTYPE(posRateLimCst_Value)
+GET_SET_CC_UINT16_PROTOTYPE(Cs_rot_spd_pump_max_C_Value)
+
 
 #ifdef __cplusplus
 }

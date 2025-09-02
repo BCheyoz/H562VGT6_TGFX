@@ -210,7 +210,98 @@ void setInputMngTick(uint8_t v){
 	rtP_input_mng_tick = v;
 }
 
+// interface modbus pour CtrlCmd
+uint16_t Ct_180L_eco_3ppl_idx = 0;
+uint16_t Ct_180L_eco_6ppl_idx = 0;
+uint16_t Ct_105L_eco_3ppl_idx = 0;
+uint16_t Ct_rpm_pump_sp_tank_cold_idx = 0;
+uint16_t Ct_temp_tank_cold_sp_bp_idx = 0;
 
+int16_t getCt_180L_eco_3ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_3ppl_Value[Ct_180L_eco_3ppl_idx];
+}
+
+void setCt_180L_eco_3ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_3ppl_Value[Ct_180L_eco_3ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_180L_eco_3ppl_Idx(){
+	return Ct_180L_eco_3ppl_idx;
+}
+
+void setCt_180L_eco_3ppl_Idx(uint16_t v){
+	if(v > 3) Ct_180L_eco_3ppl_idx = 3;
+	else Ct_180L_eco_3ppl_idx = v;
+}
+
+int16_t getCt_180L_eco_6ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_6ppl_Value[Ct_180L_eco_6ppl_idx];
+}
+
+void setCt_180L_eco_6ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_6ppl_Value[Ct_180L_eco_6ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_180L_eco_6ppl_Idx(){
+	return Ct_180L_eco_6ppl_idx;
+}
+
+void setCt_180L_eco_6ppl_Idx(uint16_t v){
+	if(v > 3) Ct_180L_eco_6ppl_idx = 3;
+	else Ct_180L_eco_6ppl_idx = v;
+}
+
+int16_t getCt_105L_eco_3ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_105L_eco_3ppl_Value[Ct_105L_eco_3ppl_idx];
+}
+
+void setCt_105L_eco_3ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_105L_eco_3ppl_Value[Ct_105L_eco_3ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_105L_eco_3ppl_Idx(){
+	return Ct_105L_eco_3ppl_idx;
+}
+
+void setCt_105L_eco_3ppl_Idx(uint16_t v){
+	if(v > 3) Ct_105L_eco_3ppl_idx = 3;
+	else Ct_105L_eco_3ppl_idx = v;
+}
+
+uint16_t getCt_rpm_pump_sp_tank_cold_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_tableData[Ct_rpm_pump_sp_tank_cold_idx];
+}
+
+void setCt_rpm_pump_sp_tank_cold_Value(uint16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_tableData[Ct_rpm_pump_sp_tank_cold_idx] = (ta_rot_spd)v;
+}
+
+uint16_t getCt_rpm_pump_sp_tank_cold_Idx(){
+	return Ct_rpm_pump_sp_tank_cold_idx;
+}
+
+void setCt_rpm_pump_sp_tank_cold_Idx(uint16_t v){
+	if(v > 7) Ct_rpm_pump_sp_tank_cold_idx = 7;
+	else Ct_rpm_pump_sp_tank_cold_idx = v;
+}
+
+
+uint16_t getCt_temp_tank_cold_sp_bp_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_bp01Data[Ct_temp_tank_cold_sp_bp_idx];
+}
+
+void setCt_temp_tank_cold_sp_bp_Value(uint16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_bp01Data[Ct_temp_tank_cold_sp_bp_idx] = (ta_rot_spd)v;
+}
+
+uint16_t getCt_temp_tank_cold_sp_bp_Idx(){
+	return Ct_temp_tank_cold_sp_bp_idx;
+}
+
+void setCt_temp_tank_cold_sp_bp_Idx(uint16_t v){
+	if(v > 7) Ct_temp_tank_cold_sp_bp_idx = 7;
+	else Ct_temp_tank_cold_sp_bp_idx = v;
+}
 
 #define GET_SET_CC_DEFINITION(a, b, c, d)		c get##a(void){return (c)FwMng::getInstance()->get##b()->a;} \
 												void set##a(c val){FwMng::getInstance()->get##b()->a = (d)val;}
@@ -351,6 +442,13 @@ GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uin
 
 GET_SET_CC_DEFINITION(FPresVent_Tau, CC_InputMngParam, float, float)
 
+GET_SET_CC_DEFINITION(Cs_temp_tank_high, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_med, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_low, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_empt, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(negRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
+GET_SET_CC_DEFINITION(posRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
+GET_SET_CC_DEFINITION(Cs_rot_spd_pump_max_C_Value, CC_WaterHeatCtrlParam, uint16_t, ta_rot_spd)
 }
 /*******************************************************************************************************/
 

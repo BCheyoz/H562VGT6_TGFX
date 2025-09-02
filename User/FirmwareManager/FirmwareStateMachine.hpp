@@ -72,6 +72,8 @@ public :
 	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.InPutSecu_Out_Y0);}
 	inline VentCtrl::P_VentCtrl_T* 	getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
 	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
+	inline WaterHeatCtrl::P_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlParam(){return &WaterHeatCtrl::WaterHeatCtrl_rtP;}
+	inline WaterHeatCtrl::DW_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlData(){return &(ctrlCmd->WaterHeatCtrlMDLOBJ5.WaterHeatCtrl_DW);}
 
 
 private :
