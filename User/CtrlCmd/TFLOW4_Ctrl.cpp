@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.354
+// Model version                  : 1.359
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:50 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -154,17 +154,10 @@ const tb_WaterHeatCtrl_In TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In{
   0,                                   // Cs_vent_temp
   te_on_off::off,                      // Ss_heat_pump_ena
   te_on_off::off,                      // Ss_elec_bstr_htr_ena
-  0U,                                  // Cs_v40_min
   0U,                                  // Ns_pers_nb
   te_tank_size::L105,                  // Ss_tank_size
-  te_heat_mode::v40_ctrl,              // Ss_heat_mode_simu
-  0U,                                  // Cs_v40_sp_simu
-  0,                                   // Cs_temp_sp_simu
   0U,                                  // Cs_heat_pump_rot_spd_sp_simu
   te_on_off::off,                      // Ss_elec_bstr_htr_sp_simu
-  false,                               // Bs_heat_mode_simu_ena
-  false,                               // Bs_v40_sp_simu_ena
-  false,                               // Bs_temp_sp_simu_ena
   false,                               // Bs_heat_pump_freq_sp_simu_ena
   false                                // Bs_elec_bstr_htr_sp_simu_ena
 };                                     // tb_WaterHeatCtrl_In ground
@@ -326,7 +319,7 @@ const tb_Control_Out TFLOW4_Ctrl_rtZtb_Control_Out{ 0U,// Cs_v40_lvl
 // Output and update for atomic system: '<Root>/OutPutMng_Interfaces'
 void TFLOW4_Ctrl::TFLOW4_Ctr_OutPutMng_Interfaces()
 {
-  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_v40_rat = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Cs_v40_rat;
+  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_v40_rat = 0U;
   TFLOW4_Ctrl_DW.OutPutMng_In.Ss_op_mode = TFLOW4_Ctrl_DW.SysMng_Out.Ss_op_mode;
   TFLOW4_Ctrl_DW.OutPutMng_In.Ss_sg_stt = TFLOW4_Ctrl_DW.InPutSecu_Out.Ss_sg_stt;
   TFLOW4_Ctrl_DW.OutPutMng_In.Ss_oph_stt = TFLOW4_Ctrl_DW.InPutSecu_Out.Ss_oph_stt;
@@ -341,8 +334,8 @@ void TFLOW4_Ctrl::TFLOW4_Ctr_OutPutMng_Interfaces()
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_vent_cnsp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_cnsp;
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_heat_wtr_cnsp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_heat_wtr_cnsp;
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_tot_cnsp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_tot_cnsp;
-  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_v40_sp = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Cs_v40_sp;
-  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_temp_sp = TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Cs_temp_sp;
+  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_v40_sp = 0U;
+  TFLOW4_Ctrl_DW.OutPutMng_In.Cs_temp_sp = 0;
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_vent_pres_sp = TFLOW4_Ctrl_DW.VentCtrl_Out.Cs_vent_pres_sp;
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_vent_flow_sp = TFLOW4_Ctrl_DW.VentCtrl_Out.Cs_vent_flow_sp;
   TFLOW4_Ctrl_DW.OutPutMng_In.Cs_vent_vltg_sp = TFLOW4_Ctrl_DW.VentCtrl_Out.Cs_vent_vltg_sp;
@@ -362,17 +355,10 @@ void TFLOW4_Ctrl::TFLOW4_WaterHeatCtrl_Interfaces()
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_vent_temp = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_vent_temp;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_heat_pump_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_heat_pump_ena;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_elec_bstr_htr_ena = TFLOW4_Ctrl_DW.SysMng_Out.Ss_elec_bstr_htr_ena;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_v40_min = TFLOW4_Ctrl_DW.InPutSecu_Out.Cs_v40_min;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ns_pers_nb = TFLOW4_Ctrl_U.Control_In.HMI.USER.Ns_pers_nb;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_tank_size = TFLOW4_Ctrl_U.Control_In.HMI.TECH.Ss_tank_size;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_heat_mode_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_heat_mode_simu;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_v40_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_v40_sp_simu;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_temp_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_temp_sp_simu;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Cs_heat_pump_rot_spd_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Cs_heat_pump_rot_spd_sp_simu;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Ss_elec_bstr_htr_sp_simu = TFLOW4_Ctrl_U.Control_In.SIMU.VAR.Ss_elec_bstr_htr_sp_simu;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_heat_mode_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_mode_simu_ena;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_v40_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_v40_sp_simu_ena;
-  TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_temp_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_temp_sp_simu_ena;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_heat_pump_freq_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_heat_pump_freq_sp_simu_ena;
   TFLOW4_Ctrl_DW.In_WaterHeatCtrl.Bs_elec_bstr_htr_sp_simu_ena = TFLOW4_Ctrl_U.Control_In.SIMU.ENA.Bs_elec_bstr_htr_sp_simu_ena;
 }
@@ -565,8 +551,8 @@ void TFLOW4_Ctrl::initialize()
   {
     TFLOW4_Ctrl_DW.In_InPutMng = TFLOW4_Ctrl_rtZtb_InPutMng_In;
     TFLOW4_Ctrl_DW.SysMng_In = TFLOW4_Ctrl_rtZtb_SysMng_In;
-    TFLOW4_Ctrl_DW.In_WaterHeatCtrl = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;
     TFLOW4_Ctrl_DW.OutPutMng_In = TFLOW4_Ctrl_rtZtb_OutPutMng_In;
+    TFLOW4_Ctrl_DW.In_WaterHeatCtrl = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;
     TFLOW4_Ctrl_DW.In_VentCtrl = TFLOW4_Ctrl_rtZtb_VentCtrl_In;
     TFLOW4_Ctrl_DW.SysMng_Out = TFLOW4_Ctrl_rtZtb_SysMng_Out;
   }
