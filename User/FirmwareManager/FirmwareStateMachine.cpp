@@ -763,6 +763,14 @@ void FwMng::initCtrlCmd(){
 	VentCtrl::VentCtrl_rtP.presFilter_Tau = 0.05;
 	VentCtrl::VentCtrl_rtP.presMesfilt_Tau = 0.05;
 	InPutMng::InPutMng_rtP.FPresVent_Tau = 8;
+	InPutMng::InPutMng_rtP.ErrTempDown_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempUp_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempXhst_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempEvap_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempVent_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrPresVent_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrRotSpd_opScaleSetTime = 255;
+
 
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut
