@@ -157,8 +157,6 @@ class TFLOW4_Ctrl final
   // Destructor
   ~TFLOW4_Ctrl();
 
-  // private data and function members
- private:
   // External inputs
   ExtU_TFLOW4_Ctrl_T TFLOW4_Ctrl_U;
 
