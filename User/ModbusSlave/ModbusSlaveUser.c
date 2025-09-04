@@ -192,6 +192,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x1204,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		Display_FF028T010_Status,	0},
 	{ 0x1205,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_0}},	TVarUCharGetFctSetFct},		Display_FF028T010_backLightLevel, Display_FF028T010_setBackLightLevel},
 	{ 0x1206,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarULongGetFctSetFct},		requestBleSpiId,			0},
+	{ 0x1208,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		0,							setBLE},
+	{ 0x1209,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		BleIrqStatus,				0},
 
 	// Gestion bypass
 	{ 0x1210,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getBypassDuration,			setBypassDuration},
@@ -511,7 +513,23 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x6020,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getflowEsti_InitialCondition,	setflowEsti_InitialCondition},
 	{ 0x6021,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFPresVent_Tau,	setFPresVent_Tau},
 
-
+	{ 0x6022,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCs_temp_tank_high,	setCs_temp_tank_high},
+	{ 0x6023,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCs_temp_tank_med,	setCs_temp_tank_med},
+	{ 0x6024,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCs_temp_tank_low,	setCs_temp_tank_low},
+	{ 0x6025,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCs_temp_tank_empt,	setCs_temp_tank_empt},
+	{ 0x6026,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getnegRateLimCst_Value,	setnegRateLimCst_Value},
+	{ 0x6027,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getposRateLimCst_Value,	setposRateLimCst_Value},
+	{ 0x6028,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_rot_spd_pump_max_C_Value,	setCs_rot_spd_pump_max_C_Value},
+	{ 0x6029,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_180L_eco_3ppl_Idx,	setCt_180L_eco_3ppl_Idx},
+	{ 0x602A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCt_180L_eco_3ppl_Value,	setCt_180L_eco_3ppl_Value},
+	{ 0x602B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_180L_eco_6ppl_Idx,	setCt_180L_eco_6ppl_Idx},
+	{ 0x602C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCt_180L_eco_6ppl_Value,	setCt_180L_eco_6ppl_Value},
+	{ 0x602D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_105L_eco_3ppl_Idx,	setCt_105L_eco_3ppl_Idx},
+	{ 0x602E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarSIntGetFctSetFct},	getCt_105L_eco_3ppl_Value,	setCt_105L_eco_3ppl_Value},
+	{ 0x602F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_rpm_pump_sp_tank_cold_Idx,	setCt_rpm_pump_sp_tank_cold_Idx},
+	{ 0x6030,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_rpm_pump_sp_tank_cold_Value,	setCt_rpm_pump_sp_tank_cold_Value},
+	{ 0x6031,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_temp_tank_cold_sp_bp_Idx,	setCt_temp_tank_cold_sp_bp_Idx},
+	{ 0x6032,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_temp_tank_cold_sp_bp_Value,	setCt_temp_tank_cold_sp_bp_Value},
 //	// Code Installation pour l'IHM :
 //	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
 

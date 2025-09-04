@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.354
+// Model version                  : 1.359
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:50 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -61,9 +61,9 @@ class TFLOW4_Ctrl final
     tb_SysMng_In SysMng_In;            // '<S9>/In_SysMng'
     tb_OutPutMng_In OutPutMng_In;      // '<S2>/In_OutPutMng'
     tb_WaterHeatCtrl_In In_WaterHeatCtrl;// '<S11>/In_WaterHeatCtrl'
-    tb_WaterHeatCtrl_Out WaterHeatDrv_Out;// '<S7>/WaterHeatCtrl'
     tb_VentCtrl_In In_VentCtrl;        // '<S10>/In_VentCtrl'
     tb_SysMng_Out SysMng_Out;          // '<S4>/SysMng'
+    tb_WaterHeatCtrl_Out WaterHeatDrv_Out;// '<S7>/WaterHeatCtrl'
     tb_SysConfigCalib_Out SysConfigCalib_Out;// '<S3>/SysConfigCalib'
     tb_VentCtrl_Out VentCtrl_Out;      // '<S6>/VentCtrl'
     uint8_t is_active_c2_TFLOW4_Ctrl;  // '<Root>/SysScheduler'
@@ -89,11 +89,11 @@ class TFLOW4_Ctrl final
     tb_InPutMng_Out InPutSecu_Out_Y0;  // Computed Parameter: InPutSecu_Out_Y0
                                           //  Referenced by: '<S1>/InPutSecu_Out'
 
-    tb_WaterHeatCtrl_Out WaterHeatDrv_Out_Y0;// Computed Parameter: WaterHeatDrv_Out_Y0
-                                                //  Referenced by: '<S7>/WaterHeatDrv_Out'
-
     tb_SysMng_Out SysMng_Out_Y0;       // Computed Parameter: SysMng_Out_Y0
                                           //  Referenced by: '<S4>/SysMng_Out'
+
+    tb_WaterHeatCtrl_Out WaterHeatDrv_Out_Y0;// Computed Parameter: WaterHeatDrv_Out_Y0
+                                                //  Referenced by: '<S7>/WaterHeatDrv_Out'
 
     tb_SysConfigCalib_Out SysConfigCalib_Out_Y0;// Computed Parameter: SysConfigCalib_Out_Y0
                                                    //  Referenced by: '<S3>/SysConfigCalib_Out'
@@ -157,8 +157,6 @@ class TFLOW4_Ctrl final
   // Destructor
   ~TFLOW4_Ctrl();
 
-  // private data and function members
- private:
   // External inputs
   ExtU_TFLOW4_Ctrl_T TFLOW4_Ctrl_U;
 

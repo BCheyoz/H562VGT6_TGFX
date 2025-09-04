@@ -106,6 +106,9 @@ uint32_t requestBleSpiId(){
 	uint8_t TxCmd = 0x9F;  // RDID : Read Identification
 	uint32_t returnValue = 0;
 
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return returnValue;
+
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
 
 	// Partie Send :
@@ -121,6 +124,25 @@ uint32_t requestBleSpiId(){
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_SET);
 
 	return returnValue;
+}
+
+void setBLE(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return;
+
+	if(value == 1){
+		HAL_GPIO_WritePin(BLE_EN_GPIO_Port, BLE_EN_Pin, GPIO_PIN_SET);
+	}
+	else {
+		HAL_GPIO_WritePin(BLE_EN_GPIO_Port, BLE_EN_Pin, GPIO_PIN_RESET);
+	}
+}
+
+int16_t BleIrqStatus(){
+	FwMng *fwp = FwMng::getInstance();
+	if(fwp->getState() < E_FACTORY_BENCH_STATE) return -1;
+
+	return HAL_GPIO_ReadPin(BLE_IRQ_GPIO_Port, BLE_IRQ_Pin);
 }
 /***********************************************************/
 
@@ -188,7 +210,98 @@ void setInputMngTick(uint8_t v){
 	rtP_input_mng_tick = v;
 }
 
+// interface modbus pour CtrlCmd
+uint16_t Ct_180L_eco_3ppl_idx = 0;
+uint16_t Ct_180L_eco_6ppl_idx = 0;
+uint16_t Ct_105L_eco_3ppl_idx = 0;
+uint16_t Ct_rpm_pump_sp_tank_cold_idx = 0;
+uint16_t Ct_temp_tank_cold_sp_bp_idx = 0;
 
+int16_t getCt_180L_eco_3ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_3ppl_Value[Ct_180L_eco_3ppl_idx];
+}
+
+void setCt_180L_eco_3ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_3ppl_Value[Ct_180L_eco_3ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_180L_eco_3ppl_Idx(){
+	return Ct_180L_eco_3ppl_idx;
+}
+
+void setCt_180L_eco_3ppl_Idx(uint16_t v){
+	if(v > 3) Ct_180L_eco_3ppl_idx = 3;
+	else Ct_180L_eco_3ppl_idx = v;
+}
+
+int16_t getCt_180L_eco_6ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_6ppl_Value[Ct_180L_eco_6ppl_idx];
+}
+
+void setCt_180L_eco_6ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_180L_eco_6ppl_Value[Ct_180L_eco_6ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_180L_eco_6ppl_Idx(){
+	return Ct_180L_eco_6ppl_idx;
+}
+
+void setCt_180L_eco_6ppl_Idx(uint16_t v){
+	if(v > 3) Ct_180L_eco_6ppl_idx = 3;
+	else Ct_180L_eco_6ppl_idx = v;
+}
+
+int16_t getCt_105L_eco_3ppl_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_105L_eco_3ppl_Value[Ct_105L_eco_3ppl_idx];
+}
+
+void setCt_105L_eco_3ppl_Value(int16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.Ct_105L_eco_3ppl_Value[Ct_105L_eco_3ppl_idx] = (ta_temp)v;
+}
+
+uint16_t getCt_105L_eco_3ppl_Idx(){
+	return Ct_105L_eco_3ppl_idx;
+}
+
+void setCt_105L_eco_3ppl_Idx(uint16_t v){
+	if(v > 3) Ct_105L_eco_3ppl_idx = 3;
+	else Ct_105L_eco_3ppl_idx = v;
+}
+
+uint16_t getCt_rpm_pump_sp_tank_cold_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_tableData[Ct_rpm_pump_sp_tank_cold_idx];
+}
+
+void setCt_rpm_pump_sp_tank_cold_Value(uint16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_tableData[Ct_rpm_pump_sp_tank_cold_idx] = (ta_rot_spd)v;
+}
+
+uint16_t getCt_rpm_pump_sp_tank_cold_Idx(){
+	return Ct_rpm_pump_sp_tank_cold_idx;
+}
+
+void setCt_rpm_pump_sp_tank_cold_Idx(uint16_t v){
+	if(v > 7) Ct_rpm_pump_sp_tank_cold_idx = 7;
+	else Ct_rpm_pump_sp_tank_cold_idx = v;
+}
+
+
+uint16_t getCt_temp_tank_cold_sp_bp_Value(){
+	return (int16_t)WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_bp01Data[Ct_temp_tank_cold_sp_bp_idx];
+}
+
+void setCt_temp_tank_cold_sp_bp_Value(uint16_t v){
+	WaterHeatCtrl::WaterHeatCtrl_rtP.CartoSetPointTankCold_bp01Data[Ct_temp_tank_cold_sp_bp_idx] = (ta_rot_spd)v;
+}
+
+uint16_t getCt_temp_tank_cold_sp_bp_Idx(){
+	return Ct_temp_tank_cold_sp_bp_idx;
+}
+
+void setCt_temp_tank_cold_sp_bp_Idx(uint16_t v){
+	if(v > 7) Ct_temp_tank_cold_sp_bp_idx = 7;
+	else Ct_temp_tank_cold_sp_bp_idx = v;
+}
 
 #define GET_SET_CC_DEFINITION(a, b, c, d)		c get##a(void){return (c)FwMng::getInstance()->get##b()->a;} \
 												void set##a(c val){FwMng::getInstance()->get##b()->a = (d)val;}
@@ -329,6 +442,13 @@ GET_SET_CC_DEFINITION(flowEsti_InitialCondition, CC_VentCtrlParam, uint16_t, uin
 
 GET_SET_CC_DEFINITION(FPresVent_Tau, CC_InputMngParam, float, float)
 
+GET_SET_CC_DEFINITION(Cs_temp_tank_high, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_med, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_low, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(Cs_temp_tank_empt, CC_WaterHeatCtrlData, int16_t, ta_temp)
+GET_SET_CC_DEFINITION(negRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
+GET_SET_CC_DEFINITION(posRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
+GET_SET_CC_DEFINITION(Cs_rot_spd_pump_max_C_Value, CC_WaterHeatCtrlParam, uint16_t, ta_rot_spd)
 }
 /*******************************************************************************************************/
 
@@ -385,17 +505,14 @@ FwMng::FwMng()
 	*/
 
 
-	/*** affiche une couleur uni ***********************************/
+	/*** affiche un écran fix ***********************************/
+	refreshFixedScreen = 0;
+	cuurentScreen = 0;
 	const uint32_t size = LCD_WIDTH * LCD_HEIGHT;
-	uint16_t pData[size];
-
-	for(uint32_t i = 0; i < size; i++){
-	  pData[i] = 3968; // Green
-	}
 
 	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-	BSP_LCD_WriteData((uint8_t*)pData, size * BSP_LCD_GetPixelDepth());
-
+	BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
+	BSP_LCD_DisplayOn();
 
 	/* temporaire pour test la SPI Bluetooth *************************************/
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
@@ -409,6 +526,8 @@ void FwMng::run(void)
 	}
 
 	timer_100ms = 0;
+
+	refreshFixedScreen++;
 
 	if(powerOnTimer < POWER_ON_WAIT){
 		powerOnTimer++;
@@ -465,8 +584,18 @@ void FwMng::run(void)
 
 	case E_PRODUCT_COMPLETE_STATE:
 		/*** affiche l'image de test par defaut ***********************************/
-		BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-		BSP_LCD_WriteData((uint8_t*)imgData, size);
+		if(refreshFixedScreen > 50){
+			refreshFixedScreen = 0;
+			BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+			if(cuurentScreen == 0){
+				cuurentScreen = 1;
+				BSP_LCD_WriteData((uint8_t*)imgHelveticaData, size);
+			}
+			else {
+				cuurentScreen = 0;
+				BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
+			}
+		}
 
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
@@ -634,6 +763,14 @@ void FwMng::initCtrlCmd(){
 	VentCtrl::VentCtrl_rtP.presFilter_Tau = 0.05;
 	VentCtrl::VentCtrl_rtP.presMesfilt_Tau = 0.05;
 	InPutMng::InPutMng_rtP.FPresVent_Tau = 8;
+	InPutMng::InPutMng_rtP.ErrTempDown_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempUp_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempXhst_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempEvap_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrTempVent_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrPresVent_opScaleSetTime = 255;
+	InPutMng::InPutMng_rtP.ErrRotSpd_opScaleSetTime = 255;
+
 
 	// set default value
 	cc_input = TFLOW4_Ctrl_rtZtb_Control_In; // initialise la structure avec les valeurs par defaut

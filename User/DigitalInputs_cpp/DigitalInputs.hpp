@@ -30,7 +30,7 @@ public:
 	virtual ~DigitalInputs();
 
 	static void GestionDigitalInputs();
-	static void Handle_RT_1ms();
+	static void Handle_IT_1ms();
 	static void Handle_RT_10ms();
 	static void Handle_RT_100ms();
 

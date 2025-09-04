@@ -13,7 +13,7 @@ std::list<DigitalInputs*> DigitalInputs::s_allInputs;
 /******************************************************************************/
 // Pour compatibilité avec la lib BaseDeTemps en C
 void GestionDigitalInputs() 		{DigitalInputs::GestionDigitalInputs();}
-void Handle_DigitalInputs_RT_1ms() { DigitalInputs::Handle_RT_1ms();}
+void Handle_DigitalInputs_IT_1ms() { DigitalInputs::Handle_IT_1ms();}
 void Handle_DigitalInputs_RT_10ms() { DigitalInputs::Handle_RT_10ms();}
 void Handle_DigitalInputs_RT_100ms() { DigitalInputs::Handle_RT_100ms();}
 
@@ -109,7 +109,7 @@ void DigitalInputs::GestionDigitalInputs()
 }
 
 /****** Echantillonnage ************************************************************************/
-void DigitalInputs::Handle_RT_1ms()
+void DigitalInputs::Handle_IT_1ms()
 {
 	for(auto input : s_allInputs)
 	{
