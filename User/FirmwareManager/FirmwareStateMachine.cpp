@@ -465,6 +465,7 @@ GET_SET_CC_DEFINITION(FTempVent_Tau, CC_InputMngParam, float, float)
 GET_SET_CC_DEFINITION(FRotSpd_Tau, CC_InputMngParam, float, float)
 
 GET_SET_CC_DEFINITION(Derivator_p, CC_WaterHeatCtrlData, float, float)
+GET_SET_CC_DEFINITION(Cs_hard_draw_thrs_Value, CC_WaterHeatCtrlParam, float, double)
 
 }
 /*******************************************************************************************************/

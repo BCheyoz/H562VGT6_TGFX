@@ -254,6 +254,7 @@ GET_SET_CC_FLOAT_PROTOTYPE(FTempVent_Tau)
 GET_SET_CC_FLOAT_PROTOTYPE(FRotSpd_Tau)
 
 GET_SET_CC_FLOAT_PROTOTYPE(Derivator_p)
+GET_SET_CC_FLOAT_PROTOTYPE(Cs_hard_draw_thrs_Value)
 
 #ifdef __cplusplus
 }
