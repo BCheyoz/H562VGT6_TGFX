@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.359
+// Model version                  : 1.362
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:05:50 2025
+// C/C++ source code generated on : Thu Sep  4 18:48:08 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -68,6 +68,30 @@ TFLOW4_Ctrl::P_TFLOW4_Ctrl_T TFLOW4_Ctrl::TFLOW4_Ctrl_P{
     false                              // Bs_tank_anod_err
   },
 
+  // Computed Parameter: WaterHeatDrv_Out_Y0
+  //  Referenced by: '<S7>/WaterHeatDrv_Out'
+
+  {
+    0U,                                // Cs_heat_pump_rot_spd_sp
+    te_on_off::off,                    // Ss_elec_bstr_htr_sp
+    te_heat_stt::Stopped,              // Ss_heat_pump_stt
+    te_heat_stt::Stopped,              // Ss_elec_htr_bstr_stt
+    te_tank_lvl::Empty,                // Ss_tank_lvl_stt
+    te_pump_mode::Tank_lvl,            // Ss_pump_ctrl_mod
+    0.0F,                              // Cs_ctrl_temp_evap_spd_cmd
+
+    {
+      false,                           // Bs_air_low_temp_prot_ena
+      false,                           // Bs_air_high_temp_prot_ena
+      false,                           // Bs_ant_shrt_cycl_lim_pump_ena
+      false,                           // Bs_pump_high_pres_prot_ena
+      false,                           // Bs_pump_high_load_prot_ena
+      false,                           // Bs_hpc_dfr_prot_ena
+      false,                           // Bs_hpc_crit_dfr_prot_ena
+      false                            // Bs_pump_prot_ena
+    }                                  // Bt_heat_pump_prot
+  },
+
   // Computed Parameter: SysMng_Out_Y0
   //  Referenced by: '<S4>/SysMng_Out'
 
@@ -76,16 +100,6 @@ TFLOW4_Ctrl::P_TFLOW4_Ctrl_T TFLOW4_Ctrl::TFLOW4_Ctrl_P{
     te_vent_op_mode::Normal,           // Ss_vent_op_mode
     te_on_off::off,                    // Ss_heat_pump_ena
     te_on_off::off                     // Ss_elec_bstr_htr_ena
-  },
-
-  // Computed Parameter: WaterHeatDrv_Out_Y0
-  //  Referenced by: '<S7>/WaterHeatDrv_Out'
-
-  {
-    0U,                                // Cs_heat_pump_rot_spd_sp
-    te_on_off::off,                    // Ss_elec_bstr_htr_sp
-    te_heat_stt::Stopped,              // Ss_heat_pump_stt
-    te_heat_stt::Stopped               // Ss_elec_htr_bstr_stt
   },
 
   // Computed Parameter: SysConfigCalib_Out_Y0

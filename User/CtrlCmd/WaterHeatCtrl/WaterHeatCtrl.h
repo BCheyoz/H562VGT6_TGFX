@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.150
+// Model version                  : 1.158
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
+// C/C++ source code generated on : Thu Sep  4 18:47:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -51,7 +51,8 @@ class WaterHeatCtrl final
     float Cs_ctrl_tref_max_spd_cmd;    // '<S12>/Divide'
     float Cs_ctrl_temp_evap_spd_cmd;   // '<S11>/Divide'
     float Derivator_p;                 // '<S10>/Derivator'
-    float prevValue_DSTATE;            // '<S17>/prevValue'
+    float rateLimPrevValue_DSTATE;     // '<S17>/rateLimPrevValue'
+    float ctrl_temp_evap_spd_cmd_prev_DST;// '<S25>/ctrl_temp_evap_spd_cmd_prev'
     te_heat_stt heat_pump_stt_prev_DSTATE;// '<Root>/heat_pump_stt_prev'
     ta_temp Cs_temp_tank_high;         // '<S5>/TempThresholdSelector'
     ta_temp Cs_temp_tank_med;          // '<S5>/TempThresholdSelector'
@@ -63,21 +64,22 @@ class WaterHeatCtrl final
     uint8_t is_active_c3_WaterHeatCtrl;// '<S7>/Chart'
     uint8_t temporalCounter_i1;        // '<S7>/Chart'
     bool exhstTempProt_DSTATE;         // '<S19>/exhstTempProt'
+    bool CntrlEvapPump_MODE;           // '<S4>/CntrlEvapPump'
   };
 
   // Parameters (default storage)
   struct P_WaterHeatCtrl_T {
-    float filterSp1_K;                 // Mask Parameter: filterSp1_K
+    float coldTank_rpmSp_filter_K;     // Mask Parameter: coldTank_rpmSp_filter_K
                                           //  Referenced by: '<S28>/firstOrderTF'
 
-    float filterSp1_Tau;               // Mask Parameter: filterSp1_Tau
+    float coldTank_rpmSp_filter_Tau;   // Mask Parameter: coldTank_rpmSp_filter_Tau
                                           //  Referenced by: '<S28>/firstOrderTF'
 
-    float Derivator_initVal;           // Mask Parameter: Derivator_initVal
+    float downTemp_changeRate_initVal; // Mask Parameter: downTemp_changeRate_initVal
                                           //  Referenced by: '<S10>/Derivator'
 
-    float filterSp1_initVal;           // Mask Parameter: filterSp1_initVal
-                                          //  Referenced by: '<S28>/firstOrderTF'
+    float coldTank_rpmSp_filter_initVal;// Mask Parameter: coldTank_rpmSp_filter_initVal
+                                           //  Referenced by: '<S28>/firstOrderTF'
 
     float HysteresisProtectTankDefrost_of;// Mask Parameter: HysteresisProtectTankDefrost_of
                                              //  Referenced by: '<S67>/Hysteresis'
@@ -85,11 +87,11 @@ class WaterHeatCtrl final
     float HysteresisProtectTankDefrost_on;// Mask Parameter: HysteresisProtectTankDefrost_on
                                              //  Referenced by: '<S67>/Hysteresis'
 
-    float Derivator_sampleTime;        // Mask Parameter: Derivator_sampleTime
-                                          //  Referenced by: '<S10>/Derivator'
+    float downTemp_changeRate_sampleTime;// Mask Parameter: downTemp_changeRate_sampleTime
+                                            //  Referenced by: '<S10>/Derivator'
 
-    float filterSp1_sampleTime;        // Mask Parameter: filterSp1_sampleTime
-                                          //  Referenced by: '<S28>/firstOrderTF'
+    float coldTank_rpmSp_filter_sampleTim;// Mask Parameter: coldTank_rpmSp_filter_sampleTim
+                                             //  Referenced by: '<S28>/firstOrderTF'
 
     ta_temp HysteresisProtectTankDefrost_sw;// Mask Parameter: HysteresisProtectTankDefrost_sw
                                                //  Referenced by: '<S67>/Hysteresis'
@@ -102,6 +104,9 @@ class WaterHeatCtrl final
 
     double negRateLimCst_Value;        // Expression: -120/5
                                           //  Referenced by: '<S17>/negRateLimCst'
+
+    double max_Tevap_StopDerating_Value;// Expression: 1
+                                           //  Referenced by: '<S25>/max_Tevap_StopDerating'
 
     double Cs_hard_draw_thrs_Value;    // Expression: Cs_hard_draw_thrs_C
                                           //  Referenced by: '<S2>/Cs_hard_draw_thrs'
@@ -117,6 +122,9 @@ class WaterHeatCtrl final
 
     float Cs_ctrl_temp_evap_spd_cmd_Y0;// Computed Parameter: Cs_ctrl_temp_evap_spd_cmd_Y0
                                           //  Referenced by: '<S11>/Cs_ctrl_temp_evap_spd_cmd'
+
+    float max_Tevap_Derating_Value;    // Computed Parameter: max_Tevap_Derating_Value
+                                          //  Referenced by: '<S11>/max_Tevap_Derating'
 
     float TevapRegulator_InitVal;      // Computed Parameter: TevapRegulator_InitVal
                                           //  Referenced by: '<S11>/TevapRegulator'
@@ -157,32 +165,32 @@ class WaterHeatCtrl final
     float TevapRegulator_Tau_f_m;      // Computed Parameter: TevapRegulator_Tau_f_m
                                           //  Referenced by: '<S12>/TevapRegulator'
 
-    float Saturation_UpperSat;         // Computed Parameter: Saturation_UpperSat
-                                          //  Referenced by: '<S13>/Saturation'
+    float heatPumpSat_trefMax_UpperSat;// Computed Parameter: heatPumpSat_trefMax_UpperSat
+                                          //  Referenced by: '<S13>/heatPumpSat_trefMax'
 
-    float Saturation_LowerSat;         // Computed Parameter: Saturation_LowerSat
-                                          //  Referenced by: '<S13>/Saturation'
+    float heatPumpSat_trefMax_LowerSat;// Computed Parameter: heatPumpSat_trefMax_LowerSat
+                                          //  Referenced by: '<S13>/heatPumpSat_trefMax'
 
-    float Saturation1_UpperSat;        // Computed Parameter: Saturation1_UpperSat
-                                          //  Referenced by: '<S13>/Saturation1'
+    float heatPumpSat_tevap_UpperSat;  // Computed Parameter: heatPumpSat_tevap_UpperSat
+                                          //  Referenced by: '<S13>/heatPumpSat_tevap'
 
-    float Saturation1_LowerSat;        // Computed Parameter: Saturation1_LowerSat
-                                          //  Referenced by: '<S13>/Saturation1'
+    float heatPumpSat_tevap_LowerSat;  // Computed Parameter: heatPumpSat_tevap_LowerSat
+                                          //  Referenced by: '<S13>/heatPumpSat_tevap'
 
-    float prevValue_InitialCondition;  // Computed Parameter: prevValue_InitialCondition
-                                          //  Referenced by: '<S17>/prevValue'
+    float rateLimPrevValue_InitialConditi;// Computed Parameter: rateLimPrevValue_InitialConditi
+                                             //  Referenced by: '<S17>/rateLimPrevValue'
 
-    float Saturation1_UpperSat_b;      // Computed Parameter: Saturation1_UpperSat_b
-                                          //  Referenced by: '<S17>/Saturation1'
+    float rateLimitMaxVal_UpperSat;    // Computed Parameter: rateLimitMaxVal_UpperSat
+                                          //  Referenced by: '<S17>/rateLimitMaxVal'
 
-    float Saturation1_LowerSat_h;      // Computed Parameter: Saturation1_LowerSat_h
-                                          //  Referenced by: '<S17>/Saturation1'
+    float rateLimitMaxVal_LowerSat;    // Computed Parameter: rateLimitMaxVal_LowerSat
+                                          //  Referenced by: '<S17>/rateLimitMaxVal'
 
-    float Saturation2_UpperSat;        // Computed Parameter: Saturation2_UpperSat
-                                          //  Referenced by: '<S17>/Saturation2'
+    float rateLimitMinVal_UpperSat;    // Computed Parameter: rateLimitMinVal_UpperSat
+                                          //  Referenced by: '<S17>/rateLimitMinVal'
 
-    float Saturation2_LowerSat;        // Computed Parameter: Saturation2_LowerSat
-                                          //  Referenced by: '<S17>/Saturation2'
+    float rateLimitMinVal_LowerSat;    // Computed Parameter: rateLimitMinVal_LowerSat
+                                          //  Referenced by: '<S17>/rateLimitMinVal'
 
     float lowCritDefrostProtection_Delay;// Computed Parameter: lowCritDefrostProtection_Delay
                                             //  Referenced by: '<S24>/lowCritDefrostProtection'
@@ -195,6 +203,9 @@ class WaterHeatCtrl final
 
     float highCritDefrostProtection_TimeS;// Computed Parameter: highCritDefrostProtection_TimeS
                                              //  Referenced by: '<S24>/highCritDefrostProtection'
+
+    float ctrl_temp_evap_spd_cmd_prev_Ini;// Computed Parameter: ctrl_temp_evap_spd_cmd_prev_Ini
+                                             //  Referenced by: '<S25>/ctrl_temp_evap_spd_cmd_prev'
 
     float evapTempProtReset_Delay;     // Computed Parameter: evapTempProtReset_Delay
                                           //  Referenced by: '<S25>/evapTempProtReset'
@@ -214,20 +225,26 @@ class WaterHeatCtrl final
     te_heat_stt hpHeating_Value;       // Expression: te_heat_stt.Heating
                                           //  Referenced by: '<S1>/hpHeating'
 
-    te_heat_stt heat_pump_stt_prev_InitialCondi;// Expression: te_heat_stt.Stopped
+    te_heat_stt heat_pump_stt_prev_InitialCondi;// Expression: te_heat_stt.Heating
                                                    //  Referenced by: '<Root>/heat_pump_stt_prev'
 
-    te_heat_stt Constant_Value;        // Expression: te_heat_stt.Stopped
-                                          //  Referenced by: '<S14>/Constant'
+    te_heat_stt heatPump_off_Value;    // Expression: te_heat_stt.Stopped
+                                          //  Referenced by: '<S14>/heatPump_off'
 
-    te_on_off Constant3_Value;         // Expression: te_on_off.off
-                                          //  Referenced by: '<S3>/Constant3'
+    te_on_off heatPumpOff_Value;       // Expression: te_on_off.off
+                                          //  Referenced by: '<S3>/heatPumpOff'
 
     te_on_off te_on_off_Value;         // Expression: te_on_off.off
                                           //  Referenced by: '<S13>/te_on_off'
 
     te_on_off boosterOff_Value;        // Expression: te_on_off.off
                                           //  Referenced by: '<S1>/boosterOff'
+
+    te_pump_mode highPres_Value;       // Expression: te_pump_mode.highPres
+                                          //  Referenced by: '<S13>/highPres'
+
+    te_pump_mode highLoad_Value;       // Expression: te_pump_mode.highLoad
+                                          //  Referenced by: '<S13>/highLoad'
 
     te_pump_mode pumpOFF_Value;        // Expression: te_pump_mode.pumpOFF
                                           //  Referenced by: '<S13>/pumpOFF'
@@ -248,10 +265,10 @@ class WaterHeatCtrl final
                                           //  Referenced by: '<S33>/L180'
 
     ta_temp Temp_2C_SetPointPID_Value; // Computed Parameter: Temp_2C_SetPointPID_Value
-                                          //  Referenced by: '<S11>/Temp_-2ï¿½C_SetPointPID'
+                                          //  Referenced by: '<S11>/Temp_-2°C_SetPointPID'
 
-    ta_temp Constant2_Value;           // Expression: Cs_temp_ref_tol_C
-                                          //  Referenced by: '<S12>/Constant2'
+    ta_temp trefTol_Value;             // Expression: Cs_temp_ref_tol_C
+                                          //  Referenced by: '<S12>/trefTol'
 
     ta_temp TimeToPumpStartup_bp01Data[6];// Expression: Ct_tank_down_temp_pump_off_bp_C
                                              //  Referenced by: '<S22>/TimeToPumpStartup'
@@ -379,11 +396,11 @@ class WaterHeatCtrl final
     ta_temp Cs_heat_pump_lim_func_h_Value;// Expression: Cs_heat_pump_lim_func_h_C
                                              //  Referenced by: '<S18>/Cs_heat_pump_lim_func_h'
 
-    ta_temp Constant4_Value;           // Expression: Cs_hpc_low_crit_dfr_prot_temp_C
-                                          //  Referenced by: '<S24>/Constant4'
+    ta_temp Cs_hpc_low_crit_dfr_prot_temp_C;// Expression: Cs_hpc_low_crit_dfr_prot_temp_C
+                                               //  Referenced by: '<S24>/Cs_hpc_low_crit_dfr_prot_temp_C'
 
-    ta_temp Constant1_Value;           // Expression: Cs_hpc_high_crit_dfr_prot_temp_C
-                                          //  Referenced by: '<S24>/Constant1'
+    ta_temp Cs_hpc_high_crit_dfr_prot_temp_;// Expression: Cs_hpc_high_crit_dfr_prot_temp_C
+                                               //  Referenced by: '<S24>/Cs_hpc_high_crit_dfr_prot_temp_C'
 
     ta_temp Tref_max_tableData[7];     // Expression: Ct_temp_ref_max_data_C
                                           //  Referenced by: '<S19>/Tref_max'
@@ -394,14 +411,11 @@ class WaterHeatCtrl final
     ta_temp Cs_hpc_dfr_prot_temp_Value;// Expression: Cs_hpc_dfr_prot_temp_l_C
                                           //  Referenced by: '<S25>/Cs_hpc_dfr_prot_temp'
 
-    int16_t Cs_hpc_dfr_prot_temp_PLUS_1_Val;// Expression: Cs_hpc_dfr_prot_temp_l_C + 1
-                                               //  Referenced by: '<S25>/Cs_hpc_dfr_prot_temp_PLUS_1'
+    ta_temp Cs_hpc_dfr_prot_temp_l_Value;// Expression: Cs_hpc_dfr_prot_temp_l_C
+                                            //  Referenced by: '<S25>/Cs_hpc_dfr_prot_temp_l'
 
     ta_temp CartoSetPointTankCold_bp01Data[8];// Expression: Ct_temp_tank_cold_sp_bp_C
                                                  //  Referenced by: '<S15>/CartoSetPointTankCold'
-
-    ta_rot_spd max_Value;              // Computed Parameter: max_Value
-                                          //  Referenced by: '<S11>/max'
 
     ta_rot_spd maxDerat_Value;         // Computed Parameter: maxDerat_Value
                                           //  Referenced by: '<S11>/maxDerat'
@@ -415,7 +429,7 @@ class WaterHeatCtrl final
     ta_rot_spd minDerat_Value_f;       // Computed Parameter: minDerat_Value_f
                                           //  Referenced by: '<S12>/minDerat'
 
-    ta_rot_spd max_Value_m;            // Computed Parameter: max_Value_m
+    ta_rot_spd max_Value;              // Computed Parameter: max_Value
                                           //  Referenced by: '<S12>/max'
 
     ta_rot_spd highLoadRotSpeedMax_Value;// Expression: Cs_pump_high_load_prot_rot_spd_max_C
@@ -423,6 +437,9 @@ class WaterHeatCtrl final
 
     ta_rot_spd SpdOFF_Value;           // Expression: Cs_rot_spd_pump_off_C
                                           //  Referenced by: '<S13>/SpdOFF'
+
+    ta_rot_spd Cs_pump_high_load_prot_rot_spd_;// Expression: Cs_pump_high_load_prot_rot_spd_max_C
+                                                  //  Referenced by: '<S13>/Cs_pump_high_load_prot_rot_spd_max_C'
 
     ta_rot_spd highPresRotSpeedMax_Value;// Expression: Cs_pump_high_pres_prot_rot_spd_max_C
                                             //  Referenced by: '<S13>/highPresRotSpeedMax'
@@ -454,6 +471,9 @@ class WaterHeatCtrl final
     ta_rot_spd nullSpeed_Value;        // Computed Parameter: nullSpeed_Value
                                           //  Referenced by: '<S1>/nullSpeed'
 
+    ta_rot_spd Cs_pump_high_pres_prot_rot_spd_;// Expression: Cs_pump_high_pres_prot_rot_spd_max_C
+                                                  //  Referenced by: '<S13>/Cs_pump_high_pres_prot_rot_spd_max_C'
+
     bool exhstTempProt_InitialCondition;// Expression: false
                                            //  Referenced by: '<S19>/exhstTempProt'
 
@@ -476,29 +496,6 @@ class WaterHeatCtrl final
 
   // Move Assignment Operator
   WaterHeatCtrl& operator= (WaterHeatCtrl &&) = delete;
-
-  // Reset function
-  void reset();
-
-  // Constructor
-  WaterHeatCtrl();
-
-  // Destructor
-  ~WaterHeatCtrl();
-
-  // Block states
-  DW_WaterHeatCtrl_T WaterHeatCtrl_DW;
-
-  // Tunable parameters
-  static P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
-
-  // private data and function members
- private:
-  // Declare private class scope variables for system: "model 'WaterHeatCtrl'"
-  const tb_WaterHeatCtrl_In *WaterHeatC_rtu_WaterHeatCtrl_In;// '<Root>/WaterHeatCtrl_In'
-
-  // private member function(s) for subsystem '<Root>/ModeThresholdTempCalc'
-  void WaterHeat_ModeThresholdTempCalc();
 
   // model instance variable for '<S10>/Derivator'
   Derivator DerivatorMDLOBJ1;
@@ -610,6 +607,32 @@ class WaterHeatCtrl final
 
   // model instance variable for '<S67>/Hysteresis'
   Hysteresis HysteresisMDLOBJ37;
+
+  // Block states
+  DW_WaterHeatCtrl_T WaterHeatCtrl_DW;
+
+  // Tunable parameters
+  static P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
+
+  // Reset function
+  void reset();
+
+  // model disable function
+  void disable();
+
+  // Constructor
+  WaterHeatCtrl();
+
+  // Destructor
+  ~WaterHeatCtrl();
+
+  // private data and function members
+ private:
+  // Declare private class scope variables for system: "model 'WaterHeatCtrl'"
+  const tb_WaterHeatCtrl_In *WaterHeatC_rtu_WaterHeatCtrl_In;// '<Root>/WaterHeatCtrl_In'
+
+  // private member function(s) for subsystem '<Root>/ModeThresholdTempCalc'
+  void WaterHeat_ModeThresholdTempCalc();
 };
 
 extern WaterHeatCtrl::P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
@@ -638,7 +661,7 @@ extern WaterHeatCtrl::P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
 //  '<S7>'   : 'WaterHeatCtrl/DrawDetection/DerivativeCalc'
 //  '<S8>'   : 'WaterHeatCtrl/DrawDetection/DerivativeCalc/Chart'
 //  '<S9>'   : 'WaterHeatCtrl/DrawDetection/DerivativeCalc/TempVarWatch'
-//  '<S10>'  : 'WaterHeatCtrl/DrawDetection/DerivativeCalc/TempVarWatch/Derivator'
+//  '<S10>'  : 'WaterHeatCtrl/DrawDetection/DerivativeCalc/TempVarWatch/downTemp_changeRate'
 //  '<S11>'  : 'WaterHeatCtrl/HeatPumpMng/CntrlEvapPump'
 //  '<S12>'  : 'WaterHeatCtrl/HeatPumpMng/CntrlProtectPump'
 //  '<S13>'  : 'WaterHeatCtrl/HeatPumpMng/HeatPumpCore'
@@ -656,7 +679,7 @@ extern WaterHeatCtrl::P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
 //  '<S25>'  : 'WaterHeatCtrl/HeatPumpMng/ProtectionDetection/fluidIcingProtectionDetect/icingProtection'
 //  '<S26>'  : 'WaterHeatCtrl/HeatPumpMng/ProtectionDetection/fluidIcingProtectionDetect/icingProtection/TevapProtState'
 //  '<S27>'  : 'WaterHeatCtrl/HeatPumpMng/TankLevelManagement/Pump_rpm_sat'
-//  '<S28>'  : 'WaterHeatCtrl/HeatPumpMng/TankLevelManagement/filterSp1'
+//  '<S28>'  : 'WaterHeatCtrl/HeatPumpMng/TankLevelManagement/coldTank_rpmSp_filter'
 //  '<S29>'  : 'WaterHeatCtrl/HeatPumpMng/tank levels indicators/TankLevelStates'
 //  '<S30>'  : 'WaterHeatCtrl/ModeThresholdTempCalc/ThresholdCalc'
 //  '<S31>'  : 'WaterHeatCtrl/ModeThresholdTempCalc/ThresholdCalc/antiLegionnellaTemperatureThreshold'

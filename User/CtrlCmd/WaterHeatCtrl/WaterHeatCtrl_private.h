@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.150
+// Model version                  : 1.158
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
+// C/C++ source code generated on : Thu Sep  4 18:47:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

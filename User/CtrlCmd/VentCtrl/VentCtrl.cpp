@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.146
+// Model version                  : 1.148
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:04:01 2025
+// C/C++ source code generated on : Thu Sep  4 18:36:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -58,17 +58,17 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Mask Parameter: firstOpressSpFilt_Tau
   //  Referenced by: '<S10>/firstOrderTF'
 
-  8.5F,
+  3.0F,
 
   // Mask Parameter: presMesfilt_Tau
   //  Referenced by: '<S9>/firstOrderTF'
 
-  0.1F,
+  0.5F,
 
   // Mask Parameter: presFilter_Tau
   //  Referenced by: '<S12>/firstOrderTF'
 
-  0.1F,
+  0.5F,
 
   // Mask Parameter: pressSpfilt_initVal
   //  Referenced by: '<S11>/firstOrderTF'
@@ -143,17 +143,17 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Expression: Cs_reg_press_tau_1_C*Cs_reg_press_tau_2_C*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  1.87F,
+  1.31999993F,
 
   // Expression: Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.02F,
+  0.04F,
 
   // Expression: (Cs_reg_press_tau_1_C+Cs_reg_press_tau_2_C)*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.39F,
+  0.56F,
 
   // Expression: Cs_PressCtrl_TimeSample_C
   //  Referenced by: '<S5>/PressureRegulator'

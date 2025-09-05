@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.359
+// Model version                  : 1.362
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:05:50 2025
+// C/C++ source code generated on : Thu Sep  4 18:48:08 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -185,6 +185,27 @@ const tb_OutPutMng_In TFLOW4_Ctrl_rtZtb_OutPutMng_In{
   0U,                                  // Cs_vent_vltg_sp
   0U                                   // Cs_vent_pres
 };                                     // tb_OutPutMng_In ground
+
+const tb_WaterHeatCtrl_Out TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_Out{
+  0U,                                  // Cs_heat_pump_rot_spd_sp
+  te_on_off::off,                      // Ss_elec_bstr_htr_sp
+  te_heat_stt::Stopped,                // Ss_heat_pump_stt
+  te_heat_stt::Stopped,                // Ss_elec_htr_bstr_stt
+  te_tank_lvl::Empty,                  // Ss_tank_lvl_stt
+  te_pump_mode::Tank_lvl,              // Ss_pump_ctrl_mod
+  0.0F,                                // Cs_ctrl_temp_evap_spd_cmd
+
+  {
+    false,                             // Bs_air_low_temp_prot_ena
+    false,                             // Bs_air_high_temp_prot_ena
+    false,                             // Bs_ant_shrt_cycl_lim_pump_ena
+    false,                             // Bs_pump_high_pres_prot_ena
+    false,                             // Bs_pump_high_load_prot_ena
+    false,                             // Bs_hpc_dfr_prot_ena
+    false,                             // Bs_hpc_crit_dfr_prot_ena
+    false                              // Bs_pump_prot_ena
+  }                                    // Bt_heat_pump_prot
+};                                     // tb_WaterHeatCtrl_Out ground
 
 const tb_SysMng_Out TFLOW4_Ctrl_rtZtb_SysMng_Out{
   te_op_mode::FullElec,                // Ss_op_mode
@@ -553,6 +574,7 @@ void TFLOW4_Ctrl::initialize()
     TFLOW4_Ctrl_DW.SysMng_In = TFLOW4_Ctrl_rtZtb_SysMng_In;
     TFLOW4_Ctrl_DW.OutPutMng_In = TFLOW4_Ctrl_rtZtb_OutPutMng_In;
     TFLOW4_Ctrl_DW.In_WaterHeatCtrl = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;
+    TFLOW4_Ctrl_DW.WaterHeatDrv_Out = TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_Out;
     TFLOW4_Ctrl_DW.In_VentCtrl = TFLOW4_Ctrl_rtZtb_VentCtrl_In;
     TFLOW4_Ctrl_DW.SysMng_Out = TFLOW4_Ctrl_rtZtb_SysMng_Out;
   }

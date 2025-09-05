@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.150
+// Model version                  : 1.158
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
+// C/C++ source code generated on : Thu Sep  4 18:47:53 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -155,6 +155,23 @@ enum class te_tank_lvl
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_tb_prot_
+#define DEFINED_TYPEDEF_FOR_tb_prot_
+
+struct tb_prot
+{
+  bool Bs_air_low_temp_prot_ena;
+  bool Bs_air_high_temp_prot_ena;
+  bool Bs_ant_shrt_cycl_lim_pump_ena;
+  bool Bs_pump_high_pres_prot_ena;
+  bool Bs_pump_high_load_prot_ena;
+  bool Bs_hpc_dfr_prot_ena;
+  bool Bs_hpc_crit_dfr_prot_ena;
+  bool Bs_pump_prot_ena;
+};
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_tb_WaterHeatCtrl_Out_
 #define DEFINED_TYPEDEF_FOR_tb_WaterHeatCtrl_Out_
 
@@ -164,6 +181,10 @@ struct tb_WaterHeatCtrl_Out
   te_on_off Ss_elec_bstr_htr_sp;
   te_heat_stt Ss_heat_pump_stt;
   te_heat_stt Ss_elec_htr_bstr_stt;
+  te_tank_lvl Ss_tank_lvl_stt;
+  te_pump_mode Ss_pump_ctrl_mod;
+  float Cs_ctrl_temp_evap_spd_cmd;
+  tb_prot Bt_heat_pump_prot;
 };
 
 #endif

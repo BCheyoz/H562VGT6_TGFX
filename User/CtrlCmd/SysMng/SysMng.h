@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysMng'.
 //
-// Model version                  : 1.149
+// Model version                  : 1.150
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:04:48 2025
+// C/C++ source code generated on : Thu Sep  4 18:37:05 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -205,6 +205,42 @@ class SysMng final
   // Move Assignment Operator
   SysMng& operator= (SysMng &&) = delete;
 
+  // model instance variable for '<S5>/BoostRqstRisingEdge'
+  RisingEdgeDetect BoostRqstRisingEdgeMDLOBJ1;
+
+  // model instance variable for '<S10>/R_S_FlipFlop'
+  R_S_FlipFlop R_S_FlipFlopMDLOBJ2;
+
+  // model instance variable for '<S11>/R_S_FlipFlop'
+  R_S_FlipFlop R_S_FlipFlopMDLOBJ3;
+
+  // model instance variable for '<S7>/HeatPumpTestRqstRisingEdge'
+  RisingEdgeDetect HeatPumpTestRqstRisiMDLOBJ4;
+
+  // model instance variable for '<S7>/HeatPumpTestRqstRstRisingEdge'
+  RisingEdgeDetect HeatPumpTestRqstRstRMDLOBJ5;
+
+  // model instance variable for '<S12>/R_S_FlipFlop'
+  R_S_FlipFlop R_S_FlipFlopMDLOBJ6;
+
+  // model instance variable for '<S13>/RisingEdgeDelay'
+  RisingEdgeDelay RisingEdgeDelayMDLOBJ7;
+
+  // model instance variable for '<S14>/R_S_FlipFlop'
+  R_S_FlipFlop R_S_FlipFlopMDLOBJ8;
+
+  // model instance variable for '<S8>/clkRchRisingEdge'
+  RisingEdgeDetect clkRchRisingEdgeMDLOBJ9;
+
+  // model instance variable for '<S8>/hldyRqstRisingEdge'
+  RisingEdgeDetect hldyRqstRisingEdgeMDLOBJ10;
+
+  // model instance variable for '<S15>/Timer'
+  Timer TimerMDLOBJ11;
+
+  // Block states
+  DW_SysMng_T SysMng_DW;
+
   // Tunable parameters
   static P_SysMng_T SysMng_rtP;
 
@@ -219,9 +255,6 @@ class SysMng final
 
   // private data and function members
  private:
-  // Block states
-  DW_SysMng_T SysMng_DW;
-
   // Declare private class scope variables for system: "model 'SysMng'"
   const tb_SysMng_In *SysMng_rtu_SysMng_In;// '<Root>/SysMng_In'
   tb_SysMng_Out *SysMng_rty_SysMng_Out;// '<Root>/SysMng_Out'
@@ -262,39 +295,6 @@ class SysMng final
   void SysMng_modeSelection();
   void Sys_enter_internal_HeatPumpUsed(void);
   void SysMng_ModeSelection(void);
-
-  // model instance variable for '<S5>/BoostRqstRisingEdge'
-  RisingEdgeDetect BoostRqstRisingEdgeMDLOBJ1;
-
-  // model instance variable for '<S10>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ2;
-
-  // model instance variable for '<S11>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ3;
-
-  // model instance variable for '<S7>/HeatPumpTestRqstRisingEdge'
-  RisingEdgeDetect HeatPumpTestRqstRisiMDLOBJ4;
-
-  // model instance variable for '<S7>/HeatPumpTestRqstRstRisingEdge'
-  RisingEdgeDetect HeatPumpTestRqstRstRMDLOBJ5;
-
-  // model instance variable for '<S12>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ6;
-
-  // model instance variable for '<S13>/RisingEdgeDelay'
-  RisingEdgeDelay RisingEdgeDelayMDLOBJ7;
-
-  // model instance variable for '<S14>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ8;
-
-  // model instance variable for '<S8>/clkRchRisingEdge'
-  RisingEdgeDetect clkRchRisingEdgeMDLOBJ9;
-
-  // model instance variable for '<S8>/hldyRqstRisingEdge'
-  RisingEdgeDetect hldyRqstRisingEdgeMDLOBJ10;
-
-  // model instance variable for '<S15>/Timer'
-  Timer TimerMDLOBJ11;
 };
 
 extern SysMng::P_SysMng_T SysMng_rtP;

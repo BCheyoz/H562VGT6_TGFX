@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.146
+// Model version                  : 1.148
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:04:01 2025
+// C/C++ source code generated on : Thu Sep  4 18:36:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -167,6 +167,27 @@ class VentCtrl final
   // Move Assignment Operator
   VentCtrl& operator= (VentCtrl &&) = delete;
 
+  // model instance variable for '<S7>/Saturation'
+  cntrlSaturation SaturationMDLOBJ1;
+
+  // model instance variable for '<S5>/PressureRegulator'
+  PID_backCalc PressureRegulatorMDLOBJ2;
+
+  // model instance variable for '<S10>/firstOrderTF'
+  firstOrderTF firstOrderTFMDLOBJ3;
+
+  // model instance variable for '<S11>/firstOrderTF'
+  firstOrderTF firstOrderTFMDLOBJ4;
+
+  // model instance variable for '<S9>/firstOrderTF'
+  firstOrderTF firstOrderTFMDLOBJ5;
+
+  // model instance variable for '<S12>/firstOrderTF'
+  firstOrderTF firstOrderTFMDLOBJ6;
+
+  // Block states
+  DW_VentCtrl_T VentCtrl_DW;
+
   // Tunable parameters
   static P_VentCtrl_T VentCtrl_rtP;
 
@@ -181,9 +202,6 @@ class VentCtrl final
 
   // private data and function members
  private:
-  // Block states
-  DW_VentCtrl_T VentCtrl_DW;
-
   // Declare private class scope variables for system: "model 'VentCtrl'"
   const tb_VentCtrl_In *VentCtrl_rtu_VentCtrl_In;// '<Root>/VentCtrl_In'
   tb_VentCtrl_Out *VentCtrl_rty_VentCtrl_Out;// '<Root>/VentCtrl_Out'
@@ -208,24 +226,6 @@ class VentCtrl final
   void VentCtrl_PresMng_Init();
   void VentCtrl_PresMng_Reset();
   void VentCtrl_PresMng();
-
-  // model instance variable for '<S7>/Saturation'
-  cntrlSaturation SaturationMDLOBJ1;
-
-  // model instance variable for '<S5>/PressureRegulator'
-  PID_backCalc PressureRegulatorMDLOBJ2;
-
-  // model instance variable for '<S10>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ3;
-
-  // model instance variable for '<S11>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ4;
-
-  // model instance variable for '<S9>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ5;
-
-  // model instance variable for '<S12>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ6;
 };
 
 extern VentCtrl::P_VentCtrl_T VentCtrl_rtP;
