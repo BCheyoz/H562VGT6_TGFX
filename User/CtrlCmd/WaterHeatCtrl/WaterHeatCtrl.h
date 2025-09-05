@@ -248,7 +248,7 @@ class WaterHeatCtrl final
                                           //  Referenced by: '<S33>/L180'
 
     ta_temp Temp_2C_SetPointPID_Value; // Computed Parameter: Temp_2C_SetPointPID_Value
-                                          //  Referenced by: '<S11>/Temp_-2°C_SetPointPID'
+                                          //  Referenced by: '<S11>/Temp_-2ï¿½C_SetPointPID'
 
     ta_temp Constant2_Value;           // Expression: Cs_temp_ref_tol_C
                                           //  Referenced by: '<S12>/Constant2'
@@ -486,14 +486,14 @@ class WaterHeatCtrl final
   // Destructor
   ~WaterHeatCtrl();
 
-  // private data and function members
- private:
   // Block states
   DW_WaterHeatCtrl_T WaterHeatCtrl_DW;
 
   // Tunable parameters
   static P_WaterHeatCtrl_T WaterHeatCtrl_rtP;
 
+  // private data and function members
+ private:
   // Declare private class scope variables for system: "model 'WaterHeatCtrl'"
   const tb_WaterHeatCtrl_In *WaterHeatC_rtu_WaterHeatCtrl_In;// '<Root>/WaterHeatCtrl_In'
 

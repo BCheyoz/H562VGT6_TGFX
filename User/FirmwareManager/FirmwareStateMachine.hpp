@@ -72,6 +72,8 @@ public :
 	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.InPutSecu_Out_Y0);}
 	inline VentCtrl::P_VentCtrl_T* 	getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
 	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
+	inline WaterHeatCtrl::P_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlParam(){return &WaterHeatCtrl::WaterHeatCtrl_rtP;}
+	inline WaterHeatCtrl::DW_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlData(){return &(ctrlCmd->WaterHeatCtrlMDLOBJ5.WaterHeatCtrl_DW);}
 
 
 private :
@@ -120,6 +122,10 @@ private :
 	static tb_Control_Out cc_out;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	static TFLOW4_Ctrl::DW_TFLOW4_Ctrl_T cc_DW;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
+
+	// todo a supprimer une fois TGFX intégré
+	uint8_t refreshFixedScreen;
+	uint8_t cuurentScreen;
 };
 
 
