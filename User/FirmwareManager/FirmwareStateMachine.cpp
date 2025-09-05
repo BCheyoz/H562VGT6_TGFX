@@ -456,6 +456,9 @@ GET_SET_CC_DEFINITION(TevapRegulator_Kd, CC_WaterHeatCtrlParam, float, float)
 GET_SET_CC_DEFINITION(TevapRegulator_Ki, CC_WaterHeatCtrlParam, float, float)
 GET_SET_CC_DEFINITION(TevapRegulator_Kp, CC_WaterHeatCtrlParam, float, float)
 GET_SET_CC_DEFINITION(TevapRegulator_Tau_f, CC_WaterHeatCtrlParam, float, float)
+
+
+GET_SET_CC_DEFINITION(FTempDown_Tau, CC_InputMngParam, float, float)
 }
 /*******************************************************************************************************/
 
