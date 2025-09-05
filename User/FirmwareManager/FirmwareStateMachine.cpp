@@ -449,6 +449,13 @@ GET_SET_CC_DEFINITION(Cs_temp_tank_empt, CC_WaterHeatCtrlData, int16_t, ta_temp)
 GET_SET_CC_DEFINITION(negRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
 GET_SET_CC_DEFINITION(posRateLimCst_Value, CC_WaterHeatCtrlParam, float, double)
 GET_SET_CC_DEFINITION(Cs_rot_spd_pump_max_C_Value, CC_WaterHeatCtrlParam, uint16_t, ta_rot_spd)
+
+GET_SET_CC_DEFINITION(TevapRegulator_InitVal, CC_WaterHeatCtrlParam, float, float)
+GET_SET_CC_DEFINITION(TevapRegulator_Kawu, CC_WaterHeatCtrlParam, float, float)
+GET_SET_CC_DEFINITION(TevapRegulator_Kd, CC_WaterHeatCtrlParam, float, float)
+GET_SET_CC_DEFINITION(TevapRegulator_Ki, CC_WaterHeatCtrlParam, float, float)
+GET_SET_CC_DEFINITION(TevapRegulator_Kp, CC_WaterHeatCtrlParam, float, float)
+GET_SET_CC_DEFINITION(TevapRegulator_Tau_f, CC_WaterHeatCtrlParam, float, float)
 }
 /*******************************************************************************************************/
 

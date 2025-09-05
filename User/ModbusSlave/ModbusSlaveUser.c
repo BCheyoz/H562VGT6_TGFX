@@ -530,6 +530,16 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x6030,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_rpm_pump_sp_tank_cold_Value,	setCt_rpm_pump_sp_tank_cold_Value},
 	{ 0x6031,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_temp_tank_cold_sp_bp_Idx,	setCt_temp_tank_cold_sp_bp_Idx},
 	{ 0x6032,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCt_temp_tank_cold_sp_bp_Value,	setCt_temp_tank_cold_sp_bp_Value},
+
+	{ 0x6033,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_InitVal,	setTevapRegulator_InitVal},
+	{ 0x6034,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kawu,	setTevapRegulator_Kawu},
+	{ 0x6035,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kd,	setTevapRegulator_Kd},
+	{ 0x6036,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Ki,	setTevapRegulator_Ki},
+	{ 0x6037,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kp,	setTevapRegulator_Kp},
+	{ 0x6038,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Tau_f,	setTevapRegulator_Tau_f},
+	{ 0x6039,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_InitVal,	setTevapRegulator_InitVal},
+
+
 //	// Code Installation pour l'IHM :
 //	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
 

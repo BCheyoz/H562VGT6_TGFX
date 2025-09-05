@@ -239,6 +239,12 @@ GET_SET_CC_FLOAT_PROTOTYPE(negRateLimCst_Value)
 GET_SET_CC_FLOAT_PROTOTYPE(posRateLimCst_Value)
 GET_SET_CC_UINT16_PROTOTYPE(Cs_rot_spd_pump_max_C_Value)
 
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_InitVal)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kawu)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kd)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Ki)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kp)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Tau_f)
 
 #ifdef __cplusplus
 }
