@@ -540,6 +540,14 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x6039,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_InitVal,	setTevapRegulator_InitVal},
 
 	{ 0x603A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Tau_f,	setTevapRegulator_Tau_f},
+
+	{ 0x603B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempDown_Tau,	setFTempDown_Tau},
+	{ 0x603C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempUp_Tau,	setFTempUp_Tau},
+	{ 0x603D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempXhst_Tau,	setFTempXhst_Tau},
+	{ 0x603E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempEvap_Tau,	setFTempEvap_Tau},
+	{ 0x603F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempVent_Tau,	setFTempVent_Tau},
+	{ 0x6040,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFRotSpd_Tau,	setFRotSpd_Tau},
+	{ 0x6041,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getDerivator_p,	setDerivator_p},
 //	// Code Installation pour l'IHM :
 //	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur
 

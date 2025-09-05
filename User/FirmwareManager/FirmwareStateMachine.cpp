@@ -457,8 +457,15 @@ GET_SET_CC_DEFINITION(TevapRegulator_Ki, CC_WaterHeatCtrlParam, float, float)
 GET_SET_CC_DEFINITION(TevapRegulator_Kp, CC_WaterHeatCtrlParam, float, float)
 GET_SET_CC_DEFINITION(TevapRegulator_Tau_f, CC_WaterHeatCtrlParam, float, float)
 
-
 GET_SET_CC_DEFINITION(FTempDown_Tau, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(FTempUp_Tau, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(FTempXhst_Tau, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(FTempEvap_Tau, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(FTempVent_Tau, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(FRotSpd_Tau, CC_InputMngParam, float, float)
+
+GET_SET_CC_DEFINITION(Derivator_p, CC_WaterHeatCtrlData, float, float)
+
 }
 /*******************************************************************************************************/
 
