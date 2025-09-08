@@ -74,8 +74,8 @@ public :
 	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
 	inline WaterHeatCtrl::P_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlParam(){return &WaterHeatCtrl::WaterHeatCtrl_rtP;}
 	inline WaterHeatCtrl::DW_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlData(){return &(ctrlCmd->WaterHeatCtrlMDLOBJ5.WaterHeatCtrl_DW);}
-
-
+	inline tb_WaterHeatCtrl_Out* 	getCC_WaterHeatCtrl_Out(){return &(ctrlCmd->TFLOW4_Ctrl_DW.WaterHeatDrv_Out);}
+	inline tb_prot*					getCC_WaterHeatCtrl_Bt_heat_pump_prot() {return &(ctrlCmd->TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Bt_heat_pump_prot);}
 private :
 /********************************************************************************************/
 // Core variable

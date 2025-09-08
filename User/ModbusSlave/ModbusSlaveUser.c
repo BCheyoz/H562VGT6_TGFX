@@ -388,18 +388,18 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x4F0D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_wtr_cnsp_rst, setSs_heat_wtr_cnsp_rst},
 	{ 0x4F0E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_vent_cnsp_rst, setSs_vent_cnsp_rst},
 	{ 0x4F0F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_tot_cnsp_rst, setSs_tot_cnsp_rst},
-	{ 0x4F00,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_sg_mode_ena, setSs_sg_mode_ena},
-	{ 0x4F01,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_oph_mode_ena, setSs_oph_mode_ena},
-	{ 0x4F02,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_hldy_rqst, setSs_hldy_rqst},
-	{ 0x4F03,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_bst_rqst, setSs_bst_rqst},
-	{ 0x4F04,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_down_temp_raw, setCs_tank_down_temp_raw},
-	{ 0x4F05,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_up_temp_raw, setCs_tank_up_temp_raw},
-	{ 0x4F06,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_xhst_temp_raw, setCs_pump_xhst_temp_raw},
-	{ 0x4F07,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_evap_temp_raw, setCs_pump_evap_temp_raw},
-	{ 0x4F08,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_temp_raw, setCs_vent_temp_raw},
-	{ 0x4F09,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres_raw, setCs_vent_pres_raw},
-	{ 0x4F0A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_rot_spd_raw, setCs_vent_rot_spd_raw},
-	{ 0x4F0B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_heat_pump_pwr, setCs_heat_pump_pwr},
+	{ 0x4F10,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_sg_mode_ena, setSs_sg_mode_ena},
+	{ 0x4F11,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_oph_mode_ena, setSs_oph_mode_ena},
+	{ 0x4F12,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_hldy_rqst, setSs_hldy_rqst},
+	{ 0x4F13,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_bst_rqst, setSs_bst_rqst},
+	{ 0x4F14,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_down_temp_raw, setCs_tank_down_temp_raw},
+	{ 0x4F15,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_tank_up_temp_raw, setCs_tank_up_temp_raw},
+	{ 0x4F16,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_xhst_temp_raw, setCs_pump_xhst_temp_raw},
+	{ 0x4F17,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_pump_evap_temp_raw, setCs_pump_evap_temp_raw},
+	{ 0x4F18,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_temp_raw, setCs_vent_temp_raw},
+	{ 0x4F19,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_pres_raw, setCs_vent_pres_raw},
+	{ 0x4F1A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_vent_rot_spd_raw, setCs_vent_rot_spd_raw},
+	{ 0x4F1B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getCs_heat_pump_pwr, setCs_heat_pump_pwr},
 
 	// Bypass Control Command
 	{ 0x5000,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_mode_simu,	setSs_heat_mode_simu},
@@ -547,8 +547,29 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x603E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempEvap_Tau,	setFTempEvap_Tau},
 	{ 0x603F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFTempVent_Tau,	setFTempVent_Tau},
 	{ 0x6040,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getFRotSpd_Tau,	setFRotSpd_Tau},
-	{ 0x6041,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getDerivator_p,	setDerivator_p},
+	{ 0x6041,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getdownTemp_changeRate,	setdownTemp_changeRate},
 	{ 0x6042,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getCs_hard_draw_thrs_Value,	setCs_hard_draw_thrs_Value},
+
+	{ 0x6043,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_air_low_temp_prot_ena,	setBs_air_low_temp_prot_ena},
+	{ 0x6044,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_air_high_temp_prot_ena,	setBs_air_high_temp_prot_ena},
+	{ 0x6045,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_ant_shrt_cycl_lim_pump_ena,	setBs_ant_shrt_cycl_lim_pump_ena},
+	{ 0x6046,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_pump_high_pres_prot_ena,	setBs_pump_high_pres_prot_ena},
+	{ 0x6047,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_pump_high_load_prot_ena,	setBs_pump_high_load_prot_ena},
+	{ 0x6048,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_hpc_dfr_prot_ena,	setBs_hpc_dfr_prot_ena},
+	{ 0x6049,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_hpc_crit_dfr_prot_ena,	setBs_hpc_crit_dfr_prot_ena},
+	{ 0x604A,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_pump_prot_ena,	setBs_pump_prot_ena},
+
+	{ 0x604B,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_pump_ctrl_mod, setSs_pump_ctrl_mod},
+	{ 0x604C,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getCs_ctrl_temp_evap_spd_cmd,	setCs_ctrl_temp_evap_spd_cmd},
+
+	{ 0x604D,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_tank_lvl_stt, setSs_tank_lvl_stt},
+	{ 0x604E,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getSs_heat_pump_stt, setSs_heat_pump_stt},
+
+	{ 0x604F,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarUIntGetFctSetFct},	getBs_vent_pres_err, setBs_vent_pres_err},
+
+	{ 0x6050,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getErrPresVent_opScaleSetTime, setErrPresVent_opScaleSetTime},
+	{ 0x6051,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getErrPresVent_opScaleRstTime, setErrPresVent_opScaleRstTime},
+	{ 0x6052,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getErrPresVent_defVal, setErrPresVent_defVal},
 
 //	// Code Installation pour l'IHM :
 //	{ 0x9C54,	{{{	ACCESS_MIN_LEVEL_3,	ACCESS_MIN_LEVEL_0}},	TVarUIntGetVarSetVar},	&InstallCodePin,				0},				// Code Installateur

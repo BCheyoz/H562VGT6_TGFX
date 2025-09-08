@@ -253,8 +253,28 @@ GET_SET_CC_FLOAT_PROTOTYPE(FTempEvap_Tau)
 GET_SET_CC_FLOAT_PROTOTYPE(FTempVent_Tau)
 GET_SET_CC_FLOAT_PROTOTYPE(FRotSpd_Tau)
 
-GET_SET_CC_FLOAT_PROTOTYPE(Derivator_p)
+GET_SET_CC_FLOAT_PROTOTYPE(downTemp_changeRate)
 GET_SET_CC_FLOAT_PROTOTYPE(Cs_hard_draw_thrs_Value)
+
+GET_SET_CC_UINT16_PROTOTYPE(Bs_air_low_temp_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_air_high_temp_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_ant_shrt_cycl_lim_pump_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_high_pres_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_high_load_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_hpc_dfr_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_hpc_crit_dfr_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_prot_ena)
+
+GET_SET_CC_UINT16_PROTOTYPE(Ss_pump_ctrl_mod)
+GET_SET_CC_FLOAT_PROTOTYPE(Cs_ctrl_temp_evap_spd_cmd)
+GET_SET_CC_UINT16_PROTOTYPE(Ss_tank_lvl_stt)
+GET_SET_CC_UINT16_PROTOTYPE(Ss_heat_pump_stt)
+
+GET_SET_CC_UINT16_PROTOTYPE(Bs_vent_pres_err)
+
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_opScaleSetTime)
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_opScaleRstTime)
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_defVal)
 
 #ifdef __cplusplus
 }

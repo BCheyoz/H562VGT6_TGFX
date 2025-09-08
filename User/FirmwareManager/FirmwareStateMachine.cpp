@@ -464,8 +464,28 @@ GET_SET_CC_DEFINITION(FTempEvap_Tau, CC_InputMngParam, float, float)
 GET_SET_CC_DEFINITION(FTempVent_Tau, CC_InputMngParam, float, float)
 GET_SET_CC_DEFINITION(FRotSpd_Tau, CC_InputMngParam, float, float)
 
-GET_SET_CC_DEFINITION(Derivator_p, CC_WaterHeatCtrlData, float, float)
+GET_SET_CC_DEFINITION(downTemp_changeRate, CC_WaterHeatCtrlData, float, float)
 GET_SET_CC_DEFINITION(Cs_hard_draw_thrs_Value, CC_WaterHeatCtrlParam, float, double)
+
+GET_SET_CC_DEFINITION(Bs_air_low_temp_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_air_high_temp_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_ant_shrt_cycl_lim_pump_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_high_pres_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_high_load_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_hpc_dfr_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_hpc_crit_dfr_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+GET_SET_CC_DEFINITION(Bs_pump_prot_ena, CC_WaterHeatCtrl_Bt_heat_pump_prot, uint16_t, bool)
+
+GET_SET_CC_DEFINITION(Ss_pump_ctrl_mod, CC_WaterHeatCtrl_Out, uint16_t, te_pump_mode)
+GET_SET_CC_DEFINITION(Cs_ctrl_temp_evap_spd_cmd, CC_WaterHeatCtrl_Out, float, float)
+GET_SET_CC_DEFINITION(Ss_tank_lvl_stt, CC_WaterHeatCtrl_Out, uint16_t, te_tank_lvl)
+GET_SET_CC_DEFINITION(Ss_heat_pump_stt, CC_WaterHeatCtrl_Out, uint16_t, te_heat_stt)
+
+GET_SET_CC_DEFINITION(Bs_vent_pres_err, CC_subInputSecuOutput, uint16_t, bool)
+
+GET_SET_CC_DEFINITION(ErrPresVent_opScaleSetTime, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(ErrPresVent_opScaleRstTime, CC_InputMngParam, float, float)
+GET_SET_CC_DEFINITION(ErrPresVent_defVal, CC_InputMngParam, float, float)
 
 }
 /*******************************************************************************************************/
