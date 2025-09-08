@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.158
+// Model version                  : 1.159
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:47:53 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:55 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -50,7 +50,7 @@ class WaterHeatCtrl final
   struct DW_WaterHeatCtrl_T {
     float Cs_ctrl_tref_max_spd_cmd;    // '<S12>/Divide'
     float Cs_ctrl_temp_evap_spd_cmd;   // '<S11>/Divide'
-    float Derivator_p;                 // '<S10>/Derivator'
+    float downTemp_changeRate;         // '<S10>/downTemp_changeRate'
     float rateLimPrevValue_DSTATE;     // '<S17>/rateLimPrevValue'
     float ctrl_temp_evap_spd_cmd_prev_DST;// '<S25>/ctrl_temp_evap_spd_cmd_prev'
     te_heat_stt heat_pump_stt_prev_DSTATE;// '<Root>/heat_pump_stt_prev'
@@ -70,34 +70,34 @@ class WaterHeatCtrl final
   // Parameters (default storage)
   struct P_WaterHeatCtrl_T {
     float coldTank_rpmSp_filter_K;     // Mask Parameter: coldTank_rpmSp_filter_K
-                                          //  Referenced by: '<S28>/firstOrderTF'
+                                          //  Referenced by: '<S28>/coldTank_rpmSp_filter'
 
     float coldTank_rpmSp_filter_Tau;   // Mask Parameter: coldTank_rpmSp_filter_Tau
-                                          //  Referenced by: '<S28>/firstOrderTF'
+                                          //  Referenced by: '<S28>/coldTank_rpmSp_filter'
 
     float downTemp_changeRate_initVal; // Mask Parameter: downTemp_changeRate_initVal
-                                          //  Referenced by: '<S10>/Derivator'
+                                          //  Referenced by: '<S10>/downTemp_changeRate'
 
     float coldTank_rpmSp_filter_initVal;// Mask Parameter: coldTank_rpmSp_filter_initVal
-                                           //  Referenced by: '<S28>/firstOrderTF'
+                                           //  Referenced by: '<S28>/coldTank_rpmSp_filter'
 
     float HysteresisProtectTankDefrost_of;// Mask Parameter: HysteresisProtectTankDefrost_of
-                                             //  Referenced by: '<S67>/Hysteresis'
+                                             //  Referenced by: '<S67>/HysteresisProtectTankDefrost'
 
     float HysteresisProtectTankDefrost_on;// Mask Parameter: HysteresisProtectTankDefrost_on
-                                             //  Referenced by: '<S67>/Hysteresis'
+                                             //  Referenced by: '<S67>/HysteresisProtectTankDefrost'
 
     float downTemp_changeRate_sampleTime;// Mask Parameter: downTemp_changeRate_sampleTime
-                                            //  Referenced by: '<S10>/Derivator'
+                                            //  Referenced by: '<S10>/downTemp_changeRate'
 
     float coldTank_rpmSp_filter_sampleTim;// Mask Parameter: coldTank_rpmSp_filter_sampleTim
-                                             //  Referenced by: '<S28>/firstOrderTF'
+                                             //  Referenced by: '<S28>/coldTank_rpmSp_filter'
 
     ta_temp HysteresisProtectTankDefrost_sw;// Mask Parameter: HysteresisProtectTankDefrost_sw
-                                               //  Referenced by: '<S67>/Hysteresis'
+                                               //  Referenced by: '<S67>/HysteresisProtectTankDefrost'
 
     ta_temp HysteresisProtectTankDefrost__c;// Mask Parameter: HysteresisProtectTankDefrost__c
-                                               //  Referenced by: '<S67>/Hysteresis'
+                                               //  Referenced by: '<S67>/HysteresisProtectTankDefrost'
 
     double posRateLimCst_Value;        // Expression: 120/5
                                           //  Referenced by: '<S17>/posRateLimCst'
@@ -497,8 +497,8 @@ class WaterHeatCtrl final
   // Move Assignment Operator
   WaterHeatCtrl& operator= (WaterHeatCtrl &&) = delete;
 
-  // model instance variable for '<S10>/Derivator'
-  Derivator DerivatorMDLOBJ1;
+  // model instance variable for '<S10>/downTemp_changeRate'
+  Derivator downTemp_changeRateMDLOBJ1;
 
   // model instance variable for '<S11>/TevapRegulator'
   PID_backCalc TevapRegulatorMDLOBJ2;
@@ -521,92 +521,92 @@ class WaterHeatCtrl final
   // model instance variable for '<S24>/lowCritDefrostProtection'
   RisingEdgeDelay lowCritDefrostProtecMDLOBJ8;
 
-  // model instance variable for '<S26>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ9;
+  // model instance variable for '<S26>/TevapProtState'
+  R_S_FlipFlop TevapProtStateMDLOBJ9;
 
   // model instance variable for '<S25>/evapTempProtReset'
   RisingEdgeDelay evapTempProtResetMDLOBJ10;
 
-  // model instance variable for '<S27>/Saturation'
-  cntrlSaturation SaturationMDLOBJ11;
+  // model instance variable for '<S27>/Pump_rpm_sat'
+  cntrlSaturation Pump_rpm_satMDLOBJ11;
 
-  // model instance variable for '<S28>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ12;
+  // model instance variable for '<S28>/coldTank_rpmSp_filter'
+  firstOrderTF coldTank_rpmSp_filteMDLOBJ12;
 
-  // model instance variable for '<S38>/Saturation'
-  cntrlSaturation SaturationMDLOBJ13;
+  // model instance variable for '<S38>/Saturation1'
+  cntrlSaturation Saturation1MDLOBJ13;
 
-  // model instance variable for '<S39>/Saturation'
-  cntrlSaturation SaturationMDLOBJ14;
+  // model instance variable for '<S39>/Saturation2'
+  cntrlSaturation Saturation2MDLOBJ14;
 
-  // model instance variable for '<S40>/Saturation'
-  cntrlSaturation SaturationMDLOBJ15;
+  // model instance variable for '<S40>/Saturation3'
+  cntrlSaturation Saturation3MDLOBJ15;
 
-  // model instance variable for '<S41>/Saturation'
-  cntrlSaturation SaturationMDLOBJ16;
+  // model instance variable for '<S41>/Saturation4'
+  cntrlSaturation Saturation4MDLOBJ16;
 
-  // model instance variable for '<S43>/Saturation'
-  cntrlSaturation SaturationMDLOBJ17;
+  // model instance variable for '<S43>/Saturation1'
+  cntrlSaturation Saturation1MDLOBJ17;
 
-  // model instance variable for '<S44>/Saturation'
-  cntrlSaturation SaturationMDLOBJ18;
+  // model instance variable for '<S44>/Saturation2'
+  cntrlSaturation Saturation2MDLOBJ18;
 
-  // model instance variable for '<S45>/Saturation'
-  cntrlSaturation SaturationMDLOBJ19;
+  // model instance variable for '<S45>/Saturation3'
+  cntrlSaturation Saturation3MDLOBJ19;
 
-  // model instance variable for '<S46>/Saturation'
-  cntrlSaturation SaturationMDLOBJ20;
+  // model instance variable for '<S46>/Saturation4'
+  cntrlSaturation Saturation4MDLOBJ20;
 
-  // model instance variable for '<S48>/Saturation'
-  cntrlSaturation SaturationMDLOBJ21;
+  // model instance variable for '<S48>/Saturation5'
+  cntrlSaturation Saturation5MDLOBJ21;
 
-  // model instance variable for '<S49>/Saturation'
-  cntrlSaturation SaturationMDLOBJ22;
+  // model instance variable for '<S49>/Saturation6'
+  cntrlSaturation Saturation6MDLOBJ22;
 
-  // model instance variable for '<S50>/Saturation'
-  cntrlSaturation SaturationMDLOBJ23;
+  // model instance variable for '<S50>/Saturation7'
+  cntrlSaturation Saturation7MDLOBJ23;
 
-  // model instance variable for '<S51>/Saturation'
-  cntrlSaturation SaturationMDLOBJ24;
+  // model instance variable for '<S51>/Saturation8'
+  cntrlSaturation Saturation8MDLOBJ24;
 
-  // model instance variable for '<S53>/Saturation'
-  cntrlSaturation SaturationMDLOBJ25;
+  // model instance variable for '<S53>/Saturation1'
+  cntrlSaturation Saturation1MDLOBJ25;
 
-  // model instance variable for '<S54>/Saturation'
-  cntrlSaturation SaturationMDLOBJ26;
+  // model instance variable for '<S54>/Saturation2'
+  cntrlSaturation Saturation2MDLOBJ26;
 
-  // model instance variable for '<S55>/Saturation'
-  cntrlSaturation SaturationMDLOBJ27;
+  // model instance variable for '<S55>/Saturation3'
+  cntrlSaturation Saturation3MDLOBJ27;
 
-  // model instance variable for '<S56>/Saturation'
-  cntrlSaturation SaturationMDLOBJ28;
+  // model instance variable for '<S56>/Saturation4'
+  cntrlSaturation Saturation4MDLOBJ28;
 
-  // model instance variable for '<S58>/Saturation'
-  cntrlSaturation SaturationMDLOBJ29;
+  // model instance variable for '<S58>/Saturation1'
+  cntrlSaturation Saturation1MDLOBJ29;
 
-  // model instance variable for '<S59>/Saturation'
-  cntrlSaturation SaturationMDLOBJ30;
+  // model instance variable for '<S59>/Saturation2'
+  cntrlSaturation Saturation2MDLOBJ30;
 
-  // model instance variable for '<S60>/Saturation'
-  cntrlSaturation SaturationMDLOBJ31;
+  // model instance variable for '<S60>/Saturation3'
+  cntrlSaturation Saturation3MDLOBJ31;
 
-  // model instance variable for '<S61>/Saturation'
-  cntrlSaturation SaturationMDLOBJ32;
+  // model instance variable for '<S61>/Saturation4'
+  cntrlSaturation Saturation4MDLOBJ32;
 
-  // model instance variable for '<S63>/Saturation'
-  cntrlSaturation SaturationMDLOBJ33;
+  // model instance variable for '<S63>/Saturation1'
+  cntrlSaturation Saturation1MDLOBJ33;
 
-  // model instance variable for '<S64>/Saturation'
-  cntrlSaturation SaturationMDLOBJ34;
+  // model instance variable for '<S64>/Saturation2'
+  cntrlSaturation Saturation2MDLOBJ34;
 
-  // model instance variable for '<S65>/Saturation'
-  cntrlSaturation SaturationMDLOBJ35;
+  // model instance variable for '<S65>/Saturation3'
+  cntrlSaturation Saturation3MDLOBJ35;
 
-  // model instance variable for '<S66>/Saturation'
-  cntrlSaturation SaturationMDLOBJ36;
+  // model instance variable for '<S66>/Saturation4'
+  cntrlSaturation Saturation4MDLOBJ36;
 
-  // model instance variable for '<S67>/Hysteresis'
-  Hysteresis HysteresisMDLOBJ37;
+  // model instance variable for '<S67>/HysteresisProtectTankDefrost'
+  Hysteresis HysteresisProtectTanMDLOBJ37;
 
   // Block states
   DW_WaterHeatCtrl_T WaterHeatCtrl_DW;

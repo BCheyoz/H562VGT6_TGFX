@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'InPutMng'.
 //
-// Model version                  : 1.337
+// Model version                  : 1.340
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:37:32 2025
+// C/C++ source code generated on : Mon Sep  8 11:00:51 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

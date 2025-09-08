@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysMng'.
 //
-// Model version                  : 1.150
+// Model version                  : 1.154
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:37:05 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:39 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -29,7 +29,7 @@
 
 // Model block global parameters (default storage)
 extern uint8_t rtP_Control_tick_C;     // Variable: Control_tick_C
-                                          //  Referenced by: '<S13>/RisingEdgeDelay'
+                                          //  Referenced by: '<S13>/heat_pump_test_rst'
 
 
 // Class declaration for model SysMng
@@ -61,10 +61,10 @@ class SysMng final
     bool heatPumpTestModeActDelay;     // '<Root>/heatPumpTestModeActDelay'
     bool Bs_clk_on;                    // '<Root>/modeSelection'
     bool isSgOn;                       // '<S9>/isSgOn'
-    bool stt;                          // '<S14>/R_S_FlipFlop'
-    bool stt_i;                        // '<S12>/R_S_FlipFlop'
-    bool stt_a;                        // '<S11>/R_S_FlipFlop'
-    bool stt_d;                        // '<S10>/R_S_FlipFlop'
+    bool stt;                          // '<S14>/R_S_Holidays'
+    bool stt_g;                        // '<S12>/R_S_anti_Lgn'
+    bool stt_b;                        // '<S11>/R_S_anti_Lgn'
+    bool stt_j;                        // '<S10>/R_S_Boost'
     bool AntiLegionnellaModeActDelay_DST;// '<Root>/AntiLegionnellaModeActDelay'
     bool HolidaysModeActDelay_DSTATE;  // '<Root>/HolidaysModeActDelay'
     bool SmartGridActDelay_DSTATE;     // '<Root>/SmartGridActDelay'
@@ -74,11 +74,11 @@ class SysMng final
 
   // Parameters (default storage)
   struct P_SysMng_T {
-    float RisingEdgeDelay_delay;       // Mask Parameter: RisingEdgeDelay_delay
-                                          //  Referenced by: '<S13>/RisingEdgeDelay'
+    float heat_pump_test_rst_delay;    // Mask Parameter: heat_pump_test_rst_delay
+                                          //  Referenced by: '<S13>/heat_pump_test_rst'
 
     float secTimer_sampleTime;         // Mask Parameter: secTimer_sampleTime
-                                          //  Referenced by: '<S15>/Timer'
+                                          //  Referenced by: '<S15>/secTimer'
 
     te_heat_stt Constant4_Value;       // Expression: te_heat_stt.Stopped
                                           //  Referenced by: '<S5>/Constant4'
@@ -208,11 +208,11 @@ class SysMng final
   // model instance variable for '<S5>/BoostRqstRisingEdge'
   RisingEdgeDetect BoostRqstRisingEdgeMDLOBJ1;
 
-  // model instance variable for '<S10>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ2;
+  // model instance variable for '<S10>/R_S_Boost'
+  R_S_FlipFlop R_S_BoostMDLOBJ2;
 
-  // model instance variable for '<S11>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ3;
+  // model instance variable for '<S11>/R_S_anti_Lgn'
+  R_S_FlipFlop R_S_anti_LgnMDLOBJ3;
 
   // model instance variable for '<S7>/HeatPumpTestRqstRisingEdge'
   RisingEdgeDetect HeatPumpTestRqstRisiMDLOBJ4;
@@ -220,14 +220,14 @@ class SysMng final
   // model instance variable for '<S7>/HeatPumpTestRqstRstRisingEdge'
   RisingEdgeDetect HeatPumpTestRqstRstRMDLOBJ5;
 
-  // model instance variable for '<S12>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ6;
+  // model instance variable for '<S12>/R_S_anti_Lgn'
+  R_S_FlipFlop R_S_anti_LgnMDLOBJ6;
 
-  // model instance variable for '<S13>/RisingEdgeDelay'
-  RisingEdgeDelay RisingEdgeDelayMDLOBJ7;
+  // model instance variable for '<S13>/heat_pump_test_rst'
+  RisingEdgeDelay heat_pump_test_rstMDLOBJ7;
 
-  // model instance variable for '<S14>/R_S_FlipFlop'
-  R_S_FlipFlop R_S_FlipFlopMDLOBJ8;
+  // model instance variable for '<S14>/R_S_Holidays'
+  R_S_FlipFlop R_S_HolidaysMDLOBJ8;
 
   // model instance variable for '<S8>/clkRchRisingEdge'
   RisingEdgeDetect clkRchRisingEdgeMDLOBJ9;
@@ -235,8 +235,8 @@ class SysMng final
   // model instance variable for '<S8>/hldyRqstRisingEdge'
   RisingEdgeDetect hldyRqstRisingEdgeMDLOBJ10;
 
-  // model instance variable for '<S15>/Timer'
-  Timer TimerMDLOBJ11;
+  // model instance variable for '<S15>/secTimer'
+  Timer secTimerMDLOBJ11;
 
   // Block states
   DW_SysMng_T SysMng_DW;
@@ -326,7 +326,7 @@ extern SysMng::P_SysMng_T SysMng_rtP;
 //  '<S10>'  : 'SysMng/ConditionForModeSelection/BoostModeActivation/R_S_Boost'
 //  '<S11>'  : 'SysMng/ConditionForModeSelection/antiLegionellaModeActivation/R_S_anti_Lgn'
 //  '<S12>'  : 'SysMng/ConditionForModeSelection/heatPumpTestModeActivation/R_S_anti_Lgn'
-//  '<S13>'  : 'SysMng/ConditionForModeSelection/heatPumpTestModeActivation/RisingEdgeDelay'
+//  '<S13>'  : 'SysMng/ConditionForModeSelection/heatPumpTestModeActivation/heat_pump_test_rst'
 //  '<S14>'  : 'SysMng/ConditionForModeSelection/holidaysModeActivation/R_S_Holidays'
 //  '<S15>'  : 'SysMng/dayCounter/secTimer'
 

@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysMng'.
 //
-// Model version                  : 1.150
+// Model version                  : 1.154
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:37:05 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:39 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

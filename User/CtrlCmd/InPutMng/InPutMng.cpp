@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'InPutMng'.
 //
-// Model version                  : 1.337
+// Model version                  : 1.340
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:37:32 2025
+// C/C++ source code generated on : Mon Sep  8 11:00:51 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -60,6 +60,7 @@ InPutMng::P_InPutMng_T InPutMng::InPutMng_rtP{
   0.0F,
   0.0F,
   0.0F,
+  60.0F,
   30.0F,
   0.0F,
   0.0F,
@@ -68,7 +69,6 @@ InPutMng::P_InPutMng_T InPutMng::InPutMng_rtP{
   0.0F,
   0.0F,
   0.0F,
-  60.0F,
   1050,
   1050,
   1050,
@@ -471,50 +471,50 @@ InPutMng::P_InPutMng_T InPutMng::InPutMng_rtP{
 // System initialize for atomic system: '<S1>/VentConsumption'
 void InPutMng::InPutMng_VentConsumption_Init()
 {
-  IntegratorMDLOBJ1.init(InPutMng_rtP.egyCalc_initVal);
+  egyCalcMDLOBJ1.init(InPutMng_rtP.egyCalc_initVal);
 }
 
 // System reset for atomic system: '<S1>/VentConsumption'
 void InPutMng::InPutMng_VentConsumption_Reset()
 {
-  IntegratorMDLOBJ1.reset(InPutMng_rtP.egyCalc_initVal);
+  egyCalcMDLOBJ1.reset(InPutMng_rtP.egyCalc_initVal);
 }
 
 // Output and update for atomic system: '<S1>/VentConsumption'
 void InPutMng::InPutMng_VentConsumption()
 {
   // local block i/o variables
-  float rtb_Integrator;
+  float rtb_egyCalc;
   float rtb_ventPwrW_at;
   bool rtb_Rst;
   InPutMng_DW.Cs_vent_pwr = look2_iu16lu32n31tu32_binlcse(InPutMng_DW.Cs_vent_rot_spd, InPutMng_DW.Cs_vent_pres, InPutMng_rtP.ventPwrMap_bp01Data,
     InPutMng_rtP.ventPwrMap_bp02Data, InPutMng_rtP.ventPwrMap_tableData, InPutMng_rtP.ventPwrMap_maxIndex, 85U);
   rtb_ventPwrW_at = static_cast<float>(InPutMng_DW.Cs_vent_pwr) / InPutMng_rtP.precisionPower_Value;
   rtb_Rst = ((InPutMng_rtu_InPutMng_In->Ss_vent_cnsp_rst == InPutMng_rtP.On_Value) || (InPutMng_rtP.On_Value == InPutMng_rtu_InPutMng_In->Ss_tot_cnsp_rst));
-  IntegratorMDLOBJ1.step(&rtb_ventPwrW_at, &rtb_Rst, &rtb_Integrator, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal);
-  InPutMng_DW.egyWh = static_cast<ta_egy>(rtb_Integrator / InPutMng_rtP.hourIntoSec_Value);
+  egyCalcMDLOBJ1.step(&rtb_ventPwrW_at, &rtb_Rst, &rtb_egyCalc, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal);
+  InPutMng_DW.egyWh = static_cast<ta_egy>(rtb_egyCalc / InPutMng_rtP.hourIntoSec_Value);
 }
 
 // System initialize for atomic system: '<S1>/WaterHeatingConsumption'
 void InPutMng::In_WaterHeatingConsumption_Init()
 {
-  IntegratorMDLOBJ2.init(InPutMng_rtP.egyCalc_initVal_f);
-  IntegratorMDLOBJ3.init(InPutMng_rtP.egyCalc_initVal_j);
+  egyCalcMDLOBJ2.init(InPutMng_rtP.egyCalc_initVal_f);
+  egyCalcMDLOBJ3.init(InPutMng_rtP.egyCalc_initVal_j);
 }
 
 // System reset for atomic system: '<S1>/WaterHeatingConsumption'
 void InPutMng::I_WaterHeatingConsumption_Reset()
 {
-  IntegratorMDLOBJ2.reset(InPutMng_rtP.egyCalc_initVal_f);
-  IntegratorMDLOBJ3.reset(InPutMng_rtP.egyCalc_initVal_j);
+  egyCalcMDLOBJ2.reset(InPutMng_rtP.egyCalc_initVal_f);
+  egyCalcMDLOBJ3.reset(InPutMng_rtP.egyCalc_initVal_j);
 }
 
 // Output and update for atomic system: '<S1>/WaterHeatingConsumption'
 void InPutMng::InPutMn_WaterHeatingConsumption()
 {
   // local block i/o variables
-  float rtb_Integrator_i;
-  float rtb_Integrator_b;
+  float rtb_egyCalc_c;
+  float rtb_egyCalc_m;
   float rtb_curPower;
   float rtb_ventPwrW_i;
   ta_pwr rtb_Cs_elec_htr_bstr_pwr;
@@ -529,12 +529,12 @@ void InPutMng::InPutMn_WaterHeatingConsumption()
   rtb_ventPwrW_i = static_cast<float>(rtb_Cs_elec_htr_bstr_pwr) / InPutMng_rtP.precisionPwr_Value;
   rtb_Rst = ((InPutMng_rtu_InPutMng_In->Ss_heat_wtr_cnsp_rst == InPutMng_rtP.On_Value_d) || (InPutMng_rtP.On_Value_d ==
               InPutMng_rtu_InPutMng_In->Ss_tot_cnsp_rst));
-  IntegratorMDLOBJ2.step(&rtb_ventPwrW_i, &rtb_Rst, &rtb_Integrator_i, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal_f);
+  egyCalcMDLOBJ2.step(&rtb_ventPwrW_i, &rtb_Rst, &rtb_egyCalc_c, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal_f);
   rtb_curPower = static_cast<float>(InPutMng_rtu_InPutMng_In->Cs_heat_pump_pwr) / InPutMng_rtP.precisionPwr_Value_i;
   rtb_Rst_n = ((InPutMng_rtu_InPutMng_In->Ss_heat_wtr_cnsp_rst == InPutMng_rtP.On_Value_c) || (InPutMng_rtP.On_Value_c ==
     InPutMng_rtu_InPutMng_In->Ss_tot_cnsp_rst));
-  IntegratorMDLOBJ3.step(&rtb_curPower, &rtb_Rst_n, &rtb_Integrator_b, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal_j);
-  InPutMng_DW.AddCnsp_g = static_cast<uint32_t>(rtb_Integrator_i / InPutMng_rtP.hourIntoSec_Value_b) + static_cast<uint32_t>(rtb_Integrator_b /
+  egyCalcMDLOBJ3.step(&rtb_curPower, &rtb_Rst_n, &rtb_egyCalc_m, rtP_input_mng_tick, InPutMng_rtP.egyCalc_initVal_j);
+  InPutMng_DW.AddCnsp_g = static_cast<uint32_t>(rtb_egyCalc_c / InPutMng_rtP.hourIntoSec_Value_b) + static_cast<uint32_t>(rtb_egyCalc_m /
     InPutMng_rtP.hourIntoSec_Value_k);
   InPutMng_DW.AddPwr_g = rtb_Cs_elec_htr_bstr_pwr + InPutMng_rtu_InPutMng_In->Cs_heat_pump_pwr;
 }
@@ -786,25 +786,25 @@ void InPutMng::InPutMng_V40Estimation()
 // System initialize for atomic system: '<S5>/Filtering'
 void InPutMng::InPutMng_Filtering_Init()
 {
-  firstOrderTFMDLOBJ6.init(InPutMng_rtP.FTempDown_initVal);
-  firstOrderTFMDLOBJ8.init(InPutMng_rtP.FTempUp_initVal);
-  firstOrderTFMDLOBJ10.init(InPutMng_rtP.FTempXhst_initVal);
-  firstOrderTFMDLOBJ7.init(InPutMng_rtP.FTempEvap_initVal);
-  firstOrderTFMDLOBJ9.init(InPutMng_rtP.FTempVent_initVal);
-  firstOrderTFMDLOBJ4.init(InPutMng_rtP.FPresVent_initVal);
-  firstOrderTFMDLOBJ5.init(InPutMng_rtP.FRotSpd_initVal);
+  FTempDownMDLOBJ6.init(InPutMng_rtP.FTempDown_initVal);
+  FTempUpMDLOBJ8.init(InPutMng_rtP.FTempUp_initVal);
+  FTempXhstMDLOBJ10.init(InPutMng_rtP.FTempXhst_initVal);
+  FTempEvapMDLOBJ7.init(InPutMng_rtP.FTempEvap_initVal);
+  FTempVentMDLOBJ9.init(InPutMng_rtP.FTempVent_initVal);
+  FPresVentMDLOBJ4.init(InPutMng_rtP.FPresVent_initVal);
+  FRotSpdMDLOBJ5.init(InPutMng_rtP.FRotSpd_initVal);
 }
 
 // System reset for atomic system: '<S5>/Filtering'
 void InPutMng::InPutMng_Filtering_Reset()
 {
-  firstOrderTFMDLOBJ6.reset(InPutMng_rtP.FTempDown_initVal);
-  firstOrderTFMDLOBJ8.reset(InPutMng_rtP.FTempUp_initVal);
-  firstOrderTFMDLOBJ10.reset(InPutMng_rtP.FTempXhst_initVal);
-  firstOrderTFMDLOBJ7.reset(InPutMng_rtP.FTempEvap_initVal);
-  firstOrderTFMDLOBJ9.reset(InPutMng_rtP.FTempVent_initVal);
-  firstOrderTFMDLOBJ4.reset(InPutMng_rtP.FPresVent_initVal);
-  firstOrderTFMDLOBJ5.reset(InPutMng_rtP.FRotSpd_initVal);
+  FTempDownMDLOBJ6.reset(InPutMng_rtP.FTempDown_initVal);
+  FTempUpMDLOBJ8.reset(InPutMng_rtP.FTempUp_initVal);
+  FTempXhstMDLOBJ10.reset(InPutMng_rtP.FTempXhst_initVal);
+  FTempEvapMDLOBJ7.reset(InPutMng_rtP.FTempEvap_initVal);
+  FTempVentMDLOBJ9.reset(InPutMng_rtP.FTempVent_initVal);
+  FPresVentMDLOBJ4.reset(InPutMng_rtP.FPresVent_initVal);
+  FRotSpdMDLOBJ5.reset(InPutMng_rtP.FRotSpd_initVal);
 }
 
 // Output and update for atomic system: '<S5>/Filtering'
@@ -812,11 +812,11 @@ void InPutMng::InPutMng_Filtering()
 {
   // local block i/o variables
   float rtb_output;
-  float rtb_output_i;
-  float rtb_output_d;
+  float rtb_output_f;
   float rtb_output_h;
-  float rtb_output_b;
-  float rtb_output_dm;
+  float rtb_output_a;
+  float rtb_output_c;
+  float rtb_output_fy;
   float rtb_output_p;
   float rtb_PresToSing;
   float rtb_RotSpdToSing;
@@ -826,25 +826,25 @@ void InPutMng::InPutMng_Filtering()
   float rtb_TempToSing5;
   float rtb_TenpToSing1;
   rtb_TempToSing = InPutMng_DW.Cs_tank_down_temp_cs;
-  firstOrderTFMDLOBJ6.step(&rtb_TempToSing, &rtb_output, InPutMng_rtP.FTempDown_K, InPutMng_rtP.FTempDown_Tau, rtP_input_mng_tick);
+  FTempDownMDLOBJ6.step(&rtb_TempToSing, &rtb_output, InPutMng_rtP.FTempDown_K, InPutMng_rtP.FTempDown_Tau, rtP_input_mng_tick);
   InPutMng_DW.Cs_tank_down_temp_e = static_cast<ta_temp>(std::floor(rtb_output));
   rtb_TenpToSing1 = InPutMng_DW.Cs_tank_up_temp_cs;
-  firstOrderTFMDLOBJ8.step(&rtb_TenpToSing1, &rtb_output_i, InPutMng_rtP.FTempUp_K, InPutMng_rtP.FTempUp_Tau, rtP_input_mng_tick);
-  InPutMng_DW.Cs_tank_up_temp_g = static_cast<ta_temp>(std::floor(rtb_output_i));
+  FTempUpMDLOBJ8.step(&rtb_TenpToSing1, &rtb_output_f, InPutMng_rtP.FTempUp_K, InPutMng_rtP.FTempUp_Tau, rtP_input_mng_tick);
+  InPutMng_DW.Cs_tank_up_temp_g = static_cast<ta_temp>(std::floor(rtb_output_f));
   rtb_TempToSing3 = InPutMng_DW.Cs_pump_xhst_temp_cs;
-  firstOrderTFMDLOBJ10.step(&rtb_TempToSing3, &rtb_output_d, InPutMng_rtP.FTempXhst_K, InPutMng_rtP.FTempXhst_Tau, rtP_input_mng_tick);
-  InPutMng_DW.Cs_pump_xhst_temp = static_cast<ta_temp>(std::floor(rtb_output_d));
+  FTempXhstMDLOBJ10.step(&rtb_TempToSing3, &rtb_output_h, InPutMng_rtP.FTempXhst_K, InPutMng_rtP.FTempXhst_Tau, rtP_input_mng_tick);
+  InPutMng_DW.Cs_pump_xhst_temp = static_cast<ta_temp>(std::floor(rtb_output_h));
   rtb_TempToSing4 = InPutMng_DW.Cs_pump_evap_temp_cs;
-  firstOrderTFMDLOBJ7.step(&rtb_TempToSing4, &rtb_output_h, InPutMng_rtP.FTempEvap_K, InPutMng_rtP.FTempEvap_Tau, rtP_input_mng_tick);
-  InPutMng_DW.Cs_pump_evap_temp_l = static_cast<ta_temp>(std::floor(rtb_output_h));
+  FTempEvapMDLOBJ7.step(&rtb_TempToSing4, &rtb_output_a, InPutMng_rtP.FTempEvap_K, InPutMng_rtP.FTempEvap_Tau, rtP_input_mng_tick);
+  InPutMng_DW.Cs_pump_evap_temp_l = static_cast<ta_temp>(std::floor(rtb_output_a));
   rtb_TempToSing5 = InPutMng_DW.Cs_vent_temp_cs;
-  firstOrderTFMDLOBJ9.step(&rtb_TempToSing5, &rtb_output_b, InPutMng_rtP.FTempVent_K, InPutMng_rtP.FTempVent_Tau, rtP_input_mng_tick);
-  InPutMng_DW.Cs_vent_temp = static_cast<ta_temp>(std::floor(rtb_output_b));
+  FTempVentMDLOBJ9.step(&rtb_TempToSing5, &rtb_output_c, InPutMng_rtP.FTempVent_K, InPutMng_rtP.FTempVent_Tau, rtP_input_mng_tick);
+  InPutMng_DW.Cs_vent_temp = static_cast<ta_temp>(std::floor(rtb_output_c));
   rtb_PresToSing = InPutMng_DW.Cs_pres_vent_cs;
-  firstOrderTFMDLOBJ4.step(&rtb_PresToSing, &rtb_output_dm, InPutMng_rtP.FPresVent_K, InPutMng_rtP.FPresVent_Tau, rtP_input_mng_tick);
-  InPutMng_DW.Cs_vent_pres_g = static_cast<ta_air_pres>(rtb_output_dm);
+  FPresVentMDLOBJ4.step(&rtb_PresToSing, &rtb_output_fy, InPutMng_rtP.FPresVent_K, InPutMng_rtP.FPresVent_Tau, rtP_input_mng_tick);
+  InPutMng_DW.Cs_vent_pres_g = static_cast<ta_air_pres>(rtb_output_fy);
   rtb_RotSpdToSing = InPutMng_DW.Cs_vent_rot_spd_cs;
-  firstOrderTFMDLOBJ5.step(&rtb_RotSpdToSing, &rtb_output_p, InPutMng_rtP.FRotSpd_K, InPutMng_rtP.FRotSpd_Tau, rtP_input_mng_tick);
+  FRotSpdMDLOBJ5.step(&rtb_RotSpdToSing, &rtb_output_p, InPutMng_rtP.FRotSpd_K, InPutMng_rtP.FRotSpd_Tau, rtP_input_mng_tick);
   InPutMng_DW.Cs_vent_rot_spd_k = static_cast<ta_rot_spd>(rtb_output_p);
 }
 
@@ -871,13 +871,13 @@ void InPutMng::InPutMng_errorBypass()
 void InPutMng::InPutMng_errorDetect()
 {
   // local block i/o variables
-  float rtb_SensErrorDetection_o1;
-  float rtb_SensErrorDetection_o1_i;
-  float rtb_SensErrorDetection_o1_b;
-  float rtb_SensErrorDetection_o1_ig;
-  float rtb_SensErrorDetection_o1_io;
-  float rtb_SensErrorDetection_o1_n;
-  float rtb_SensErrorDetection_o1_h;
+  float rtb_ErrTempDown_o1;
+  float rtb_ErrTempUp_o1;
+  float rtb_ErrTempXhst_o1;
+  float rtb_ErrTempEvap_o1;
+  float rtb_ErrTempVent_o1;
+  float rtb_ErrPresVent_o1;
+  float rtb_ErrRotSpd_o1;
   float rtb_PresToSing;
   float rtb_RotSpdToSing;
   float rtb_TempToSing;
@@ -886,47 +886,47 @@ void InPutMng::InPutMng_errorDetect()
   float rtb_TempToSing3;
   float rtb_TempToSing4;
   rtb_TempToSing = InPutMng_DW.Cs_tank_down_temp_raw;
-  SensErrorDetectionMDLOBJ13.step(&rtb_TempToSing, &rtb_SensErrorDetection_o1, &InPutMng_DW.mergeErr[0], InPutMng_rtP.ErrTempDown_defVal,
+  ErrTempDownMDLOBJ13.step(&rtb_TempToSing, &rtb_ErrTempDown_o1, &InPutMng_DW.mergeErr[0], InPutMng_rtP.ErrTempDown_defVal,
     InPutMng_rtP.ErrTempDown_opScaleRstTime, InPutMng_rtP.ErrTempDown_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempDown_staticRstTime,
     InPutMng_rtP.ErrTempDown_staticRstTol, InPutMng_rtP.ErrTempDown_staticSetTime, InPutMng_rtP.ErrTempDown_maxThrs, InPutMng_rtP.ErrTempDown_minThrs,
     InPutMng_rtP.ErrTempDown_varRstTime, InPutMng_rtP.ErrTempDown_varSetTime, InPutMng_rtP.ErrTempDown_maxVar);
-  InPutMng_DW.Cs_tank_down_temp_cs = static_cast<ta_temp>(std::floor(rtb_SensErrorDetection_o1));
+  InPutMng_DW.Cs_tank_down_temp_cs = static_cast<ta_temp>(std::floor(rtb_ErrTempDown_o1));
   rtb_TempToSing1 = InPutMng_DW.Cs_tank_up_temp_raw;
-  SensErrorDetectionMDLOBJ15.step(&rtb_TempToSing1, &rtb_SensErrorDetection_o1_i, &InPutMng_DW.mergeErr[1], InPutMng_rtP.ErrTempUp_defVal,
-    InPutMng_rtP.ErrTempUp_opScaleRstTime, InPutMng_rtP.ErrTempUp_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempUp_staticRstTime,
-    InPutMng_rtP.ErrTempUp_staticRstTol, InPutMng_rtP.ErrTempUp_staticSetTime, InPutMng_rtP.ErrTempUp_maxThrs, InPutMng_rtP.ErrTempUp_minThrs,
-    InPutMng_rtP.ErrTempUp_varRstTime, InPutMng_rtP.ErrTempUp_varSetTime, InPutMng_rtP.ErrTempUp_maxVar);
-  InPutMng_DW.Cs_tank_up_temp_cs = static_cast<ta_temp>(std::floor(rtb_SensErrorDetection_o1_i));
+  ErrTempUpMDLOBJ15.step(&rtb_TempToSing1, &rtb_ErrTempUp_o1, &InPutMng_DW.mergeErr[1], InPutMng_rtP.ErrTempUp_defVal, InPutMng_rtP.ErrTempUp_opScaleRstTime,
+    InPutMng_rtP.ErrTempUp_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempUp_staticRstTime, InPutMng_rtP.ErrTempUp_staticRstTol,
+    InPutMng_rtP.ErrTempUp_staticSetTime, InPutMng_rtP.ErrTempUp_maxThrs, InPutMng_rtP.ErrTempUp_minThrs, InPutMng_rtP.ErrTempUp_varRstTime,
+    InPutMng_rtP.ErrTempUp_varSetTime, InPutMng_rtP.ErrTempUp_maxVar);
+  InPutMng_DW.Cs_tank_up_temp_cs = static_cast<ta_temp>(std::floor(rtb_ErrTempUp_o1));
   rtb_TempToSing2 = InPutMng_DW.Cs_pump_xhst_temp_raw;
-  SensErrorDetectionMDLOBJ17.step(&rtb_TempToSing2, &rtb_SensErrorDetection_o1_b, &InPutMng_DW.mergeErr[2], InPutMng_rtP.ErrTempXhst_defVal,
+  ErrTempXhstMDLOBJ17.step(&rtb_TempToSing2, &rtb_ErrTempXhst_o1, &InPutMng_DW.mergeErr[2], InPutMng_rtP.ErrTempXhst_defVal,
     InPutMng_rtP.ErrTempXhst_opScaleRstTime, InPutMng_rtP.ErrTempXhst_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempXhst_staticRstTime,
     InPutMng_rtP.ErrTempXhst_staticRstTol, InPutMng_rtP.ErrTempXhst_staticSetTime, InPutMng_rtP.ErrTempXhst_maxThrs, InPutMng_rtP.ErrTempXhst_minThrs,
     InPutMng_rtP.ErrTempXhst_varRstTime, InPutMng_rtP.ErrTempXhst_varSetTime, InPutMng_rtP.ErrTempXhst_maxVar);
-  InPutMng_DW.Cs_pump_xhst_temp_cs = static_cast<ta_temp>(std::floor(rtb_SensErrorDetection_o1_b));
+  InPutMng_DW.Cs_pump_xhst_temp_cs = static_cast<ta_temp>(std::floor(rtb_ErrTempXhst_o1));
   rtb_TempToSing3 = InPutMng_DW.Cs_pump_evap_temp_raw;
-  SensErrorDetectionMDLOBJ14.step(&rtb_TempToSing3, &rtb_SensErrorDetection_o1_ig, &InPutMng_DW.mergeErr[3], InPutMng_rtP.ErrTempEvap_defVal,
+  ErrTempEvapMDLOBJ14.step(&rtb_TempToSing3, &rtb_ErrTempEvap_o1, &InPutMng_DW.mergeErr[3], InPutMng_rtP.ErrTempEvap_defVal,
     InPutMng_rtP.ErrTempEvap_opScaleRstTime, InPutMng_rtP.ErrTempEvap_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempEvap_staticRstTime,
     InPutMng_rtP.ErrTempEvap_staticRstTol, InPutMng_rtP.ErrTempEvap_staticSetTime, InPutMng_rtP.ErrTempEvap_maxThrs, InPutMng_rtP.ErrTempEvap_minThrs,
     InPutMng_rtP.ErrTempEvap_varRstTime, InPutMng_rtP.ErrTempEvap_varSetTime, InPutMng_rtP.ErrTempEvap_maxVar);
-  InPutMng_DW.Cs_pump_evap_temp_cs = static_cast<ta_temp>(std::floor(rtb_SensErrorDetection_o1_ig));
+  InPutMng_DW.Cs_pump_evap_temp_cs = static_cast<ta_temp>(std::floor(rtb_ErrTempEvap_o1));
   rtb_TempToSing4 = InPutMng_DW.Cs_vent_temp_raw;
-  SensErrorDetectionMDLOBJ16.step(&rtb_TempToSing4, &rtb_SensErrorDetection_o1_io, &InPutMng_DW.mergeErr[4], InPutMng_rtP.ErrTempVent_defVal,
+  ErrTempVentMDLOBJ16.step(&rtb_TempToSing4, &rtb_ErrTempVent_o1, &InPutMng_DW.mergeErr[4], InPutMng_rtP.ErrTempVent_defVal,
     InPutMng_rtP.ErrTempVent_opScaleRstTime, InPutMng_rtP.ErrTempVent_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrTempVent_staticRstTime,
     InPutMng_rtP.ErrTempVent_staticRstTol, InPutMng_rtP.ErrTempVent_staticSetTime, InPutMng_rtP.ErrTempVent_maxThrs, InPutMng_rtP.ErrTempVent_minThrs,
     InPutMng_rtP.ErrTempVent_varRstTime, InPutMng_rtP.ErrTempVent_varSetTime, InPutMng_rtP.ErrTempVent_maxVar);
-  InPutMng_DW.Cs_vent_temp_cs = static_cast<ta_temp>(std::floor(rtb_SensErrorDetection_o1_io));
+  InPutMng_DW.Cs_vent_temp_cs = static_cast<ta_temp>(std::floor(rtb_ErrTempVent_o1));
   rtb_PresToSing = InPutMng_DW.Cs_vent_pres_raw;
-  SensErrorDetectionMDLOBJ11.step(&rtb_PresToSing, &rtb_SensErrorDetection_o1_n, &InPutMng_DW.mergeErr[5], InPutMng_rtP.ErrPresVent_defVal,
+  ErrPresVentMDLOBJ11.step(&rtb_PresToSing, &rtb_ErrPresVent_o1, &InPutMng_DW.mergeErr[5], InPutMng_rtP.ErrPresVent_defVal,
     InPutMng_rtP.ErrPresVent_opScaleRstTime, InPutMng_rtP.ErrPresVent_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrPresVent_staticRstTime,
     InPutMng_rtP.ErrPresVent_staticRstTol, InPutMng_rtP.ErrPresVent_staticSetTime, InPutMng_rtP.ErrPresVent_maxThrs, InPutMng_rtP.ErrPresVent_minThrs,
     InPutMng_rtP.ErrPresVent_varRstTime, InPutMng_rtP.ErrPresVent_varSetTime, InPutMng_rtP.ErrPresVent_maxVar);
-  InPutMng_DW.Cs_pres_vent_cs = static_cast<ta_air_pres>(rtb_SensErrorDetection_o1_n);
+  InPutMng_DW.Cs_pres_vent_cs = static_cast<ta_air_pres>(rtb_ErrPresVent_o1);
   rtb_RotSpdToSing = InPutMng_DW.Cs_vent_rot_spd_raw;
-  SensErrorDetectionMDLOBJ12.step(&rtb_RotSpdToSing, &rtb_SensErrorDetection_o1_h, &InPutMng_DW.mergeErr[6], InPutMng_rtP.ErrRotSpd_defVal,
-    InPutMng_rtP.ErrRotSpd_opScaleRstTime, InPutMng_rtP.ErrRotSpd_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrRotSpd_staticRstTime,
-    InPutMng_rtP.ErrRotSpd_staticRstTol, InPutMng_rtP.ErrRotSpd_staticSetTime, InPutMng_rtP.ErrRotSpd_maxThrs, InPutMng_rtP.ErrRotSpd_minThrs,
-    InPutMng_rtP.ErrRotSpd_varRstTime, InPutMng_rtP.ErrRotSpd_varSetTime, InPutMng_rtP.ErrRotSpd_maxVar);
-  InPutMng_DW.Cs_vent_rot_spd_cs = static_cast<ta_rot_spd>(rtb_SensErrorDetection_o1_h);
+  ErrRotSpdMDLOBJ12.step(&rtb_RotSpdToSing, &rtb_ErrRotSpd_o1, &InPutMng_DW.mergeErr[6], InPutMng_rtP.ErrRotSpd_defVal, InPutMng_rtP.ErrRotSpd_opScaleRstTime,
+    InPutMng_rtP.ErrRotSpd_opScaleSetTime, rtP_input_mng_tick, InPutMng_rtP.ErrRotSpd_staticRstTime, InPutMng_rtP.ErrRotSpd_staticRstTol,
+    InPutMng_rtP.ErrRotSpd_staticSetTime, InPutMng_rtP.ErrRotSpd_maxThrs, InPutMng_rtP.ErrRotSpd_minThrs, InPutMng_rtP.ErrRotSpd_varRstTime,
+    InPutMng_rtP.ErrRotSpd_varSetTime, InPutMng_rtP.ErrRotSpd_maxVar);
+  InPutMng_DW.Cs_vent_rot_spd_cs = static_cast<ta_rot_spd>(rtb_ErrRotSpd_o1);
 }
 
 // System initialize for atomic system: '<S5>/errorDetection'

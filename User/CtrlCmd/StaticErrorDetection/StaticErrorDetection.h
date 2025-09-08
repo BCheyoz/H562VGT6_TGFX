@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'StaticErrorDetection'.
 //
-// Model version                  : 1.49
+// Model version                  : 1.50
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:04:24 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:25 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -73,8 +73,8 @@ class StaticErrorDetection final
   // model instance variable for '<Root>/EdgeDelaySet'
   RisingEdgeDelay EdgeDelaySetMDLOBJ2;
 
-  // model instance variable for '<Root>/NumberNotEqual'
-  Timer NumberNotEqualMDLOBJ3;
+  // model instance variable for '<Root>/StaticErrorDetection'
+  Timer StaticErrorDetectionMDLOBJ3;
 
   // model instance variable for '<Root>/StaticErrorRS'
   R_S_FlipFlop StaticErrorRSMDLOBJ4;

@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'StaticErrorDetection'.
 //
-// Model version                  : 1.49
+// Model version                  : 1.50
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Jul 31 11:04:24 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:25 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -28,7 +28,7 @@ void StaticErrorDetection::reset(void)
   StaticErrorDetection_DW.prevSignalRaw_DSTATE = 0.0F;
   StaticErrorDetection_DW.UnitDelay3_DSTATE = 0U;
   StaticErrorDetection_DW.UnitDelay1_DSTATE = false;
-  NumberNotEqualMDLOBJ3.reset();
+  StaticErrorDetectionMDLOBJ3.reset();
   EdgeDelaySetMDLOBJ2.reset();
   EdgeDelayRstTimeMDLOBJ1.reset();
   StaticErrorRSMDLOBJ4.reset();
@@ -58,7 +58,7 @@ void StaticErrorDetection::step(const float *rtu_signalRaw, float *rty_signal,
   rtb_isEqualUint8_c = ((!StaticErrorDetection_DW.UnitDelay1_DSTATE) ||
                         (StaticErrorDetection_DW.UnitDelay3_DSTATE != 0));
   rtb_isEqualUint8_b_tmp = rtb_isEqual;
-  NumberNotEqualMDLOBJ3.step(&rtb_isEqualUint8, &rtb_isEqualUint8_c,
+  StaticErrorDetectionMDLOBJ3.step(&rtb_isEqualUint8, &rtb_isEqualUint8_c,
     &rtb_isEqualUint8_b_tmp, &rtb_numberNotEqual, &rtb_TimerState,
     rtp_Cs_smpl_time);
   rtb_calcTol = rtb_numberNotEqual * 100.0F / rtp_Cs_rst_dlay_time;

@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'InPutMng'.
 //
-// Model version                  : 1.337
+// Model version                  : 1.340
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Sep  4 18:37:32 2025
+// C/C++ source code generated on : Mon Sep  8 11:00:51 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -29,23 +29,23 @@
 // Model block global parameters (default storage)
 extern uint8_t rtP_input_mng_tick;     // Variable: input_mng_tick
                                           //  Referenced by:
-                                          //    '<S28>/firstOrderTF'
-                                          //    '<S29>/firstOrderTF'
-                                          //    '<S30>/firstOrderTF'
-                                          //    '<S31>/firstOrderTF'
-                                          //    '<S32>/firstOrderTF'
-                                          //    '<S33>/firstOrderTF'
-                                          //    '<S34>/firstOrderTF'
-                                          //    '<S9>/Integrator'
-                                          //    '<S38>/SensErrorDetection'
-                                          //    '<S39>/SensErrorDetection'
-                                          //    '<S40>/SensErrorDetection'
-                                          //    '<S41>/SensErrorDetection'
-                                          //    '<S42>/SensErrorDetection'
-                                          //    '<S43>/SensErrorDetection'
-                                          //    '<S44>/SensErrorDetection'
-                                          //    '<S13>/Integrator'
-                                          //    '<S15>/Integrator'
+                                          //    '<S28>/FPresVent'
+                                          //    '<S29>/FRotSpd'
+                                          //    '<S30>/FTempDown'
+                                          //    '<S31>/FTempEvap'
+                                          //    '<S32>/FTempUp'
+                                          //    '<S33>/FTempVent'
+                                          //    '<S34>/FTempXhst'
+                                          //    '<S9>/egyCalc'
+                                          //    '<S38>/ErrPresVent'
+                                          //    '<S39>/ErrRotSpd'
+                                          //    '<S40>/ErrTempDown'
+                                          //    '<S41>/ErrTempEvap'
+                                          //    '<S42>/ErrTempUp'
+                                          //    '<S43>/ErrTempVent'
+                                          //    '<S44>/ErrTempXhst'
+                                          //    '<S13>/egyCalc'
+                                          //    '<S15>/egyCalc'
 
 
 // Class declaration for model InPutMng
@@ -113,307 +113,307 @@ class InPutMng final
   // Parameters (default storage)
   struct P_InPutMng_T {
     float FTempDown_K;                 // Mask Parameter: FTempDown_K
-                                          //  Referenced by: '<S30>/firstOrderTF'
+                                          //  Referenced by: '<S30>/FTempDown'
 
     float FTempUp_K;                   // Mask Parameter: FTempUp_K
-                                          //  Referenced by: '<S32>/firstOrderTF'
+                                          //  Referenced by: '<S32>/FTempUp'
 
     float FTempXhst_K;                 // Mask Parameter: FTempXhst_K
-                                          //  Referenced by: '<S34>/firstOrderTF'
+                                          //  Referenced by: '<S34>/FTempXhst'
 
     float FTempEvap_K;                 // Mask Parameter: FTempEvap_K
-                                          //  Referenced by: '<S31>/firstOrderTF'
+                                          //  Referenced by: '<S31>/FTempEvap'
 
     float FTempVent_K;                 // Mask Parameter: FTempVent_K
-                                          //  Referenced by: '<S33>/firstOrderTF'
+                                          //  Referenced by: '<S33>/FTempVent'
 
     float FPresVent_K;                 // Mask Parameter: FPresVent_K
-                                          //  Referenced by: '<S28>/firstOrderTF'
+                                          //  Referenced by: '<S28>/FPresVent'
 
     float FRotSpd_K;                   // Mask Parameter: FRotSpd_K
-                                          //  Referenced by: '<S29>/firstOrderTF'
+                                          //  Referenced by: '<S29>/FRotSpd'
 
     float FTempDown_Tau;               // Mask Parameter: FTempDown_Tau
-                                          //  Referenced by: '<S30>/firstOrderTF'
+                                          //  Referenced by: '<S30>/FTempDown'
 
     float FTempUp_Tau;                 // Mask Parameter: FTempUp_Tau
-                                          //  Referenced by: '<S32>/firstOrderTF'
+                                          //  Referenced by: '<S32>/FTempUp'
 
     float FTempXhst_Tau;               // Mask Parameter: FTempXhst_Tau
-                                          //  Referenced by: '<S34>/firstOrderTF'
+                                          //  Referenced by: '<S34>/FTempXhst'
 
     float FTempEvap_Tau;               // Mask Parameter: FTempEvap_Tau
-                                          //  Referenced by: '<S31>/firstOrderTF'
+                                          //  Referenced by: '<S31>/FTempEvap'
 
     float FTempVent_Tau;               // Mask Parameter: FTempVent_Tau
-                                          //  Referenced by: '<S33>/firstOrderTF'
+                                          //  Referenced by: '<S33>/FTempVent'
 
     float FPresVent_Tau;               // Mask Parameter: FPresVent_Tau
-                                          //  Referenced by: '<S28>/firstOrderTF'
+                                          //  Referenced by: '<S28>/FPresVent'
 
     float FRotSpd_Tau;                 // Mask Parameter: FRotSpd_Tau
-                                          //  Referenced by: '<S29>/firstOrderTF'
+                                          //  Referenced by: '<S29>/FRotSpd'
 
     float ErrTempDown_defVal;          // Mask Parameter: ErrTempDown_defVal
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     float ErrTempUp_defVal;            // Mask Parameter: ErrTempUp_defVal
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     float ErrTempXhst_defVal;          // Mask Parameter: ErrTempXhst_defVal
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     float ErrTempEvap_defVal;          // Mask Parameter: ErrTempEvap_defVal
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     float ErrTempVent_defVal;          // Mask Parameter: ErrTempVent_defVal
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     float ErrPresVent_defVal;          // Mask Parameter: ErrPresVent_defVal
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     float ErrRotSpd_defVal;            // Mask Parameter: ErrRotSpd_defVal
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     float egyCalc_initVal;             // Mask Parameter: egyCalc_initVal
-                                          //  Referenced by: '<S9>/Integrator'
+                                          //  Referenced by: '<S9>/egyCalc'
 
     float egyCalc_initVal_f;           // Mask Parameter: egyCalc_initVal_f
-                                          //  Referenced by: '<S13>/Integrator'
+                                          //  Referenced by: '<S13>/egyCalc'
 
     float egyCalc_initVal_j;           // Mask Parameter: egyCalc_initVal_j
-                                          //  Referenced by: '<S15>/Integrator'
+                                          //  Referenced by: '<S15>/egyCalc'
 
     float FTempDown_initVal;           // Mask Parameter: FTempDown_initVal
-                                          //  Referenced by: '<S30>/firstOrderTF'
+                                          //  Referenced by: '<S30>/FTempDown'
 
     float FTempUp_initVal;             // Mask Parameter: FTempUp_initVal
-                                          //  Referenced by: '<S32>/firstOrderTF'
+                                          //  Referenced by: '<S32>/FTempUp'
 
     float FTempXhst_initVal;           // Mask Parameter: FTempXhst_initVal
-                                          //  Referenced by: '<S34>/firstOrderTF'
+                                          //  Referenced by: '<S34>/FTempXhst'
 
     float FTempEvap_initVal;           // Mask Parameter: FTempEvap_initVal
-                                          //  Referenced by: '<S31>/firstOrderTF'
+                                          //  Referenced by: '<S31>/FTempEvap'
 
     float FTempVent_initVal;           // Mask Parameter: FTempVent_initVal
-                                          //  Referenced by: '<S33>/firstOrderTF'
+                                          //  Referenced by: '<S33>/FTempVent'
 
     float FPresVent_initVal;           // Mask Parameter: FPresVent_initVal
-                                          //  Referenced by: '<S28>/firstOrderTF'
+                                          //  Referenced by: '<S28>/FPresVent'
 
     float FRotSpd_initVal;             // Mask Parameter: FRotSpd_initVal
-                                          //  Referenced by: '<S29>/firstOrderTF'
+                                          //  Referenced by: '<S29>/FRotSpd'
 
-    float ErrPresVent_staticRstTime;   // Mask Parameter: ErrPresVent_staticRstTime
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+    float ErrPresVent_opScaleRstTime;  // Mask Parameter: ErrPresVent_opScaleRstTime
+                                          //  Referenced by: '<S38>/ErrPresVent'
+
+    float ErrPresVent_opScaleSetTime;  // Mask Parameter: ErrPresVent_opScaleSetTime
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     float ErrTempDown_staticRstTol;    // Mask Parameter: ErrTempDown_staticRstTol
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     float ErrTempUp_staticRstTol;      // Mask Parameter: ErrTempUp_staticRstTol
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     float ErrTempXhst_staticRstTol;    // Mask Parameter: ErrTempXhst_staticRstTol
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     float ErrTempEvap_staticRstTol;    // Mask Parameter: ErrTempEvap_staticRstTol
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     float ErrTempVent_staticRstTol;    // Mask Parameter: ErrTempVent_staticRstTol
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     float ErrPresVent_staticRstTol;    // Mask Parameter: ErrPresVent_staticRstTol
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     float ErrRotSpd_staticRstTol;      // Mask Parameter: ErrRotSpd_staticRstTol
-                                          //  Referenced by: '<S39>/SensErrorDetection'
-
-    float ErrPresVent_staticSetTime;   // Mask Parameter: ErrPresVent_staticSetTime
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     ta_temp ErrTempDown_maxThrs;       // Mask Parameter: ErrTempDown_maxThrs
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     ta_temp ErrTempUp_maxThrs;         // Mask Parameter: ErrTempUp_maxThrs
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     ta_temp ErrTempXhst_maxThrs;       // Mask Parameter: ErrTempXhst_maxThrs
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     ta_temp ErrTempEvap_maxThrs;       // Mask Parameter: ErrTempEvap_maxThrs
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     ta_temp ErrTempVent_maxThrs;       // Mask Parameter: ErrTempVent_maxThrs
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     ta_temp ErrTempDown_maxVar;        // Mask Parameter: ErrTempDown_maxVar
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     ta_temp ErrTempUp_maxVar;          // Mask Parameter: ErrTempUp_maxVar
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     ta_temp ErrTempXhst_maxVar;        // Mask Parameter: ErrTempXhst_maxVar
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     ta_temp ErrTempEvap_maxVar;        // Mask Parameter: ErrTempEvap_maxVar
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     ta_temp ErrTempVent_maxVar;        // Mask Parameter: ErrTempVent_maxVar
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     ta_temp ErrTempDown_minThrs;       // Mask Parameter: ErrTempDown_minThrs
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     ta_temp ErrTempUp_minThrs;         // Mask Parameter: ErrTempUp_minThrs
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     ta_temp ErrTempXhst_minThrs;       // Mask Parameter: ErrTempXhst_minThrs
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     ta_temp ErrTempEvap_minThrs;       // Mask Parameter: ErrTempEvap_minThrs
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     ta_temp ErrTempVent_minThrs;       // Mask Parameter: ErrTempVent_minThrs
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     ta_air_pres ErrPresVent_maxThrs;   // Mask Parameter: ErrPresVent_maxThrs
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     ta_rot_spd ErrRotSpd_maxThrs;      // Mask Parameter: ErrRotSpd_maxThrs
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     ta_air_pres ErrPresVent_maxVar;    // Mask Parameter: ErrPresVent_maxVar
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     ta_rot_spd ErrRotSpd_maxVar;       // Mask Parameter: ErrRotSpd_maxVar
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     ta_air_pres ErrPresVent_minThrs;   // Mask Parameter: ErrPresVent_minThrs
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     ta_rot_spd ErrRotSpd_minThrs;      // Mask Parameter: ErrRotSpd_minThrs
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_opScaleRstTime;// Mask Parameter: ErrTempDown_opScaleRstTime
-                                           //  Referenced by: '<S40>/SensErrorDetection'
+                                           //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_opScaleRstTime; // Mask Parameter: ErrTempUp_opScaleRstTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_opScaleRstTime;// Mask Parameter: ErrTempXhst_opScaleRstTime
-                                           //  Referenced by: '<S44>/SensErrorDetection'
+                                           //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_opScaleRstTime;// Mask Parameter: ErrTempEvap_opScaleRstTime
-                                           //  Referenced by: '<S41>/SensErrorDetection'
+                                           //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_opScaleRstTime;// Mask Parameter: ErrTempVent_opScaleRstTime
-                                           //  Referenced by: '<S43>/SensErrorDetection'
-
-    uint16_t ErrPresVent_opScaleRstTime;// Mask Parameter: ErrPresVent_opScaleRstTime
-                                           //  Referenced by: '<S38>/SensErrorDetection'
+                                           //  Referenced by: '<S43>/ErrTempVent'
 
     uint16_t ErrRotSpd_opScaleRstTime; // Mask Parameter: ErrRotSpd_opScaleRstTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_opScaleSetTime;// Mask Parameter: ErrTempDown_opScaleSetTime
-                                           //  Referenced by: '<S40>/SensErrorDetection'
+                                           //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_opScaleSetTime; // Mask Parameter: ErrTempUp_opScaleSetTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_opScaleSetTime;// Mask Parameter: ErrTempXhst_opScaleSetTime
-                                           //  Referenced by: '<S44>/SensErrorDetection'
+                                           //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_opScaleSetTime;// Mask Parameter: ErrTempEvap_opScaleSetTime
-                                           //  Referenced by: '<S41>/SensErrorDetection'
+                                           //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_opScaleSetTime;// Mask Parameter: ErrTempVent_opScaleSetTime
-                                           //  Referenced by: '<S43>/SensErrorDetection'
-
-    uint16_t ErrPresVent_opScaleSetTime;// Mask Parameter: ErrPresVent_opScaleSetTime
-                                           //  Referenced by: '<S38>/SensErrorDetection'
+                                           //  Referenced by: '<S43>/ErrTempVent'
 
     uint16_t ErrRotSpd_opScaleSetTime; // Mask Parameter: ErrRotSpd_opScaleSetTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_staticRstTime;// Mask Parameter: ErrTempDown_staticRstTime
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_staticRstTime;  // Mask Parameter: ErrTempUp_staticRstTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_staticRstTime;// Mask Parameter: ErrTempXhst_staticRstTime
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_staticRstTime;// Mask Parameter: ErrTempEvap_staticRstTime
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_staticRstTime;// Mask Parameter: ErrTempVent_staticRstTime
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
+
+    uint16_t ErrPresVent_staticRstTime;// Mask Parameter: ErrPresVent_staticRstTime
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     uint16_t ErrRotSpd_staticRstTime;  // Mask Parameter: ErrRotSpd_staticRstTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_staticSetTime;// Mask Parameter: ErrTempDown_staticSetTime
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_staticSetTime;  // Mask Parameter: ErrTempUp_staticSetTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_staticSetTime;// Mask Parameter: ErrTempXhst_staticSetTime
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_staticSetTime;// Mask Parameter: ErrTempEvap_staticSetTime
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_staticSetTime;// Mask Parameter: ErrTempVent_staticSetTime
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
+
+    uint16_t ErrPresVent_staticSetTime;// Mask Parameter: ErrPresVent_staticSetTime
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     uint16_t ErrRotSpd_staticSetTime;  // Mask Parameter: ErrRotSpd_staticSetTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_varRstTime;   // Mask Parameter: ErrTempDown_varRstTime
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_varRstTime;     // Mask Parameter: ErrTempUp_varRstTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_varRstTime;   // Mask Parameter: ErrTempXhst_varRstTime
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_varRstTime;   // Mask Parameter: ErrTempEvap_varRstTime
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_varRstTime;   // Mask Parameter: ErrTempVent_varRstTime
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     uint16_t ErrPresVent_varRstTime;   // Mask Parameter: ErrPresVent_varRstTime
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     uint16_t ErrRotSpd_varRstTime;     // Mask Parameter: ErrRotSpd_varRstTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     uint16_t ErrTempDown_varSetTime;   // Mask Parameter: ErrTempDown_varSetTime
-                                          //  Referenced by: '<S40>/SensErrorDetection'
+                                          //  Referenced by: '<S40>/ErrTempDown'
 
     uint16_t ErrTempUp_varSetTime;     // Mask Parameter: ErrTempUp_varSetTime
-                                          //  Referenced by: '<S42>/SensErrorDetection'
+                                          //  Referenced by: '<S42>/ErrTempUp'
 
     uint16_t ErrTempXhst_varSetTime;   // Mask Parameter: ErrTempXhst_varSetTime
-                                          //  Referenced by: '<S44>/SensErrorDetection'
+                                          //  Referenced by: '<S44>/ErrTempXhst'
 
     uint16_t ErrTempEvap_varSetTime;   // Mask Parameter: ErrTempEvap_varSetTime
-                                          //  Referenced by: '<S41>/SensErrorDetection'
+                                          //  Referenced by: '<S41>/ErrTempEvap'
 
     uint16_t ErrTempVent_varSetTime;   // Mask Parameter: ErrTempVent_varSetTime
-                                          //  Referenced by: '<S43>/SensErrorDetection'
+                                          //  Referenced by: '<S43>/ErrTempVent'
 
     uint16_t ErrPresVent_varSetTime;   // Mask Parameter: ErrPresVent_varSetTime
-                                          //  Referenced by: '<S38>/SensErrorDetection'
+                                          //  Referenced by: '<S38>/ErrPresVent'
 
     uint16_t ErrRotSpd_varSetTime;     // Mask Parameter: ErrRotSpd_varSetTime
-                                          //  Referenced by: '<S39>/SensErrorDetection'
+                                          //  Referenced by: '<S39>/ErrRotSpd'
 
     float precisionPower_Value;        // Computed Parameter: precisionPower_Value
                                           //  Referenced by: '<S6>/precisionPower'
@@ -612,56 +612,56 @@ class InPutMng final
   // Move Assignment Operator
   InPutMng& operator= (InPutMng &&) = delete;
 
-  // model instance variable for '<S9>/Integrator'
-  Integrator IntegratorMDLOBJ1;
+  // model instance variable for '<S9>/egyCalc'
+  Integrator egyCalcMDLOBJ1;
 
-  // model instance variable for '<S13>/Integrator'
-  Integrator IntegratorMDLOBJ2;
+  // model instance variable for '<S13>/egyCalc'
+  Integrator egyCalcMDLOBJ2;
 
-  // model instance variable for '<S15>/Integrator'
-  Integrator IntegratorMDLOBJ3;
+  // model instance variable for '<S15>/egyCalc'
+  Integrator egyCalcMDLOBJ3;
 
-  // model instance variable for '<S28>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ4;
+  // model instance variable for '<S28>/FPresVent'
+  firstOrderTF FPresVentMDLOBJ4;
 
-  // model instance variable for '<S29>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ5;
+  // model instance variable for '<S29>/FRotSpd'
+  firstOrderTF FRotSpdMDLOBJ5;
 
-  // model instance variable for '<S30>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ6;
+  // model instance variable for '<S30>/FTempDown'
+  firstOrderTF FTempDownMDLOBJ6;
 
-  // model instance variable for '<S31>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ7;
+  // model instance variable for '<S31>/FTempEvap'
+  firstOrderTF FTempEvapMDLOBJ7;
 
-  // model instance variable for '<S32>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ8;
+  // model instance variable for '<S32>/FTempUp'
+  firstOrderTF FTempUpMDLOBJ8;
 
-  // model instance variable for '<S33>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ9;
+  // model instance variable for '<S33>/FTempVent'
+  firstOrderTF FTempVentMDLOBJ9;
 
-  // model instance variable for '<S34>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ10;
+  // model instance variable for '<S34>/FTempXhst'
+  firstOrderTF FTempXhstMDLOBJ10;
 
-  // model instance variable for '<S38>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ11;
+  // model instance variable for '<S38>/ErrPresVent'
+  SensErrorDetection ErrPresVentMDLOBJ11;
 
-  // model instance variable for '<S39>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ12;
+  // model instance variable for '<S39>/ErrRotSpd'
+  SensErrorDetection ErrRotSpdMDLOBJ12;
 
-  // model instance variable for '<S40>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ13;
+  // model instance variable for '<S40>/ErrTempDown'
+  SensErrorDetection ErrTempDownMDLOBJ13;
 
-  // model instance variable for '<S41>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ14;
+  // model instance variable for '<S41>/ErrTempEvap'
+  SensErrorDetection ErrTempEvapMDLOBJ14;
 
-  // model instance variable for '<S42>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ15;
+  // model instance variable for '<S42>/ErrTempUp'
+  SensErrorDetection ErrTempUpMDLOBJ15;
 
-  // model instance variable for '<S43>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ16;
+  // model instance variable for '<S43>/ErrTempVent'
+  SensErrorDetection ErrTempVentMDLOBJ16;
 
-  // model instance variable for '<S44>/SensErrorDetection'
-  SensErrorDetection SensErrorDetectionMDLOBJ17;
+  // model instance variable for '<S44>/ErrTempXhst'
+  SensErrorDetection ErrTempXhstMDLOBJ17;
 
   // Block states
   DW_InPutMng_T InPutMng_DW;
