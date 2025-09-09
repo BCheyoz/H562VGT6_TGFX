@@ -68,8 +68,8 @@ public :
 	inline tb_hmi_user* 			getCC_HmiUser(){return &cc_input.HMI.USER;}
 	inline tb_hw* 					getCC_HW(){return &cc_input.HW;}
 	inline tb_Control_Out* 			getCC_output(){return &cc_out;}
-	inline tb_VentCtrl_Out* 		getCC_subVentCtrlOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.VentCtrl_Out_Y0);}
-	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.InPutSecu_Out_Y0);}
+	inline tb_VentCtrl_Out* 		getCC_subVentCtrlOutput() {return &(ctrlCmd->TFLOW4_Ctrl_DW.VentCtrl_Out);}
+	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(ctrlCmd->TFLOW4_Ctrl_DW.InPutSecu_Out);}
 	inline VentCtrl::P_VentCtrl_T* 	getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
 	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
 	inline WaterHeatCtrl::P_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlParam(){return &WaterHeatCtrl::WaterHeatCtrl_rtP;}
