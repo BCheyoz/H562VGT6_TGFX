@@ -534,7 +534,7 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x6033,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_InitVal,	setTevapRegulator_InitVal},
 	{ 0x6034,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kawu,	setTevapRegulator_Kawu},
 	{ 0x6035,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kd,	setTevapRegulator_Kd},
-	{ 0x6036,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Ki,	setTevapRegulator_Ki},
+	{ 0x6036,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX1000GetFctSetFct},	getTevapRegulator_Ki,	setTevapRegulator_Ki},
 	{ 0x6037,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Kp,	setTevapRegulator_Kp},
 	{ 0x6038,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_Tau_f,	setTevapRegulator_Tau_f},
 	{ 0x6039,	{{{	ACCESS_MIN_LEVEL_5,	ACCESS_MIN_LEVEL_5}},	TVarFloatIntX100GetFctSetFct},	getTevapRegulator_InitVal,	setTevapRegulator_InitVal},
