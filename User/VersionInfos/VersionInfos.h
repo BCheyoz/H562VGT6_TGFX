@@ -23,7 +23,7 @@ extern "C" {
 // Paramètres User à Activer / Configurer :
 
 /*** Alpha 00.01.00 (v0.1.0) by BC le 11/02/2025 ****************************************************/
-#define VERSION_FW_SOFT_TYPE    (0xA0)  // Bin type
+#define VERSION_FW_SOFT_TYPE    (0xC0)  // Bin type
 #define VERSION_FW_SOFT_MAJOR   (0x00)  // major version
 #define VERSION_FW_SOFT_MINOR   (0x03)  // Minor version
 #define VERSION_FW_SOFT_DEV     (0x09)  // Dev version
