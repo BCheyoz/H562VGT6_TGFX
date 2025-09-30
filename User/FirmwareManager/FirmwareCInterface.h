@@ -63,6 +63,8 @@ uint16_t blinkMode();
 // User varaible
 uint8_t isAnodeFlags();
 uint8_t isAnodeState();
+uint8_t isJNState();
+uint8_t isSmartState();
 uint8_t getControlTick();
 uint8_t getWaterHeatCtrlTick();
 uint8_t getInputMngTick();

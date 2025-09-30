@@ -186,6 +186,16 @@ uint8_t isAnodeState(){
 	return fwp->isAnodeState();
 }
 
+uint8_t isJNState(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->isJNState();
+}
+
+uint8_t isSmartState(){
+	FwMng *fwp = FwMng::getInstance();
+	return fwp->isSmartState();
+}
+
 uint8_t getControlTick(){
 	return rtP_Control_tick_C;
 }
@@ -521,6 +531,9 @@ FwMng::FwMng()
 	appointElec = new AppointElec(DO_Appoint_GPIO_Port, DO_Appoint_Pin);
 
 	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
+
+	di_J_N = new DigitalInputs(DI_J_N_GPIO_Port, DI_J_N_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
+	di_Smart = new DigitalInputs(DI_SMART_GPIO_Port, DI_SMART_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
 
 	ctrlCmd = new TFLOW4_Ctrl;
 	initCtrlCmd();

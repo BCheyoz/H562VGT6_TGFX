@@ -209,6 +209,8 @@ static const tModbusSlaveItem TableModbusSlave[] = {
 	{ 0x121A,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn3,					0},
 	{ 0x121B,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarSIntGetFctSetFct},		getCtn4,					byPassCtn4},
 	{ 0x121C,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUIntGetFctSetFct},		getIDCtn4,					0},
+	{ 0x121D,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isJNState,					0},
+	{ 0x121E,		{{{	ACCESS_MIN_LEVEL_0,	ACCESS_MIN_LEVEL_4}},	TVarUCharGetFctSetFct},		isSmartState,				0},
 
 	/*
     // Push Button :

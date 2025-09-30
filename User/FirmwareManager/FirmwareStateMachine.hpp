@@ -60,6 +60,8 @@ public :
 
 	inline uint8_t isAnodeFlags(){return (uint8_t)di_Anode->getFlags();}
 	inline uint8_t isAnodeState(){return (uint8_t)di_Anode->getcurState();}
+	inline uint8_t isJNState(){return (uint8_t)di_J_N->getcurState();}
+	inline uint8_t isSmartState(){return (uint8_t)di_Smart->getcurState();}
 
 	inline tb_simu_ena* 			getCC_SimuEna(){return &cc_input.SIMU.ENA;}
 	inline tb_simu_var* 			getCC_SimuVar(){return &cc_input.SIMU.VAR;}
@@ -116,6 +118,8 @@ private :
 
 	AppointElec *appointElec;
 	DigitalInputs *di_Anode;
+	DigitalInputs *di_J_N;
+	DigitalInputs *di_Smart;
 
 	TFLOW4_Ctrl *ctrlCmd;
 	static tb_Control_In cc_input; // structure d'entrée déclaré en static pour acces via cubeMonitor
