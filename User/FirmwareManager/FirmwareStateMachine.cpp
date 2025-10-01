@@ -713,7 +713,19 @@ void FwMng::run(void)
 	        //initNvmemAuxValeursParDefaut();   // effacement des parametrages
             eraseMemory = 0;
 	    }
-
+		/*** affiche l'image de test par defaut ***********************************/
+		if(refreshFixedScreen > 10){
+			refreshFixedScreen = 0;
+			BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+			if(cuurentScreen == 0){
+				cuurentScreen = 1;
+				BSP_LCD_WriteData((uint8_t*)imgHelveticaData, size);
+			}
+			else {
+				cuurentScreen = 0;
+				BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
+			}
+		}
 		// rien a faire, c'est le boulot du module modbus de repondre aux requetes
 		break;
 
