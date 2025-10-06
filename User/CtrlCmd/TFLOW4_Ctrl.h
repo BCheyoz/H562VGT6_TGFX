@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.354
+// Model version                  : 1.362
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
+// C/C++ source code generated on : Fri Sep  5 16:52:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -35,6 +35,7 @@ extern const tb_SysMng_In TFLOW4_Ctrl_rtZtb_SysMng_In;// tb_SysMng_In ground
 extern const tb_VentCtrl_In TFLOW4_Ctrl_rtZtb_VentCtrl_In;// tb_VentCtrl_In ground
 extern const tb_WaterHeatCtrl_In TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_In;// tb_WaterHeatCtrl_In ground
 extern const tb_OutPutMng_In TFLOW4_Ctrl_rtZtb_OutPutMng_In;// tb_OutPutMng_In ground
+extern const tb_WaterHeatCtrl_Out TFLOW4_Ctrl_rtZtb_WaterHeatCtrl_Out;// tb_WaterHeatCtrl_Out ground
 extern const tb_Control_Out TFLOW4_Ctrl_rtZtb_Control_Out;// tb_Control_Out ground
 extern const tb_SysMng_Out TFLOW4_Ctrl_rtZtb_SysMng_Out;// tb_SysMng_Out ground
 
@@ -115,6 +116,33 @@ class TFLOW4_Ctrl final
   // Move Assignment Operator
   TFLOW4_Ctrl& operator= (TFLOW4_Ctrl &&) = delete;
 
+  // model instance variable for '<S1>/InPutMng'
+  InPutMng InPutMngMDLOBJ1;
+
+  // model instance variable for '<Root>/OutPutMng'
+  OutPutMng OutPutMngMDLOBJ2;
+
+  // model instance variable for '<S4>/SysMng'
+  SysMng SysMngMDLOBJ3;
+
+  // model instance variable for '<S6>/VentCtrl'
+  VentCtrl VentCtrlMDLOBJ4;
+
+  // model instance variable for '<S7>/WaterHeatCtrl'
+  WaterHeatCtrl WaterHeatCtrlMDLOBJ5;
+
+  // model instance variable for '<S3>/SysConfigCalib'
+  SysConfigCalib SysConfigCalibMDLOBJ6;
+
+  // External inputs
+  ExtU_TFLOW4_Ctrl_T TFLOW4_Ctrl_U;
+
+  // External outputs
+  ExtY_TFLOW4_Ctrl_T TFLOW4_Ctrl_Y;
+
+  // Block states
+  DW_TFLOW4_Ctrl_T TFLOW4_Ctrl_DW;
+
   // Tunable parameters
   static P_TFLOW4_Ctrl_T TFLOW4_Ctrl_P;
 
@@ -159,15 +187,6 @@ class TFLOW4_Ctrl final
 
   // private data and function members
  private:
-  // External inputs
-  ExtU_TFLOW4_Ctrl_T TFLOW4_Ctrl_U;
-
-  // External outputs
-  ExtY_TFLOW4_Ctrl_T TFLOW4_Ctrl_Y;
-
-  // Block states
-  DW_TFLOW4_Ctrl_T TFLOW4_Ctrl_DW;
-
   // private member function(s) for subsystem '<Root>/OutPutMng_Interfaces'
   void TFLOW4_Ctr_OutPutMng_Interfaces();
 
@@ -182,24 +201,6 @@ class TFLOW4_Ctrl final
 
   // private member function(s) for subsystem '<S4>/SysMng_Interfaces'
   void TFLOW4_Ctrl_SysMng_Interfaces();
-
-  // model instance variable for '<S1>/InPutMng'
-  InPutMng InPutMngMDLOBJ1;
-
-  // model instance variable for '<Root>/OutPutMng'
-  OutPutMng OutPutMngMDLOBJ2;
-
-  // model instance variable for '<S4>/SysMng'
-  SysMng SysMngMDLOBJ3;
-
-  // model instance variable for '<S6>/VentCtrl'
-  VentCtrl VentCtrlMDLOBJ4;
-
-  // model instance variable for '<S7>/WaterHeatCtrl'
-  WaterHeatCtrl WaterHeatCtrlMDLOBJ5;
-
-  // model instance variable for '<S3>/SysConfigCalib'
-  SysConfigCalib SysConfigCalibMDLOBJ6;
 };
 
 //-

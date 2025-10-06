@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.50
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:52:17 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:25 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -35,7 +35,8 @@ void StaticErrorDetection::reset(void)
 }
 
 // Output and update for referenced model: 'StaticErrorDetection'
-void StaticErrorDetection::step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_dlay_time, float
+void StaticErrorDetection::step(const float *rtu_signalRaw, float *rty_signal,
+  bool *rty_isDefect, float rtp_Cs_dflt_val, float rtp_Cs_rst_dlay_time, float
   rtp_Cs_rst_tol, float rtp_Cs_set_dlay_time, float rtp_Cs_smpl_time)
 {
   // local block i/o variables
@@ -50,15 +51,23 @@ void StaticErrorDetection::step(const float *rtu_signalRaw, float *rty_signal, b
   bool rtb_isEqual;
   bool rtb_isTolOk;
   rtb_isEqual = (*rtu_signalRaw == StaticErrorDetection_DW.prevSignalRaw_DSTATE);
-  rtb_isEqualUint8 = ((static_cast<bool>((StaticErrorDetection_DW.UnitDelay3_DSTATE != 0) ^ !rtb_isEqual)) && StaticErrorDetection_DW.UnitDelay1_DSTATE);
-  rtb_isEqualUint8_c = ((!StaticErrorDetection_DW.UnitDelay1_DSTATE) || (StaticErrorDetection_DW.UnitDelay3_DSTATE != 0));
+  rtb_isEqualUint8 = ((static_cast<bool>
+                       ((StaticErrorDetection_DW.UnitDelay3_DSTATE != 0) ^
+                        !rtb_isEqual)) &&
+                      StaticErrorDetection_DW.UnitDelay1_DSTATE);
+  rtb_isEqualUint8_c = ((!StaticErrorDetection_DW.UnitDelay1_DSTATE) ||
+                        (StaticErrorDetection_DW.UnitDelay3_DSTATE != 0));
   rtb_isEqualUint8_b_tmp = rtb_isEqual;
-  StaticErrorDetectionMDLOBJ3.step(&rtb_isEqualUint8, &rtb_isEqualUint8_c, &rtb_isEqualUint8_b_tmp, &rtb_numberNotEqual, &rtb_TimerState, rtp_Cs_smpl_time);
+  StaticErrorDetectionMDLOBJ3.step(&rtb_isEqualUint8, &rtb_isEqualUint8_c,
+    &rtb_isEqualUint8_b_tmp, &rtb_numberNotEqual, &rtb_TimerState,
+    rtp_Cs_smpl_time);
   rtb_calcTol = rtb_numberNotEqual * 100.0F / rtp_Cs_rst_dlay_time;
   rtb_isTolOk = (rtb_calcTol >= rtp_Cs_rst_tol);
   rtb_isEqualUint8 = rtb_TimerState;
-  EdgeDelaySetMDLOBJ2.step(&rtb_isEqualUint8_b_tmp, &rtb_setUint8, rtp_Cs_set_dlay_time, rtp_Cs_smpl_time);
-  EdgeDelayRstTimeMDLOBJ1.step(&rtb_isEqualUint8, &rtb_rstTimeUint8, rtp_Cs_rst_dlay_time, rtp_Cs_smpl_time);
+  EdgeDelaySetMDLOBJ2.step(&rtb_isEqualUint8_b_tmp, &rtb_setUint8,
+    rtp_Cs_set_dlay_time, rtp_Cs_smpl_time);
+  EdgeDelayRstTimeMDLOBJ1.step(&rtb_isEqualUint8, &rtb_rstTimeUint8,
+    rtp_Cs_rst_dlay_time, rtp_Cs_smpl_time);
   rtb_isEqual = (rtb_isTolOk && (rtb_rstTimeUint8 != 0));
   rtb_isTolOk = (rtb_setUint8 != 0);
   StaticErrorRSMDLOBJ4.step(&rtb_isTolOk, &rtb_isEqual, rty_isDefect);

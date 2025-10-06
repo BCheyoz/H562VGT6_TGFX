@@ -38,6 +38,12 @@ uint16_t resetMemoriesState();
 
 void requestToInitRegulation(uint16_t value);
 
+/* Temporaire pour tester les PINs BLE ***********************/
+uint32_t requestBleSpiId();
+void setBLE(uint16_t value);
+int16_t BleIrqStatus();
+/***********************************************************/
+
 #ifdef USE_COMMISIONNING_STATE
 void resetCommissionningState(uint8_t code);
 void requestEndOfCommissionning(uint8_t code);
@@ -57,6 +63,8 @@ uint16_t blinkMode();
 // User varaible
 uint8_t isAnodeFlags();
 uint8_t isAnodeState();
+uint8_t isJNState();
+uint8_t isSmartState();
 uint8_t getControlTick();
 uint8_t getWaterHeatCtrlTick();
 uint8_t getInputMngTick();
@@ -64,7 +72,30 @@ void setControlTick(uint8_t v);
 void setWaterHeatCtrlTick(uint8_t v);
 void setInputMngTick(uint8_t v);
 
+
+int16_t getCt_180L_eco_3ppl_Value();
+void setCt_180L_eco_3ppl_Value(int16_t v);
+uint16_t getCt_180L_eco_3ppl_Idx();
+void setCt_180L_eco_3ppl_Idx(uint16_t v);
+int16_t getCt_180L_eco_6ppl_Value();
+void setCt_180L_eco_6ppl_Value(int16_t v);
+uint16_t getCt_180L_eco_6ppl_Idx();
+void setCt_180L_eco_6ppl_Idx(uint16_t v);
+int16_t getCt_105L_eco_3ppl_Value();
+void setCt_105L_eco_3ppl_Value(int16_t v);
+uint16_t getCt_105L_eco_3ppl_Idx();
+void setCt_105L_eco_3ppl_Idx(uint16_t v);
+uint16_t getCt_rpm_pump_sp_tank_cold_Value();
+void setCt_rpm_pump_sp_tank_cold_Value(uint16_t v);
+uint16_t getCt_rpm_pump_sp_tank_cold_Idx();
+void setCt_rpm_pump_sp_tank_cold_Idx(uint16_t v);
+uint16_t getCt_temp_tank_cold_sp_bp_Value();
+void setCt_temp_tank_cold_sp_bp_Value(uint16_t v);
+uint16_t getCt_temp_tank_cold_sp_bp_Idx();
+void setCt_temp_tank_cold_sp_bp_Idx(uint16_t v);
+
 #define GET_SET_CC_UINT16_PROTOTYPE(a)	uint16_t get##a(void); void set##a(uint16_t val);
+#define GET_SET_CC_INT16_PROTOTYPE(a)	int16_t get##a(void); void set##a(int16_t val);
 #define GET_SET_CC_FLOAT_PROTOTYPE(a)	float get##a(void); void set##a(float val);
 
 GET_SET_CC_UINT16_PROTOTYPE(Ss_heat_mode_simu)
@@ -201,6 +232,51 @@ GET_SET_CC_UINT16_PROTOTYPE(NullFlowConstant_Value)
 GET_SET_CC_UINT16_PROTOTYPE(flowEsti_InitialCondition)
 
 GET_SET_CC_FLOAT_PROTOTYPE(FPresVent_Tau)
+
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_high)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_med)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_low)
+GET_SET_CC_INT16_PROTOTYPE(Cs_temp_tank_empt)
+GET_SET_CC_FLOAT_PROTOTYPE(negRateLimCst_Value)
+GET_SET_CC_FLOAT_PROTOTYPE(posRateLimCst_Value)
+GET_SET_CC_UINT16_PROTOTYPE(Cs_rot_spd_pump_max_C_Value)
+
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_InitVal)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kawu)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kd)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Ki)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Kp)
+GET_SET_CC_FLOAT_PROTOTYPE(TevapRegulator_Tau_f)
+
+GET_SET_CC_FLOAT_PROTOTYPE(FTempDown_Tau)
+GET_SET_CC_FLOAT_PROTOTYPE(FTempUp_Tau)
+GET_SET_CC_FLOAT_PROTOTYPE(FTempXhst_Tau)
+GET_SET_CC_FLOAT_PROTOTYPE(FTempEvap_Tau)
+GET_SET_CC_FLOAT_PROTOTYPE(FTempVent_Tau)
+GET_SET_CC_FLOAT_PROTOTYPE(FRotSpd_Tau)
+
+GET_SET_CC_FLOAT_PROTOTYPE(downTemp_changeRate)
+GET_SET_CC_FLOAT_PROTOTYPE(Cs_hard_draw_thrs_Value)
+
+GET_SET_CC_UINT16_PROTOTYPE(Bs_air_low_temp_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_air_high_temp_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_ant_shrt_cycl_lim_pump_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_high_pres_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_high_load_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_hpc_dfr_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_hpc_crit_dfr_prot_ena)
+GET_SET_CC_UINT16_PROTOTYPE(Bs_pump_prot_ena)
+
+GET_SET_CC_UINT16_PROTOTYPE(Ss_pump_ctrl_mod)
+GET_SET_CC_FLOAT_PROTOTYPE(Cs_ctrl_temp_evap_spd_cmd)
+GET_SET_CC_UINT16_PROTOTYPE(Ss_tank_lvl_stt)
+GET_SET_CC_UINT16_PROTOTYPE(Ss_heat_pump_stt)
+
+GET_SET_CC_UINT16_PROTOTYPE(Bs_vent_pres_err)
+
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_opScaleSetTime)
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_opScaleRstTime)
+GET_SET_CC_FLOAT_PROTOTYPE(ErrPresVent_defVal)
 
 #ifdef __cplusplus
 }

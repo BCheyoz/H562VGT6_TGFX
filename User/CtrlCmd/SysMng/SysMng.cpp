@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'SysMng'.
 //
-// Model version                  : 1.149
+// Model version                  : 1.154
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 12:15:32 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:39 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -65,13 +65,13 @@ const uint8_t SysMng_IN_TestMode{ 2U };
 const uint8_t SysMng_IN_UsualMode{ 2U };
 
 SysMng::P_SysMng_T SysMng::SysMng_rtP{
-  // Mask Parameter: RisingEdgeDelay_delay
-  //  Referenced by: '<S13>/RisingEdgeDelay'
+  // Mask Parameter: heat_pump_test_rst_delay
+  //  Referenced by: '<S13>/heat_pump_test_rst'
 
   1800.0F,
 
   // Mask Parameter: secTimer_sampleTime
-  //  Referenced by: '<S15>/Timer'
+  //  Referenced by: '<S15>/secTimer'
 
   1.15740741E-5F,
 
@@ -250,7 +250,7 @@ SysMng::P_SysMng_T SysMng::SysMng_rtP{
 void SysMng::SysMn_BoostModeActivation_Reset()
 {
   BoostRqstRisingEdgeMDLOBJ1.reset();
-  R_S_FlipFlopMDLOBJ2.reset();
+  R_S_BoostMDLOBJ2.reset();
 }
 
 // Output and update for atomic system: '<S1>/BoostModeActivation'
@@ -267,13 +267,13 @@ void SysMng::SysMng_BoostModeActivation()
   rtb_Bs_bst_mode_rst_o = ((rtb_Bs_bst_mode_rqst_uint || (((SysMng_rtu_SysMng_In->Ss_heat_pump_stt == SysMng_rtP.Constant4_Value) ||
     (SysMng_rtu_SysMng_In->Ss_heat_pump_stt == SysMng_rtP.Constant7_Value)) && ((SysMng_rtu_SysMng_In->Ss_elec_htr_bstr_stt == SysMng_rtP.Constant6_Value) ||
     (SysMng_rtu_SysMng_In->Ss_elec_htr_bstr_stt == SysMng_rtP.Constant8_Value)))) && (SysMng_DW.opModeDelay == SysMng_rtP.Constant2_Value_i));
-  R_S_FlipFlopMDLOBJ2.step(&rtb_Bs_bst_mode_set, &rtb_Bs_bst_mode_rst_o, &SysMng_DW.stt_d);
+  R_S_BoostMDLOBJ2.step(&rtb_Bs_bst_mode_set, &rtb_Bs_bst_mode_rst_o, &SysMng_DW.stt_j);
 }
 
 // System reset for atomic system: '<S1>/antiLegionellaModeActivation'
 void SysMng::antiLegionellaModeActivat_Reset()
 {
-  R_S_FlipFlopMDLOBJ3.reset();
+  R_S_anti_LgnMDLOBJ3.reset();
 }
 
 // Output and update for atomic system: '<S1>/antiLegionellaModeActivation'
@@ -286,16 +286,16 @@ void SysMng::Sy_antiLegionellaModeActivation()
   rtb_Bs_anti_lgn_rst = (((SysMng_rtu_SysMng_In->Ss_heat_pump_stt == SysMng_rtP.Constant3_Value) || (SysMng_rtu_SysMng_In->Ss_heat_pump_stt ==
     SysMng_rtP.Constant5_Value)) && ((SysMng_rtu_SysMng_In->Ss_elec_htr_bstr_stt == SysMng_rtP.Constant4_Value_j) || (SysMng_rtu_SysMng_In->Ss_elec_htr_bstr_stt
     == SysMng_rtP.Constant6_Value_j)) && (SysMng_DW.opModeDelay == SysMng_rtP.Constant7_Value_h));
-  R_S_FlipFlopMDLOBJ3.step(&rtb_Bs_anti_lgn_set, &rtb_Bs_anti_lgn_rst, &SysMng_DW.stt_a);
+  R_S_anti_LgnMDLOBJ3.step(&rtb_Bs_anti_lgn_set, &rtb_Bs_anti_lgn_rst, &SysMng_DW.stt_b);
 }
 
 // System reset for atomic system: '<S1>/heatPumpTestModeActivation'
 void SysMng::heatPumpTestModeActivatio_Reset()
 {
-  RisingEdgeDelayMDLOBJ7.reset();
+  heat_pump_test_rstMDLOBJ7.reset();
   HeatPumpTestRqstRstRMDLOBJ5.reset();
   HeatPumpTestRqstRisiMDLOBJ4.reset();
-  R_S_FlipFlopMDLOBJ6.reset();
+  R_S_anti_LgnMDLOBJ6.reset();
 }
 
 // Output and update for atomic system: '<S1>/heatPumpTestModeActivation'
@@ -312,13 +312,13 @@ void SysMng::SysM_heatPumpTestModeActivation()
   bool rtb_Bs_test_mode_stt;
   rtb_Bs_test_mode_stt = (SysMng_DW.opModeDelay == SysMng_rtP.HeatPumpTestCstt_Value);
   rtb_Ss_op_mode_prev_uint = rtb_Bs_test_mode_stt;
-  RisingEdgeDelayMDLOBJ7.step(&rtb_Ss_op_mode_prev_uint, &rtb_Out, SysMng_rtP.RisingEdgeDelay_delay, rtP_Control_tick_C);
+  heat_pump_test_rstMDLOBJ7.step(&rtb_Ss_op_mode_prev_uint, &rtb_Out, SysMng_rtP.heat_pump_test_rst_delay, rtP_Control_tick_C);
   rtb_Bs_heat_pump_test_rqst_ui_0 = static_cast<uint8_t>(SysMng_rtu_SysMng_In->Ss_heat_pump_test_rqst);
   HeatPumpTestRqstRstRMDLOBJ5.step(&rtb_Bs_heat_pump_test_rqst_ui_0, &rtb_Bs_heat_pump_test_rqst_rst_);
   rtb_AND_HeatMode_rst = (((rtb_Out != 0) || rtb_Bs_heat_pump_test_rqst_rst_) && rtb_Bs_test_mode_stt);
   HeatPumpTestRqstRisiMDLOBJ4.step(&rtb_Bs_heat_pump_test_rqst_ui_0, &rtb_Bs_heat_pump_test_set_uint);
   rtb_AND_HeatMode_set = (rtb_Bs_heat_pump_test_set_uint && (!rtb_Bs_test_mode_stt));
-  R_S_FlipFlopMDLOBJ6.step(&rtb_AND_HeatMode_set, &rtb_AND_HeatMode_rst, &SysMng_DW.stt_i);
+  R_S_anti_LgnMDLOBJ6.step(&rtb_AND_HeatMode_set, &rtb_AND_HeatMode_rst, &SysMng_DW.stt_g);
 }
 
 // System reset for atomic system: '<S1>/holidaysModeActivation'
@@ -326,7 +326,7 @@ void SysMng::Sy_holidaysModeActivation_Reset()
 {
   clkRchRisingEdgeMDLOBJ9.reset();
   hldyRqstRisingEdgeMDLOBJ10.reset();
-  R_S_FlipFlopMDLOBJ8.reset();
+  R_S_HolidaysMDLOBJ8.reset();
 }
 
 // Output and update for atomic system: '<S1>/holidaysModeActivation'
@@ -348,7 +348,7 @@ void SysMng::SysMng_holidaysModeActivation()
   rtb_Bs_mode_chk_hldy_rqst_on_e = ((SysMng_rtu_SysMng_In->Ss_tech_mode != SysMng_rtP.Constant_Value_i) && (!rtb_Bs_hldy_mode) && rtb_Bs_hldy_mode_set_uint);
   rtb_OR_Holidays_rst = ((static_cast<uint8_t>(SysMng_DW.conv2Days + SysMng_rtP.OneMoreDay_Bias) >= SysMng_rtu_SysMng_In->Ns_hldy_nb) || (rtb_Bs_hldy_mode &&
     rtb_Bs_hldy_mode_rst_uint));
-  R_S_FlipFlopMDLOBJ8.step(&rtb_Bs_mode_chk_hldy_rqst_on_e, &rtb_OR_Holidays_rst, &SysMng_DW.stt);
+  R_S_HolidaysMDLOBJ8.step(&rtb_Bs_mode_chk_hldy_rqst_on_e, &rtb_OR_Holidays_rst, &SysMng_DW.stt);
 }
 
 // Output and update for atomic system: '<S1>/smartGridModeActivation'
@@ -393,20 +393,20 @@ void SysMng::SysMng_VentModeSelection() const
 // System reset for atomic system: '<Root>/dayCounter'
 void SysMng::SysMng_dayCounter_Reset()
 {
-  TimerMDLOBJ11.reset();
+  secTimerMDLOBJ11.reset();
 }
 
 // Output and update for atomic system: '<Root>/dayCounter'
 void SysMng::SysMng_dayCounter()
 {
   // local block i/o variables
-  float rtb_Timer_o1;
+  float rtb_secTimer_o1;
   bool rtb_TimerState;
   uint8_t rtb_bool2uint[2];
   rtb_bool2uint[0] = SysMng_DW.Bs_clk_on;
   rtb_bool2uint[1] = static_cast<uint8_t>(!SysMng_DW.Bs_clk_on);
-  TimerMDLOBJ11.step(&rtb_bool2uint[0], &rtb_bool2uint[1], &rtb_bool2uint[1], &rtb_Timer_o1, &rtb_TimerState, SysMng_rtP.secTimer_sampleTime);
-  SysMng_DW.conv2Days = static_cast<ta_time_day>(rtb_Timer_o1);
+  secTimerMDLOBJ11.step(&rtb_bool2uint[0], &rtb_bool2uint[1], &rtb_bool2uint[1], &rtb_secTimer_o1, &rtb_TimerState, SysMng_rtP.secTimer_sampleTime);
+  SysMng_DW.conv2Days = static_cast<ta_time_day>(rtb_secTimer_o1);
 }
 
 // Function for Chart: '<Root>/modeSelection'
@@ -787,11 +787,11 @@ void SysMng::step(const tb_SysMng_In *rtu_SysMng_In, tb_SysMng_Out *rty_SysMng_O
   rty_SysMng_Out->Ss_op_mode = SysMng_DW.Ss_op_mode;
   rty_SysMng_Out->Ss_heat_pump_ena = SysMng_DW.Ss_heat_pump_ena;
   rty_SysMng_Out->Ss_elec_bstr_htr_ena = SysMng_DW.Ss_elec_bstr_htr_ena;
-  SysMng_DW.AntiLegionnellaModeActDelay_DST = SysMng_DW.stt_a;
+  SysMng_DW.AntiLegionnellaModeActDelay_DST = SysMng_DW.stt_b;
   SysMng_DW.HolidaysModeActDelay_DSTATE = SysMng_DW.stt;
   SysMng_DW.SmartGridActDelay_DSTATE = SysMng_DW.isSgOn;
-  SysMng_DW.bstModeActDelay_DSTATE = SysMng_DW.stt_d;
-  SysMng_DW.heatPumpTestModeActDelay_DSTATE = SysMng_DW.stt_i;
+  SysMng_DW.bstModeActDelay_DSTATE = SysMng_DW.stt_j;
+  SysMng_DW.heatPumpTestModeActDelay_DSTATE = SysMng_DW.stt_g;
   SysMng_DW.opModeDelay_DSTATE = SysMng_DW.Ss_op_mode;
 }
 

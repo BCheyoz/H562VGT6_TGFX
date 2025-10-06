@@ -5,7 +5,7 @@
 //
 // Model version                  : 5.0
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:51:18 2025
+// C/C++ source code generated on : Thu Jul 31 11:03:12 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -19,7 +19,8 @@
 #include <cmath>
 
 // Output and update for referenced model: 'cntrlSaturation'
-void cntrlSaturation::step(const float *rtu_maxVal, const float *rtu_minVal, const float *rtu_val, float *rty_satVal, float *rty_ovrFlw)
+void cntrlSaturation::step(const float *rtu_maxVal, const float *rtu_minVal,
+  const float *rtu_val, float *rty_satVal, float *rty_ovrFlw)
 {
   float maxV;
   maxV = std::fmax(*rtu_val, *rtu_minVal);

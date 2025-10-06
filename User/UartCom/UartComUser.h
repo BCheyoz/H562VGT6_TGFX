@@ -51,6 +51,7 @@
 #define UART_MODBUS_USER	&huart5
 //#define UART_MODBUS_EXT 	&huart8
 #define UART_COM_INVERTER	&huart3
+#define UART_COM_BLE		&huart4
 
 //#define USBD_MODBUS 		&hUsbDeviceFS
 //#define USBD_CDC_DEVICE 	&hUsbDeviceFS	// CDC sur USB_Device via UsbDevice_FullSpeed

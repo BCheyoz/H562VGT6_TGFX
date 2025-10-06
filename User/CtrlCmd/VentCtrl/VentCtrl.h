@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.146
+// Model version                  : 1.149
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed May 14 14:09:23 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:05 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -46,52 +46,52 @@ class VentCtrl final
   // Parameters (default storage)
   struct P_VentCtrl_T {
     float pressSpfilt_K;               // Mask Parameter: pressSpfilt_K
-                                          //  Referenced by: '<S11>/firstOrderTF'
+                                          //  Referenced by: '<S11>/pressSpfilt'
 
     float firstOpressSpFilt_K;         // Mask Parameter: firstOpressSpFilt_K
-                                          //  Referenced by: '<S10>/firstOrderTF'
+                                          //  Referenced by: '<S10>/firstOpressSpFilt'
 
     float presMesfilt_K;               // Mask Parameter: presMesfilt_K
-                                          //  Referenced by: '<S9>/firstOrderTF'
+                                          //  Referenced by: '<S9>/presMesfilt'
 
     float presFilter_K;                // Mask Parameter: presFilter_K
-                                          //  Referenced by: '<S12>/firstOrderTF'
+                                          //  Referenced by: '<S12>/presFilter'
 
     float pressSpfilt_Tau;             // Mask Parameter: pressSpfilt_Tau
-                                          //  Referenced by: '<S11>/firstOrderTF'
+                                          //  Referenced by: '<S11>/pressSpfilt'
 
     float firstOpressSpFilt_Tau;       // Mask Parameter: firstOpressSpFilt_Tau
-                                          //  Referenced by: '<S10>/firstOrderTF'
+                                          //  Referenced by: '<S10>/firstOpressSpFilt'
 
     float presMesfilt_Tau;             // Mask Parameter: presMesfilt_Tau
-                                          //  Referenced by: '<S9>/firstOrderTF'
+                                          //  Referenced by: '<S9>/presMesfilt'
 
     float presFilter_Tau;              // Mask Parameter: presFilter_Tau
-                                          //  Referenced by: '<S12>/firstOrderTF'
+                                          //  Referenced by: '<S12>/presFilter'
 
     float pressSpfilt_initVal;         // Mask Parameter: pressSpfilt_initVal
-                                          //  Referenced by: '<S11>/firstOrderTF'
+                                          //  Referenced by: '<S11>/pressSpfilt'
 
     float firstOpressSpFilt_initVal;   // Mask Parameter: firstOpressSpFilt_initVal
-                                          //  Referenced by: '<S10>/firstOrderTF'
+                                          //  Referenced by: '<S10>/firstOpressSpFilt'
 
     float presMesfilt_initVal;         // Mask Parameter: presMesfilt_initVal
-                                          //  Referenced by: '<S9>/firstOrderTF'
+                                          //  Referenced by: '<S9>/presMesfilt'
 
     float presFilter_initVal;          // Mask Parameter: presFilter_initVal
-                                          //  Referenced by: '<S12>/firstOrderTF'
+                                          //  Referenced by: '<S12>/presFilter'
 
     float pressSpfilt_sampleTime;      // Mask Parameter: pressSpfilt_sampleTime
-                                          //  Referenced by: '<S11>/firstOrderTF'
+                                          //  Referenced by: '<S11>/pressSpfilt'
 
     float firstOpressSpFilt_sampleTime;// Mask Parameter: firstOpressSpFilt_sampleTime
-                                          //  Referenced by: '<S10>/firstOrderTF'
+                                          //  Referenced by: '<S10>/firstOpressSpFilt'
 
     float presMesfilt_sampleTime;      // Mask Parameter: presMesfilt_sampleTime
-                                          //  Referenced by: '<S9>/firstOrderTF'
+                                          //  Referenced by: '<S9>/presMesfilt'
 
     float presFilter_sampleTime;       // Mask Parameter: presFilter_sampleTime
-                                          //  Referenced by: '<S12>/firstOrderTF'
+                                          //  Referenced by: '<S12>/presFilter'
 
     double press_max_Value;            // Computed Parameter: press_max_Value
                                           //  Referenced by: '<S5>/press_max'
@@ -167,6 +167,27 @@ class VentCtrl final
   // Move Assignment Operator
   VentCtrl& operator= (VentCtrl &&) = delete;
 
+  // model instance variable for '<S7>/PressureRangeControl'
+  cntrlSaturation PressureRangeControlMDLOBJ1;
+
+  // model instance variable for '<S5>/PressureRegulator'
+  PID_backCalc PressureRegulatorMDLOBJ2;
+
+  // model instance variable for '<S10>/firstOpressSpFilt'
+  firstOrderTF firstOpressSpFiltMDLOBJ3;
+
+  // model instance variable for '<S11>/pressSpfilt'
+  firstOrderTF pressSpfiltMDLOBJ4;
+
+  // model instance variable for '<S9>/presMesfilt'
+  firstOrderTF presMesfiltMDLOBJ5;
+
+  // model instance variable for '<S12>/presFilter'
+  firstOrderTF presFilterMDLOBJ6;
+
+  // Block states
+  DW_VentCtrl_T VentCtrl_DW;
+
   // Tunable parameters
   static P_VentCtrl_T VentCtrl_rtP;
 
@@ -181,9 +202,6 @@ class VentCtrl final
 
   // private data and function members
  private:
-  // Block states
-  DW_VentCtrl_T VentCtrl_DW;
-
   // Declare private class scope variables for system: "model 'VentCtrl'"
   const tb_VentCtrl_In *VentCtrl_rtu_VentCtrl_In;// '<Root>/VentCtrl_In'
   tb_VentCtrl_Out *VentCtrl_rty_VentCtrl_Out;// '<Root>/VentCtrl_Out'
@@ -208,24 +226,6 @@ class VentCtrl final
   void VentCtrl_PresMng_Init();
   void VentCtrl_PresMng_Reset();
   void VentCtrl_PresMng();
-
-  // model instance variable for '<S7>/Saturation'
-  cntrlSaturation SaturationMDLOBJ1;
-
-  // model instance variable for '<S5>/PressureRegulator'
-  PID_backCalc PressureRegulatorMDLOBJ2;
-
-  // model instance variable for '<S10>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ3;
-
-  // model instance variable for '<S11>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ4;
-
-  // model instance variable for '<S9>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ5;
-
-  // model instance variable for '<S12>/firstOrderTF'
-  firstOrderTF firstOrderTFMDLOBJ6;
 };
 
 extern VentCtrl::P_VentCtrl_T VentCtrl_rtP;

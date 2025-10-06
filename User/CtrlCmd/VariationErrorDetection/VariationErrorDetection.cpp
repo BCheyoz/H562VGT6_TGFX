@@ -5,7 +5,7 @@
 //
 // Model version                  : 1.28
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Thu Apr 17 10:52:22 2025
+// C/C++ source code generated on : Thu Jul 31 11:04:33 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -32,8 +32,10 @@ void VariationErrorDetection::reset(void)
 }
 
 // Output and update for referenced model: 'VariationErrorDetection'
-void VariationErrorDetection::step(const float *rtu_signalRaw, float *rty_signal, bool *rty_isDefect, float rtp_Cs_dfct_rst_dlay_time, float
-  rtp_Cs_dfct_set_dlay_time, float rtp_Cs_dflt_val, float rtp_Cs_smpl_time, float rtp_Cs_var_max)
+void VariationErrorDetection::step(const float *rtu_signalRaw, float *rty_signal,
+  bool *rty_isDefect, float rtp_Cs_dfct_rst_dlay_time, float
+  rtp_Cs_dfct_set_dlay_time, float rtp_Cs_dflt_val, float rtp_Cs_smpl_time,
+  float rtp_Cs_var_max)
 {
   // local block i/o variables
   uint8_t rtb_setUint8;
@@ -47,10 +49,12 @@ void VariationErrorDetection::step(const float *rtu_signalRaw, float *rty_signal
   rtb_step /= rtp_Cs_smpl_time;
   rtb_isErr = (std::abs(rtb_step) > rtp_Cs_var_max);
   rtb_errUint8 = rtb_isErr;
-  edgeDelaySetMDLOBJ3.step(&rtb_errUint8, &rtb_setUint8, rtp_Cs_dfct_set_dlay_time, rtp_Cs_smpl_time);
+  edgeDelaySetMDLOBJ3.step(&rtb_errUint8, &rtb_setUint8,
+    rtp_Cs_dfct_set_dlay_time, rtp_Cs_smpl_time);
   rtb_set = (rtb_setUint8 != 0);
   rtb_errUint8 = static_cast<uint8_t>(!rtb_isErr);
-  edgeDelayResetMDLOBJ2.step(&rtb_errUint8, &rtb_rstUint8, rtp_Cs_dfct_rst_dlay_time, rtp_Cs_smpl_time);
+  edgeDelayResetMDLOBJ2.step(&rtb_errUint8, &rtb_rstUint8,
+    rtp_Cs_dfct_rst_dlay_time, rtp_Cs_smpl_time);
   rtb_rst = (rtb_rstUint8 != 0);
   DefectSwitchMDLOBJ1.step(&rtb_set, &rtb_rst, rty_isDefect);
   if (*rty_isDefect) {

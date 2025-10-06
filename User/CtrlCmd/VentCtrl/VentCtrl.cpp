@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'VentCtrl'.
 //
-// Model version                  : 1.146
+// Model version                  : 1.149
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed May 14 14:09:23 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:05 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -31,82 +31,82 @@ const bool VentCtrl_BGND{ false };     // bool ground
 
 VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Mask Parameter: pressSpfilt_K
-  //  Referenced by: '<S11>/firstOrderTF'
+  //  Referenced by: '<S11>/pressSpfilt'
 
   1.0F,
 
   // Mask Parameter: firstOpressSpFilt_K
-  //  Referenced by: '<S10>/firstOrderTF'
+  //  Referenced by: '<S10>/firstOpressSpFilt'
 
   1.0F,
 
   // Mask Parameter: presMesfilt_K
-  //  Referenced by: '<S9>/firstOrderTF'
+  //  Referenced by: '<S9>/presMesfilt'
 
   1.0F,
 
   // Mask Parameter: presFilter_K
-  //  Referenced by: '<S12>/firstOrderTF'
+  //  Referenced by: '<S12>/presFilter'
 
   1.0F,
 
   // Mask Parameter: pressSpfilt_Tau
-  //  Referenced by: '<S11>/firstOrderTF'
+  //  Referenced by: '<S11>/pressSpfilt'
 
   11.0F,
 
   // Mask Parameter: firstOpressSpFilt_Tau
-  //  Referenced by: '<S10>/firstOrderTF'
+  //  Referenced by: '<S10>/firstOpressSpFilt'
 
-  8.5F,
+  3.0F,
 
   // Mask Parameter: presMesfilt_Tau
-  //  Referenced by: '<S9>/firstOrderTF'
+  //  Referenced by: '<S9>/presMesfilt'
 
-  0.1F,
+  0.5F,
 
   // Mask Parameter: presFilter_Tau
-  //  Referenced by: '<S12>/firstOrderTF'
+  //  Referenced by: '<S12>/presFilter'
 
-  0.1F,
+  0.5F,
 
   // Mask Parameter: pressSpfilt_initVal
-  //  Referenced by: '<S11>/firstOrderTF'
+  //  Referenced by: '<S11>/pressSpfilt'
 
   0.0F,
 
   // Mask Parameter: firstOpressSpFilt_initVal
-  //  Referenced by: '<S10>/firstOrderTF'
+  //  Referenced by: '<S10>/firstOpressSpFilt'
 
   0.0F,
 
   // Mask Parameter: presMesfilt_initVal
-  //  Referenced by: '<S9>/firstOrderTF'
+  //  Referenced by: '<S9>/presMesfilt'
 
   0.0F,
 
   // Mask Parameter: presFilter_initVal
-  //  Referenced by: '<S12>/firstOrderTF'
+  //  Referenced by: '<S12>/presFilter'
 
   0.0F,
 
   // Mask Parameter: pressSpfilt_sampleTime
-  //  Referenced by: '<S11>/firstOrderTF'
+  //  Referenced by: '<S11>/pressSpfilt'
 
   1.0F,
 
   // Mask Parameter: firstOpressSpFilt_sampleTime
-  //  Referenced by: '<S10>/firstOrderTF'
+  //  Referenced by: '<S10>/firstOpressSpFilt'
 
   1.0F,
 
   // Mask Parameter: presMesfilt_sampleTime
-  //  Referenced by: '<S9>/firstOrderTF'
+  //  Referenced by: '<S9>/presMesfilt'
 
   1.0F,
 
   // Mask Parameter: presFilter_sampleTime
-  //  Referenced by: '<S12>/firstOrderTF'
+  //  Referenced by: '<S12>/presFilter'
 
   1.0F,
 
@@ -143,17 +143,17 @@ VentCtrl::P_VentCtrl_T VentCtrl::VentCtrl_rtP{
   // Expression: Cs_reg_press_tau_1_C*Cs_reg_press_tau_2_C*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  1.87F,
+  1.31999993F,
 
   // Expression: Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.02F,
+  0.04F,
 
   // Expression: (Cs_reg_press_tau_1_C+Cs_reg_press_tau_2_C)*Cs_reg_press_gain_C
   //  Referenced by: '<S5>/PressureRegulator'
 
-  0.39F,
+  0.56F,
 
   // Expression: Cs_PressCtrl_TimeSample_C
   //  Referenced by: '<S5>/PressureRegulator'
@@ -243,18 +243,18 @@ void VentCtrl::VentCtrl_ConsTens() const
 // System initialize for atomic system: '<S3>/ConsPres'
 void VentCtrl::VentCtrl_ConsPres_Init()
 {
-  firstOrderTFMDLOBJ4.init(VentCtrl_rtP.pressSpfilt_initVal);
-  firstOrderTFMDLOBJ3.init(VentCtrl_rtP.firstOpressSpFilt_initVal);
-  firstOrderTFMDLOBJ5.init(VentCtrl_rtP.presMesfilt_initVal);
+  pressSpfiltMDLOBJ4.init(VentCtrl_rtP.pressSpfilt_initVal);
+  firstOpressSpFiltMDLOBJ3.init(VentCtrl_rtP.firstOpressSpFilt_initVal);
+  presMesfiltMDLOBJ5.init(VentCtrl_rtP.presMesfilt_initVal);
   PressureRegulatorMDLOBJ2.init(VentCtrl_rtP.PressureRegulator_InitVal);
 }
 
 // System reset for atomic system: '<S3>/ConsPres'
 void VentCtrl::VentCtrl_ConsPres_Reset()
 {
-  firstOrderTFMDLOBJ4.reset(VentCtrl_rtP.pressSpfilt_initVal);
-  firstOrderTFMDLOBJ3.reset(VentCtrl_rtP.firstOpressSpFilt_initVal);
-  firstOrderTFMDLOBJ5.reset(VentCtrl_rtP.presMesfilt_initVal);
+  pressSpfiltMDLOBJ4.reset(VentCtrl_rtP.pressSpfilt_initVal);
+  firstOpressSpFiltMDLOBJ3.reset(VentCtrl_rtP.firstOpressSpFilt_initVal);
+  presMesfiltMDLOBJ5.reset(VentCtrl_rtP.presMesfilt_initVal);
   PressureRegulatorMDLOBJ2.reset(VentCtrl_rtP.PressureRegulator_InitVal);
 }
 
@@ -263,9 +263,9 @@ void VentCtrl::VentCtrl_ConsPres()
 {
   // local block i/o variables
   float rtb_output;
-  float rtb_output_n;
-  float rtb_Saturation_o1;
-  float rtb_Saturation_o2;
+  float rtb_output_i;
+  float rtb_PressureRangeControl_o1;
+  float rtb_PressureRangeControl_o2;
   float rtb_output_d;
   float rtb_cmd;
   float rtb_ovrFlwVal;
@@ -279,15 +279,15 @@ void VentCtrl::VentCtrl_ConsPres()
   rtb_Cs_press_max_C_sngl = static_cast<float>(VentCtrl_rtP.press_max_Value);
   rtb_Cs_press_min_C_sngl = static_cast<float>(VentCtrl_rtP.press_min_Value);
   rtb_Cs_press_rise_curv_sp_sngl = VentCtrl_DW.VentPresSwitch;
-  firstOrderTFMDLOBJ4.step(&rtb_Cs_press_rise_curv_sp_sngl, &rtb_output, VentCtrl_rtP.pressSpfilt_K, VentCtrl_rtP.pressSpfilt_Tau,
+  pressSpfiltMDLOBJ4.step(&rtb_Cs_press_rise_curv_sp_sngl, &rtb_output, VentCtrl_rtP.pressSpfilt_K, VentCtrl_rtP.pressSpfilt_Tau,
     VentCtrl_rtP.pressSpfilt_sampleTime);
-  firstOrderTFMDLOBJ3.step(&rtb_output, &rtb_output_n, VentCtrl_rtP.firstOpressSpFilt_K, VentCtrl_rtP.firstOpressSpFilt_Tau,
+  firstOpressSpFiltMDLOBJ3.step(&rtb_output, &rtb_output_i, VentCtrl_rtP.firstOpressSpFilt_K, VentCtrl_rtP.firstOpressSpFilt_Tau,
     VentCtrl_rtP.firstOpressSpFilt_sampleTime);
-  SaturationMDLOBJ1.step(&rtb_Cs_press_max_C_sngl, &rtb_Cs_press_min_C_sngl, &rtb_output_n, &rtb_Saturation_o1, &rtb_Saturation_o2);
+  PressureRangeControlMDLOBJ1.step(&rtb_Cs_press_max_C_sngl, &rtb_Cs_press_min_C_sngl, &rtb_output_i, &rtb_PressureRangeControl_o1, &rtb_PressureRangeControl_o2);
   rtb_Cs_vent_pres_sngl = VentCtrl_rtu_VentCtrl_In->Cs_vent_pres;
-  firstOrderTFMDLOBJ5.step(&rtb_Cs_vent_pres_sngl, &rtb_output_d, VentCtrl_rtP.presMesfilt_K, VentCtrl_rtP.presMesfilt_Tau, VentCtrl_rtP.presMesfilt_sampleTime);
+  presMesfiltMDLOBJ5.step(&rtb_Cs_vent_pres_sngl, &rtb_output_d, VentCtrl_rtP.presMesfilt_K, VentCtrl_rtP.presMesfilt_Tau, VentCtrl_rtP.presMesfilt_sampleTime);
   if (VentCtrl_rtu_VentCtrl_In->Ss_vent_op_mode == te_vent_op_mode::Normal) {
-    rtb_Pres_setPoint = rtb_Saturation_o1;
+    rtb_Pres_setPoint = rtb_PressureRangeControl_o1;
   } else {
     rtb_Pres_setPoint = rtb_output_d;
   }
@@ -304,20 +304,20 @@ void VentCtrl::VentCtrl_ConsPres()
 // System initialize for atomic system: '<S3>/CourbMont'
 void VentCtrl::VentCtrl_CourbMont_Init()
 {
-  firstOrderTFMDLOBJ6.init(VentCtrl_rtP.presFilter_initVal);
+  presFilterMDLOBJ6.init(VentCtrl_rtP.presFilter_initVal);
 }
 
 // System reset for atomic system: '<S3>/CourbMont'
 void VentCtrl::VentCtrl_CourbMont_Reset()
 {
-  firstOrderTFMDLOBJ6.reset(VentCtrl_rtP.presFilter_initVal);
+  presFilterMDLOBJ6.reset(VentCtrl_rtP.presFilter_initVal);
 }
 
 // Output and update for atomic system: '<S3>/CourbMont'
 void VentCtrl::VentCtrl_CourbMont()
 {
   // local block i/o variables
-  float rtb_output_m;
+  float rtb_output_j;
   float rtb_Cs_pres_sp_sngl;
   ta_air_pres tmp;
   if (VentCtrl_rtu_VentCtrl_In->Cs_vent_pres_min >= VentCtrl_rtu_VentCtrl_In->Cs_vent_pres_sys) {
@@ -328,8 +328,8 @@ void VentCtrl::VentCtrl_CourbMont()
 
   rtb_Cs_pres_sp_sngl = static_cast<uint16_t>(look1_iu16lu32n16_binlcse(VentCtrl_DW.flowEsti, VentCtrl_rtP.Rise_Curve_bp01Data,
     VentCtrl_rtP.Rise_Curve_tableData, 32U) + tmp);
-  firstOrderTFMDLOBJ6.step(&rtb_Cs_pres_sp_sngl, &rtb_output_m, VentCtrl_rtP.presFilter_K, VentCtrl_rtP.presFilter_Tau, VentCtrl_rtP.presFilter_sampleTime);
-  VentCtrl_DW.Cs_press_rise_curv_sp = static_cast<ta_air_pres>(rt_roundf(rtb_output_m));
+  presFilterMDLOBJ6.step(&rtb_Cs_pres_sp_sngl, &rtb_output_j, VentCtrl_rtP.presFilter_K, VentCtrl_rtP.presFilter_Tau, VentCtrl_rtP.presFilter_sampleTime);
+  VentCtrl_DW.Cs_press_rise_curv_sp = static_cast<ta_air_pres>(rt_roundf(rtb_output_j));
 }
 
 // System initialize for atomic system: '<Root>/PresMng'

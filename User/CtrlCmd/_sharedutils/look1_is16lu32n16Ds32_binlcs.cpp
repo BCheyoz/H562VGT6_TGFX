@@ -1,17 +1,16 @@
 //
 // File: look1_is16lu32n16Ds32_binlcs.cpp
 //
-// Code generated for Simulink model 'WaterHeatController'.
+// Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.570
+// Model version                  : 1.150
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Mon Apr 14 15:39:34 2025
+// C/C++ source code generated on : Thu Jul 31 11:05:04 2025
 //
 #include "look1_is16lu32n16Ds32_binlcs.h"
 #include <stdint.h>
 
-int16_t look1_is16lu32n16Ds32_binlcs(int16_t u0, const int16_t bp0[], const
-  int16_t table[], uint32_t maxIndex)
+int16_t look1_is16lu32n16Ds32_binlcs(int16_t u0, const int16_t bp0[], const int16_t table[], uint32_t maxIndex)
 {
   uint32_t frac;
   uint32_t iLeft;
@@ -55,8 +54,7 @@ int16_t look1_is16lu32n16Ds32_binlcs(int16_t u0, const int16_t bp0[], const
     }
 
     bpLeftVar = bp0[iLeft];
-    frac = (static_cast<uint32_t>(u0 - bpLeftVar) << 16) / static_cast<uint32_t>
-      (bp0[iLeft + 1U] - bpLeftVar);
+    frac = (static_cast<uint32_t>(u0 - bpLeftVar) << 16) / static_cast<uint32_t>(bp0[iLeft + 1U] - bpLeftVar);
   } else {
     iLeft = maxIndex - 1U;
     frac = 65536U;
@@ -69,8 +67,7 @@ int16_t look1_is16lu32n16Ds32_binlcs(int16_t u0, const int16_t bp0[], const
   // Overflow mode: 'wrapping'
 
   bpLeftVar = table[iLeft];
-  return static_cast<int16_t>(static_cast<int16_t>(((table[iLeft + 1U] -
-    bpLeftVar) * static_cast<int32_t>(frac)) >> 16) + bpLeftVar);
+  return static_cast<int16_t>(static_cast<int16_t>(((table[iLeft + 1U] - bpLeftVar) * static_cast<int32_t>(frac)) >> 16) + bpLeftVar);
 }
 
 //

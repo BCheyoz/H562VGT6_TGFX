@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'WaterHeatCtrl'.
 //
-// Model version                  : 1.75
+// Model version                  : 1.159
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed Jun  4 11:34:40 2025
+// C/C++ source code generated on : Fri Sep  5 16:51:55 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -20,6 +20,13 @@
 #define WaterHeatCtrl_types_h_
 #include <stdint.h>
 #include <stdbool.h>
+#ifndef DEFINED_TYPEDEF_FOR_ta_temp_
+#define DEFINED_TYPEDEF_FOR_ta_temp_
+
+using ta_temp = int16_t;
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_te_op_mode_
 #define DEFINED_TYPEDEF_FOR_te_op_mode_
 
@@ -45,13 +52,6 @@ using ta_rfrg_pres = uint16_t;
 
 #endif
 
-#ifndef DEFINED_TYPEDEF_FOR_ta_temp_
-#define DEFINED_TYPEDEF_FOR_ta_temp_
-
-using ta_temp = int16_t;
-
-#endif
-
 #ifndef DEFINED_TYPEDEF_FOR_te_on_off_
 #define DEFINED_TYPEDEF_FOR_te_on_off_
 
@@ -61,13 +61,6 @@ enum class te_on_off
   on,
   forced
 };
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_ta_wtr_vol_
-#define DEFINED_TYPEDEF_FOR_ta_wtr_vol_
-
-using ta_wtr_vol = uint16_t;
 
 #endif
 
@@ -85,17 +78,6 @@ enum class te_tank_size
   : int32_t {
   L105 = 105,                          // Default value
   L180 = 180
-};
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_te_heat_mode_
-#define DEFINED_TYPEDEF_FOR_te_heat_mode_
-
-enum class te_heat_mode
-  : int32_t {
-  v40_ctrl = 0,                        // Default value
-  temp_ctrl
 };
 
 #endif
@@ -122,17 +104,10 @@ struct tb_WaterHeatCtrl_In
   ta_temp Cs_vent_temp;
   te_on_off Ss_heat_pump_ena;
   te_on_off Ss_elec_bstr_htr_ena;
-  ta_wtr_vol Cs_v40_min;
   ta_pers_nb Ns_pers_nb;
   te_tank_size Ss_tank_size;
-  te_heat_mode Ss_heat_mode_simu;
-  ta_wtr_vol Cs_v40_sp_simu;
-  ta_temp Cs_temp_sp_simu;
   ta_rot_spd Cs_heat_pump_rot_spd_sp_simu;
   te_on_off Ss_elec_bstr_htr_sp_simu;
-  bool Bs_heat_mode_simu_ena;
-  bool Bs_v40_sp_simu_ena;
-  bool Bs_temp_sp_simu_ena;
   bool Bs_heat_pump_freq_sp_simu_ena;
   bool Bs_elec_bstr_htr_sp_simu_ena;
 };
@@ -152,19 +127,64 @@ enum class te_heat_stt
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_te_pump_mode_
+#define DEFINED_TYPEDEF_FOR_te_pump_mode_
+
+enum class te_pump_mode
+  : int32_t {
+  pumpOFF = 0,
+  Tank_lvl,                            // Default value
+  Tref,
+  Tevap,
+  highLoad,
+  highPres
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_te_tank_lvl_
+#define DEFINED_TYPEDEF_FOR_te_tank_lvl_
+
+enum class te_tank_lvl
+  : int32_t {
+  Empty = 0,                           // Default value
+  Cold,
+  Hot,
+  Ready
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_tb_prot_
+#define DEFINED_TYPEDEF_FOR_tb_prot_
+
+struct tb_prot
+{
+  bool Bs_air_low_temp_prot_ena;
+  bool Bs_air_high_temp_prot_ena;
+  bool Bs_ant_shrt_cycl_lim_pump_ena;
+  bool Bs_pump_high_pres_prot_ena;
+  bool Bs_pump_high_load_prot_ena;
+  bool Bs_hpc_dfr_prot_ena;
+  bool Bs_hpc_crit_dfr_prot_ena;
+  bool Bs_pump_prot_ena;
+};
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_tb_WaterHeatCtrl_Out_
 #define DEFINED_TYPEDEF_FOR_tb_WaterHeatCtrl_Out_
 
 struct tb_WaterHeatCtrl_Out
 {
-  te_heat_mode Ss_heat_mode;
-  ta_wtr_vol Cs_v40_sp;
-  ta_temp Cs_temp_sp;
   ta_rot_spd Cs_heat_pump_rot_spd_sp;
   te_on_off Ss_elec_bstr_htr_sp;
-  uint8_t Cs_v40_rat;
   te_heat_stt Ss_heat_pump_stt;
   te_heat_stt Ss_elec_htr_bstr_stt;
+  te_tank_lvl Ss_tank_lvl_stt;
+  te_pump_mode Ss_pump_ctrl_mod;
+  float Cs_ctrl_temp_evap_spd_cmd;
+  tb_prot Bt_heat_pump_prot;
 };
 
 #endif

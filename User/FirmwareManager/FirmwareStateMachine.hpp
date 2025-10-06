@@ -60,6 +60,8 @@ public :
 
 	inline uint8_t isAnodeFlags(){return (uint8_t)di_Anode->getFlags();}
 	inline uint8_t isAnodeState(){return (uint8_t)di_Anode->getcurState();}
+	inline uint8_t isJNState(){return (uint8_t)di_J_N->getcurState();}
+	inline uint8_t isSmartState(){return (uint8_t)di_Smart->getcurState();}
 
 	inline tb_simu_ena* 			getCC_SimuEna(){return &cc_input.SIMU.ENA;}
 	inline tb_simu_var* 			getCC_SimuVar(){return &cc_input.SIMU.VAR;}
@@ -68,12 +70,14 @@ public :
 	inline tb_hmi_user* 			getCC_HmiUser(){return &cc_input.HMI.USER;}
 	inline tb_hw* 					getCC_HW(){return &cc_input.HW;}
 	inline tb_Control_Out* 			getCC_output(){return &cc_out;}
-	inline tb_VentCtrl_Out* 		getCC_subVentCtrlOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.VentCtrl_Out_Y0);}
-	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(TFLOW4_Ctrl::TFLOW4_Ctrl_P.InPutSecu_Out_Y0);}
+	inline tb_VentCtrl_Out* 		getCC_subVentCtrlOutput() {return &(ctrlCmd->TFLOW4_Ctrl_DW.VentCtrl_Out);}
+	inline tb_InPutMng_Out* 		getCC_subInputSecuOutput(){return &(ctrlCmd->TFLOW4_Ctrl_DW.InPutSecu_Out);}
 	inline VentCtrl::P_VentCtrl_T* 	getCC_VentCtrlParam(){return &VentCtrl::VentCtrl_rtP;}
 	inline InPutMng::P_InPutMng_T* 	getCC_InputMngParam(){return &InPutMng::InPutMng_rtP;}
-
-
+	inline WaterHeatCtrl::P_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlParam(){return &WaterHeatCtrl::WaterHeatCtrl_rtP;}
+	inline WaterHeatCtrl::DW_WaterHeatCtrl_T* 	getCC_WaterHeatCtrlData(){return &(ctrlCmd->WaterHeatCtrlMDLOBJ5.WaterHeatCtrl_DW);}
+	inline tb_WaterHeatCtrl_Out* 	getCC_WaterHeatCtrl_Out(){return &(ctrlCmd->TFLOW4_Ctrl_DW.WaterHeatDrv_Out);}
+	inline tb_prot*					getCC_WaterHeatCtrl_Bt_heat_pump_prot() {return &(ctrlCmd->TFLOW4_Ctrl_DW.WaterHeatDrv_Out.Bt_heat_pump_prot);}
 private :
 /********************************************************************************************/
 // Core variable
@@ -114,12 +118,18 @@ private :
 
 	AppointElec *appointElec;
 	DigitalInputs *di_Anode;
+	DigitalInputs *di_J_N;
+	DigitalInputs *di_Smart;
 
 	TFLOW4_Ctrl *ctrlCmd;
 	static tb_Control_In cc_input; // structure d'entrée déclaré en static pour acces via cubeMonitor
 	static tb_Control_Out cc_out;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	static TFLOW4_Ctrl::DW_TFLOW4_Ctrl_T cc_DW;  // structure de sortie déclaré en static pour acces via cubeMonitor
 	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
+
+	// todo a supprimer une fois TGFX intégré
+	uint8_t refreshFixedScreen;
+	uint8_t cuurentScreen;
 };
 
 

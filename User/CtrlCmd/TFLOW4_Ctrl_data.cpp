@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'TFLOW4_Ctrl'.
 //
-// Model version                  : 1.354
+// Model version                  : 1.362
 // Simulink Coder version         : 24.2 (R2024b) 21-Jun-2024
-// C/C++ source code generated on : Wed Jun  4 11:35:08 2025
+// C/C++ source code generated on : Fri Sep  5 16:52:29 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -72,14 +72,24 @@ TFLOW4_Ctrl::P_TFLOW4_Ctrl_T TFLOW4_Ctrl::TFLOW4_Ctrl_P{
   //  Referenced by: '<S7>/WaterHeatDrv_Out'
 
   {
-    te_heat_mode::v40_ctrl,            // Ss_heat_mode
-    0U,                                // Cs_v40_sp
-    0,                                 // Cs_temp_sp
     0U,                                // Cs_heat_pump_rot_spd_sp
     te_on_off::off,                    // Ss_elec_bstr_htr_sp
-    0U,                                // Cs_v40_rat
     te_heat_stt::Stopped,              // Ss_heat_pump_stt
-    te_heat_stt::Stopped               // Ss_elec_htr_bstr_stt
+    te_heat_stt::Stopped,              // Ss_elec_htr_bstr_stt
+    te_tank_lvl::Empty,                // Ss_tank_lvl_stt
+    te_pump_mode::Tank_lvl,            // Ss_pump_ctrl_mod
+    0.0F,                              // Cs_ctrl_temp_evap_spd_cmd
+
+    {
+      false,                           // Bs_air_low_temp_prot_ena
+      false,                           // Bs_air_high_temp_prot_ena
+      false,                           // Bs_ant_shrt_cycl_lim_pump_ena
+      false,                           // Bs_pump_high_pres_prot_ena
+      false,                           // Bs_pump_high_load_prot_ena
+      false,                           // Bs_hpc_dfr_prot_ena
+      false,                           // Bs_hpc_crit_dfr_prot_ena
+      false                            // Bs_pump_prot_ena
+    }                                  // Bt_heat_pump_prot
   },
 
   // Computed Parameter: SysMng_Out_Y0

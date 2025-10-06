@@ -136,7 +136,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_GPIO_WritePin(SW_DEBUG1_GPIO_Port, SW_DEBUG1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(SW_DEBUG2_GPIO_Port, SW_DEBUG2_Pin, GPIO_PIN_SET);
   InitBaseDeTemps();
   InitComputeInfos();
   I2cComMaster_Init_System();
