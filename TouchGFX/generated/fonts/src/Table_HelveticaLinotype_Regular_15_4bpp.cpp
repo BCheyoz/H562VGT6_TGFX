@@ -10,16 +10,19 @@ KEEP extern const touchgfx::GlyphNode glyphs_HelveticaLinotype_Regular_15_4bpp[]
     {    73, 0x003F,   8,  11,  11,   0,   8,   0,   0, 0x00 }, // question
     {   117, 0x0048,   9,  11,  11,   1,  11,   0,   0, 0x00 }, // H
     {   172, 0x004C,   8,  11,  11,   1,   8,   0,   0, 0x00 }, // L
-    {   216, 0x0054,   9,  11,  11,   0,   9,   0,   1, 0x00 }, // T
-    {   271, 0x0061,   8,   8,   8,   0,   8,   1,   1, 0x00 }, // a
-    {   303, 0x0063,   8,   8,   8,   0,   8,   2,   1, 0x00 }, // c
-    {   335, 0x0065,   8,   8,   8,   0,   8,   3,   1, 0x00 }, // e
-    {   367, 0x0069,   2,  11,  11,   1,   3,   0,   0, 0x00 }, // i
-    {   378, 0x006C,   2,  11,  11,   1,   3,   0,   0, 0x00 }, // l
-    {   389, 0x0070,   7,  11,   8,   1,   8,   0,   0, 0x00 }, // p
-    {   433, 0x0074,   4,  10,  10,   0,   4,   0,   0, 0x00 }, // t
-    {   453, 0x0076,   8,   8,   8,   0,   7,   0,   0, 0x00 }, // v
-    {   485, 0x0078,   8,   8,   8,   0,   8,   0,   0, 0x00 }  // x
+    {   216, 0x004D,  11,  11,  11,   1,  13,   0,   0, 0x00 }, // M
+    {   282, 0x0050,   9,  11,  11,   1,  10,   0,   0, 0x00 }, // P
+    {   337, 0x0052,  10,  11,  11,   1,  11,   0,   0, 0x00 }, // R
+    {   392, 0x0054,   9,  11,  11,   0,   9,   0,   1, 0x00 }, // T
+    {   447, 0x0061,   8,   8,   8,   0,   8,   1,   1, 0x00 }, // a
+    {   479, 0x0063,   8,   8,   8,   0,   8,   2,   1, 0x00 }, // c
+    {   511, 0x0065,   8,   8,   8,   0,   8,   3,   1, 0x00 }, // e
+    {   543, 0x0069,   2,  11,  11,   1,   3,   0,   0, 0x00 }, // i
+    {   554, 0x006C,   2,  11,  11,   1,   3,   0,   0, 0x00 }, // l
+    {   565, 0x0070,   7,  11,   8,   1,   8,   0,   0, 0x00 }, // p
+    {   609, 0x0074,   4,  10,  10,   0,   4,   0,   0, 0x00 }, // t
+    {   629, 0x0076,   8,   8,   8,   0,   7,   0,   0, 0x00 }, // v
+    {   661, 0x0078,   8,   8,   8,   0,   8,   0,   0, 0x00 }  // x
 };
 
 // HelveticaLinotype_Regular_15_4bpp
@@ -187,6 +190,6 @@ touchgfx::GeneratedFont& getFont_HelveticaLinotype_Regular_15_4bpp();
 
 touchgfx::GeneratedFont& getFont_HelveticaLinotype_Regular_15_4bpp()
 {
-    static touchgfx::GeneratedFont HelveticaLinotype_Regular_15_4bpp(glyphs_HelveticaLinotype_Regular_15_4bpp, 16, 18, 15, 0, 0, 4, 1, 0, 1, unicodes_HelveticaLinotype_Regular_15_4bpp, kerning_HelveticaLinotype_Regular_15_4bpp, 63, 0, 0, &HelveticaLinotype_Regular_contextualFormsTable);
+    static touchgfx::GeneratedFont HelveticaLinotype_Regular_15_4bpp(glyphs_HelveticaLinotype_Regular_15_4bpp, 19, 18, 15, 0, 0, 4, 1, 0, 1, unicodes_HelveticaLinotype_Regular_15_4bpp, kerning_HelveticaLinotype_Regular_15_4bpp, 63, 0, 0, &HelveticaLinotype_Regular_contextualFormsTable);
     return HelveticaLinotype_Regular_15_4bpp;
 }

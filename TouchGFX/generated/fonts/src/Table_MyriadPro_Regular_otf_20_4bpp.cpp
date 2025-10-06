@@ -8,18 +8,23 @@ KEEP extern const touchgfx::GlyphNode glyphs_MyriadPro_Regular_otf_20_4bpp[] FON
     {     0, 0x0030,  10,  13,  13,   0,  10,   0,   0, 0x00 }, // zero
     {    65, 0x0032,  10,  13,  13,   0,  10,   0,   0, 0x00 }, // two
     {   130, 0x003F,   7,  14,  14,   1,   8,   0,   0, 0x00 }, // question
-    {   186, 0x0048,  11,  14,  14,   1,  13,   0,   0, 0x00 }, // H
-    {   270, 0x004C,   8,  14,  14,   1,   9,   0,   0, 0x00 }, // L
-    {   326, 0x0054,  10,  14,  14,   0,  10,   0,   6, 0x00 }, // T
-    {   396, 0x0061,   9,  10,  10,   0,  10,   6,   1, 0x00 }, // a
-    {   446, 0x0063,   9,  10,  10,   0,   9,   7,   1, 0x00 }, // c
-    {   496, 0x0065,  10,  10,  10,   0,  10,   8,   1, 0x00 }, // e
-    {   546, 0x0069,   3,  14,  14,   1,   5,   9,   1, 0x00 }, // i
-    {   574, 0x006C,   3,  15,  15,   1,   5,   0,   0, 0x00 }, // l
-    {   604, 0x0070,  10,  14,  10,   1,  11,  10,   1, 0x00 }, // p
-    {   674, 0x0074,   7,  13,  13,   0,   7,   0,   0, 0x00 }, // t
-    {   726, 0x0076,  10,  10,  10,   0,  10,  11,   2, 0x00 }, // v
-    {   776, 0x0078,   9,  10,  10,   0,   9,  13,   1, 0x00 }  // x
+    {   186, 0x0044,  12,  14,  14,   1,  13,   0,   0, 0x00 }, // D
+    {   270, 0x0048,  11,  14,  14,   1,  13,   0,   0, 0x00 }, // H
+    {   354, 0x004C,   8,  14,  14,   1,   9,   0,   0, 0x00 }, // L
+    {   410, 0x0054,  10,  14,  14,   0,  10,   0,  10, 0x00 }, // T
+    {   480, 0x0061,   9,  10,  10,   0,  10,  10,   1, 0x00 }, // a
+    {   530, 0x0063,   9,  10,  10,   0,   9,  11,   1, 0x00 }, // c
+    {   580, 0x0065,  10,  10,  10,   0,  10,  12,   1, 0x00 }, // e
+    {   630, 0x0069,   3,  14,  14,   1,   5,  13,   1, 0x00 }, // i
+    {   658, 0x006C,   3,  15,  15,   1,   5,   0,   0, 0x00 }, // l
+    {   688, 0x006E,   9,  10,  10,   1,  11,  14,   1, 0x00 }, // n
+    {   738, 0x006F,  11,  10,  10,   0,  11,  15,   1, 0x00 }, // o
+    {   798, 0x0070,  10,  14,  10,   1,  11,  16,   1, 0x00 }, // p
+    {   868, 0x0074,   7,  13,  13,   0,   7,   0,   0, 0x00 }, // t
+    {   920, 0x0075,   9,  10,  10,   1,  11,  17,   1, 0x00 }, // u
+    {   970, 0x0076,  10,  10,  10,   0,  10,  18,   2, 0x00 }, // v
+    {  1020, 0x0077,  15,  10,  10,   0,  15,  20,   2, 0x00 }, // w
+    {  1100, 0x0078,   9,  10,  10,   0,   9,  22,   1, 0x00 }  // x
 };
 
 // MyriadPro_Regular_otf_20_4bpp
@@ -37,6 +42,6 @@ touchgfx::GeneratedFont& getFont_MyriadPro_Regular_otf_20_4bpp();
 
 touchgfx::GeneratedFont& getFont_MyriadPro_Regular_otf_20_4bpp()
 {
-    static touchgfx::GeneratedFont MyriadPro_Regular_otf_20_4bpp(glyphs_MyriadPro_Regular_otf_20_4bpp, 16, 24, 20, 0, 0, 4, 1, 0, 0, unicodes_MyriadPro_Regular_otf_20_4bpp, kerning_MyriadPro_Regular_otf_20_4bpp, 63, 0, 0, 0);
+    static touchgfx::GeneratedFont MyriadPro_Regular_otf_20_4bpp(glyphs_MyriadPro_Regular_otf_20_4bpp, 21, 24, 20, 0, 0, 4, 1, 0, 0, unicodes_MyriadPro_Regular_otf_20_4bpp, kerning_MyriadPro_Regular_otf_20_4bpp, 63, 0, 0, 0);
     return MyriadPro_Regular_otf_20_4bpp;
 }

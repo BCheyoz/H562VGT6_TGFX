@@ -6,20 +6,23 @@ FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::GlyphNode glyphs_HelveticaLinotype_Regular_40_4bpp[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE = {
     {     0, 0x0020,   0,   0,   0,   0,  10,   0,   0, 0x00 }, // space
     {     0, 0x0030,  20,  30,  29,   1,  22,   0,   0, 0x00 }, // zero
-    {   300, 0x0034,  20,  29,  29,   1,  22,   0,   0, 0x00 }, // four
-    {   590, 0x003F,  18,  29,  29,   2,  22,   0,   0, 0x00 }, // question
-    {   851, 0x0048,  23,  29,  29,   3,  29,   0,   0, 0x00 }, // H
-    {  1199, 0x004C,  19,  29,  29,   3,  22,   0,   0, 0x00 }, // L
-    {  1489, 0x0054,  24,  29,  29,   0,  24,   0,   2, 0x00 }, // T
-    {  1837, 0x0061,  21,  23,  22,   1,  22,   2,   3, 0x00 }, // a
-    {  2090, 0x0063,  19,  23,  22,   1,  21,   5,   3, 0x00 }, // c
-    {  2320, 0x0065,  20,  23,  22,   1,  22,   8,   4, 0x00 }, // e
-    {  2550, 0x0069,   5,  29,  29,   2,   9,   0,   0, 0x00 }, // i
-    {  2637, 0x006C,   5,  29,  29,   2,   9,   0,   0, 0x00 }, // l
-    {  2724, 0x0070,  19,  30,  22,   2,  23,   0,   0, 0x00 }, // p
-    {  3024, 0x0074,  11,  28,  28,   0,  11,   0,   0, 0x00 }, // t
-    {  3192, 0x0076,  20,  21,  21,   0,  20,  12,   3, 0x00 }, // v
-    {  3402, 0x0078,  20,  21,  21,   0,  20,  15,   3, 0x00 }  // x
+    {   300, 0x0031,  11,  29,  29,   4,  22,   0,   0, 0x00 }, // one
+    {   474, 0x0034,  20,  29,  29,   1,  22,   0,   0, 0x00 }, // four
+    {   764, 0x0035,  20,  30,  29,   1,  22,   0,   0, 0x00 }, // five
+    {  1064, 0x003F,  18,  29,  29,   2,  22,   0,   0, 0x00 }, // question
+    {  1325, 0x0045,  22,  29,  29,   3,  26,   0,   0, 0x00 }, // E
+    {  1644, 0x0048,  23,  29,  29,   3,  29,   0,   0, 0x00 }, // H
+    {  1992, 0x004C,  19,  29,  29,   3,  22,   0,   0, 0x00 }, // L
+    {  2282, 0x0054,  24,  29,  29,   0,  24,   0,   2, 0x00 }, // T
+    {  2630, 0x0061,  21,  23,  22,   1,  22,   2,   3, 0x00 }, // a
+    {  2883, 0x0063,  19,  23,  22,   1,  21,   5,   3, 0x00 }, // c
+    {  3113, 0x0065,  20,  23,  22,   1,  22,   8,   4, 0x00 }, // e
+    {  3343, 0x0069,   5,  29,  29,   2,   9,   0,   0, 0x00 }, // i
+    {  3430, 0x006C,   5,  29,  29,   2,   9,   0,   0, 0x00 }, // l
+    {  3517, 0x0070,  19,  30,  22,   2,  23,   0,   0, 0x00 }, // p
+    {  3817, 0x0074,  11,  28,  28,   0,  11,   0,   0, 0x00 }, // t
+    {  3985, 0x0076,  20,  21,  21,   0,  20,  12,   4, 0x00 }, // v
+    {  4195, 0x0078,  20,  21,  21,   0,  20,  16,   3, 0x00 }  // x
 };
 
 // HelveticaLinotype_Regular_40_4bpp
@@ -38,6 +41,6 @@ touchgfx::GeneratedFont& getFont_HelveticaLinotype_Regular_40_4bpp();
 
 touchgfx::GeneratedFont& getFont_HelveticaLinotype_Regular_40_4bpp()
 {
-    static touchgfx::GeneratedFont HelveticaLinotype_Regular_40_4bpp(glyphs_HelveticaLinotype_Regular_40_4bpp, 16, 48, 40, 0, 0, 4, 1, 0, 0, unicodes_HelveticaLinotype_Regular_40_4bpp, kerning_HelveticaLinotype_Regular_40_4bpp, 63, 0, 0, &HelveticaLinotype_Regular_contextualFormsTable);
+    static touchgfx::GeneratedFont HelveticaLinotype_Regular_40_4bpp(glyphs_HelveticaLinotype_Regular_40_4bpp, 19, 48, 40, 0, 0, 4, 1, 0, 0, unicodes_HelveticaLinotype_Regular_40_4bpp, kerning_HelveticaLinotype_Regular_40_4bpp, 63, 0, 0, &HelveticaLinotype_Regular_contextualFormsTable);
     return HelveticaLinotype_Regular_40_4bpp;
 }

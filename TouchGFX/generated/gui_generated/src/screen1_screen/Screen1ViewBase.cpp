@@ -7,7 +7,7 @@
 #include <images/BitmapDatabase.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
-    wait3secCounter(0)
+    frameCountUpdateDataTimerInterval(0)
 {
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -20,7 +20,7 @@ Screen1ViewBase::Screen1ViewBase() :
     textArea1.setXY(170, 10);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(12, 31, 107));
     textArea1.setLinespacing(0);
-    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_784X));
+    textArea1.setTypedText(touchgfx::TypedText(T_SCREEN1TITLE));
     add(textArea1);
 
     qrCode1.setXY(8, 8);
@@ -36,10 +36,10 @@ Screen1ViewBase::Screen1ViewBase() :
 
     digitalClock1.setPosition(165, 58, 150, 41);
     digitalClock1.setColor(touchgfx::Color::getColorFromRGB(16, 120, 16));
-    digitalClock1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_F9VJ));
+    digitalClock1.setTypedText(touchgfx::TypedText(T_CLOCKTXT));
     digitalClock1.displayLeadingZeroForHourIndicator(true);
     digitalClock1.setDisplayMode(touchgfx::DigitalClock::DISPLAY_24_HOUR);
-    digitalClock1.setTime24Hour(17, 29, 43);
+    digitalClock1.setTime24Hour(17, 29, 10);
     add(digitalClock1);
 
     button1.setXY(205, 200);
@@ -52,13 +52,17 @@ Screen1ViewBase::Screen1ViewBase() :
     boxProgress1.setDirection(touchgfx::AbstractDirectionProgress::RIGHT);
     boxProgress1.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BOXPROGRESS_THICK_TINY_ID));
     boxProgress1.setColor(touchgfx::Color::getColorFromRGB(254, 189, 23));
-    boxProgress1.setValue(60);
+    boxProgress1.setValue(20);
     add(boxProgress1);
 
     scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
     scalableImage1.setPosition(165, 99, 150, 54);
     scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::BILINEAR_INTERPOLATION);
     add(scalableImage1);
+
+    customContainer11.setXY(35, 60);
+    customContainer11.setVisible(false);
+    add(customContainer11);
 }
 
 Screen1ViewBase::~Screen1ViewBase()
@@ -68,30 +72,18 @@ Screen1ViewBase::~Screen1ViewBase()
 
 void Screen1ViewBase::setupScreen()
 {
-
-}
-
-void Screen1ViewBase::afterTransition()
-{
-    //wait3sec
-    //When screen transition ends delay
-    //Delay for 3000 ms (180 Ticks)
-    wait3secCounter = WAIT3SEC_DURATION;
+    customContainer11.initialize();
 }
 
 void Screen1ViewBase::handleTickEvent()
 {
-    if (wait3secCounter > 0)
+    frameCountUpdateDataTimerInterval++;
+    if(frameCountUpdateDataTimerInterval == TICK_UPDATEDATATIMER_INTERVAL)
     {
-        wait3secCounter--;
-        if (wait3secCounter == 0)
-        {
-
-            //Interaction1
-            //When wait3sec completed change screen to Screen2
-            //Go to Screen2 with no screen transition
-            application().gotoScreen2ScreenNoTransition();
-        }
+        //updateDataTimer
+        //When every N tick call virtual function
+        //Call updateData
+        updateData();
+        frameCountUpdateDataTimerInterval = 0;
     }
-
 }

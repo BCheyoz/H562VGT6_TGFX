@@ -11,7 +11,10 @@ public:
     virtual ~Screen2View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    virtual void changeTxt() final;
 protected:
+    bool btn;
 };
 
 #endif // SCREEN2VIEW_HPP

@@ -11,7 +11,12 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void updateData() final;
 protected:
+    int digitalHours;
+    int digitalMinutes;
+    int digitalSeconds;
+    int progressBar;
 };
 
 #endif // SCREEN1VIEW_HPP

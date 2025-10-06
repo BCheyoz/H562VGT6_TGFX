@@ -15,6 +15,7 @@
 #include <touchgfx/widgets/Button.hpp>
 #include <touchgfx/containers/progress_indicators/BoxProgress.hpp>
 #include <touchgfx/widgets/ScalableImage.hpp>
+#include <gui/containers/CustomContainer1.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
 {
@@ -22,8 +23,15 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase();
     virtual void setupScreen();
-    virtual void afterTransition();
     virtual void handleTickEvent();
+
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void updateData()
+    {
+        // Override and implement this function in Screen1
+    }
 
 protected:
     FrontendApplication& application() {
@@ -44,14 +52,15 @@ protected:
     touchgfx::Button button1;
     touchgfx::BoxProgress boxProgress1;
     touchgfx::ScalableImage scalableImage1;
+    CustomContainer1 customContainer11;
 
 private:
 
     /*
-     * Delay Variable Declarations
+     * Tick Counter Declarations
      */
-    static const uint16_t WAIT3SEC_DURATION = 180;
-    uint16_t wait3secCounter;
+    static const uint32_t TICK_UPDATEDATATIMER_INTERVAL = 62;
+    uint32_t frameCountUpdateDataTimerInterval;
 
 };
 

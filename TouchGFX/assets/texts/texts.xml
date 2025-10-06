@@ -2,39 +2,143 @@
 <TextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="texts.xsd" Version="4.25.0">
   <Languages>
     <Language Id="GB" />
+    <Language Id="FR" />
   </Languages>
   <Texts>
-    <TextGroup Id="Group1" />
+    <TextGroup Id="ListElem">
+      <Text Id="listElemTxt8" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">ECS &lt;&gt;</Translation>
+        <Translation Language="FR">ECS &lt;&gt;</Translation>
+      </Text>
+      <Text Id="listElemTxt7" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">VMC</Translation>
+        <Translation Language="FR">VMC</Translation>
+      </Text>
+      <Text Id="listElemTxt6" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Système</Translation>
+        <Translation Language="FR">Système</Translation>
+      </Text>
+      <Text Id="listElemTxt5" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Erreur &lt;value&gt;</Translation>
+        <Translation Language="FR">Erreur &lt;value&gt;</Translation>
+      </Text>
+      <Text Id="listElemTxt4" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Installateur</Translation>
+        <Translation Language="FR">Installateur</Translation>
+      </Text>
+      <Text Id="listElemTxt3" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Mode</Translation>
+        <Translation Language="FR">Mode</Translation>
+      </Text>
+      <Text Id="listElemTxt2" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Configuration</Translation>
+        <Translation Language="FR">Configuration</Translation>
+      </Text>
+      <Text Id="listElemTxt1" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Tests</Translation>
+        <Translation Language="FR">Tests</Translation>
+      </Text>
+    </TextGroup>
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_R5CT" Alignment="Center" TypographyId="Large">
-        <Translation Language="GB">Btn</Translation>
+      <Text Id="ErrorID" Alignment="Left" TypographyId="HelveticaLinotype40">
+        <Translation Language="GB">15</Translation>
+        <Translation Language="FR">15</Translation>
       </Text>
-      <Text Id="__SingleUse_F9VJ" Alignment="Center" TypographyId="Large">
+      <Text Id="Modal1txtE" Alignment="Center" TypographyId="HelveticaLinotype40">
+        <Translation Language="GB">E&lt;&gt;</Translation>
+        <Translation Language="FR">E&lt;&gt;</Translation>
+      </Text>
+      <Text Id="Modal1TxtWArn" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Warning</Translation>
+        <Translation Language="FR">Attention</Translation>
+      </Text>
+      <Text Id="screen5txtRPM" Alignment="Left" TypographyId="HelveticaLinotype15">
+        <Translation Language="GB">RPM</Translation>
+        <Translation Language="FR">RPM</Translation>
+      </Text>
+      <Text Id="FanRpmWildcardDefault" Alignment="Left" TypographyId="HelveticaLinotype25">
+        <Translation Language="GB">100000</Translation>
+        <Translation Language="FR">100000</Translation>
+      </Text>
+      <Text Id="screen5FanSpeed" Alignment="Center" TypographyId="HelveticaLinotype25">
         <Translation Language="GB">&lt;&gt;</Translation>
+        <Translation Language="FR">&lt;&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_MFZB" Alignment="Left" TypographyId="HelveticaLinotype35">
+      <Text Id="screen5TxtFan" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">Fan </Translation>
+        <Translation Language="FR">MV </Translation>
+      </Text>
+      <Text Id="screnn5txtSG" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">SmartGrid</Translation>
+        <Translation Language="FR">SmartGrid</Translation>
+      </Text>
+      <Text Id="screen5txtHPHC" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">HP / HC</Translation>
+        <Translation Language="FR">HP / HC</Translation>
+      </Text>
+      <Text Id="Screen5txtTB" Alignment="Left" TypographyId="HelveticaLinotype20">
+        <Translation Language="GB">T Up</Translation>
+        <Translation Language="FR">T Bas</Translation>
+      </Text>
+      <Text Id="Screen5txtTH" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">T Down</Translation>
+        <Translation Language="FR">T Haut</Translation>
+      </Text>
+      <Text Id="ListElem1wildcardDefault" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">9</Translation>
+        <Translation Language="FR">9</Translation>
+      </Text>
+      <Text Id="textBuff" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">0</Translation>
+        <Translation Language="FR">0</Translation>
+      </Text>
+      <Text Id="clockTxt" Alignment="Left" TypographyId="Large">
+        <Translation Language="GB">&lt;&gt;</Translation>
+        <Translation Language="FR">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="labelNumber" Alignment="Center" TypographyId="Large">
+        <Translation Language="GB">&lt;&gt;</Translation>
+        <Translation Language="FR">&lt;&gt;</Translation>
+      </Text>
+      <Text Id="ListElemTxt" Alignment="Left" TypographyId="HelveticaLinotype30">
+        <Translation Language="GB">List elem &lt;&gt;</Translation>
+        <Translation Language="FR">List elem &lt;&gt;</Translation>
+      </Text>
+      <Text Id="BtnTxt" Alignment="Center" TypographyId="Large">
+        <Translation Language="GB">Btn</Translation>
+        <Translation Language="FR">Btn</Translation>
+      </Text>
+      <Text Id="Screen2txt35" Alignment="Left" TypographyId="HelveticaLinotype35">
         <Translation Language="GB">Helvetica LT 35px</Translation>
+        <Translation Language="FR">Helvetica LT 35px</Translation>
       </Text>
-      <Text Id="__SingleUse_PKVE" Alignment="Left" TypographyId="HelveticaLinotype30">
+      <Text Id="Screen2txt30" Alignment="Left" TypographyId="HelveticaLinotype30">
         <Translation Language="GB">Helvetica LT 30px</Translation>
+        <Translation Language="FR">Helvetica LT 30px</Translation>
       </Text>
-      <Text Id="__SingleUse_E8VB" Alignment="Left" TypographyId="HelveticaLinotype25">
+      <Text Id="Screen2txt25" Alignment="Left" TypographyId="HelveticaLinotype25">
         <Translation Language="GB">Helvetica LT 25px</Translation>
+        <Translation Language="FR">Helvetica LT 25px</Translation>
       </Text>
-      <Text Id="__SingleUse_04XL" Alignment="Left" TypographyId="HelveticaLinotype15">
+      <Text Id="Screen2txt15" Alignment="Left" TypographyId="HelveticaLinotype15">
         <Translation Language="GB">Helvetica LT 15px</Translation>
+        <Translation Language="FR">Helvetica LT 15px</Translation>
       </Text>
-      <Text Id="__SingleUse_STD5" Alignment="Left" TypographyId="Small">
+      <Text Id="Screen2txt10" Alignment="Left" TypographyId="Small">
         <Translation Language="GB">Helvetica LT 10px</Translation>
+        <Translation Language="FR">Helvetica LT 10px</Translation>
       </Text>
-      <Text Id="__SingleUse_WJGV" Alignment="Left" TypographyId="HelveticaLinotype40">
+      <Text Id="Screen2txt40" Alignment="Left" TypographyId="HelveticaLinotype40">
         <Translation Language="GB">Helvetica LT 40px</Translation>
+        <Translation Language="FR">Helvetica LT 40px</Translation>
       </Text>
-      <Text Id="__SingleUse_ZXEM" Alignment="Left" TypographyId="Default">
+      <Text Id="Screen2txt20" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Helvetica LT 20px</Translation>
+        <Translation Language="FR">Helvetica LT 20px</Translation>
       </Text>
-      <Text Id="__SingleUse_784X" Alignment="Left" TypographyId="Large">
+      <Text Id="screen1Title" Alignment="Left" TypographyId="Large">
         <Translation Language="GB">TFlow4</Translation>
+        <Translation Language="FR">TFlow4</Translation>
       </Text>
     </TextGroup>
   </Texts>
@@ -43,6 +147,7 @@
     <Typography Id="Large" Font="MyriadPro-Regular.otf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WidgetWildcardCharacters="0123456789 :APM" />
     <Typography Id="Small" Font="MyriadPro-Regular.otf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="HelveticaLinotype15" Font="HelveticaLinotype-Regular.ttf" Size="15" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="HelveticaLinotype20" Font="HelveticaLinotype-Regular.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="HelveticaLinotype25" Font="HelveticaLinotype-Regular.ttf" Size="25" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="HelveticaLinotype30" Font="HelveticaLinotype-Regular.ttf" Size="30" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="HelveticaLinotype35" Font="HelveticaLinotype-Regular.ttf" Size="35" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />

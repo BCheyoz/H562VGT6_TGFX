@@ -17,10 +17,11 @@ struct Typography
     static const touchgfx::FontId LARGE = 1;
     static const touchgfx::FontId SMALL = 2;
     static const touchgfx::FontId HELVETICALINOTYPE15 = 3;
-    static const touchgfx::FontId HELVETICALINOTYPE25 = 4;
-    static const touchgfx::FontId HELVETICALINOTYPE30 = 5;
-    static const touchgfx::FontId HELVETICALINOTYPE35 = 6;
-    static const touchgfx::FontId HELVETICALINOTYPE40 = 7;
+    static const touchgfx::FontId HELVETICALINOTYPE20 = 4;
+    static const touchgfx::FontId HELVETICALINOTYPE25 = 5;
+    static const touchgfx::FontId HELVETICALINOTYPE30 = 6;
+    static const touchgfx::FontId HELVETICALINOTYPE35 = 7;
+    static const touchgfx::FontId HELVETICALINOTYPE40 = 8;
 };
 
 struct TypographyFontIndex
@@ -29,11 +30,12 @@ struct TypographyFontIndex
     static const touchgfx::FontId LARGE = 1;               // MyriadPro_Regular_otf_40_4bpp
     static const touchgfx::FontId SMALL = 2;               // MyriadPro_Regular_otf_10_4bpp
     static const touchgfx::FontId HELVETICALINOTYPE15 = 3; // HelveticaLinotype_Regular_15_4bpp
-    static const touchgfx::FontId HELVETICALINOTYPE25 = 4; // HelveticaLinotype_Regular_25_4bpp
-    static const touchgfx::FontId HELVETICALINOTYPE30 = 5; // HelveticaLinotype_Regular_30_4bpp
-    static const touchgfx::FontId HELVETICALINOTYPE35 = 6; // HelveticaLinotype_Regular_35_4bpp
-    static const touchgfx::FontId HELVETICALINOTYPE40 = 7; // HelveticaLinotype_Regular_40_4bpp
-    static const uint16_t NUMBER_OF_FONTS = 8;
+    static const touchgfx::FontId HELVETICALINOTYPE20 = 4; // HelveticaLinotype_Regular_20_4bpp
+    static const touchgfx::FontId HELVETICALINOTYPE25 = 5; // HelveticaLinotype_Regular_25_4bpp
+    static const touchgfx::FontId HELVETICALINOTYPE30 = 6; // HelveticaLinotype_Regular_30_4bpp
+    static const touchgfx::FontId HELVETICALINOTYPE35 = 7; // HelveticaLinotype_Regular_35_4bpp
+    static const touchgfx::FontId HELVETICALINOTYPE40 = 8; // HelveticaLinotype_Regular_40_4bpp
+    static const uint16_t NUMBER_OF_FONTS = 9;
 };
 
 class ApplicationFontProvider : public touchgfx::FontProvider

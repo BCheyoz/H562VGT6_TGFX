@@ -9,6 +9,7 @@
 #include <gui/screen3_screen/Screen3Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include <gui/containers/CustomContainer1.hpp>
 
 class Screen3ViewBase : public touchgfx::View<Screen3Presenter>
 {
@@ -16,8 +17,6 @@ public:
     Screen3ViewBase();
     virtual ~Screen3ViewBase();
     virtual void setupScreen();
-    virtual void afterTransition();
-    virtual void handleTickEvent();
 
 protected:
     FrontendApplication& application() {
@@ -29,14 +28,9 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Image image1;
+    CustomContainer1 customContainer11;
 
 private:
-
-    /*
-     * Delay Variable Declarations
-     */
-    static const uint16_t WAIT3SEC_DURATION = 180;
-    uint16_t wait3secCounter;
 
 };
 

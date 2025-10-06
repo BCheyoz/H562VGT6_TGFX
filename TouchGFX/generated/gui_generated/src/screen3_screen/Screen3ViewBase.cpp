@@ -5,8 +5,7 @@
 #include <touchgfx/Color.hpp>
 #include <images/BitmapDatabase.hpp>
 
-Screen3ViewBase::Screen3ViewBase() :
-    wait3secCounter(0)
+Screen3ViewBase::Screen3ViewBase()
 {
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -15,6 +14,10 @@ Screen3ViewBase::Screen3ViewBase() :
     image1.setXY(0, 0);
     image1.setBitmap(touchgfx::Bitmap(BITMAP_SMPTE_COLOR_BARS_SVG_ID));
     add(image1);
+
+    customContainer11.setXY(35, 60);
+    customContainer11.setVisible(false);
+    add(customContainer11);
 }
 
 Screen3ViewBase::~Screen3ViewBase()
@@ -24,30 +27,5 @@ Screen3ViewBase::~Screen3ViewBase()
 
 void Screen3ViewBase::setupScreen()
 {
-
-}
-
-void Screen3ViewBase::afterTransition()
-{
-    //wait3sec
-    //When screen transition ends delay
-    //Delay for 3000 ms (180 Ticks)
-    wait3secCounter = WAIT3SEC_DURATION;
-}
-
-void Screen3ViewBase::handleTickEvent()
-{
-    if (wait3secCounter > 0)
-    {
-        wait3secCounter--;
-        if (wait3secCounter == 0)
-        {
-
-            //Interaction1
-            //When wait3sec completed change screen to Screen1
-            //Go to Screen1 with no screen transition
-            application().gotoScreen1ScreenNoTransition();
-        }
-    }
-
+    customContainer11.initialize();
 }

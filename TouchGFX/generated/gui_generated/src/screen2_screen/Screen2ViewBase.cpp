@@ -7,7 +7,7 @@
 #include <texts/TextKeysAndLanguages.hpp>
 
 Screen2ViewBase::Screen2ViewBase() :
-    wait3secCounter(0)
+    buttonCallback(this, &Screen2ViewBase::buttonCallbackHandler)
 {
     __background.setPosition(0, 0, 320, 240);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
@@ -20,51 +20,56 @@ Screen2ViewBase::Screen2ViewBase() :
     textArea1.setXY(1, 156);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1.setLinespacing(0);
-    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_ZXEM));
+    textArea1.setTypedText(touchgfx::TypedText(T_SCREEN2TXT20));
     add(textArea1);
 
     textArea1_2.setXY(1, 126);
     textArea1_2.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1_2.setLinespacing(0);
-    textArea1_2.setTypedText(touchgfx::TypedText(T___SINGLEUSE_E8VB));
+    textArea1_2.setTypedText(touchgfx::TypedText(T_SCREEN2TXT25));
     add(textArea1_2);
 
     textArea1_2_1.setXY(1, 90);
     textArea1_2_1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1_2_1.setLinespacing(0);
-    textArea1_2_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_PKVE));
+    textArea1_2_1.setTypedText(touchgfx::TypedText(T_SCREEN2TXT30));
     add(textArea1_2_1);
 
     textArea1_2_1_1.setXY(0, 48);
     textArea1_2_1_1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1_2_1_1.setLinespacing(0);
-    textArea1_2_1_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_MFZB));
+    textArea1_2_1_1.setTypedText(touchgfx::TypedText(T_SCREEN2TXT35));
     add(textArea1_2_1_1);
 
     textArea1_1.setXY(2, 202);
     textArea1_1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1_1.setLinespacing(0);
-    textArea1_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_STD5));
+    textArea1_1.setTypedText(touchgfx::TypedText(T_SCREEN2TXT10));
     add(textArea1_1);
 
     textArea1_1_1.setXY(1, 181);
     textArea1_1_1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1_1_1.setLinespacing(0);
-    textArea1_1_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_04XL));
+    textArea1_1_1.setTypedText(touchgfx::TypedText(T_SCREEN2TXT15));
     add(textArea1_1_1);
 
-    textArea2.setXY(0, 0);
+    textArea2.setPosition(0, 0, 320, 48);
     textArea2.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea2.setLinespacing(0);
-    textArea2.setTypedText(touchgfx::TypedText(T___SINGLEUSE_WJGV));
+    textArea2.setTypedText(touchgfx::TypedText(T_SCREEN2TXT40));
     add(textArea2);
 
     buttonWithLabel1.setXY(242, 168);
     buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_TINY_FILL_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUNDED_TINY_FILL_PRESSED_ID));
-    buttonWithLabel1.setLabelText(touchgfx::TypedText(T___SINGLEUSE_R5CT));
+    buttonWithLabel1.setLabelText(touchgfx::TypedText(T_BTNTXT));
     buttonWithLabel1.setLabelColor(touchgfx::Color::getColorFromRGB(62, 96, 120));
     buttonWithLabel1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    buttonWithLabel1.setAction(buttonCallback);
     add(buttonWithLabel1);
+
+    customContainer11.setXY(35, 60);
+    customContainer11.setVisible(false);
+    add(customContainer11);
 }
 
 Screen2ViewBase::~Screen2ViewBase()
@@ -74,30 +79,16 @@ Screen2ViewBase::~Screen2ViewBase()
 
 void Screen2ViewBase::setupScreen()
 {
-
+    customContainer11.initialize();
 }
 
-void Screen2ViewBase::afterTransition()
+void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    //wait3sec
-    //When screen transition ends delay
-    //Delay for 3000 ms (180 Ticks)
-    wait3secCounter = WAIT3SEC_DURATION;
-}
-
-void Screen2ViewBase::handleTickEvent()
-{
-    if (wait3secCounter > 0)
+    if (&src == &buttonWithLabel1)
     {
-        wait3secCounter--;
-        if (wait3secCounter == 0)
-        {
-
-            //Interaction1
-            //When wait3sec completed change screen to Screen3
-            //Go to Screen3 with no screen transition
-            application().gotoScreen3ScreenNoTransition();
-        }
+        //changeTxtOnClic
+        //When buttonWithLabel1 clicked call virtual function
+        //Call changeTxt
+        changeTxt();
     }
-
 }

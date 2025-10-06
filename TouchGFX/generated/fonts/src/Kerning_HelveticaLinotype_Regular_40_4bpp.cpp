@@ -14,6 +14,7 @@ KEEP extern const touchgfx::KerningNode kerning_HelveticaLinotype_Regular_40_4bp
     { 0x0054, -5 },  // (First char = [0x0054, T], Second char = [0x0065, e], Kerning dist = -5)
     { 0x0076, -1 },  // (First char = [0x0076, v], Second char = [0x0065, e], Kerning dist = -1)
     { 0x0078, -1 },  // (First char = [0x0078, x], Second char = [0x0065, e], Kerning dist = -1)
+    { 0x0045, -1 },  // (First char = [0x0045, E], Second char = [0x0076, v], Kerning dist = -1)
     { 0x0061, -1 },  // (First char = [0x0061, a], Second char = [0x0076, v], Kerning dist = -1)
     { 0x0065, -1 },  // (First char = [0x0065, e], Second char = [0x0076, v], Kerning dist = -1)
     { 0x0070, -1 },  // (First char = [0x0070, p], Second char = [0x0076, v], Kerning dist = -1)

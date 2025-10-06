@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <gui/containers/CustomContainer1.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -18,8 +19,14 @@ public:
     Screen2ViewBase();
     virtual ~Screen2ViewBase();
     virtual void setupScreen();
-    virtual void afterTransition();
-    virtual void handleTickEvent();
+
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void changeTxt()
+    {
+        // Override and implement this function in Screen2
+    }
 
 protected:
     FrontendApplication& application() {
@@ -39,14 +46,19 @@ protected:
     touchgfx::TextArea textArea1_1_1;
     touchgfx::TextArea textArea2;
     touchgfx::ButtonWithLabel buttonWithLabel1;
+    CustomContainer1 customContainer11;
 
 private:
 
     /*
-     * Delay Variable Declarations
+     * Callback Declarations
      */
-    static const uint16_t WAIT3SEC_DURATION = 180;
-    uint16_t wait3secCounter;
+    touchgfx::Callback<Screen2ViewBase, const touchgfx::AbstractButton&> buttonCallback;
+
+    /*
+     * Callback Handler Declarations
+     */
+    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
 
 };
 
