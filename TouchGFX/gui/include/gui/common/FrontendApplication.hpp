@@ -18,6 +18,8 @@ public:
         model.tick();
         FrontendApplicationBase::handleTickEvent();
     }
+
+    void enablePopupFromseletedScreen(bool enable);
 private:
 };
 

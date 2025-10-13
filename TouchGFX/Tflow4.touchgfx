@@ -5,15 +5,11 @@
         "Name": "Screen1",
         "Components": [
           {
-            "Type": "Box",
-            "Name": "box1",
+            "Type": "Image",
+            "Name": "image2",
             "Width": 320,
             "Height": 240,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_waves.png"
           },
           {
             "Type": "TextArea",
@@ -21,7 +17,7 @@
             "X": 170,
             "Y": 10,
             "Width": 119,
-            "Height": 41,
+            "Height": 49,
             "TextId": "screen1Title",
             "TextRotation": "0",
             "Color": {
@@ -50,7 +46,8 @@
           {
             "Type": "Image",
             "Name": "image1",
-            "Y": 160,
+            "X": 60,
+            "Y": 157,
             "Width": 187,
             "Height": 80,
             "RelativeFilename": "aldes100ans.png"
@@ -58,14 +55,14 @@
           {
             "Type": "DigitalClock",
             "Name": "digitalClock1",
-            "X": 165,
-            "Y": 58,
+            "X": 160,
+            "Y": 68,
             "Width": 150,
             "Height": 41,
             "TextColor": {
-              "Red": 16,
-              "Green": 120,
-              "Blue": 16
+              "Red": 47,
+              "Green": 224,
+              "Blue": 183
             },
             "TextId": "clockTxt",
             "DisplaySeconds": true,
@@ -75,45 +72,24 @@
             "InitialSecond": 10
           },
           {
-            "Type": "Button",
-            "Name": "button1",
-            "X": 205,
-            "Y": 200,
-            "Width": 100,
-            "Height": 36,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_36_tiny_round_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_36_tiny_round_action.png",
-            "Preset": "alternate_theme\\presets\\button\\regular\\height_36\\tiny_round_action.json"
-          },
-          {
             "Type": "BoxProgress",
             "Name": "boxProgress1",
-            "X": 205,
-            "Y": 175,
+            "X": 179,
+            "Y": 120,
             "Width": 100,
             "Height": 18,
             "Color": {
-              "Red": 254,
-              "Green": 189,
-              "Blue": 23
+              "Red": 39,
+              "Green": 68,
+              "Blue": 87
             },
             "Direction": "Right",
-            "Preset": "alternate_theme\\presets\\boxprogress\\thick\\tiny_action.json",
+            "Preset": "alternate_theme\\presets\\boxprogress\\thick\\tiny_dark.json",
             "FileNameBackground": "__generated\\alternate_theme_images_widgets_boxprogress_thick_tiny.png",
             "IndicatorPositionWidth": 100,
             "IndicatorPositionHeight": 18,
             "ProgressRangeMax": 100,
             "ProgressInitialValue": 20
-          },
-          {
-            "Type": "ScalableImage",
-            "Name": "scalableImage1",
-            "X": 165,
-            "Y": 99,
-            "Width": 150,
-            "Height": 54,
-            "Filename": "aldes100ans.png",
-            "ScalingAlgorithm": "Bilinear Interpolation"
           },
           {
             "Type": "CustomContainerInstance",
@@ -137,6 +113,17 @@
               "Type": "ActionCustom",
               "FunctionName": "updateData"
             }
+          },
+          {
+            "InteractionName": "gotoScreen1",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Screen1"
+            }
           }
         ]
       },
@@ -148,7 +135,7 @@
             "Name": "image1",
             "Width": 320,
             "Height": 240,
-            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_poly.png"
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_waves.png"
           },
           {
             "Type": "TextArea",
@@ -156,7 +143,7 @@
             "X": 1,
             "Y": 156,
             "Width": 144,
-            "Height": 24,
+            "Height": 25,
             "TextId": "Screen2txt20",
             "TextRotation": "0",
             "AutoSize": true
@@ -199,7 +186,7 @@
             "X": 2,
             "Y": 202,
             "Width": 72,
-            "Height": 12,
+            "Height": 13,
             "TextId": "Screen2txt10",
             "TextRotation": "0",
             "AutoSize": true
@@ -230,8 +217,8 @@
             "Y": 168,
             "Width": 60,
             "Height": 60,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_action.png",
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_disabled.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_rounded_tiny_fill_disabled.png",
             "TextId": "BtnTxt",
             "ReleasedColor": {
               "Red": 62,
@@ -244,7 +231,7 @@
               "Blue": 255
             },
             "TextRotation": "0",
-            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\tiny_fill_action.json"
+            "Preset": "alternate_theme\\presets\\button\\icon\\rounded\\tiny_fill_disabled.json"
           },
           {
             "Type": "CustomContainerInstance",
@@ -267,6 +254,18 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "changeTxt"
+            }
+          },
+          {
+            "InteractionName": "gotoScreen2",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionCover",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen2"
             }
           }
         ]
@@ -292,7 +291,20 @@
             "CustomContainerDefinitionName": "CustomContainer1"
           }
         ],
-        "Interactions": []
+        "Interactions": [
+          {
+            "InteractionName": "gotoScreen3",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionWipe",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen3"
+            }
+          }
+        ]
       },
       {
         "Name": "Screen4",
@@ -302,7 +314,7 @@
             "Name": "image1",
             "Width": 320,
             "Height": 240,
-            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_poly.png"
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_waves.png"
           },
           {
             "Type": "ButtonWithIcon",
@@ -384,6 +396,27 @@
               "Type": "ActionCustom",
               "FunctionName": "scrollDown"
             }
+          },
+          {
+            "InteractionName": "gotoScreen4",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionBlock",
+              "ActionComponent": "Screen4"
+            }
+          },
+          {
+            "InteractionName": "showPopup1",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "showPopup1"
+            }
           }
         ],
         "CustomActions": [
@@ -401,7 +434,7 @@
             "Name": "image1",
             "Width": 320,
             "Height": 240,
-            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_poly.png"
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_waves.png"
           },
           {
             "Type": "Gauge",
@@ -474,7 +507,7 @@
             "StartAngle": -119.0,
             "EndAngle": 122.0,
             "RangeMax": 100.0,
-            "InitialValue": 50.0,
+            "InitialValue": 20.0,
             "Easing": "Linear",
             "EasingOption": "In",
             "FileNameNeedle": "__generated\\alternate_theme_images_widgets_gauge_tiny_needles_rough.png",
@@ -501,24 +534,22 @@
           {
             "Type": "TextArea",
             "Name": "textArea1",
-            "X": 28,
-            "Y": 80,
-            "Width": 64,
-            "Height": 24,
+            "X": 24,
+            "Y": 77,
+            "Width": 72,
+            "Height": 25,
             "TextId": "Screen5txtTH",
-            "TextRotation": "0",
-            "AutoSize": true
+            "TextRotation": "0"
           },
           {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 235,
-            "Y": 82,
-            "Width": 42,
-            "Height": 24,
+            "X": 227,
+            "Y": 80,
+            "Width": 66,
+            "Height": 22,
             "TextId": "Screen5txtTB",
-            "TextRotation": "0",
-            "AutoSize": true
+            "TextRotation": "0"
           },
           {
             "Type": "TextArea",
@@ -576,15 +607,16 @@
           {
             "Type": "TextArea",
             "Name": "textArea6",
-            "X": 118,
-            "Y": 84,
-            "Width": 84,
-            "Height": 30,
+            "X": 123,
+            "Y": 80,
+            "Width": 77,
+            "Height": 39,
             "TextId": "screen5FanSpeed",
             "TextRotation": "0",
-            "AutoSize": true,
             "Wildcard1": {
-              "TextId": "FanRpmWildcardDefault"
+              "TextId": "FanRpmWildcardDefault",
+              "UseBuffer": true,
+              "BufferSize": 6
             }
           },
           {
@@ -607,6 +639,16 @@
             "Height": 120,
             "Visible": false,
             "CustomContainerDefinitionName": "CustomContainer1"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea8",
+            "X": 102,
+            "Y": 4,
+            "Width": 113,
+            "Height": 37,
+            "TextId": "screen5Title",
+            "TextRotation": "0"
           }
         ],
         "Interactions": [
@@ -619,6 +661,143 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "updateScreen5Data"
+            }
+          },
+          {
+            "InteractionName": "gotoScreen5",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Screen5"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen6",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "Width": 320,
+            "Height": 240,
+            "RelativeFilename": "__generated\\alternate_theme_images_backgrounds_320x240_waves.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 191,
+            "Y": 72,
+            "Width": 63,
+            "Height": 49,
+            "TextId": "waterAvailable",
+            "TextRotation": "0",
+            "Wildcard1": {
+              "TextId": "__SingleUse_TFM9",
+              "UseBuffer": true,
+              "BufferSize": 5
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 254,
+            "Y": 90,
+            "Width": 16,
+            "Height": 25,
+            "TextId": "__SingleUse_KS7Y",
+            "TextRotation": "0",
+            "AutoSize": true
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 80,
+            "Y": 207,
+            "Width": 93,
+            "Height": 6,
+            "RelativeFilename": "battery_fill_bottom_dark.png"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "scalableImage1",
+            "X": 71,
+            "Y": 21,
+            "Width": 110,
+            "Height": 201,
+            "Filename": "battery_frame_dark.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Box",
+            "Name": "box2",
+            "X": 80,
+            "Y": 36,
+            "Width": 93,
+            "Height": 150,
+            "Color": {
+              "Green": 13,
+              "Blue": 19
+            }
+          },
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "X": 80,
+            "Y": 190,
+            "Width": 93,
+            "Height": 18,
+            "Color": {
+              "Green": 60,
+              "Blue": 188
+            }
+          },
+          {
+            "Type": "AnimatedImage",
+            "Name": "waveAnimated",
+            "X": 80,
+            "Y": 185,
+            "Width": 93,
+            "Height": 25,
+            "FileNameFirst": "waterAnimation\\battery_end_sequence_00.png",
+            "FileNameLast": "waterAnimation\\battery_end_sequence_23.png",
+            "UpdateTicksInterval": 48,
+            "StartOnLoad": true
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 80,
+            "Y": 30,
+            "Width": 93,
+            "Height": 6,
+            "RelativeFilename": "battery_fill_upper_dark.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "gotoScreen6",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Screen6"
+            }
+          },
+          {
+            "InteractionName": "waveAnimationDone",
+            "Trigger": {
+              "Type": "TriggerAnimationEnded",
+              "TriggerComponent": "waveAnimated"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "waveAnimationDone"
             }
           }
         ]
@@ -683,22 +862,22 @@
           {
             "Type": "ScalableImage",
             "Name": "scalableImage1",
+            "X": 8,
             "Y": 20,
             "Width": 80,
             "Height": 80,
-            "Filename": "__generated\\icon_theme_images_alert_error_outline_48_44_000000.svg.png",
+            "Filename": "__generated\\icon_theme_images_alert_error_outline_80_80_000000.svg.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
             "Type": "TextArea",
             "Name": "textArea1",
-            "X": 104,
-            "Y": 14,
-            "Width": 112,
-            "Height": 36,
+            "X": 90,
+            "Y": 12,
+            "Width": 141,
+            "Height": 40,
             "TextId": "Modal1TxtWArn",
-            "TextRotation": "0",
-            "AutoSize": true
+            "TextRotation": "0"
           },
           {
             "Type": "TextArea",

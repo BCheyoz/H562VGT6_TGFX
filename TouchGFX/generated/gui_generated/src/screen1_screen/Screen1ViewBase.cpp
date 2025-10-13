@@ -3,8 +3,8 @@
 /*********************************************************************************/
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <touchgfx/Color.hpp>
-#include <texts/TextKeysAndLanguages.hpp>
 #include <images/BitmapDatabase.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 
 Screen1ViewBase::Screen1ViewBase() :
     frameCountUpdateDataTimerInterval(0)
@@ -13,9 +13,9 @@ Screen1ViewBase::Screen1ViewBase() :
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    box1.setPosition(0, 0, 320, 240);
-    box1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    add(box1);
+    image2.setXY(0, 0);
+    image2.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_WAVES_ID));
+    add(image2);
 
     textArea1.setXY(170, 10);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(12, 31, 107));
@@ -30,35 +30,26 @@ Screen1ViewBase::Screen1ViewBase() :
     qrCode1.convertStringToQRCode("ALDES.COM");
     add(qrCode1);
 
-    image1.setXY(0, 160);
+    image1.setXY(60, 157);
     image1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
     add(image1);
 
-    digitalClock1.setPosition(165, 58, 150, 41);
-    digitalClock1.setColor(touchgfx::Color::getColorFromRGB(16, 120, 16));
+    digitalClock1.setPosition(160, 68, 150, 41);
+    digitalClock1.setColor(touchgfx::Color::getColorFromRGB(47, 224, 183));
     digitalClock1.setTypedText(touchgfx::TypedText(T_CLOCKTXT));
     digitalClock1.displayLeadingZeroForHourIndicator(true);
     digitalClock1.setDisplayMode(touchgfx::DigitalClock::DISPLAY_24_HOUR);
     digitalClock1.setTime24Hour(17, 29, 10);
     add(digitalClock1);
 
-    button1.setXY(205, 200);
-    button1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_36_TINY_ROUND_ACTION_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_36_TINY_ROUND_PRESSED_ID));
-    add(button1);
-
-    boxProgress1.setXY(205, 175);
+    boxProgress1.setXY(179, 120);
     boxProgress1.setProgressIndicatorPosition(0, 0, 100, 18);
     boxProgress1.setRange(0, 100);
     boxProgress1.setDirection(touchgfx::AbstractDirectionProgress::RIGHT);
     boxProgress1.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BOXPROGRESS_THICK_TINY_ID));
-    boxProgress1.setColor(touchgfx::Color::getColorFromRGB(254, 189, 23));
+    boxProgress1.setColor(touchgfx::Color::getColorFromRGB(39, 68, 87));
     boxProgress1.setValue(20);
     add(boxProgress1);
-
-    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_ALDES100ANS_ID));
-    scalableImage1.setPosition(165, 99, 150, 54);
-    scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::BILINEAR_INTERPOLATION);
-    add(scalableImage1);
 
     customContainer11.setXY(35, 60);
     customContainer11.setVisible(false);

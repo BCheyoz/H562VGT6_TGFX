@@ -33,6 +33,12 @@ public :
 	uint16_t resetMemoriesState();
 
 	void requestToInitRegulation(uint16_t value);
+	void requestChangeScreen(uint16_t value);  	// premet de changer l'ecran dynamiquement
+	void showModal(uint16_t value);  			// Affiche ou non le pop-up sur l'ecran Enum = "0:Hide/1:show"
+	void changeLanguage(uint16_t idx);
+	void setTankLvl(uint16_t lvl);				// test IHM
+	uint16_t getTankLvl() { return tankLvl;}				// test IHM
+
 
 #ifdef USE_COMMISIONNING_STATE
 	void resetCommissionningState(uint8_t code);
@@ -128,8 +134,7 @@ private :
 	uint8_t ctrlCmdCounter; // Timer pour executer la régulation a un cadencement donnée
 
 	// todo a supprimer une fois TGFX intégré
-	uint8_t refreshFixedScreen;
-	uint8_t cuurentScreen;
+	uint16_t tankLvl;
 };
 
 

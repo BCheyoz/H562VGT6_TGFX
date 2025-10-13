@@ -11,6 +11,11 @@ public:
     virtual ~Screen5View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    virtual void updateScreen5Data() final;
+
+    void enablePopup(bool enable);
+
 protected:
 };
 

@@ -38,6 +38,11 @@ uint16_t resetMemoriesState();
 
 void requestToInitRegulation(uint16_t value);
 
+void requestChangeScreen(uint16_t value);  	// premet de changer l'ecran dynamiquement
+void showModal(uint16_t value);  			// Affiche ou non le pop-up sur l'ecran Enum = "0:Hide/1:show"
+void changeLanguage(uint16_t idx);
+void setTankLvl(uint16_t idx);
+
 /* Temporaire pour tester les PINs BLE ***********************/
 uint32_t requestBleSpiId();
 void setBLE(uint16_t value);

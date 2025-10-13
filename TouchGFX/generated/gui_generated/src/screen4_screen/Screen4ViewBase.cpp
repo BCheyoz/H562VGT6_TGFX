@@ -14,7 +14,7 @@ Screen4ViewBase::Screen4ViewBase() :
     add(__background);
 
     image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_POLY_ID));
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_WAVES_ID));
     add(image1);
 
     buttonUp.setXY(15, 0);

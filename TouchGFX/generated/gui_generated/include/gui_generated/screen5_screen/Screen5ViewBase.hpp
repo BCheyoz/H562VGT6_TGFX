@@ -59,6 +59,13 @@ protected:
     touchgfx::TextAreaWithOneWildcard textArea6;
     touchgfx::TextArea textArea7;
     CustomContainer1 customContainer11;
+    touchgfx::TextArea textArea8;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t TEXTAREA6_SIZE = 6;
+    touchgfx::Unicode::UnicodeChar textArea6Buffer[TEXTAREA6_SIZE];
 
 private:
 

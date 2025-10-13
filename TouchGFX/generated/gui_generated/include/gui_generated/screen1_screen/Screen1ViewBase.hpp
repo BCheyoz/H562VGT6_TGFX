@@ -8,13 +8,11 @@
 #include <mvp/View.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/QRCode.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/clock/DigitalClock.hpp>
-#include <touchgfx/widgets/Button.hpp>
 #include <touchgfx/containers/progress_indicators/BoxProgress.hpp>
-#include <touchgfx/widgets/ScalableImage.hpp>
 #include <gui/containers/CustomContainer1.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
@@ -42,16 +40,14 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Box box1;
+    touchgfx::Image image2;
     touchgfx::TextArea textArea1;
     uint8_t qrBuffer_qrCode1[QRCODE_BUFFER_SIZE(3)];
     uint8_t qrScratchBuffer_qrCode1[QRCODE_BUFFER_SIZE(3)];
     touchgfx::QRCode qrCode1;
     touchgfx::Image image1;
     touchgfx::DigitalClock digitalClock1;
-    touchgfx::Button button1;
     touchgfx::BoxProgress boxProgress1;
-    touchgfx::ScalableImage scalableImage1;
     CustomContainer1 customContainer11;
 
 private:

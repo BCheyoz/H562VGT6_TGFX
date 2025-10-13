@@ -16,12 +16,12 @@ CustomContainer1Base::CustomContainer1Base()
     boxWithBorder1.setBorderSize(5);
     add(boxWithBorder1);
 
-    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ALERT_ERROR_OUTLINE_48_44_000000_SVG_ID));
-    scalableImage1.setPosition(0, 20, 80, 80);
+    scalableImage1.setBitmap(touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ALERT_ERROR_OUTLINE_80_80_000000_SVG_ID));
+    scalableImage1.setPosition(8, 20, 80, 80);
     scalableImage1.setScalingAlgorithm(touchgfx::ScalableImage::NEAREST_NEIGHBOR);
     add(scalableImage1);
 
-    textArea1.setXY(104, 14);
+    textArea1.setPosition(90, 12, 141, 40);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T_MODAL1TXTWARN));

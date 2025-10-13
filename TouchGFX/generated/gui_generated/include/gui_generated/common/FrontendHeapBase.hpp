@@ -9,6 +9,10 @@
 #include <mvp/MVPHeap.hpp>
 
 #include <touchgfx/transitions/NoTransition.hpp>
+#include <touchgfx/transitions/CoverTransition.hpp>
+#include <touchgfx/transitions/WipeTransition.hpp>
+#include <touchgfx/transitions/BlockTransition.hpp>
+
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
@@ -22,6 +26,8 @@
 #include <gui/screen4_screen/Screen4Presenter.hpp>
 #include <gui/screen5_screen/Screen5View.hpp>
 #include <gui/screen5_screen/Screen5Presenter.hpp>
+#include <gui/screen6_screen/Screen6View.hpp>
+#include <gui/screen6_screen/Screen6Presenter.hpp>
 
 
 /**
@@ -49,7 +55,8 @@ public:
             touchgfx::meta::TypeList< Screen3View,
             touchgfx::meta::TypeList< Screen4View,
             touchgfx::meta::TypeList< Screen5View,
-            touchgfx::meta::Nil > > > >
+            touchgfx::meta::TypeList< Screen6View,
+            touchgfx::meta::Nil > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -66,7 +73,8 @@ public:
             touchgfx::meta::TypeList< Screen3Presenter,
             touchgfx::meta::TypeList< Screen4Presenter,
             touchgfx::meta::TypeList< Screen5Presenter,
-            touchgfx::meta::Nil > > > >
+            touchgfx::meta::TypeList< Screen6Presenter,
+            touchgfx::meta::Nil > > > > >
             > GeneratedPresenterTypes;
 
     /**
@@ -79,7 +87,10 @@ public:
      * @note All transition types used in the application MUST be added to this list!
      */
     typedef touchgfx::meta::TypeList< touchgfx::NoTransition,
-            touchgfx::meta::Nil
+            touchgfx::meta::TypeList< CoverTransition<EAST>,
+            touchgfx::meta::TypeList< WipeTransition<EAST>,
+            touchgfx::meta::TypeList< BlockTransition,
+            touchgfx::meta::Nil > > >
             > GeneratedTransitionTypes;
 
     /**

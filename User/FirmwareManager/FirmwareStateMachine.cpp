@@ -18,6 +18,10 @@
 
 //#include "Display_FF028T010.h"
 #include "spi.h"				// temporaire pour test la spi du BLE
+#include <touchgfx/Application.hpp>
+#include <gui/common/FrontendApplication.hpp>
+#include <touchgfx/Texts.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 
 #ifdef USE_COMMISIONNING_STATE
 #define COMMISSIONNING_END_PWD      204
@@ -98,6 +102,25 @@ void requestToInitRegulation(uint16_t value){
 	fwp->requestToInitRegulation(value);
 }
 
+void requestChangeScreen(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->requestChangeScreen(value);
+}
+
+void showModal(uint16_t value){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->showModal(value);
+}
+
+void changeLanguage(uint16_t idx){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->changeLanguage(idx);
+}
+
+void setTankLvl(uint16_t idx){
+	FwMng *fwp = FwMng::getInstance();
+	fwp->setTankLvl(idx);
+}
 /* Temporaire pour tester la SPI BLE ***********************/
 
 uint32_t requestBleSpiId(){
@@ -531,8 +554,8 @@ FwMng::FwMng()
 
 	di_Anode = new DigitalInputs(DI_Anode_GPIO_Port, DI_Anode_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
 
-	di_J_N = new DigitalInputs(DI_J_N_GPIO_Port, DI_J_N_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
-	di_Smart = new DigitalInputs(DI_SMART_GPIO_Port, DI_SMART_Pin, DI_NO_WORKING_STATE_IS_1, 75, 50, E_DI_SAMPLE_1ms);
+	di_J_N = new DigitalInputs(DI_J_N_GPIO_Port, DI_J_N_Pin, DI_NO_WORKING_STATE_IS_1);
+	di_Smart = new DigitalInputs(DI_SMART_GPIO_Port, DI_SMART_Pin, DI_NO_WORKING_STATE_IS_1);
 
 	ctrlCmd = new TFLOW4_Ctrl;
 	initCtrlCmd();
@@ -554,19 +577,10 @@ FwMng::FwMng()
 	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
 	*/
 
-
-	/*** affiche un écran fix ***********************************/
-	refreshFixedScreen = 0;
-	cuurentScreen = 0;
-	const uint32_t size = LCD_WIDTH * LCD_HEIGHT;
-
-	BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-	BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
-	BSP_LCD_DisplayOn();
-
 	/* temporaire pour test la SPI Bluetooth *************************************/
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
 	/*****************************************************************************/
+
 }
 
 void FwMng::run(void)
@@ -576,8 +590,6 @@ void FwMng::run(void)
 	}
 
 	timer_100ms = 0;
-
-	refreshFixedScreen++;
 
 	if(powerOnTimer < POWER_ON_WAIT){
 		powerOnTimer++;
@@ -631,19 +643,6 @@ void FwMng::run(void)
 #endif
 
 	case E_PRODUCT_COMPLETE_STATE:
-		/*** affiche l'image de test par defaut ***********************************/
-		if(refreshFixedScreen > 50){
-			refreshFixedScreen = 0;
-			BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-			if(cuurentScreen == 0){
-				cuurentScreen = 1;
-				BSP_LCD_WriteData((uint8_t*)imgHelveticaData, size);
-			}
-			else {
-				cuurentScreen = 0;
-				BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
-			}
-		}
 
 #ifdef USE_ALIVE_LED
 	ledAlive->SetBlinkMode(E_LED_HEARTBEAT_BLINK);
@@ -710,19 +709,7 @@ void FwMng::run(void)
 	        //initNvmemAuxValeursParDefaut();   // effacement des parametrages
             eraseMemory = 0;
 	    }
-		/*** affiche l'image de test par defaut ***********************************/
-		if(refreshFixedScreen > 10){
-			refreshFixedScreen = 0;
-			BSP_LCD_SetDisplayWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
-			if(cuurentScreen == 0){
-				cuurentScreen = 1;
-				BSP_LCD_WriteData((uint8_t*)imgHelveticaData, size);
-			}
-			else {
-				cuurentScreen = 0;
-				BSP_LCD_WriteData((uint8_t*)imgMyriadData, size);
-			}
-		}
+
 		// rien a faire, c'est le boulot du module modbus de repondre aux requetes
 		break;
 
@@ -768,6 +755,59 @@ uint16_t FwMng::resetMemoriesState() { return eraseMemory; }
 void FwMng::requestToInitRegulation(uint16_t value){
 	if(value == REG_RESET_PWD){
 		regReset = TRUE;
+	}
+}
+
+
+void FwMng::requestChangeScreen(uint16_t value){
+	FrontendApplication* tgfxApp = static_cast<FrontendApplication*>(Application::getInstance());
+
+	switch (value) {
+		case 1:
+			tgfxApp->gotoScreen1ScreenNoTransition();
+			break;
+
+		case 2:
+			tgfxApp->gotoScreen2ScreenCoverTransitionEast();
+			break;
+
+		case 3:
+			tgfxApp->gotoScreen3ScreenWipeTransitionEast();
+			break;
+
+		case 4:
+			tgfxApp->gotoScreen4ScreenBlockTransition();
+			break;
+
+		case 5:
+			tgfxApp->gotoScreen5ScreenNoTransition();
+			break;
+		case 6:
+			tgfxApp->gotoScreen6ScreenNoTransition();
+			break;
+
+		default:
+			break;
+	}
+}
+
+void FwMng::showModal(uint16_t value){
+	FrontendApplication* tgfxApp = static_cast<FrontendApplication*>(Application::getInstance());
+	tgfxApp->enablePopupFromseletedScreen(value == 0 ? false : true);
+	tgfxApp->requestRedraw();
+}
+
+
+void FwMng::changeLanguage(uint16_t idx){
+	if(idx >= NUMBER_OF_LANGUAGES) return;
+	touchgfx::Texts::setLanguage(idx);
+	FrontendApplication* tgfxApp = static_cast<FrontendApplication*>(Application::getInstance());
+	tgfxApp->requestRedraw();
+}
+
+void FwMng::setTankLvl(uint16_t lvl){
+	if (lvl <= 100){
+		tankLvl = lvl;
 	}
 }
 

@@ -17,7 +17,7 @@ Screen5ViewBase::Screen5ViewBase() :
     add(__background);
 
     image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_POLY_ID));
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_BACKGROUNDS_320X240_WAVES_ID));
     add(image1);
 
     TmpBasGauge.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_GAUGE_TINY_BACKGROUNDS_ACTIVE_FILLED_ID));
@@ -51,7 +51,7 @@ Screen5ViewBase::Screen5ViewBase() :
     TmpHautGauge.setCenter(60, 60);
     TmpHautGauge.setStartEndAngle(-119, 122);
     TmpHautGauge.setRange(0, 100);
-    TmpHautGauge.setValue(50);
+    TmpHautGauge.setValue(20);
     TmpHautGauge.setNeedle(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_GAUGE_TINY_NEEDLES_ROUGH_ID, 5, 33);
     TmpHautGauge.setMovingNeedleRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
     TmpHautGauge.setSteadyNeedleRenderingAlgorithm(touchgfx::TextureMapper::BILINEAR_INTERPOLATION);
@@ -64,13 +64,13 @@ Screen5ViewBase::Screen5ViewBase() :
     TmpHautGauge.setArcPosition(12, 12, 95, 71);
     add(TmpHautGauge);
 
-    textArea1.setXY(28, 80);
+    textArea1.setPosition(24, 77, 72, 25);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T_SCREEN5TXTTH));
     add(textArea1);
 
-    textArea2.setXY(235, 82);
+    textArea2.setPosition(227, 80, 66, 22);
     textArea2.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea2.setLinespacing(0);
     textArea2.setTypedText(touchgfx::TypedText(T_SCREEN5TXTTB));
@@ -104,11 +104,11 @@ Screen5ViewBase::Screen5ViewBase() :
     textArea5.setTypedText(touchgfx::TypedText(T_SCREEN5TXTFAN));
     add(textArea5);
 
-    textArea6.setXY(118, 84);
+    textArea6.setPosition(123, 80, 77, 39);
     textArea6.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     textArea6.setLinespacing(0);
-    textArea6.setWildcard(touchgfx::TypedText(T_FANRPMWILDCARDDEFAULT).getText());
-    textArea6.resizeToCurrentText();
+    Unicode::snprintf(textArea6Buffer, TEXTAREA6_SIZE, "%s", touchgfx::TypedText(T_FANRPMWILDCARDDEFAULT).getText());
+    textArea6.setWildcard(textArea6Buffer);
     textArea6.setTypedText(touchgfx::TypedText(T_SCREEN5FANSPEED));
     add(textArea6);
 
@@ -121,6 +121,12 @@ Screen5ViewBase::Screen5ViewBase() :
     customContainer11.setXY(35, 60);
     customContainer11.setVisible(false);
     add(customContainer11);
+
+    textArea8.setPosition(102, 4, 113, 37);
+    textArea8.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
+    textArea8.setLinespacing(0);
+    textArea8.setTypedText(touchgfx::TypedText(T_SCREEN5TITLE));
+    add(textArea8);
 }
 
 Screen5ViewBase::~Screen5ViewBase()
