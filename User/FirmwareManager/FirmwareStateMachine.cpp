@@ -577,6 +577,9 @@ FwMng::FwMng()
 	cc_input.HMI.USER.Ss_anti_lgn_ena; // te_on_off : enum off = 0; on = 1; force = 2
 	*/
 
+	// Demande a TGFX de rafraishir entièrement l'ecran car le premier afficahge ne charge pas les images
+	Application::getInstance()->requestRedraw();
+
 	/* temporaire pour test la SPI Bluetooth *************************************/
 	HAL_GPIO_WritePin(BLE_SPI_CS_GPIO_Port, BLE_SPI_CS_Pin, GPIO_PIN_RESET);
 	/*****************************************************************************/
